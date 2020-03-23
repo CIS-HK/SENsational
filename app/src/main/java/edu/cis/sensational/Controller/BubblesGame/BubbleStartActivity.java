@@ -5,11 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import edu.cis.sensational.R;
 
-public class BubblesEndActivity extends AppCompatActivity {
+public class BubbleStartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bubbles_end);
+        setContentView(R.layout.activity_bubble_start);
     }
 }
