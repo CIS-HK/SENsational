@@ -22,7 +22,5 @@ public class LoginActivity extends AppCompatActivity{
     private TextView mPleaseWait;
 
 
-
-
     final Context context = this;
 }
