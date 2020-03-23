@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.BubblesGame.BubblesEndActivity"></activity>
+        <activity android:name=".Controller.Colorize.ColorizeEndActivity"></activity>
+        <activity android:name=".Controller.Colorize.ColorizeInstructionsActivity" />
+        <activity android:name=".Controller.Colorize.ColorizeStartActivity" />
+        <activity android:name=".Controller.Colorize.ColorizeMainActivity" />
+        <activity android:name=".Controller.BubblesGame.BubblesEndActivity" />
         <activity android:name=".Controller.BubblesGame.BubblesMiddleActivity" />
         <activity android:name=".Controller.BubblesGame.BubbleStartActivity" />
         <activity
