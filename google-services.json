@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "592269351689",
+    "firebase_url": "https://sensational-8a677.firebaseio.com",
+    "project_id": "sensational-8a677",
+    "storage_bucket": "sensational-8a677.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592269351689:android:91dadd380835bd2da011d8",
+        "android_client_info": {
+          "package_name": "edu.cis.sensational"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592269351689-043sp7ddo0v5bqaad9ipcd3vfalil7t7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.cis.sensational",
+            "certificate_hash": "ab9a6cba0414e1c5db57ea1f2e18e49f0961aa68"
+          }
+        },
+        {
+          "client_id": "592269351689-qse0o8snbtrt9b8316hbpqb8djfp7h5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDewOkotasLCjvRYaxL8QPZ7IOql5gHcJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592269351689-qse0o8snbtrt9b8316hbpqb8djfp7h5h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
