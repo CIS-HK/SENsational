@@ -1,15 +1,16 @@
-package edu.cis.sensational.Controller.BubblesGame;
+package edu.cis.sensational.Controller.Colorize;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
 import edu.cis.sensational.R;
 
-public class BubblesEndActivity extends AppCompatActivity {
+public class ColorizeInstructionsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bubbles_end);
+        setContentView(R.layout.activity_colorize_instructions);
     }
 }
