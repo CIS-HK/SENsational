@@ -16,7 +16,7 @@
         android:contentDescription="TODO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/Screenshot 2020-03-27 at 11" />
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <ImageView
         android:id="@+id/imageView12"
@@ -27,7 +27,7 @@
         android:background="#D1C4E9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/Screenshot 2020-03-27 at 11" />
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <ImageView
         android:id="@+id/imageView13"
@@ -38,7 +38,7 @@
         android:background="#FFF7FF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/Screenshot 2020-03-27 at 11" />
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <ImageView
         android:id="@+id/imageView14"
@@ -49,7 +49,7 @@
         android:background="#F3E5F5"
         app:layout_constraintBottom_toTopOf="@+id/gameName"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/Screenshot 2020-03-27 at 11" />
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <ImageView
         android:id="@+id/imageView15"
@@ -61,7 +61,7 @@
         app:layout_constraintBottom_toTopOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/Screenshot 2020-03-27 at 11" />
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <ImageView
         android:id="@+id/imageView17"
@@ -72,7 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/Screenshot 2020-03-27 at 11" />
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <TextView
         android:id="@+id/gamaName"

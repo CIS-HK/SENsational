@@ -75,7 +75,7 @@
         app:layout_constraintHorizontal_bias="0.602"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toBottomOf="@+id/instructionsButton"
-        app:srcCompat="@drawable/Screenshot 2020-03-27 at 11" />
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -86,7 +86,7 @@
         android:background="#D1C4E9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/Screenshot 2020-03-27 at 11" />
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -97,7 +97,7 @@
         android:background="#FFF7FF"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/Screenshot 2020-03-27 at 11" />
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -108,7 +108,7 @@
         android:background="#F3E5F5"
         app:layout_constraintBottom_toTopOf="@+id/gameName"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/Screenshot 2020-03-27 at 11" />
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -119,7 +119,7 @@
         android:background="#E1BEE7"
         app:layout_constraintBottom_toTopOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/Screenshot 2020-03-27 at 11" />
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <TextView
         android:id="@+id/gameName"
