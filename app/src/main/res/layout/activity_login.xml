@@ -60,7 +60,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/signup"
+                android:id="@+id/link_signup"
                 android:layout_width="88dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

@@ -24,6 +24,8 @@ public class ColorizeStartActivity extends AppCompatActivity {
         playButton = findViewById(R.id.playButton);
         quitButton = findViewById(R.id.quitButton);
         instructionButton = findViewById(R.id.instructionsButton);
+
+        setUpButtons();
     }
 
     private void setUpButtons(){
