@@ -24,7 +24,11 @@ public class User implements Parcelable{
         user_id = "";
         user_name = "";
         user_email = "";
-
+        user_location = "";
+        user_gender = "";
+        user_password = "";
+        user_child_gender = "";
+        user_child_age = "";
     }
 
     public User(String id, String n, String e, String l)
@@ -82,9 +86,8 @@ public class User implements Parcelable{
     public String toString() {
         return "User{" +
                 "user_id='" + user_id + '\'' +
-                ", phone_number='" + phone_number + '\'' +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
+                ", email='" + user_email + '\'' +
+                ", username='" + user_name + '\'' +
                 '}';
     }
 
@@ -96,8 +99,7 @@ public class User implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(user_id);
-        dest.writeLong(phone_number);
-        dest.writeString(email);
-        dest.writeString(username);
+        dest.writeString(user_email);
+        dest.writeString(user_name);
     }
 }

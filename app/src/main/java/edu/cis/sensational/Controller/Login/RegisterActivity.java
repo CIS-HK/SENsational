@@ -1,4 +1,4 @@
-package edu.cis.instagramclone.Controller.Login;
+package edu.cis.sensational.Controller.Login;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,11 +34,9 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
 
     private Context mContext;
-    private String email, username, password;
-    private EditText mEmail, mPassword, mUsername;
-    private TextView loadingPleaseWait;
-    private Button btnRegister;
-    private ProgressBar mProgressBar;
+    private String email, username, password, fourDigit;
+    private EditText mEmail, mPassword, mUsername, mFourDigit, mLocation;
+    private Button mRegisterButton;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -50,7 +46,6 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference myRef;
 
     private String append = "";
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,19 +61,16 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void init(){
-        btnRegister.setOnClickListener(new View.OnClickListener() { /***** Part 2: this a creates listener for the register button and register a new email *****/
+        mRegisterButton.setOnClickListener(new View.OnClickListener() { /***** Part 2: this a creates listener for the register button and register a new email *****/
         @Override
         public void onClick(View v) { //when the button is clicked, this happens
             email = mEmail.getText().toString();
             username = mUsername.getText().toString();
             password = mPassword.getText().toString();
-
-            /*** TODO 2a: get email, username and password from EditTexts, store them in instance variables ***/
+            fourDigit = mFourDigit.getText().toString();
 
             if(checkInputs(email, username, password)){ /*** TODO 2b: check if user input something valid, look at the email, username and password EditTexts and check that they aren't empty ***/
                 /*** TODO 2c : if true, set mProgressBar and loadingPleasWait visibility to View.VISIBLE ***/
-                mProgressBar.setVisibility(View.VISIBLE);
-                loadingPleaseWait.setVisibility(View.VISIBLE);
                 firebaseMethods.registerNewEmail(email, password, username);
 
                 /*** TODO 2d: Use a firebaseMethod to register the new email, you will to looks at the FirebaseMethods class ***/
@@ -102,13 +94,10 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, "initWidgets: Initializing Widgets.");
         mEmail = (EditText) findViewById(R.id.input_email);
         mUsername = (EditText) findViewById(R.id.input_username);
-        btnRegister = (Button) findViewById(R.id.btn_register);
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        loadingPleaseWait = (TextView) findViewById(R.id.loadingPleaseWait);
+        mPassword = (EditText) findViewById(R.id.input_password);
+        mRegisterButton = (Button) findViewById(R.id.registerButton);
         mPassword = (EditText) findViewById(R.id.input_password);
         mContext = RegisterActivity.this;
-        mProgressBar.setVisibility(View.GONE);
-        loadingPleaseWait.setVisibility(View.GONE);
 
     }
 
@@ -128,19 +117,19 @@ public class RegisterActivity extends AppCompatActivity {
      */
 
     /**
-     * Check is @param username already exists in teh database
+     * Check is @param username already exists in the database
      * @param username
      */
     private void checkIfUsernameExists(final String username) {
         Log.d(TAG, "checkIfUsernameExists: Checking if  " + username + " already exists.");
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query = reference
-                .child(getString(R.string.dbname_users))
-                .orderByChild(getString(R.string.field_username))
-                .equalTo(username);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+//        Query query = reference
+//                .child(getString(R.string.dbname_users))
+//                .orderByChild(getString(R.string.field_username))
+//                .equalTo(username);
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
