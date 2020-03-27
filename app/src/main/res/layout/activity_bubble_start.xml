@@ -6,4 +6,188 @@
     android:layout_height="match_parent"
     tools:context=".Controller.BubblesGame.BubbleStartActivity">
 
+    <TextView
+        android:id="@+id/bubblesTitle"
+        android:layout_width="367dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/bungee_inline"
+        android:text="BUBBLES!"
+        android:textColor="#0069C0"
+        android:textSize="68sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/instructionsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="17dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="Instructions:"
+        android:textColor="#2984C7"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubblesTitle" />
+
+    <TextView
+        android:id="@+id/targetsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="304dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="Targets:"
+        android:textColor="#2984C7"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubblesTitle" />
+
+    <TextView
+        android:id="@+id/selectModeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="552dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="Select the mode:"
+        android:textColor="#2984C7"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bubblesTitle" />
+
+    <TextView
+        android:id="@+id/instructions1a"
+        android:layout_width="373dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="19dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="1. A few bubbles will float up on the screen one by one. "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instructionsLabel" />
+
+    <TextView
+        android:id="@+id/instructions1b"
+        android:layout_width="377dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="9dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="Try to remember the color of each bubble."
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instructions1a" />
+
+    <TextView
+        android:id="@+id/2. When it is your turn, pick the color of each bubble in the right order."
+        android:layout_width="380dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="2. When it is your turn, pick the color of each bubble in the right order."
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instructions1b" />
+
+    <TextView
+        android:id="@+id/instructions3"
+        android:layout_width="380dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="3. If you are right, you win a smiley face!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/2. When it is your turn, pick the color of each bubble in the right order." />
+
+    <ImageView
+        android:id="@+id/bubble1"
+        android:layout_width="174dp"
+        android:layout_height="146dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/targetsLabel"
+        tools:srcCompat="@drawable/bubbles" />
+
+    <ImageView
+        android:id="@+id/bubble2"
+        android:layout_width="170dp"
+        android:layout_height="144dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instructions3"
+        tools:srcCompat="@drawable/bubbles" />
+
+    <Spinner
+        android:id="@+id/modeSpinner"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectModeLabel" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="117dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="116dp"
+        android:backgroundTint="#0069C0"
+        android:fontFamily="@font/bubbler_one"
+        android:text="PLAY "
+        android:textColor="#FBFBFB"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/selectModeLabel"
+        app:layout_constraintTop_toBottomOf="@+id/bubble2" />
+
+    <TextView
+        android:id="@+id/workingMemory"
+        android:layout_width="85dp"
+        android:layout_height="65dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="Working Memory"
+        android:textAlignment="center"
+        android:textColor="#FBFBFB"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bubble1"
+        app:layout_constraintEnd_toStartOf="@+id/bubble1"
+        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintStart_toEndOf="@+id/bubble1"
+        app:layout_constraintTop_toBottomOf="@+id/bubble1"
+        app:layout_constraintVertical_bias="0.45" />
+
+    <TextView
+        android:id="@+id/attentionSpan"
+        android:layout_width="93dp"
+        android:layout_height="66dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="Attention Span"
+        android:textAlignment="center"
+        android:textColor="#FBFBFB"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bubble2"
+        app:layout_constraintEnd_toStartOf="@+id/bubble2"
+        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintStart_toEndOf="@+id/bubble2"
+        app:layout_constraintTop_toBottomOf="@+id/bubble2"
+        app:layout_constraintVertical_bias="0.423" />
 </androidx.constraintlayout.widget.ConstraintLayout>
