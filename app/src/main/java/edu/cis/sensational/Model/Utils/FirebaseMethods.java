@@ -208,36 +208,26 @@ public class FirebaseMethods {
      * Add information to the user_account_settings node
      * @param email
      * @param username
-     * @param description
-     * @param website
-     * @param profile_photo
+     * @param location
      */
-    public void addNewUser(String email, String username, String description, String website, String profile_photo){
+    public void addNewUser(String email, String username, String location){
 
-        User user = new User( userID,  1,  email,  StringManipulation.condenseUsername(username) );
+        User user = new User( userID,  StringManipulation.condenseUsername(username) , email, location);
 
         myRef.child(mContext.getString(R.string.dbname_users))
                 .child(userID)
                 .setValue(user);
 
-
         UserAccountSettings settings = new UserAccountSettings(
-                description,
-                username,
-                0,
-                0,
-                0,
-                0,
-                profile_photo,
                 StringManipulation.condenseUsername(username),
-                website,
+                email,
+                location,
                 userID
         );
 
         myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                 .child(userID)
                 .setValue(settings);
-
     }
 
 
@@ -247,143 +237,99 @@ public class FirebaseMethods {
      * @param dataSnapshot
      * @return
      */
-    public UserSettings getUserSettings(DataSnapshot dataSnapshot){
-        Log.d(TAG, "getUserSettings: retrieving user account settings from firebase.");
-
-
-        UserAccountSettings settings  = new UserAccountSettings();
-        User user = new User();
-
-        for(DataSnapshot ds: dataSnapshot.getChildren()){
-
-            // user_account_settings node
-            if(ds.getKey().equals(mContext.getString(R.string.dbname_user_account_settings))) {
-                Log.d(TAG, "getUserSettings: user account settings node datasnapshot: " + ds);
-
-                try {
-
-                    settings.setDisplay_name(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getDisplay_name()
-                    );
-                    settings.setUsername(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getUsername()
-                    );
-                    settings.setWebsite(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getWebsite()
-                    );
-                    settings.setDescription(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getDescription()
-                    );
-                    settings.setProfile_photo(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getProfile_photo()
-                    );
-                    settings.setPosts(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getPosts()
-                    );
-                    settings.setPhone(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getPhone()
-                    );
-                    settings.setFollowing(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getFollowing()
-                    );
-                    settings.setFollowers(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getFollowers()
-                    );
-
-                    Log.d(TAG, "getUserAccountSettings: retrieved user_account_settings information: " + settings.toString());
-                } catch (NullPointerException e) {
-                    Log.e(TAG, "getUserAccountSettings: NullPointerException: " + e.getMessage());
-                }
-            }
-
-            // users node
-            Log.d(TAG, "getUserSettings: snapshot key: " + ds.getKey());
-            if(ds.getKey().equals(mContext.getString(R.string.dbname_users))) {
-                Log.d(TAG, "getUserAccountSettings: users node datasnapshot: " + ds);
-
-                user.setUsername(
-                        ds.child(userID)
-                                .getValue(User.class)
-                                .getUsername()
-                );
-                user.setEmail(
-                        ds.child(userID)
-                                .getValue(User.class)
-                                .getEmail()
-                );
-                user.setUser_id(
-                        ds.child(userID)
-                                .getValue(User.class)
-                                .getUser_id()
-                );
-
-                Log.d(TAG, "getUserAccountSettings: retrieved users information: " + user.toString());
-            }
-        }
-        return new UserSettings(user, settings);
-
-    }
+//    public UserSettings getUserSettings(DataSnapshot dataSnapshot){
+//        Log.d(TAG, "getUserSettings: retrieving user account settings from firebase.");
+//
+//
+//        UserAccountSettings settings  = new UserAccountSettings();
+//        User user = new User();
+//
+//        for(DataSnapshot ds: dataSnapshot.getChildren()){
+//
+//            // user_account_settings node
+//            if(ds.getKey().equals(mContext.getString(R.string.dbname_user_account_settings))) {
+//                Log.d(TAG, "getUserSettings: user account settings node datasnapshot: " + ds);
+//
+//                try {
+//
+//                    settings.setDisplay_name(
+//                            ds.child(userID)
+//                                    .getValue(UserAccountSettings.class)
+//                                    .getDisplay_name()
+//                    );
+//                    settings.setUsername(
+//                            ds.child(userID)
+//                                    .getValue(UserAccountSettings.class)
+//                                    .getUsername()
+//                    );
+//                    settings.setWebsite(
+//                            ds.child(userID)
+//                                    .getValue(UserAccountSettings.class)
+//                                    .getWebsite()
+//                    );
+//                    settings.setDescription(
+//                            ds.child(userID)
+//                                    .getValue(UserAccountSettings.class)
+//                                    .getDescription()
+//                    );
+//                    settings.setProfile_photo(
+//                            ds.child(userID)
+//                                    .getValue(UserAccountSettings.class)
+//                                    .getProfile_photo()
+//                    );
+//                    settings.setPosts(
+//                            ds.child(userID)
+//                                    .getValue(UserAccountSettings.class)
+//                                    .getPosts()
+//                    );
+//                    settings.setPhone(
+//                            ds.child(userID)
+//                                    .getValue(UserAccountSettings.class)
+//                                    .getPhone()
+//                    );
+//                    settings.setFollowing(
+//                            ds.child(userID)
+//                                    .getValue(UserAccountSettings.class)
+//                                    .getFollowing()
+//                    );
+//                    settings.setFollowers(
+//                            ds.child(userID)
+//                                    .getValue(UserAccountSettings.class)
+//                                    .getFollowers()
+//                    );
+//
+//                    Log.d(TAG, "getUserAccountSettings: retrieved user_account_settings information: " + settings.toString());
+//                } catch (NullPointerException e) {
+//                    Log.e(TAG, "getUserAccountSettings: NullPointerException: " + e.getMessage());
+//                }
+//            }
+//
+//            // users node
+//            Log.d(TAG, "getUserSettings: snapshot key: " + ds.getKey());
+//            if(ds.getKey().equals(mContext.getString(R.string.dbname_users))) {
+//                Log.d(TAG, "getUserAccountSettings: users node datasnapshot: " + ds);
+//
+//                user.setUsername(
+//                        ds.child(userID)
+//                                .getValue(User.class)
+//                                .getUsername()
+//                );
+//                user.setEmail(
+//                        ds.child(userID)
+//                                .getValue(User.class)
+//                                .getEmail()
+//                );
+//                user.setUser_id(
+//                        ds.child(userID)
+//                                .getValue(User.class)
+//                                .getUser_id()
+//                );
+//
+//                Log.d(TAG, "getUserAccountSettings: retrieved users information: " + user.toString());
+//            }
+//        }
+//        return new UserSettings(user, settings);
+//
+//    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

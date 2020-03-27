@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
 
     private Context mContext;
-    private String email, username, password, fourDigit;
+    private String email, username, password, fourDigit, location;
     private EditText mEmail, mPassword, mUsername, mFourDigit, mLocation;
     private Button mRegisterButton;
 
@@ -68,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
             username = mUsername.getText().toString();
             password = mPassword.getText().toString();
             fourDigit = mFourDigit.getText().toString();
+            location = mLocation.getText().toString();
 
             if(checkInputs(email, username, password)){ /*** TODO 2b: check if user input something valid, look at the email, username and password EditTexts and check that they aren't empty ***/
                 /*** TODO 2c : if true, set mProgressBar and loadingPleasWait visibility to View.VISIBLE ***/
@@ -98,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterButton = (Button) findViewById(R.id.registerButton);
         mPassword = (EditText) findViewById(R.id.input_password);
         mContext = RegisterActivity.this;
+        mLocation = (EditText) findViewById(R.id.input_location);
 
     }
 
@@ -123,13 +125,13 @@ public class RegisterActivity extends AppCompatActivity {
     private void checkIfUsernameExists(final String username) {
         Log.d(TAG, "checkIfUsernameExists: Checking if  " + username + " already exists.");
 
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-//        Query query = reference
-//                .child(getString(R.string.dbname_users))
-//                .orderByChild(getString(R.string.field_username))
-//                .equalTo(username);
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference
+                .child(getString(R.string.dbname_users))
+                .orderByChild(getString(R.string.field_username))
+                .equalTo(username);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
@@ -144,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
                 mUsername = username + append;
 
                 //add new user to the database
-                firebaseMethods.addNewUser(email, mUsername, "", "", "");
+                firebaseMethods.addNewUser(email, username, location);
 
                 Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
 
