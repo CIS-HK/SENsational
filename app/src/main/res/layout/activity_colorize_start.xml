@@ -7,48 +7,27 @@
     android:backgroundTint="#FFFFFF"
     tools:context=".Controller.Colorize.ColorizeStartActivity">
 
-    <TextView
-        android:id="@+id/gameName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="117dp"
-        android:layout_marginTop="288dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginBottom="394dp"
-        android:fontFamily="monospace"
-        android:text="@string/colorize"
-        android:textColor="#03477C"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.326"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.463"
-        tools:text="@string/colorize" />
-
     <Button
         android:id="@+id/playButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="164dp"
+        android:layout_height="65dp"
         android:layout_marginStart="182dp"
-        android:layout_marginTop="26dp"
         android:layout_marginEnd="172dp"
-        android:layout_marginBottom="381dp"
+        android:layout_marginBottom="348dp"
         android:backgroundTint="#F790A4"
         android:fontFamily="monospace"
         android:text="@string/play"
         android:textColor="#03477C"
-        android:textSize="18sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameName" />
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/instructionsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="115dp"
+        android:layout_height="45dp"
         android:layout_marginStart="159dp"
         android:layout_marginTop="23dp"
         android:layout_marginEnd="159dp"
@@ -79,9 +58,84 @@
         android:textColor="#03477C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/instructionsButton"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="507dp"
+        android:layout_height="233dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="48dp"
+        android:background="#FCE4EC"
+        android:contentDescription="TODO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.602"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/instructionsButton"
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="317dp"
+        android:layout_height="563dp"
+        android:layout_marginEnd="256dp"
+        android:layout_marginBottom="108dp"
+        android:background="#D1C4E9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="432dp"
+        android:layout_height="253dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="72dp"
+        android:background="#FFF7FF"
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="424dp"
+        android:layout_height="305dp"
+        android:layout_marginStart="224dp"
+        android:layout_marginBottom="8dp"
+        android:background="#F3E5F5"
+        app:layout_constraintBottom_toTopOf="@+id/gameName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="480dp"
+        android:layout_height="190dp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginBottom="32dp"
+        android:background="#E1BEE7"
+        app:layout_constraintBottom_toTopOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
+
+    <TextView
+        android:id="@+id/gameName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="312dp"
+        android:fontFamily="monospace"
+        android:text="@string/colorize"
+        android:textColor="#03477C"
+        android:textSize="50sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.75" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
