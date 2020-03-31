@@ -1,4 +1,4 @@
-package edu.cis.sensational.Model;
+package edu.cis.sensational.Model.Utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
