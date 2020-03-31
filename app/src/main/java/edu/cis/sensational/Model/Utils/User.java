@@ -1,4 +1,4 @@
-package edu.cis.sensational.Model;
+package edu.cis.sensational.Model.Utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -16,7 +16,7 @@ public class User implements Parcelable{
     private String user_gender;
     private String user_password;
     private String user_child_gender;
-    private String user_child_age;
+    private int user_child_age;
     private String user_child_profile;
 
     public User()
@@ -28,7 +28,7 @@ public class User implements Parcelable{
         user_gender = "";
         user_password = "";
         user_child_gender = "";
-        user_child_age = "";
+        user_child_age = 0;
     }
 
     public User(String id, String n, String e, String l)
@@ -81,6 +81,55 @@ public class User implements Parcelable{
     public void setUsername(String username) {
         this.user_name = username;
     }
+
+    public String getUser_location() {
+        return user_location;
+    }
+
+    public void setUser_location(String location) {
+        this.user_location = location;
+    }
+
+    public String getUser_gender() {
+        return user_gender;
+    }
+
+    public void setUser_gender(String gender) {
+        this.user_gender = gender;
+    }
+
+    public String getUser_password() {
+        return user_password;
+    }
+
+    public void setUser_password(String password) {
+        this.user_password = password;
+    }
+
+    public String getUser_child_gender() {
+        return user_child_gender;
+    }
+
+    public void setUser_child_gender(String child_gender) {
+        this.user_child_gender = child_gender;
+    }
+
+    public int getUser_child_age() {
+        return user_child_age;
+    }
+
+    public void setUser_child_age(int age) {
+        this.user_child_age = age;
+    }
+
+    public String getUser_child_profile() {
+        return user_child_profile;
+    }
+
+    public void setUser_child_profile(String profile) {
+        this.user_child_profile = profile;
+    }
+
 
     @Override
     public String toString() {

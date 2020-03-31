@@ -15,6 +15,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
     Button playButton, quitButton, instructionButton;
     TextView gameName;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
