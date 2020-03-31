@@ -43,5 +43,17 @@
     <string name="field_duration">duration</string>
     <string name="field_profile_photo">profile_photo</string>
     <string name="field_timestamp">timestamp</string>
+    <string name="bubbles_title">BUBBLES!</string>
+    <string name="instructions1a">1. A few bubbles will float up on the screen one by one.</string>
+    <string name="instructions1b">Try to remember the color of each bubble.</string>
+    <string name="instructions2">2. When it is your turn, pick the color of each bubble in the right order.</string>
+    <string name="instructions3">3. If you are right, you win a smiley face!</string>
+    <string name="instructionsLabel">Instructions:</string>
+    <string name="select_mode_label">Select the mode:</string>
+    <string name="targets_label">Targets:</string>
+    <string name="working_memory">Working Memory</string>
+    <string name="attention_span">Attention Span</string>
+    <string name="play_bubbles">PLAY</string>
+    <string name="score_label">Score:</string>
 
 </resources>
