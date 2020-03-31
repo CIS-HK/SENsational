@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E8FAFA"
     tools:context=".Controller.BubblesGame.BubbleStartActivity">
 
     <ImageView
         android:id="@+id/bubble2"
-        android:layout_width="189dp"
-        android:layout_height="160dp"
+        android:layout_width="181dp"
+        android:layout_height="148dp"
         android:layout_marginStart="208dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="47dp"
@@ -149,10 +150,10 @@
 
     <ImageView
         android:id="@+id/bubble1"
-        android:layout_width="185dp"
-        android:layout_height="158dp"
+        android:layout_width="174dp"
+        android:layout_height="143dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="26dp"
         android:layout_marginEnd="6dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bubble1"
@@ -191,7 +192,7 @@
         android:text="@string/working_memory"
         android:textAlignment="center"
         android:textColor="#FBFBFB"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bubble1"
         app:layout_constraintEnd_toStartOf="@+id/bubble1"
@@ -208,7 +209,7 @@
         android:text="@string/attention_span"
         android:textAlignment="center"
         android:textColor="#FDFDFD"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bubble2"
         app:layout_constraintEnd_toStartOf="@+id/bubble2"

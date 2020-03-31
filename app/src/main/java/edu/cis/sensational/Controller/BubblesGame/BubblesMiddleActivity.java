@@ -8,12 +8,10 @@ import android.widget.TextView;
 import edu.cis.sensational.R;
 
 public class BubblesMiddleActivity extends AppCompatActivity {
-    private TextView scoreLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bubbles_middle);
-        scoreLabel = findViewById(R.id.scoreLabel);
     }
 }
