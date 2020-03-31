@@ -11,8 +11,17 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Controller.BubblesGame.BubblesEndActivity"></activity>
         <activity android:name=".Controller.BubblesGame.BubblesMiddleActivity" />
-        <activity
-            android:name=".Controller.BubblesGame.BubbleStartActivity">
+        <activity android:name=".Controller.BubblesGame.BubbleStartActivity" />
+        <activity android:name=".Controller.Colorize.ColorizeMainActivity" />
+        <activity android:name=".Controller.Colorize.ColorizeEndActivity" />
+        <activity android:name=".Controller.Colorize.ColorizeInstructionsActivity" />
+        <activity android:name=".Controller.Calming.CalmingActivity" />
+        <activity android:name=".Controller.Calming.CalmingMode1Activity" />
+        <activity android:name=".Controller.Calming.CalmingMode2Activity" />
+        <activity android:name=".Controller.Calming.CalmingMode3Activity" />
+        <activity android:name=".Controller.Login.LoginActivity" />
+        <activity android:name=".Controller.Login.RegisterActivity" />
+        <activity android:name=".Controller.Colorize.ColorizeStartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

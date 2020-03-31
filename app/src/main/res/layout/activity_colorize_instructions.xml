@@ -19,17 +19,6 @@
         app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
 
     <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="294dp"
-        android:layout_height="529dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginEnd="252dp"
-        android:background="#D1C4E9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
-
-    <ImageView
         android:id="@+id/imageView13"
         android:layout_width="461dp"
         android:layout_height="227dp"
@@ -79,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/bungee_inline"
         android:text="@string/colorize"
         android:textColor="#03477C"
         android:textSize="50sp"
@@ -93,6 +82,7 @@
         android:layout_width="293dp"
         android:layout_height="47dp"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/bubbler_one"
         android:text="The level of difficulty will increase  as you score higher."
         android:textColor="#03477C"
         android:textSize="18sp"
@@ -106,6 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
+        android:fontFamily="@font/bubbler_one"
         android:text="A word will appear on the screen. "
         android:textColor="#03477C"
         android:textSize="18sp"
@@ -119,6 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/bubbler_one"
         android:text="Identify the colour of the word."
         android:textColor="#03477C"
         android:textSize="18sp"
@@ -132,6 +124,7 @@
         android:layout_width="289dp"
         android:layout_height="43dp"
         android:layout_marginTop="40dp"
+        android:fontFamily="@font/bubbler_one"
         android:text="Choose your answer by clicking one of the buttons."
         android:textColor="#03477C"
         android:textSize="18sp"
@@ -145,6 +138,7 @@
         android:layout_width="289dp"
         android:layout_height="45dp"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/bubbler_one"
         android:text="You score one point if you chose the correct answer."
         android:textColor="#03477C"
         android:textSize="18sp"
@@ -158,6 +152,7 @@
         android:layout_width="293dp"
         android:layout_height="33dp"
         android:layout_marginTop="27dp"
+        android:fontFamily="@font/bubbler_one"
         android:text="Have fun!"
         android:textAlignment="center"
         android:textColor="#03477C"
@@ -171,6 +166,7 @@
         android:layout_width="311dp"
         android:layout_height="45dp"
         android:layout_marginTop="36dp"
+        android:fontFamily="@font/bubbler_one"
         android:text="This game aims to develop your self control."
         android:textAlignment="center"
         android:textAllCaps="false"
@@ -188,6 +184,7 @@
         android:layout_marginStart="72dp"
         android:layout_marginBottom="80dp"
         android:background="#F790A4"
+        android:fontFamily="@font/bubbler_one"
         android:text="BACK"
         android:textColor="#03477C"
         android:textSize="18sp"
@@ -203,10 +200,19 @@
         android:layout_marginEnd="76dp"
         android:layout_marginBottom="80dp"
         android:background="#F790A4"
+        android:fontFamily="@font/bubbler_one"
         android:text="@string/play"
         android:textColor="#03477C"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="80dp"
+        android:layout_height="480dp"
+        app:srcCompat="#D1C4E9"
+        tools:layout_editor_absoluteX="-23dp"
+        tools:layout_editor_absoluteY="145dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
