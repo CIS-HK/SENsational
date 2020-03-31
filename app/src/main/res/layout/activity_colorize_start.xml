@@ -106,6 +106,7 @@
         android:layout_marginStart="224dp"
         android:layout_marginBottom="8dp"
         android:background="#F3E5F5"
+        android:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/gameName"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />

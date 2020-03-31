@@ -11,9 +11,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Controller.BubblesGame.BubblesEndActivity"></activity>
         <activity android:name=".Controller.BubblesGame.BubblesMiddleActivity" />
-        <activity
-            android:name=".Controller.BubblesGame.BubbleStartActivity">
-            <intent-filter>
+        <activity android:name=".Controller.BubblesGame.BubbleStartActivity">
+
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
