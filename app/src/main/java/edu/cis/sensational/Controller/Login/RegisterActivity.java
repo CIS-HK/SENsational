@@ -96,11 +96,10 @@ public class RegisterActivity extends AppCompatActivity {
         mEmail = (EditText) findViewById(R.id.input_email);
         mUsername = (EditText) findViewById(R.id.input_username);
         mPassword = (EditText) findViewById(R.id.input_password);
-        mRegisterButton = (Button) findViewById(R.id.registerButton);
         mPassword = (EditText) findViewById(R.id.input_password);
-        mContext = RegisterActivity.this;
         mLocation = (EditText) findViewById(R.id.input_location);
-
+        mRegisterButton = (Button) findViewById(R.id.registerButton);
+        mContext = RegisterActivity.this;
     }
 
     private boolean isStringNull(String string){
