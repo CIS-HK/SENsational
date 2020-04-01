@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import edu.cis.sensational.R;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
-import edu.cis.sensational.Model.User;
+import edu.cis.sensational.Model.Utils.User;
 
 /**
  * Created by User on 6/19/2017.
@@ -34,8 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
 
     private Context mContext;
-    private String email, username, password, fourDigit, location;
-    private EditText mEmail, mPassword, mUsername, mFourDigit, mLocation;
+    private String email, username, password, fourDigit, location, age, profile;
+    private EditText mEmail, mPassword, mUsername, mFourDigit, mLocation, mAge, mProfile;
     private Button mRegisterButton;
 
     //firebase
@@ -69,6 +69,9 @@ public class RegisterActivity extends AppCompatActivity {
             password = mPassword.getText().toString();
             fourDigit = mFourDigit.getText().toString();
             location = mLocation.getText().toString();
+            age = mAge.getText().toString();
+            profile = mProfile.getText().toString();
+
 
             if(checkInputs(email, username, password)){ /*** TODO 2b: check if user input something valid, look at the email, username and password EditTexts and check that they aren't empty ***/
                 /*** TODO 2c : if true, set mProgressBar and loadingPleasWait visibility to View.VISIBLE ***/
@@ -145,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
                 mUsername = username + append;
 
                 //add new user to the database
-                firebaseMethods.addNewUser(email, username, location);
+                firebaseMethods.addNewUser(email, username, location, age, profile);
 
                 Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
 

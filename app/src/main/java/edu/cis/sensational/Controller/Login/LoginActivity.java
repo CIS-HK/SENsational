@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity{
                                             /*** CODE for 1g inside if statement parenthesis, should not be boolean "true" ***/
                                             if(currentUser.isEmailVerified()){ /*** TODO 1g: Check if the user's email has been verified, change true, research the FirebaseUser class documentation for helpful method(s) ***/
                                                 Log.d(TAG, "onComplete: success. email is verified.");
-//                                                /*** TODO 1h: create code to navigate from LoginActivity to HomeActivity, you'll have to research the Android Class used for navigating from one screen to another ***/
+                                                /*** TODO 1h: create code to navigate from LoginActivity to HomeActivity, you'll have to research the Android Class used for navigating from one screen to another ***/
 //                                                Intent intent = new Intent(context,
 //                                                        HomeActivity.class);
 //                                                startActivity(intent);
