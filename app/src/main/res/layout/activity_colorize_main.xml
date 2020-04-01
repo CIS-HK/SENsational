@@ -30,6 +30,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/backgroundColor"
+        android:layout_width="408dp"
+        android:layout_height="574dp"
+        android:layout_marginTop="76dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#72DEE0" />
+
     <TextView
         android:id="@+id/colorWord"
         android:layout_width="wrap_content"
@@ -38,14 +48,13 @@
         android:fontFamily="@font/bubbler_one"
         android:text="RED"
         android:textColor="#4CAF50"
-        android:textSize="150sp"
+        android:textSize="100sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.129" />
 
     <Button
         android:id="@+id/answerOne"
