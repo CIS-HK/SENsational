@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/scoreLabel"
-        android:layout_width="87dp"
-        android:layout_height="25dp"
+        android:layout_width="91dp"
+        android:layout_height="31dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
         android:fontFamily="@font/bubbler_one"
@@ -20,8 +20,8 @@
 
     <TextView
         android:id="@+id/timeLabel"
-        android:layout_width="87dp"
-        android:layout_height="25dp"
+        android:layout_width="83dp"
+        android:layout_height="35dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/bubbler_one"
