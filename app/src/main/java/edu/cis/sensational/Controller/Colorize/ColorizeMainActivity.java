@@ -56,7 +56,7 @@ public class ColorizeMainActivity extends AppCompatActivity {
 
 
     }
-    public void addColors()
+    private void addColors()
     {
         colorWords.add("RED");
         colorWords.add("ORANGE");
@@ -66,7 +66,7 @@ public class ColorizeMainActivity extends AppCompatActivity {
         colorWords.add("PURPLE");
     }
 
-    public void play()
+    private void play()
     {
         //generate random index from colorarraylist
         int index = new Random().nextInt(colorWords.size());
