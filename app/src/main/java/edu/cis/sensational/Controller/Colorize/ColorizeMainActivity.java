@@ -65,12 +65,10 @@ public class ColorizeMainActivity extends AppCompatActivity {
         answers = new HashMap<Integer, String>();
         colors = new ArrayList<Integer>();
 
-
         setUpButtons();
         addColors();
         setUpGame();
         play();
-
     }
 
     public void setUpButtons()
