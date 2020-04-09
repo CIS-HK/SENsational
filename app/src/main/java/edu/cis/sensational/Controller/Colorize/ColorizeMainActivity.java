@@ -3,6 +3,7 @@ package edu.cis.sensational.Controller.Colorize;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,11 +42,21 @@ public class ColorizeMainActivity extends AppCompatActivity {
         @Override
         public void onTick(long millisUntilFinished) {
             timeLeft = millisUntilFinished/1000;
-            timeLabel.setText("Time: " + timeLeft);
+            timeLabel.setText(GameConstants.DISPLAYTIME + timeLeft);
         }
 
         @Override
-        public void onFinish() {
+        public void onFinish()
+        {
+            finish();
+            startActivity(new Intent(ColorizeMainActivity.this,ColorizeEndActivity.class));
+
+            Context context = getApplicationContext();
+            CharSequence text = GameConstants.TOAST;
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
 
         }
     };
@@ -73,7 +85,8 @@ public class ColorizeMainActivity extends AppCompatActivity {
 
     public void setUpButtons()
     {
-        quitButton.setOnClickListener(new View.OnClickListener() {
+        quitButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ColorizeMainActivity.this,ColorizeEndActivity.class));
@@ -85,13 +98,13 @@ public class ColorizeMainActivity extends AppCompatActivity {
     private void addColors()
     {
         //change to constants
-        answers.put(Color.RED, "RED");
-        answers.put(Color.YELLOW, "YELLOW");
-        answers.put(Color.GREEN, "GREEN");
-        answers.put(Color.BLACK, "BLACK");
-        answers.put(Color.GRAY, "GRAY");
-        answers.put(Color.MAGENTA, "PINK");
-        answers.put(Color.BLUE, "BLUE");
+        answers.put(Color.RED, GameConstants.RED);
+        answers.put(Color.YELLOW, GameConstants.YELLOW);
+        answers.put(Color.GREEN, GameConstants.GREEN);
+        answers.put(Color.BLACK, GameConstants.BLACK);
+        answers.put(Color.GRAY, GameConstants.GRAY);
+        answers.put(Color.MAGENTA, GameConstants.PINK);
+        answers.put(Color.BLUE, GameConstants.BLUE);
 
         colors.add(Color.RED);
         colors.add(Color.YELLOW);
@@ -101,13 +114,13 @@ public class ColorizeMainActivity extends AppCompatActivity {
         colors.add(Color.GRAY);
         colors.add(Color.BLACK);
 
-        colorWords.add("RED");
-        colorWords.add("YELLOW");
-        colorWords.add("GREEN");
-        colorWords.add("BLACK");
-        colorWords.add("GRAY");
-        colorWords.add("PINK");
-        colorWords.add("BLUE");
+        colorWords.add(GameConstants.RED);
+        colorWords.add(GameConstants.YELLOW);
+        colorWords.add(GameConstants.GREEN);
+        colorWords.add(GameConstants.BLACK);
+        colorWords.add(GameConstants.GRAY);
+        colorWords.add(GameConstants.PINK);
+        colorWords.add(GameConstants.BLUE);
 
     }
 
@@ -162,12 +175,6 @@ public class ColorizeMainActivity extends AppCompatActivity {
 
     private void play()
     {
-        if (timeLeft < 0)
-        {
-            finish();
-            startActivity(new Intent(ColorizeMainActivity.this,ColorizeEndActivity.class));
-        }
-
         answerOne.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -175,8 +182,8 @@ public class ColorizeMainActivity extends AppCompatActivity {
 
                 if (answerOne.getText() == correctAnswer && timeLeft > 0 ){
                     counter.cancel();
-                    GameConstants.score ++;
-                    scoreLabel.setText("Score: " + GameConstants.score);
+                    GameConstants.SCORE ++;
+                    scoreLabel.setText(GameConstants.DISPLAYSCORE + GameConstants.SCORE);
                     addColors();
                     setUpGame();
                 }
@@ -195,8 +202,8 @@ public class ColorizeMainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (answerTwo.getText() == correctAnswer && timeLeft > 0)
                 {
-                    GameConstants.score ++;
-                    scoreLabel.setText("Score: " + GameConstants.score);
+                    GameConstants.SCORE++;
+                    scoreLabel.setText(GameConstants.DISPLAYSCORE + GameConstants.SCORE);
                     counter.cancel();
                     addColors();
                     setUpGame();
