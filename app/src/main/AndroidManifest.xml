@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.cis.sensational">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,8 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.Login.LoginActivity"></activity>
-        <activity android:name=".Controller.Login.RegisterActivity" />
+        <activity android:name=".Controller.Profile.ProfileActivity"></activity>
         <activity android:name=".Controller.BubblesGame.BubbleMiddle2Activity" />
         <activity android:name=".Controller.BubblesGame.BubblesEndActivity" />
         <activity android:name=".Controller.BubblesGame.BubblesMiddleActivity" />
@@ -22,11 +24,17 @@
         <activity android:name=".Controller.Calming.CalmingMode1Activity" />
         <activity android:name=".Controller.Calming.CalmingMode2Activity" />
         <activity android:name=".Controller.Calming.CalmingMode3Activity" />
-        <activity android:name=".Controller.Colorize.ColorizeStartActivity">
+        <activity android:name=".Controller.Colorize.ColorizeStartActivity" />
+        <activity android:name=".Controller.Home.HomeActivity" />
+        <activity android:name=".Controller.Login.RegisterActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Controller.Login.LoginActivity" >
+
         </activity>
         <activity
             android:name=".MainActivity"

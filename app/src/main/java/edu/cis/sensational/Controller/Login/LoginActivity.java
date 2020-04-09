@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.R;
 
 public class LoginActivity extends AppCompatActivity{
@@ -34,14 +34,14 @@ public class LoginActivity extends AppCompatActivity{
     private Context mContext;
     private EditText mEmail, mPassword;
 
-
     final Context context = this;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
         mEmail = (EditText) findViewById(R.id.input_email);
         mPassword = (EditText) findViewById(R.id.input_password);
         mContext = LoginActivity.this;
@@ -76,55 +76,52 @@ public class LoginActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Log.d(TAG, "onClick: attempting to log in.");
 
-                /***TODO 1a: Get email and password strings from mEmail and mPassword EditText object. Research the EditText class documentation to find out which method(s) will help. ***/
                 String emailString = mEmail.getText().toString();
                 String pwString = mPassword.getText().toString();
 
-                /*** CODE for 1b inside if statement parenthesis, should not be boolean "true" ***/
-                if( emailString.isEmpty() || pwString.isEmpty()){ /*** TODO 1b. check whether the user gave a blank email or password, research which method(s) you can use from the EditText class ***/
-                    Toast.makeText(mContext, "Invalid input", Toast.LENGTH_SHORT).show(); /*** TODO 1c: if true this line uses Toast.makeText to inform the user of an error, give any error message you want ***/
+                if( emailString.isEmpty() || pwString.isEmpty()){
+                    Toast.makeText(mContext, "Invalid input", Toast.LENGTH_SHORT).show();
                 }else{
-
-                    mAuth.signInWithEmailAndPassword(emailString, pwString) /*** TODO 1d. If email and password are present, use mAuth.signInWithEmailAndPassword to send it to firebase, change the parameters here ***/
+                    mAuth.signInWithEmailAndPassword(emailString, pwString)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                                     //get current user from mAuth, store it in variable
                                     FirebaseUser currentUser = mAuth.getCurrentUser();
+                                    Intent intent = new Intent(context,
+                                            HomeActivity.class);
+                                    startActivity(intent);
 
                                     // If sign in fails, display a message to the user. If sign in succeeds
                                     // the auth state listener will be notified and logic to handle the
                                     // signed in user can be handled in the listener.
 
-                                    /*** CODE for 1e inside if statement parenthesis, should not be boolean "true" ***/
-                                    if (!task.isSuccessful()) { /*** TODO 1e: check if task was not successful, research the Android Task Class ***/
+                                    if (!task.isSuccessful()) {
                                         Log.w(TAG, "signInWithEmail:failed", task.getException());
 
-                                        /*** TODO 1f: inform the user with a Toast that something went wrong ***/
                                         Toast.makeText(mContext, "something went wrong.",
                                                 Toast.LENGTH_SHORT).show();
                                     }
-                                    else{ //if task was successful
-                                        try{
-                                            /*** CODE for 1g inside if statement parenthesis, should not be boolean "true" ***/
-                                            if(currentUser.isEmailVerified()){ /*** TODO 1g: Check if the user's email has been verified, change true, research the FirebaseUser class documentation for helpful method(s) ***/
-                                                Log.d(TAG, "onComplete: success. email is verified.");
-                                                /*** TODO 1h: create code to navigate from LoginActivity to HomeActivity, you'll have to research the Android Class used for navigating from one screen to another ***/
+//                                    else{ //if task was successful
+//                                        try{
+//                                            /*** CODE for 1g inside if statement parenthesis, should not be boolean "true" ***/
+//                                            if(currentUser.isEmailVerified()){
+//                                                Log.d(TAG, "onComplete: success. email is verified.");
 //                                                Intent intent = new Intent(context,
 //                                                        HomeActivity.class);
 //                                                startActivity(intent);
-                                            }
-                                            else
-                                            {
-                                                Toast.makeText(mContext, "Email is not verified \n check your email inbox.", Toast.LENGTH_SHORT).show();
-                                                mAuth.signOut();
-                                            }
-
-                                        }catch (NullPointerException e){
-                                            Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
-                                        }
-                                    }
+//                                            }
+//                                            else
+//                                            {
+//                                                Toast.makeText(mContext, "Email is not verified \n check your email inbox.", Toast.LENGTH_SHORT).show();
+//                                                mAuth.signOut();
+//                                            }
+//
+//                                        }catch (NullPointerException e){
+//                                            Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
+//                                        }
+//                                    }
 
                                     // ...
                                 }
@@ -148,8 +145,8 @@ public class LoginActivity extends AppCompatActivity{
          If the user is logged in then navigate to HomeActivity and call 'finish()'
           */
         if(mAuth.getCurrentUser() != null){
-//            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
             finish();
         }
     }
