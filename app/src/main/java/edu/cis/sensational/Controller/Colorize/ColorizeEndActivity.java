@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.R;
 
 public class ColorizeEndActivity extends AppCompatActivity {
 
     Button playAgainButton, quitButton;
     TextView scoreLabel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,6 +27,7 @@ public class ColorizeEndActivity extends AppCompatActivity {
         scoreLabel = findViewById(R.id.scoreLabel);
 
         setUpButtons();
+        scoreLabel.setText(GameConstants.DISPLAYSCORE + GameConstants.SCORE);
 
     }
 
@@ -33,7 +36,11 @@ public class ColorizeEndActivity extends AppCompatActivity {
         playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 startActivity(new Intent(ColorizeEndActivity.this,ColorizeMainActivity.class));
+                finish();
+                GameConstants.SCORE = 0;
+
             }
         });
 

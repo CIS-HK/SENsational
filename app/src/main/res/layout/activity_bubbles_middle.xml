@@ -10,65 +10,46 @@
         android:id="@+id/smiley1"
         android:layout_width="56dp"
         android:layout_height="47dp"
-        android:layout_marginStart="10dp"
         android:background="@drawable/smiley_face"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/smiley2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/scoreLabel1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.301"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.039"
+        app:layout_constraintVertical_bias="0.03"
         app:srcCompat="@drawable/smiley_face"
-        tools:srcCompat="@drawable/smiley_face"
-        tools:visibility="visible" />
+        tools:srcCompat="@drawable/smiley_face" />
 
     <ImageView
         android:id="@+id/smiley2"
         android:layout_width="56dp"
         android:layout_height="47dp"
         android:background="@drawable/smiley_face"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/smiley3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/smiley1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.039"
+        app:layout_constraintVertical_bias="0.03"
         app:srcCompat="@drawable/smiley_face"
-        tools:srcCompat="@drawable/smiley_face"
-        tools:visibility="visible" />
+        tools:srcCompat="@drawable/smiley_face" />
 
     <ImageView
         android:id="@+id/smiley3"
         android:layout_width="56dp"
         android:layout_height="47dp"
-        android:layout_marginEnd="136dp"
         android:background="@drawable/smiley_face"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/smiley2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.039"
-        app:srcCompat="@drawable/smiley_face"
-        tools:srcCompat="@drawable/smiley_face"
-        tools:visibility="visible" />
-
-    <ImageView
-        android:id="@+id/floatingBubble"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="692dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginBottom="3dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.616"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars"
-        tools:visibility="gone" />
+        app:layout_constraintVertical_bias="0.03"
+        app:srcCompat="@drawable/smiley_face"
+        tools:srcCompat="@drawable/smiley_face" />
 
     <Button
         android:id="@+id/settings"
@@ -89,18 +70,46 @@
         android:id="@+id/scoreLabel1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginEnd="10dp"
         android:fontFamily="@font/bubbler_one"
         android:text="@string/score_label"
         android:textColor="#A96DEE"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/smiley1"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.077"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039" />
+
+    <ImageView
+        android:id="@+id/floatingBubble"
+        android:layout_width="175dp"
+        android:layout_height="171dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.934"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.28"
+        app:srcCompat="@drawable/redbubble"
+        tools:srcCompat="@drawable/redbubble" />
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bubbler_one"
+        android:text="1"
+        android:textColor="#FFFFFF"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/floatingBubble"
+        app:layout_constraintEnd_toStartOf="@+id/floatingBubble"
+        app:layout_constraintHorizontal_bias="0.467"
+        app:layout_constraintStart_toEndOf="@+id/floatingBubble"
+        app:layout_constraintTop_toBottomOf="@+id/floatingBubble"
+        app:layout_constraintVertical_bias="0.452" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

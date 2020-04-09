@@ -54,7 +54,7 @@
         android:id="@+id/gameName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="255dp"
+        android:layout_marginTop="100dp"
         android:fontFamily="@font/bungee_inline"
         android:text="@string/colorize"
         android:textColor="#03477C"
@@ -65,29 +65,30 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.056" />
 
     <ImageView
         android:id="@+id/imageView17"
         android:layout_width="187dp"
         android:layout_height="66dp"
-        android:layout_marginBottom="320dp"
+        android:layout_marginBottom="280dp"
         android:background="#FEFEFE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/scoreLabel"
-        android:layout_width="178dp"
-        android:layout_height="58dp"
+        android:layout_width="170dp"
+        android:layout_height="71dp"
         android:fontFamily="@font/bubbler_one"
         android:text="Score: 10"
         android:textColor="#03477C"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView17"
         app:layout_constraintEnd_toEndOf="@+id/imageView17"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/imageView17"
         app:layout_constraintTop_toTopOf="@+id/imageView17"
         app:layout_constraintVertical_bias="0.0" />
@@ -98,7 +99,7 @@
         android:layout_height="62dp"
         android:layout_marginStart="182dp"
         android:layout_marginEnd="172dp"
-        android:layout_marginBottom="228dp"
+        android:layout_marginBottom="196dp"
         android:backgroundTint="#F790A4"
         android:fontFamily="@font/bubbler_one"
         android:text="Play Again?"

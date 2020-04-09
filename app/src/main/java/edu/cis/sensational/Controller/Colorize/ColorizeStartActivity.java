@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import edu.cis.sensational.R;
 
-public class ColorizeStartActivity extends AppCompatActivity {
+public class ColorizeStartActivity extends AppCompatActivity
+{
 
     Button playButton, quitButton, instructionButton;
     TextView gameName;
