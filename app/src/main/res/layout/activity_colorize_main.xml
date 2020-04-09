@@ -10,7 +10,7 @@
         android:id="@+id/scoreLabel"
         android:layout_width="91dp"
         android:layout_height="31dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="40dp"
         android:fontFamily="@font/bubbler_one"
         android:text="Score: 0"
@@ -23,7 +23,7 @@
         android:layout_width="83dp"
         android:layout_height="35dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="@font/bubbler_one"
         android:text="Time: 5"
         android:textSize="25sp"
@@ -32,19 +32,19 @@
 
     <ImageView
         android:id="@+id/backgroundColor"
-        android:layout_width="408dp"
-        android:layout_height="574dp"
+        android:layout_width="399dp"
+        android:layout_height="423dp"
         android:layout_marginTop="76dp"
+        android:background="#72DEE0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="#72DEE0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/colorWord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="200dp"
         android:fontFamily="@font/bubbler_one"
         android:text="RED"
         android:textColor="#4CAF50"
@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.129" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/answerOne"
