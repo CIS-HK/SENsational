@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controller.BubblesGame.BubbleMiddle2Activity">
+    tools:context=".Controller.BubblesGame.BubblesMiddle2Activity">
 
     <Button
         android:id="@+id/settings2"
@@ -24,60 +24,51 @@
         android:id="@+id/smiley1_2"
         android:layout_width="56dp"
         android:layout_height="47dp"
-        android:layout_marginStart="10dp"
         android:background="@drawable/smiley_face"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/smiley3_2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/scoreLabel2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.307"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.027"
         app:srcCompat="@drawable/smiley_face"
-        tools:srcCompat="@drawable/smiley_face"
-        tools:visibility="visible" />
+        tools:srcCompat="@drawable/smiley_face" />
 
     <ImageView
         android:id="@+id/smiley3_2"
         android:layout_width="56dp"
         android:layout_height="47dp"
         android:background="@drawable/smiley_face"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/smiley2_2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/smiley1_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.467"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.027"
         app:srcCompat="@drawable/smiley_face"
-        tools:srcCompat="@drawable/smiley_face"
-        tools:visibility="visible" />
+        tools:srcCompat="@drawable/smiley_face" />
 
     <ImageView
         android:id="@+id/smiley2_2"
         android:layout_width="56dp"
         android:layout_height="47dp"
-        android:layout_marginEnd="132dp"
         android:background="@drawable/smiley_face"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/smiley3_2"
+        app:layout_constraintHorizontal_bias="0.625"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.027"
         app:srcCompat="@drawable/smiley_face"
-        tools:srcCompat="@drawable/smiley_face"
-        tools:visibility="visible" />
+        tools:srcCompat="@drawable/smiley_face" />
 
     <TextView
         android:id="@+id/scoreLabel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="718dp"
         android:fontFamily="@font/bubbler_one"
         android:text="@string/score_label"
         android:textColor="#A96DEE"
@@ -85,11 +76,11 @@
         android:textStyle="bold"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/smiley1_2"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.077"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.035" />
 
     <TextView
         android:id="@+id/whatColor"
@@ -109,15 +100,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.178" />
+        app:layout_constraintVertical_bias="0.034" />
 
     <TextView
         android:id="@+id/whatColor2"
         android:layout_width="171dp"
         android:layout_height="59dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="38dp"
         android:fontFamily="@font/bubbler_one"
         android:text="bubble?"
         android:textAlignment="center"
@@ -126,18 +114,15 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/numBubble"
+        app:layout_constraintHorizontal_bias="0.766"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.343" />
+        app:layout_constraintVertical_bias="0.257" />
 
     <TextView
         android:id="@+id/numBubble"
-        android:layout_width="100dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="5dp"
+        android:layout_width="155dp"
+        android:layout_height="58dp"
         android:fontFamily="@font/bubbler_one"
         android:text="first"
         android:textAlignment="center"
@@ -145,37 +130,36 @@
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/whatColor2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.377" />
+        app:layout_constraintVertical_bias="0.257" />
 
     <Button
         android:id="@+id/red"
-        android:layout_width="106dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="161dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="116dp"
+        android:layout_height="107dp"
+        android:background="@drawable/redbubble"
         android:backgroundTint="#F44336"
         android:fontFamily="@font/bubbler_one"
         android:text="Red"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.565" />
+        app:layout_constraintVertical_bias="0.418" />
 
     <Button
         android:id="@+id/purple"
-        android:layout_width="106dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="161dp"
-        android:layout_marginEnd="162dp"
-        android:backgroundTint="#A96DEE"
+        android:layout_width="124dp"
+        android:layout_height="116dp"
+        android:background="@drawable/purplebubble"
         android:fontFamily="@font/bubbler_one"
         android:text="Purple"
         android:textColor="#FBFBFB"
@@ -183,19 +167,20 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.789" />
+        app:layout_constraintVertical_bias="0.63" />
 
     <Button
         android:id="@+id/blue"
-        android:layout_width="106dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="161dp"
-        android:layout_marginEnd="162dp"
+        android:layout_width="117dp"
+        android:layout_height="107dp"
+        android:background="@drawable/bluebubble"
         android:backgroundTint="#03A9F4"
         android:fontFamily="@font/bubbler_one"
         android:text="Blue"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -203,6 +188,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.662" />
+        app:layout_constraintVertical_bias="0.831" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
