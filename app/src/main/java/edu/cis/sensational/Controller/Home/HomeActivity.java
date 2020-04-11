@@ -1,40 +1,46 @@
-//package edu.cis.sensational.Controller.Home;
-//
-//import android.content.Context;
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.view.Menu;
-//import android.view.MenuItem;
-//import android.view.View;
-//import android.widget.FrameLayout;
-//import android.widget.RelativeLayout;
-//
-//
-//import androidx.annotation.NonNull;
-//import androidx.appcompat.app.AppCompatActivity;
-//import androidx.appcompat.app.AppCompatDelegate;
-//import androidx.fragment.app.FragmentTransaction;
-//import androidx.viewpager.widget.ViewPager;
-//
-//import com.google.android.material.tabs.TabLayout;
-//import com.google.firebase.auth.FirebaseAuth;
-//import com.google.firebase.auth.FirebaseUser;
+package edu.cis.sensational.Controller.Home;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+import android.widget.ImageButton;
+
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 //import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 //import com.nostra13.universalimageloader.core.ImageLoader;
-//
-//import edu.cis.sensational.Controller.Login.LoginActivity;
-//import edu.cis.sensational.R;
-//import edu.cis.sensational.Model.Utils.BottomNavigationViewHelper;
+
+import edu.cis.sensational.Controller.Login.LoginActivity;
+import edu.cis.sensational.Controller.Profile.ProfileActivity;
+//import edu.cis.sensational.Controller.Profile.ProfileFragment;
+import edu.cis.sensational.R;
 //import edu.cis.sensational.Model.Utils.FirebaseMethods;
 //import edu.cis.sensational.Model.Utils.MainFeedListAdapter;
-//import edu.cis.instagramclone.Model.Utils.SectionsPagerAdapter;
-//import edu.cis.instagramclone.Model.Utils.UniversalImageLoader;
-//import edu.cis.instagramclone.Model.Utils.ViewCommentsFragment;
-//
-//public class HomeActivity extends AppCompatActivity implements
+//import edu.cis.sensational.Model.Utils.SectionsPagerAdapter;
+//import edu.cis.sensational.Model.Utils.UniversalImageLoader;
+//import edu.cis.sensational.Model.Utils.ViewCommentsFragment;
+//import edu.cis.sensational.Model.Photo;
+//import edu.cis.sensational.View.opengl.AddToStoryDialog;
+//import edu.cis.sensational.View.opengl.NewStoryActivity;
+
+public class HomeActivity extends AppCompatActivity {
 //        MainFeedListAdapter.OnLoadMoreItemsListener{
-//
+
 //    @Override
 //    public void onLoadMoreItems() {
 //        Log.d(TAG, "onLoadMoreItems: displaying more photos");
@@ -44,57 +50,70 @@
 //            fragment.displayMorePhotos();
 //        }
 //    }
-//
-//    private static final String TAG = "HomeActivity";
-//    private static final int ACTIVITY_NUM = 0;
-//    private static final int HOME_FRAGMENT = 1;
-//    private static final int RESULT_ADD_NEW_STORY = 7891;
-//    private final static int CAMERA_RQ = 6969;
-//    private static final int REQUEST_ADD_NEW_STORY = 8719;
-//
-//    private Context mContext = HomeActivity.this;
-//
-//    //firebase
-//    private FirebaseAuth mAuth;
-//    private FirebaseAuth.AuthStateListener mAuthListener;
-//
-//    //widgets
-//    private ViewPager mViewPager;
-//    private FrameLayout mFrameLayout;
-//    private RelativeLayout mRelativeLayout;
-//
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState)
-//    {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_home);
-//        Log.d(TAG, "onCreate: starting.");
+
+    private static final String TAG = "HomeActivity";
+    private static final int ACTIVITY_NUM = 0;
+    private static final int HOME_FRAGMENT = 1;
+    private static final int RESULT_ADD_NEW_STORY = 7891;
+    private final static int CAMERA_RQ = 6969;
+    private static final int REQUEST_ADD_NEW_STORY = 8719;
+
+    private Context mContext = HomeActivity.this;
+
+    //firebase
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    //widgets
+    private ViewPager mViewPager;
+    private FrameLayout mFrameLayout;
+    private RelativeLayout mRelativeLayout;
+
+    private ImageButton addPostButton;
+    private ImageButton profilePageButton;
+    private ImageButton starPageButton;
+
+    final Context context = this;
+
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+
 //        mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
 //        mFrameLayout = (FrameLayout) findViewById(R.id.container);
 //        mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayoutParent);
-//
-//        setupFirebaseAuth();
+
+        setupFirebaseAuth();
 //
 //        initImageLoader();
 //        setupBottomNavigationView();
 //        setupViewPager();
-//
-//
-//    }
-//
-//    public void openNewStoryActivity(){
-//        Intent intent = new Intent(this, NewStoryActivity.class);
-//        startActivityForResult(intent, REQUEST_ADD_NEW_STORY);
-//    }
-//
-//    public void showAddToStoryDialog(){
-//        Log.d(TAG, "showAddToStoryDialog: showing add to story dialog.");
-//        AddToStoryDialog dialog = new AddToStoryDialog();
-//        dialog.show(getFragmentManager(), getString(R.string.dialog_add_to_story));
-//    }
-//
-//
+
+        setUpButtons();
+
+
+    }
+
+    public void setUpButtons()
+    {
+        addPostButton = (ImageButton) findViewById(R.id.addPostButton);
+        profilePageButton = (ImageButton) findViewById(R.id.profilePageButton);
+        starPageButton = (ImageButton) findViewById(R.id.starPageButton);
+
+        profilePageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,
+                        ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 //    public void onCommentThreadSelected(Photo photo, String callingActivity){
 //        Log.d(TAG, "onCommentThreadSelected: selected a coemment thread");
 //
@@ -110,7 +129,7 @@
 //        transaction.commit();
 //
 //    }
-//
+
 //    public void hideLayout(){
 //        Log.d(TAG, "hideLayout: hiding layout");
 //        mRelativeLayout.setVisibility(View.GONE);
@@ -131,8 +150,8 @@
 //            showLayout();
 //        }
 //    }
-//
-//
+
+
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
@@ -155,9 +174,6 @@
 //                else{
 //                    Log.d(TAG, "onActivityResult: could not communicate with home fragment.");
 //                }
-//
-//
-//
 //            }
 //        }
 //    }
@@ -198,67 +214,67 @@
 //        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
 //        menuItem.setChecked(true);
 //    }
-//
-//
-//     /*
-//    ------------------------------------ Firebase ---------------------------------------------
-//     */
-//
-//    /**
-//     * checks to see if the @param 'user' is logged in
-//     * @param user
-//     */
-//    private void checkCurrentUser(FirebaseUser user){
-//        Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
-//
-//        if(user == null){
-//            Intent intent = new Intent(mContext, LoginActivity.class);
-//            startActivity(intent);
-//        }
-//    }
-//    /**
-//     * Setup the firebase auth object
-//     */
-//    private void setupFirebaseAuth(){
-//        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
-//
-//        mAuth = FirebaseAuth.getInstance();
-//
-//        mAuthListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = firebaseAuth.getCurrentUser();
-//
-//                //check if the user is logged in
-//                checkCurrentUser(user);
-//
-//                if (user != null) {
-//                    // User is signed in
-//                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-//                } else {
-//                    // User is signed out
-//                    Log.d(TAG, "onAuthStateChanged:signed_out");
-//                }
-//                // ...
-//            }
-//        };
-//    }
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        mAuth.addAuthStateListener(mAuthListener);
-//        mViewPager.setCurrentItem(HOME_FRAGMENT);
-//        checkCurrentUser(mAuth.getCurrentUser());
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        if (mAuthListener != null) {
-//            mAuth.removeAuthStateListener(mAuthListener);
-//        }
-//    }
-//
-//
-//}
+
+
+     /*
+    ------------------------------------ Firebase ---------------------------------------------
+     */
+
+    /**
+     * checks to see if the @param 'user' is logged in
+     * @param user
+     */
+    private void checkCurrentUser(FirebaseUser user){
+        Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
+
+        if(user == null){
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+    /**
+     * Setup the firebase auth object
+     */
+    private void setupFirebaseAuth(){
+        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                //check if the user is logged in
+                checkCurrentUser(user);
+
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+        mViewPager.setCurrentItem(HOME_FRAGMENT);
+        checkCurrentUser(mAuth.getCurrentUser());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+
+}

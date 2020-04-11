@@ -7,6 +7,24 @@
     tools:context=".Controller.BubblesGame.BubblesMiddle2Activity">
 
     <Button
+        android:id="@+id/option3"
+        android:layout_width="126dp"
+        android:layout_height="116dp"
+        android:background="@drawable/bluebubble"
+        android:fontFamily="@font/bubbler_one"
+        android:text="Blue"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.842" />
+
+    <Button
         android:id="@+id/settings2"
         android:layout_width="81dp"
         android:layout_height="75dp"
@@ -15,7 +33,7 @@
         android:background="@drawable/settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.978" />
@@ -25,7 +43,7 @@
         android:layout_width="56dp"
         android:layout_height="47dp"
         android:background="@drawable/smiley_face"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.307"
@@ -137,11 +155,10 @@
         app:layout_constraintVertical_bias="0.257" />
 
     <Button
-        android:id="@+id/red"
-        android:layout_width="116dp"
-        android:layout_height="107dp"
+        android:id="@+id/option1"
+        android:layout_width="126dp"
+        android:layout_height="116dp"
         android:background="@drawable/redbubble"
-        android:backgroundTint="#F44336"
         android:fontFamily="@font/bubbler_one"
         android:text="Red"
         android:textAlignment="center"
@@ -156,7 +173,7 @@
         app:layout_constraintVertical_bias="0.418" />
 
     <Button
-        android:id="@+id/purple"
+        android:id="@+id/option2"
         android:layout_width="124dp"
         android:layout_height="116dp"
         android:background="@drawable/purplebubble"
@@ -172,22 +189,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.63" />
 
-    <Button
-        android:id="@+id/blue"
-        android:layout_width="117dp"
-        android:layout_height="107dp"
-        android:background="@drawable/bluebubble"
-        android:backgroundTint="#03A9F4"
-        android:fontFamily="@font/bubbler_one"
-        android:text="Blue"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="22sp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/checkOrCross"
+        android:layout_width="116dp"
+        android:layout_height="93dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.953"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.831" />
+        app:layout_constraintVertical_bias="0.976"
+        app:srcCompat="@drawable/cross"
+        tools:src="@drawable/cross" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

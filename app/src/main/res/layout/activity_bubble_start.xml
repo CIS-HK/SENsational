@@ -23,16 +23,16 @@
         android:id="@+id/bubble2"
         android:layout_width="178dp"
         android:layout_height="176dp"
-        android:background="@drawable/orangebubble"
+        android:background="@drawable/yellowbubble"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.892"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.279"
-        app:srcCompat="@drawable/orangebubble"
-        tools:src="@drawable/orangebubble"
-        tools:srcCompat="@drawable/orangebubble" />
+        app:srcCompat="@drawable/yellowbubble"
+        tools:src="@drawable/yellowbubble"
+        tools:srcCompat="@drawable/yellowbubble" />
 
     <ImageView
         android:id="@+id/bubble1"

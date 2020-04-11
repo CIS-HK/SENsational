@@ -27,7 +27,7 @@ public class ColorizeEndActivity extends AppCompatActivity {
         scoreLabel = findViewById(R.id.scoreLabel);
 
         setUpButtons();
-        scoreLabel.setText("Score: " + GameConstants.score);
+        scoreLabel.setText(GameConstants.DISPLAYSCORE + GameConstants.SCORE);
 
     }
 
@@ -39,7 +39,7 @@ public class ColorizeEndActivity extends AppCompatActivity {
 
                 startActivity(new Intent(ColorizeEndActivity.this,ColorizeMainActivity.class));
                 finish();
-                GameConstants.score = 0;
+                GameConstants.SCORE = 0;
 
             }
         });
