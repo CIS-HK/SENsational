@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,26 +20,44 @@ public class BubblesMiddle2Activity extends AppCompatActivity {
     private Button option2;
     private Button option3;
     private ImageView checkOrCross;
+    private ImageView smiley1;
+    private ImageView smiley2;
+    private TextView whichBubble;
     private int numBubbles;
     private ArrayList<String> colorsPicked;
     private ArrayList<String> allColors;
     private int numTimes;
     private int numberCorrect;
+    private int score;
     private int roundNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bubble_middle2);
+
         settings = findViewById(R.id.settings2);
         option1 = findViewById(R.id.option1);
         option2 = findViewById(R.id.option2);
         option3 = findViewById(R.id.option3);
+        smiley1 = findViewById(R.id.smiley1_2);
+        smiley2 = findViewById(R.id.smiley2_2);
         checkOrCross = findViewById(R.id.checkOrCross);
+        whichBubble = findViewById(R.id.whichBubble);
+
+        roundNumber = getIntent().getIntExtra("roundNumber", roundNumber);
         numBubbles = getIntent().getIntExtra("numBubbles", 0);
         colorsPicked = getIntent().getStringArrayListExtra("colorsPicked");
         allColors = getIntent().getStringArrayListExtra("allColors");
-        roundNumber = 1;
+        score = getIntent().getIntExtra("score", 0);
+
+        if (score == 1){
+            smiley1.setVisibility(View.VISIBLE);
+        }
+        else if (score == 2){
+            smiley1.setVisibility(View.VISIBLE);
+            smiley2.setVisibility(View.VISIBLE);
+        }
         numTimes = 1;
         randomizeOptions(numTimes - 1);
     }
@@ -60,12 +79,13 @@ public class BubblesMiddle2Activity extends AppCompatActivity {
         options.add(color3);
 
         // Randomly decide which button has which color
-        String answer1 = options.get(random.nextInt(3));
+        index = random.nextInt(3);
+        String answer1 = options.get(index);
+        options.remove(index);
         String imageName = answer1 + "bubble";
         int imageID = getResources().getIdentifier(imageName, "drawable", getPackageName());
         option1.setBackgroundResource(imageID);
         option1.setText(answer1);
-        options.remove(answer1);
         if (answer1.equals(correctAnswer)){
             setUpCorrectButton(option1);
         }
@@ -73,13 +93,13 @@ public class BubblesMiddle2Activity extends AppCompatActivity {
             setUpWrongButton(option1);
         }
 
-        String answer2 = options.get(random.nextInt(2));
+        index = random.nextInt(2);
+        String answer2 = options.get(index);
+        options.remove(index);
         imageName = answer2 + "bubble";
-        System.out.println(imageName);
         imageID = getResources().getIdentifier(imageName, "drawable", getPackageName());
         option2.setBackgroundResource(imageID);
         option2.setText(answer2);
-        options.remove(answer2);
         if (answer2.equals(correctAnswer)){
             setUpCorrectButton(option2);
         }
@@ -89,7 +109,6 @@ public class BubblesMiddle2Activity extends AppCompatActivity {
 
         String answer3 = options.get(0);
         imageName = answer3 + "bubble";
-        System.out.println(imageName);
         imageID = getResources().getIdentifier(imageName, "drawable", getPackageName());
         option3.setBackgroundResource(imageID);
         option3.setText(answer3);
@@ -102,10 +121,8 @@ public class BubblesMiddle2Activity extends AppCompatActivity {
 
         // Reset allColors ArrayList
         allColors.add(correctAnswer);
-        allColors.add(answer2);
-
-        numTimes = numTimes + 1;
-
+        allColors.add(color2);
+        allColors.add(color3);
     }
 
     public void setUpCorrectButton(Button button){
@@ -119,6 +136,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity {
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.correct);
                 mediaPlayer.setVolume(20, 20);
                 mediaPlayer.start();
+                checkEnd();
             }
         });
 
@@ -134,9 +152,47 @@ public class BubblesMiddle2Activity extends AppCompatActivity {
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
                 mediaPlayer.setVolume(20, 20);
                 mediaPlayer.start();
+                checkEnd();
             }
         });
 
+    }
+    public void checkEnd(){
+        if (numTimes > numBubbles){
+            if (numberCorrect == numBubbles){
+                score++;
+            }
+            roundNumber++;
+            numberCorrect = 0;
+            if (roundNumber == 3){
+                Intent intent = new Intent(BubblesMiddle2Activity.this, BubblesEndActivity.class);
+                intent.putExtra("score", score);
+                startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(BubblesMiddle2Activity.this, BubblesMiddleActivity.class);
+                intent.putExtra("score", score);
+                intent.putExtra("numBubbles", numBubbles);
+                intent.putExtra("roundNumber", roundNumber);
+                intent.putExtra("firstTime", false);
+                startActivity(intent);
+            }
+        }
+        else {
+            if (numTimes == 2){
+                whichBubble.setText("second");
+            }
+            else if (numTimes == 3){
+                whichBubble.setText("third");
+            }
+            else if (numTimes == 4){
+                whichBubble.setText("fourth");
+            }
+            else if (numTimes == 5){
+                whichBubble.setText("fifth");
+            }
+            randomizeOptions(numTimes - 1);
+        }
     }
 
 }

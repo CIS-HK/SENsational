@@ -36,21 +36,6 @@
         app:srcCompat="@drawable/smiley_face"
         tools:srcCompat="@drawable/smiley_face" />
 
-    <ImageView
-        android:id="@+id/smiley3"
-        android:layout_width="56dp"
-        android:layout_height="47dp"
-        android:background="@drawable/smiley_face"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.616"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.03"
-        app:srcCompat="@drawable/smiley_face"
-        tools:srcCompat="@drawable/smiley_face" />
-
     <Button
         android:id="@+id/settings"
         android:layout_width="81dp"

@@ -31,6 +31,7 @@ public class BubbleStartActivity extends AppCompatActivity
                 String mode = spinner.getSelectedItem().toString();
                 Intent intent = new Intent(BubbleStartActivity.this, BubblesMiddleActivity.class);
                 intent.putExtra("mode", mode);
+                intent.putExtra("firstTime", true);
                 startActivity(intent);
             }
         });

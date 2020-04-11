@@ -27,8 +27,6 @@ public class BubblesMiddleActivity extends AppCompatActivity {
     private TextView bubbleNumber;
     private ImageView smiley1;
     private ImageView smiley2;
-    private ImageView smiley3;
-    private int widthOfScreen;
     private int heightOfScreen;
     private float bubbleY;
     private Handler handler;
@@ -36,23 +34,14 @@ public class BubblesMiddleActivity extends AppCompatActivity {
     private int numTimes;
     private ArrayList<String> colorsPicked;
     private ArrayList<String> allColors;
+    private Boolean firstTime;
+    private int score;
+    private int roundNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bubbles_middle);
-
-        // Set up mode
-        mode = getIntent().getStringExtra("mode");
-        if (mode.equals("Easy")){
-            numBubbles = 3;
-        }
-        if (mode.equals("Medium")){
-            numBubbles = 4;
-        }
-        if (mode.equals("Hard")){
-            numBubbles = 5;
-        }
 
         // Set up buttons and ImageView
         settings = findViewById(R.id.settings);
@@ -60,6 +49,35 @@ public class BubblesMiddleActivity extends AppCompatActivity {
         bubbleNumber = findViewById(R.id.number);
         smiley1 = findViewById(R.id.smiley1);
         smiley2 = findViewById(R.id.smiley2);
+
+        // Set up mode (if this is the first time starting the screen)
+        firstTime = getIntent().getBooleanExtra("firstTime", false);
+        if (firstTime){
+            mode = getIntent().getStringExtra("mode");
+            if (mode != null && mode.equals("Easy")){
+                numBubbles = 3;
+            }
+            if (mode != null && mode.equals("Medium")){
+                numBubbles = 4;
+            }
+            if (mode != null && mode.equals("Hard")){
+                numBubbles = 5;
+            }
+            roundNumber = 0;
+            score = 0;
+        }
+        else {
+            numBubbles = getIntent().getIntExtra("numBubbles", 0);
+            score = getIntent().getIntExtra("score", 0);
+            roundNumber = getIntent().getIntExtra("roundNumber", 0);
+            if (score == 1){
+                smiley1.setVisibility(View.VISIBLE);
+            }
+            else if (score == 2){
+                smiley1.setVisibility(View.VISIBLE);
+                smiley2.setVisibility(View.VISIBLE);
+            }
+        }
 
         // Set up allColors ArrayList
         allColors = new ArrayList<>();
@@ -91,7 +109,6 @@ public class BubblesMiddleActivity extends AppCompatActivity {
         Display display = windowManager.getDefaultDisplay();
         Point sizeOfScreen = new Point();
         display.getSize(sizeOfScreen);
-        widthOfScreen = sizeOfScreen.x;
         heightOfScreen = sizeOfScreen.y;
 
         playBubble();
@@ -113,6 +130,8 @@ public class BubblesMiddleActivity extends AppCompatActivity {
                 intent.putExtra("numBubbles", numBubbles);
                 intent.putExtra("colorsPicked", colorsPicked);
                 intent.putExtra("allColors", allColors);
+                intent.putExtra("score", score);
+                intent.putExtra("roundNumber", roundNumber);
                 startActivity(intent);
             }
         }
