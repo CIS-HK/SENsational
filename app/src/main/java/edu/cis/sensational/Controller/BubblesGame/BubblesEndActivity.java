@@ -1,16 +1,16 @@
 package edu.cis.sensational.Controller.BubblesGame;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-
+import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 import edu.cis.sensational.R;
 
-public class BubblesEndActivity extends AppCompatActivity {
+public class BubblesEndActivity extends AppCompatActivity
+{
     private int score;
     private ImageView smiley1;
     private ImageView smiley2;
@@ -19,7 +19,8 @@ public class BubblesEndActivity extends AppCompatActivity {
     private Button exitGame;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bubbles_end);
 
@@ -29,25 +30,31 @@ public class BubblesEndActivity extends AppCompatActivity {
         playAgain = findViewById(R.id.playAgain);
         exitGame = findViewById(R.id.exitGame);
 
-        score = getIntent().getIntExtra("score", 0);
+        score = getIntent().getIntExtra(BubbleConstants.SCORE, BubbleConstants.DEFAULT);
         System.out.println(score);
-        if (score == 1){
+        if (score == BubbleConstants.SCORE_ONE)
+        {
             smiley1.setVisibility(View.VISIBLE);
         }
-        else if (score == 2){
+        else if (score == BubbleConstants.SCORE_TWO)
+        {
             smiley1.setVisibility(View.VISIBLE);
             smiley2.setVisibility(View.VISIBLE);
         }
-        else if (score == 3){
+        else if (score == BubbleConstants.SCORE_THREE)
+        {
             smiley1.setVisibility(View.VISIBLE);
             smiley2.setVisibility(View.VISIBLE);
             smiley3.setVisibility(View.VISIBLE);
         }
 
-        playAgain.setOnClickListener(new View.OnClickListener() {
+        playAgain.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BubblesEndActivity.this, BubbleStartActivity.class);
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(BubblesEndActivity.this,
+                                            BubbleStartActivity.class);
                 startActivity(intent);
             }
         });
