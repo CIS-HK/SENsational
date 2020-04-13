@@ -25,6 +25,10 @@ import java.util.TimeZone;
 //import edu.cis.instagramclone.Controller.Home.HomeActivity;
 //import edu.cis.instagramclone.Controller.Home.HomeFragment;
 //import edu.cis.instagramclone.Controller.Profile.AccountSettingsActivity;
+import edu.cis.sensational.Model.Post;
+import edu.cis.sensational.Model.User;
+import edu.cis.sensational.Model.UserAccountSettings;
+import edu.cis.sensational.Model.UserSettings;
 import edu.cis.sensational.R;
 //import edu.cis.instagramclone.View.materialcamera.MaterialCamera;
 //import edu.cis.instagramclone.Model.Comment;
@@ -73,36 +77,58 @@ public class FirebaseMethods {
         return sdf.format(new Date());
     }
 
-    public void updateUserAccountSettings(String displayName, String website, String description, long phoneNumber) { //TODO finish updateUserSettings
+    public void createNewPost(String title, String description, String tag){
+
+        String newPostKey = myRef.child(mContext.getString(R.string.dbname_posts)).push().getKey();
+
+        Post post = new Post();
+        post.setTitle(title);
+        post.setDescription(description);
+        post.setTags(tag);
+        post.setUser_id(userID);
+        post.setDate_created(getTimestamp());
+        post.setComments(post.getComments());
+        post.setPostID(newPostKey);
+
+//        uploadNewPost(post);
+    }
+
+    public void uploadNewPost(Post post)
+    {
+        Log.d(TAG, "uploadNewPost: attempting to post.");
+
+        myRef = mFirebaseDatabase.getReference("message");
+
+        myRef.setValue("Hello, World!");
+//
+//        myRef.child("user_posts").child(post.getUser_id())
+//                .child(post.getPostID()).setValue(post);
+//        myRef.child("photos").child(post.getPostID()).setValue(post);
+    }
+
+    public void updateUserAccountSettings(String location, String age, String information) {
 
         Log.d(TAG, "updateUserAccountSettings: updating user account settings.");
 
-        if (displayName != null) {
+        if (location != null) {
             myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                     .child(userID)
-                    .child(mContext.getString(R.string.field_display_name))
-                    .setValue(displayName);
+                    .child(mContext.getString(R.string.field_location))
+                    .setValue(location);
         }
 
-        if (website != null) {
+        if (age != null) {
             myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                     .child(userID)
-                    .child(mContext.getString(R.string.field_website))
-                    .setValue(website);
+                    .child(mContext.getString(R.string.field_age))
+                    .setValue(age);
         }
 
-        if (description != null) {
+        if (information != null) {
             myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                     .child(userID)
-                    .child(mContext.getString(R.string.field_description))
-                    .setValue(description);
-        }
-
-        if (phoneNumber != 0) {
-            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
-                    .child(userID)
-                    .child(mContext.getString(R.string.field_phone_number))
-                    .setValue(phoneNumber);
+                    .child(mContext.getString(R.string.field_information))
+                    .setValue(information);
         }
     }
 
@@ -112,7 +138,7 @@ public class FirebaseMethods {
      * @param username
      */
     public void updateUsername(String username) {
-        Log.d(TAG, "updateUsername: upadting username to: " + username);
+        Log.d(TAG, "updateUsername: updating username to: " + username);
 
         myRef.child(mContext.getString(R.string.dbname_users))
                 .child(userID)
@@ -131,15 +157,22 @@ public class FirebaseMethods {
      * @param email
      */
     public void updateEmail(String email) {
-        Log.d(TAG, "updateEmail: upadting email to: " + email);
+        Log.d(TAG, "updateEmail: updating email to: " + email);
 
         myRef.child(mContext.getString(R.string.dbname_users))
                 .child(userID)
                 .child(mContext.getString(R.string.field_email))
                 .setValue(email);
-
     }
 
+    public void updatePassword(String password) {
+        Log.d(TAG, "updatePassword: updating password to: " + password);
+
+        myRef.child(mContext.getString(R.string.dbname_users))
+                .child(userID)
+                .child(mContext.getString(R.string.field_password))
+                .setValue(password);
+    }
     /**
      * Register a new email and password to Firebase Authentication
      *

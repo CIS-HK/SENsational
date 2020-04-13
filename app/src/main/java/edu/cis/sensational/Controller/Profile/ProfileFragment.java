@@ -1,108 +1,99 @@
-//package edu.cis.sensational.Controller.Profile;
-//
-//import android.content.Context;
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.view.LayoutInflater;
-//import android.view.Menu;
-//import android.view.MenuItem;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.widget.AdapterView;
-//import android.widget.GridView;
-//import android.widget.ImageView;
-//import android.widget.ProgressBar;
-//import android.widget.TextView;
-//
-//
-//import androidx.annotation.NonNull;
-//import androidx.annotation.Nullable;
-//import androidx.appcompat.widget.Toolbar;
-//import androidx.fragment.app.Fragment;
-//
-//import com.google.firebase.auth.FirebaseAuth;
-//import com.google.firebase.auth.FirebaseUser;
-//import com.google.firebase.database.DataSnapshot;
-//import com.google.firebase.database.DatabaseError;
-//import com.google.firebase.database.DatabaseReference;
-//import com.google.firebase.database.FirebaseDatabase;
-//import com.google.firebase.database.Query;
-//import com.google.firebase.database.ValueEventListener;
-//import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-//
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Map;
-//
-//import de.hdodenhof.circleimageview.CircleImageView;
-//import edu.cis.sensational.R;
-//import edu.cis.sensational.Model.Utils.BottomNavigationViewHelper;
-//import edu.cis.sensational.Model.Utils.FirebaseMethods;
+package edu.cis.sensational.Controller.Profile;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import edu.cis.sensational.R;
+import edu.cis.sensational.Model.Utils.FirebaseMethods;
 //import edu.cis.sensational.Model.Utils.GridImageAdapter;
-//import edu.cis.instagramclone.Model.Utils.UniversalImageLoader;
-//import edu.cis.instagramclone.Model.Comment;
-//import edu.cis.instagramclone.Model.Like;
-//import edu.cis.instagramclone.Model.Photo;
-//import edu.cis.sensational.Model.Utils.UserAccountSettings;
-//import edu.cis.sensational.Model.Utils.UserSettings;
-//
-///**
-// * Created by User on 6/29/2017.
-// */
-//
-//public class ProfileFragment extends Fragment {
-//
-//    private static final String TAG = "ProfileFragment";
-//
-//
+//import edu.cis.sensational.Model.Utils.UniversalImageLoader;
+import edu.cis.sensational.Model.Comment;
+import edu.cis.sensational.Model.Likes;
+import edu.cis.sensational.Model.UserAccountSettings;
+import edu.cis.sensational.Model.UserSettings;
+
+/**
+ * Created by User on 6/29/2017.
+ */
+
+public class ProfileFragment extends Fragment {
+
+    private static final String TAG = "ProfileFragment";
+
+
 //    public interface OnGridImageSelectedListener{
 //        void onGridImageSelected(Photo photo, int activityNumber);
 //    }
 //    OnGridImageSelectedListener mOnGridImageSelectedListener;
-//
-//    private static final int ACTIVITY_NUM = 4;
-//    private static final int NUM_GRID_COLUMNS = 3;
-//
-//    //firebase
-//    private FirebaseAuth mAuth;
-//    private FirebaseAuth.AuthStateListener mAuthListener;
-//    private FirebaseDatabase mFirebaseDatabase;
-//    private DatabaseReference myRef;
-//    private FirebaseMethods mFirebaseMethods;
-//
-//
-//    //widgets
-//    private TextView mPosts, mFollowers, mFollowing, mDisplayName, mUsername, mWebsite, mDescription;
-//    private ProgressBar mProgressBar;
-//    private CircleImageView mProfilePhoto;
-//    private GridView gridView;
-//    private Toolbar toolbar;
-//    private ImageView profileMenu;
-//    private BottomNavigationViewEx bottomNavigationView;
-//    private Context mContext;
-//
-//
-//    //vars
-//    private int mFollowersCount = 0;
-//    private int mFollowingCount = 0;
-//    private int mPostsCount = 0;
-//
-//
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+    private static final int ACTIVITY_NUM = 4;
+    private static final int NUM_GRID_COLUMNS = 3;
+
+    //firebase
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference myRef;
+    private FirebaseMethods mFirebaseMethods;
+
+
+    //widgets
+    private TextView mPosts, mFollowers, mFollowing, mDisplayName, mUsername, mWebsite, mDescription;
+    private GridView gridView;
+    private Toolbar toolbar;
+    private ImageView profileMenu;
+    private Context mContext;
+
+
+    //vars
+    private int mFollowersCount = 0;
+    private int mFollowingCount = 0;
+    private int mPostsCount = 0;
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 //        mDisplayName = (TextView) view.findViewById(R.id.display_name);
 //        mUsername = (TextView) view.findViewById(R.id.username);
 //        mWebsite = (TextView) view.findViewById(R.id.website);
 //        mDescription = (TextView) view.findViewById(R.id.description);
-//        mProfilePhoto = (CircleImageView) view.findViewById(R.id.profile_photo);
 //        mPosts = (TextView) view.findViewById(R.id.tvPosts);
 //        mFollowers = (TextView) view.findViewById(R.id.tvFollowers);
 //        mFollowing = (TextView) view.findViewById(R.id.tvFollowing);
-//        mProgressBar = (ProgressBar) view.findViewById(R.id.profileProgressBar);
 //        gridView = (GridView) view.findViewById(R.id.gridView);
 //        toolbar = (Toolbar) view.findViewById(R.id.profileToolBar);
 //        profileMenu = (ImageView) view.findViewById(R.id.profileMenu);
@@ -111,16 +102,16 @@
 //        mFirebaseMethods = new FirebaseMethods(getActivity());
 //        Log.d(TAG, "onCreateView: stared.");
 //
-//
-//        setupBottomNavigationView();
-//        setupToolbar();
-//
-//        setupFirebaseAuth();
-//        setupGridView();
-//
-//        getFollowersCount();
-//        getFollowingCount();
-//        getPostsCount();
+////
+////        setupBottomNavigationView();
+////        setupToolbar();
+////
+////        setupFirebaseAuth();
+////        setupGridView();
+////
+////        getFollowersCount();
+////        getFollowingCount();
+////        getPostsCount();
 //
 //        TextView editProfile = (TextView) view.findViewById(R.id.textEditProfile);
 //        editProfile.setOnClickListener(new View.OnClickListener() {
@@ -133,9 +124,9 @@
 //                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 //            }
 //        });
-//
-//        return view;
-//    }
+
+        return view;
+    }
 //
 //    @Override
 //    public void onAttach(Context context) {
@@ -410,4 +401,4 @@
 //            mAuth.removeAuthStateListener(mAuthListener);
 //        }
 //    }
-//}
+    }
