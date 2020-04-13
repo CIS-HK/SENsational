@@ -32,16 +32,16 @@ public class BubblesEndActivity extends AppCompatActivity
 
         score = getIntent().getIntExtra(BubbleConstants.SCORE, BubbleConstants.DEFAULT);
         System.out.println(score);
-        if (score == BubbleConstants.SCORE_ONE)
+        if (score == 1)
         {
             smiley1.setVisibility(View.VISIBLE);
         }
-        else if (score == BubbleConstants.SCORE_TWO)
+        else if (score == 2)
         {
             smiley1.setVisibility(View.VISIBLE);
             smiley2.setVisibility(View.VISIBLE);
         }
-        else if (score == BubbleConstants.SCORE_THREE)
+        else if (score == 3)
         {
             smiley1.setVisibility(View.VISIBLE);
             smiley2.setVisibility(View.VISIBLE);
