@@ -4,43 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF7D1"
+    android:background="#FFFFCE"
     tools:context=".Controller.Calming.CalmingActivity">
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="145dp"
+        android:layout_marginTop="155dp"
+        android:fontFamily="@font/bubbler_one"
         android:text="@string/select_mode_label"
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="413dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="2dp"
-        android:background="#A9F6FF"
+    <Button
+        android:id="@+id/mode1Button"
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="259dp"
+        android:layout_marginBottom="397dp"
+        android:background="#FFEFFC"
+        android:ellipsize="none"
+        android:text="@string/mode_1"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/mode2Button"
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="412dp"
+        android:layout_marginBottom="244dp"
+        android:background="#FFD9F9"
+        android:text="@string/mode_2"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/mode3Button"
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="565dp"
+        android:layout_marginBottom="91dp"
+        android:background="#FFB8F5"
+        android:text="@string/mode_3"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/calmingIntroTextView"
+        android:layout_width="279dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="@string/welcome_to_calming_this_function_will_help_you_calm_down_using_breathing_excercises_and_colorful_distractions_simply_follow_the_circle_with_your_breathing"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/calming"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
