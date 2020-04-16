@@ -7,21 +7,65 @@
     android:backgroundTint="#FFFFFF"
     tools:context=".Controller.Colorize.ColorizeStartActivity">
 
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="367dp"
+        android:layout_height="197dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background ="#FCE4EC"/>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="159dp"
+        android:layout_height="480dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#D1C4E9"/>
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="348dp"
+        android:layout_height="262dp"
+        android:layout_marginBottom="280dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#FFF7FF"/>
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="217dp"
+        android:layout_height="237dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#F3E5F5"/>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="306dp"
+        android:layout_height="111dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#E1BEE7"/>
+
     <Button
         android:id="@+id/playButton"
         android:layout_width="164dp"
         android:layout_height="65dp"
         android:layout_marginStart="182dp"
         android:layout_marginEnd="172dp"
-        android:layout_marginBottom="348dp"
+        android:layout_marginBottom="280dp"
         android:backgroundTint="#F790A4"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/bubbler_one"
         android:text="@string/play"
         android:textColor="#03477C"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -34,7 +78,7 @@
         android:layout_marginBottom="310dp"
         android:background="#FBFBFB"
         android:backgroundTint="#FBFBFB"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/bubbler_one"
         android:foregroundTint="#FBFBFB"
         android:text="@string/instructions"
         android:textColor="#03477C"
@@ -54,6 +98,7 @@
         android:layout_marginEnd="178dp"
         android:layout_marginBottom="28dp"
         android:background="#FFFFFF"
+        android:fontFamily="@font/bubbler_one"
         android:text="@string/quit"
         android:textColor="#03477C"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,79 +108,21 @@
         app:layout_constraintTop_toBottomOf="@+id/instructionsButton"
         app:layout_constraintVertical_bias="1.0" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="507dp"
-        android:layout_height="233dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="48dp"
-        android:background="#FCE4EC"
-        android:contentDescription="TODO"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.602"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/instructionsButton"
-        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="317dp"
-        android:layout_height="563dp"
-        android:layout_marginEnd="256dp"
-        android:layout_marginBottom="108dp"
-        android:background="#D1C4E9"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="432dp"
-        android:layout_height="253dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="72dp"
-        android:background="#FFF7FF"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="424dp"
-        android:layout_height="305dp"
-        android:layout_marginStart="224dp"
-        android:layout_marginBottom="8dp"
-        android:background="#F3E5F5"
-        app:layout_constraintBottom_toTopOf="@+id/gameName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="480dp"
-        android:layout_height="190dp"
-        android:layout_marginEnd="128dp"
-        android:layout_marginBottom="32dp"
-        android:background="#E1BEE7"
-        app:layout_constraintBottom_toTopOf="@+id/imageView5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/screenshot_20200327_at_11_00_35_am" />
-
     <TextView
         android:id="@+id/gameName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="312dp"
-        android:fontFamily="monospace"
+        android:layout_marginTop="140dp"
+        android:fontFamily="@font/bungee_inline"
         android:text="@string/colorize"
         android:textColor="#03477C"
-        android:textSize="50sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        android:textSize="60sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

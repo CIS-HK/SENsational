@@ -1,6 +1,7 @@
 package edu.cis.sensational.Controller.Login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,9 +35,9 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
 
     private Context mContext;
-    private String email, username, password, fourDigit, location;
-    private EditText mEmail, mPassword, mUsername, mFourDigit, mLocation;
-    private Button mRegisterButton;
+    private String email, username, password;
+    private EditText mEmail, mPassword, mUsername;
+    private Button btnRegister;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -47,6 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String append = "";
 
+    final Context context = this;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,19 +59,19 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: started.");
 
         initWidgets();
-        setupFirebaseAuth();
+//        setupFirebaseAuth();
         init();
     }
 
     private void init(){
-        mRegisterButton.setOnClickListener(new View.OnClickListener() { /***** Part 2: this a creates listener for the register button and register a new email *****/
+        btnRegister.setOnClickListener(new View.OnClickListener() { /***** Part 2: this a creates listener for the register button and register a new email *****/
         @Override
         public void onClick(View v) { //when the button is clicked, this happens
             email = mEmail.getText().toString();
             username = mUsername.getText().toString();
             password = mPassword.getText().toString();
-            fourDigit = mFourDigit.getText().toString();
-            location = mLocation.getText().toString();
+
+            /*** TODO 2a: get email, username and password from EditTexts, store them in instance variables ***/
 
             if(checkInputs(email, username, password)){ /*** TODO 2b: check if user input something valid, look at the email, username and password EditTexts and check that they aren't empty ***/
                 /*** TODO 2c : if true, set mProgressBar and loadingPleasWait visibility to View.VISIBLE ***/
@@ -95,12 +98,9 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, "initWidgets: Initializing Widgets.");
         mEmail = (EditText) findViewById(R.id.input_email);
         mUsername = (EditText) findViewById(R.id.input_username);
-        mPassword = (EditText) findViewById(R.id.input_password);
-        mRegisterButton = (Button) findViewById(R.id.registerButton);
+        btnRegister = (Button) findViewById(R.id.signUpButton);
         mPassword = (EditText) findViewById(R.id.input_password);
         mContext = RegisterActivity.this;
-        mLocation = (EditText) findViewById(R.id.input_location);
-
     }
 
     private boolean isStringNull(String string){
@@ -119,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
      */
 
     /**
-     * Check is @param username already exists in the database
+     * Check is @param username already exists in teh database
      * @param username
      */
     private void checkIfUsernameExists(final String username) {
@@ -146,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
                 mUsername = username + append;
 
                 //add new user to the database
-                firebaseMethods.addNewUser(email, username, location);
+                firebaseMethods.addNewUser(email, mUsername, "", "", "");
 
                 Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
 
@@ -155,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.d(TAG, "checking username failed.");
             }
         });
     }
@@ -187,7 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-
+                            Log.d(TAG, "authentication check failed.");
                         }
                     });
 
@@ -196,6 +196,9 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
+                    Intent intent = new Intent(context,
+                            LoginActivity.class);
+                    startActivity(intent);
                 }
                 // ...
             }
@@ -205,7 +208,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+//        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override

@@ -8,6 +8,33 @@
     <string name="instructions">Instructions</string>
     <string name="quit">Quit</string>
 
+    <string-array name="modes">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
+
+    <!-- fragment names -->
+    <string name="edit_profile_fragment">Edit Profile</string>
+    <string name="view_post_fragment">View Post</string>
+    <string name="sign_out_fragment">Sign Out</string>
+    <string name="profile_fragment">Profile</string>
+    <string name="view_profile_fragment">ViewProfile</string>
+    <string name="view_comments_fragment">View Comments</string>
+
+    <!-- Intent Extras -->
+    <string name="calling_activity">calling_activity</string>
+    <string name="selected_image">selected_image</string>
+    <string name="selected_bitmap">selected_bitmap</string>
+    <string name="return_to_fragment">return_to_fragment</string>
+    <string name="intent_user">intent_user</string>
+    <string name="user_stories">user_stories</string>
+
+    <!-- activity names -->
+    <string name="profile_activity">Profile Activity</string>
+    <string name="search_activity">Search Activity</string>
+    <string name="home_activity">Home Activity</string>
+
     <!-- Firebase messages -->
     <string name="auth_failed">Failed to Authenticate</string>
     <string name="auth_success">Authentication Success</string>
@@ -15,7 +42,7 @@
     <!-- Firebase database fields -->
     <string name="dbname_users">users</string>
     <string name="dbname_user_account_settings">user_account_settings</string>
-    <string name="dbname_photos">photos</string>
+    <string name="dbname_posts">posts</string>
     <string name="dbname_user_photos">user_photos</string>
     <string name="dbname_following">following</string>
     <string name="dbname_followers">followers</string>
@@ -23,10 +50,14 @@
 
     <string name="field_username">username</string>
     <string name="field_email">email</string>
+    <string name="field_password">password</string>
     <string name="field_display_name">display_name</string>
     <string name="field_website">website</string>
     <string name="field_description">description</string>
     <string name="field_phone_number">phone_number</string>
+    <string name="field_location">location</string>
+    <string name="field_age">age</string>
+    <string name="field_information">information</string>
     <string name="field_user_id">user_id</string>
     <string name="field_likes">likes</string>
     <string name="field_caption">caption</string>
@@ -44,10 +75,8 @@
     <string name="field_profile_photo">profile_photo</string>
     <string name="field_timestamp">timestamp</string>
     <string name="bubbles_title">BUBBLES!</string>
-    <string name="instructions1a">1. A few bubbles will float up on the screen one by one.</string>
-    <string name="instructions1b">Try to remember the color of each bubble.</string>
-    <string name="instructions2">2. When it is your turn, pick the color of each bubble in the right order.</string>
-    <string name="instructions3">3. If you are right, you win a smiley face!</string>
+    <string name="instructions1a">Bubbles will float up on the screen one by one. Try to remember the color of each bubble. </string>
+    <string name="instructions2">Pick the color of each bubble in the right order.</string>
     <string name="instructionsLabel">Instructions:</string>
     <string name="select_mode_label">Select the mode:</string>
     <string name="targets_label">Targets:</string>
@@ -62,5 +91,8 @@
     <string name="welcome_to_calming_this_function_will_help_you_calm_down_using_breathing_excercises_and_colorful_distractions_simply_follow_the_circle_with_your_breathing">Welcome to Calming! This function will help you calm down, using breathing excercises and colorful distractions. Simply follow the circle with your breathing.</string>
     <string name="back">Back</string>
     <string name="pause">II</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

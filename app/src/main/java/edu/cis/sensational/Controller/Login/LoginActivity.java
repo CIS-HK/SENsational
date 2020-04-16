@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.R;
 
 public class LoginActivity extends AppCompatActivity{
@@ -34,14 +34,13 @@ public class LoginActivity extends AppCompatActivity{
     private Context mContext;
     private EditText mEmail, mPassword;
 
-
     final Context context = this;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         mEmail = (EditText) findViewById(R.id.input_email);
         mPassword = (EditText) findViewById(R.id.input_password);
         mContext = LoginActivity.this;
@@ -110,10 +109,10 @@ public class LoginActivity extends AppCompatActivity{
                                             /*** CODE for 1g inside if statement parenthesis, should not be boolean "true" ***/
                                             if(currentUser.isEmailVerified()){ /*** TODO 1g: Check if the user's email has been verified, change true, research the FirebaseUser class documentation for helpful method(s) ***/
                                                 Log.d(TAG, "onComplete: success. email is verified.");
-//                                                /*** TODO 1h: create code to navigate from LoginActivity to HomeActivity, you'll have to research the Android Class used for navigating from one screen to another ***/
-//                                                Intent intent = new Intent(context,
-//                                                        HomeActivity.class);
-//                                                startActivity(intent);
+                                                /*** TODO 1h: create code to navigate from LoginActivity to HomeActivity, you'll have to research the Android Class used for navigating from one screen to another ***/
+                                                Intent intent = new Intent(context,
+                                                        HomeActivity.class);
+                                                startActivity(intent);
                                             }
                                             else
                                             {
@@ -148,8 +147,8 @@ public class LoginActivity extends AppCompatActivity{
          If the user is logged in then navigate to HomeActivity and call 'finish()'
           */
         if(mAuth.getCurrentUser() != null){
-//            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
             finish();
         }
     }
@@ -182,7 +181,8 @@ public class LoginActivity extends AppCompatActivity{
     @Override
     public void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+        //TODO figure out why this crashes the system
+//        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
