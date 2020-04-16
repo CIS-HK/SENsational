@@ -1,4 +1,4 @@
-package edu.cis.sensational.Model.Utils;
+package edu.cis.sensational.Model;
 
 /**
  * Created by User on 6/30/2017.

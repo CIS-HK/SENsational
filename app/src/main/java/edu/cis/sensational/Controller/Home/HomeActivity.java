@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -15,21 +13,17 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 //import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 //import com.nostra13.universalimageloader.core.ImageLoader;
 
 import edu.cis.sensational.Controller.Login.LoginActivity;
-import edu.cis.sensational.Controller.Profile.ProfileActivity;
-//import edu.cis.sensational.Controller.Profile.ProfileFragment;
+import edu.cis.sensational.Controller.Profile.ProfileFragment;
 import edu.cis.sensational.R;
-//import edu.cis.sensational.Model.Utils.FirebaseMethods;
+import edu.cis.sensational.Model.Utils.FirebaseMethods;
 //import edu.cis.sensational.Model.Utils.MainFeedListAdapter;
 //import edu.cis.sensational.Model.Utils.SectionsPagerAdapter;
 //import edu.cis.sensational.Model.Utils.UniversalImageLoader;
@@ -103,15 +97,15 @@ public class HomeActivity extends AppCompatActivity {
         addPostButton = (ImageButton) findViewById(R.id.addPostButton);
         profilePageButton = (ImageButton) findViewById(R.id.profilePageButton);
         starPageButton = (ImageButton) findViewById(R.id.starPageButton);
-
-        profilePageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context,
-                        ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+//
+//        profilePageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context,
+//                        ProfileActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
 //    public void onCommentThreadSelected(Photo photo, String callingActivity){
@@ -264,7 +258,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-        mViewPager.setCurrentItem(HOME_FRAGMENT);
+//        mViewPager.setCurrentItem(HOME_FRAGMENT);
         checkCurrentUser(mAuth.getCurrentUser());
     }
 
