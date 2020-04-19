@@ -56,7 +56,6 @@ public class CalmingMode3Activity extends AppCompatActivity
 
     //Creating things needed like Timer and handler for images to move on screen, and pause boolean
     //for the pause button
-    private boolean isSmall = false;
     private boolean pause = false;
     private Handler handler = new Handler();
     private Timer timer = new Timer();
@@ -74,8 +73,8 @@ public class CalmingMode3Activity extends AppCompatActivity
         bubbles1 = findViewById(R.id.bubbles_m_1);
         bubbles2 = findViewById(R.id.bubbles_m_2);
         circle = findViewById(R.id.circle3);
-        breathe = findViewById(R.id.breatheTextView);
-        number = findViewById(R.id.numberTextView);
+        breathe = findViewById(R.id.breatheTextView3);
+        number = findViewById(R.id.numberTextView3);
 
         //Setting the location of the fish and bubbles on the screen
         fish1X = -500.0f;
@@ -98,7 +97,6 @@ public class CalmingMode3Activity extends AppCompatActivity
 
         bubbles2X = 900;
         bubbles2Y = 1000;
-
 
         WindowManager wm = getWindowManager();
         Display display = wm.getDefaultDisplay();
@@ -206,20 +204,16 @@ public class CalmingMode3Activity extends AppCompatActivity
         grow.setDuration(4000);
         animSet.addAnimation(grow);
 
-
         Animation shrink = AnimationUtils.loadAnimation(this, R.anim.circleanimation);
         shrink.setDuration(6000);
         shrink.setStartOffset(8000);
 
         animSet.addAnimation(shrink);
 
-
-
         animSet.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation)
             {
-
             }
 
             @Override
@@ -229,22 +223,14 @@ public class CalmingMode3Activity extends AppCompatActivity
                 {
                     circle.startAnimation(animSet);
                 }
-                else
-                {
-                    animSet.cancel();
-
-                }
             }
 
             @Override
             public void onAnimationRepeat(Animation animation)
             {
-
             }
         });
-
         circle.startAnimation(animSet);
-
     }
 
 
@@ -316,8 +302,6 @@ public class CalmingMode3Activity extends AppCompatActivity
             int width = (int)circle.getWidth();
             circle.setMaxHeight(height);
             circle.setMaxWidth(width);
-
-
 
         }
         else
