@@ -205,7 +205,7 @@ public class CalmingMode3Activity extends AppCompatActivity
         animSet.addAnimation(grow);
 
         Animation shrink = AnimationUtils.loadAnimation(this, R.anim.circleanimation);
-        shrink.setDuration(6000);
+        shrink.setDuration(4000);
         shrink.setStartOffset(8000);
 
         animSet.addAnimation(shrink);
@@ -234,55 +234,48 @@ public class CalmingMode3Activity extends AppCompatActivity
     }
 
 
-    public void text()
-    {
+    public void text() {
         //Numbers to be shown in order on the screen per 1 second
-        final String[] array1 = {"1","2","3","4","1","2","3","4","1","2","3","4","5","6"};
+        final String[] array1 = {"1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4"};
 
         //Words to be shown in order on the screen for for seconds, then 6 seconds
         final String[] array2 = {"Breathe in", "Hold", "Breathe out"};
 
-            number.post(new Runnable() {
-                int i = 0;
-                @Override
-                public void run() {
-                    number.setText(array1[i]);
-                    i++;
-                    if (i == 14)
-                    {
-                        i = 0;
-                    }
-                    number.postDelayed(this, 1000);
-                    if(pause == true)
-                    {
-                        number.setText("1");
-                        i = 0;
-                    }
+        number.post(new Runnable() {
+            int i = 0;
+            @Override
+            public void run() {
+                number.setText(array1[i]);
+                i++;
+                if (i == 12) {
+                    i = 0;
                 }
-
-            });
-
+                number.postDelayed(this, 1000);
+                if (pause == true) {
+                    i = 0;
+                    number.setText(array1[i]);
+                }
+            }
+        });
         breathe.post(new Runnable() {
             int x = 0;
             @Override
             public void run() {
                 breathe.setText(array2[x]);
                 x++;
-                if (x == 3) {
-                    x = 0;
-                }
-                if (x == 3 || x == 0) {
-                    breathe.postDelayed(this, 6000);
-                } else {
-                    breathe.postDelayed(this, 4000);
-                }
                 if(pause == true)
                 {
-                    breathe.setText("Breathe in");
+                    x = 0;
+                    breathe.setText(array2[x]);
+                }
+                if (x == 3)
+                {
                     x = 0;
                 }
+                breathe.postDelayed(this, 4000);
             }
         });
+
 
     }
 
@@ -310,7 +303,7 @@ public class CalmingMode3Activity extends AppCompatActivity
 
             // Continuing the circle
             sizeControl();
-//            text();
+            text();
 
             //Creating and starting new timer if button is pressed and screen is paused
             timer = new Timer();

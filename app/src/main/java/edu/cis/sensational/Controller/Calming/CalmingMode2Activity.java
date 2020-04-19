@@ -42,7 +42,6 @@ public class CalmingMode2Activity extends AppCompatActivity {
     float bf6Y;
 
     //Getting the height and width of the screen
-    private float screenWidth;
     private float screenHeight;
 
     //Creating things needed like Timer and handler for images to move on screen, and pause boolean
@@ -69,21 +68,15 @@ public class CalmingMode2Activity extends AppCompatActivity {
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        screenWidth = size.x;
         screenHeight = size.y;
 
         //Setting the location of the fish and bubbles on the screen
 
         bf1Y = 1600;
-
         bf2Y = 500;
-
         bf3Y = 1200;
-
         bf4Y = 100;
-
         bf5Y = 2000;
-
         bf6Y = 900;
 
 
@@ -167,7 +160,7 @@ public class CalmingMode2Activity extends AppCompatActivity {
         animSet.addAnimation(grow);
 
         Animation shrink = AnimationUtils.loadAnimation(this, R.anim.circleanimation);
-        shrink.setDuration(6000);
+        shrink.setDuration(4000);
         shrink.setStartOffset(8000);
 
         animSet.addAnimation(shrink);
@@ -198,47 +191,45 @@ public class CalmingMode2Activity extends AppCompatActivity {
 
     public void text() {
         //Numbers to be shown in order on the screen per 1 second
-        final String[] array1 = {"1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4", "5", "6"};
+        final String[] array1 = {"1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4"};
 
         //Words to be shown in order on the screen for for seconds, then 6 seconds
         final String[] array2 = {"Breathe in", "Hold", "Breathe out"};
 
         number.post(new Runnable() {
             int i = 0;
-
             @Override
             public void run() {
                 number.setText(array1[i]);
                 i++;
-                if (i == 14) {
+                if (i == 12)
+                {
                     i = 0;
                 }
                 number.postDelayed(this, 1000);
                 if (pause == true) {
-                    number.setText("1");
                     i = 0;
+                    number.setText(array1[i]);
                 }
             }
-
         });
+
         breathe.post(new Runnable() {
             int x = 0;
             @Override
-            public void run() {
+            public void run()
+            {
                 breathe.setText(array2[x]);
                 x++;
-                if (x == 3) {
+                if (x == 3)
+                {
                     x = 0;
                 }
-                if (x == 3 || x == 0) {
-                    breathe.postDelayed(this, 6000);
-                } else {
-                    breathe.postDelayed(this, 4000);
-                }
+                breathe.postDelayed(this, 4000);
                 if(pause == true)
                 {
-                    breathe.setText("Breathe in");
                     x = 0;
+                    breathe.setText(array2[x]);
                 }
             }
         });
@@ -259,6 +250,7 @@ public class CalmingMode2Activity extends AppCompatActivity {
             int width = (int)circle.getWidth();
             circle.setMaxHeight(height);
             circle.setMaxWidth(width);
+
         }
         else
         {
@@ -268,6 +260,7 @@ public class CalmingMode2Activity extends AppCompatActivity {
             sizeControl();
 
             //Creating and starting new timer if button is pressed and screen is paused
+            text();
             timer = new Timer();
             timer.schedule(new TimerTask()
             {

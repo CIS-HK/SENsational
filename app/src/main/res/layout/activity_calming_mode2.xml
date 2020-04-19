@@ -108,20 +108,6 @@
         app:srcCompat="@drawable/grass" />
 
     <ImageView
-        android:id="@+id/circle2"
-        android:layout_width="302dp"
-        android:layout_height="298dp"
-        android:layout_marginTop="217dp"
-        android:layout_marginBottom="216dp"
-        android:tint="#A0FFBA"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/circle" />
-
-    <ImageView
         android:id="@+id/bf6"
         android:layout_width="108dp"
         android:layout_height="76dp"
@@ -132,18 +118,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bf5" />
 
-    <TextView
-        android:id="@+id/breatheTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="315dp"
-        android:text="@string/breathe_in"
-        android:textColor="#0C0C0C"
-        android:textSize="36sp"
+    <ImageView
+        android:id="@+id/circle2"
+        android:layout_width="302dp"
+        android:layout_height="298dp"
+        android:layout_marginTop="217dp"
+        android:layout_marginBottom="216dp"
+        android:tint="#A0FFBA"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/circle" />
 
     <TextView
         android:id="@+id/numberTextView2"
@@ -157,4 +145,18 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/breatheTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="315dp"
+        android:text="@string/breathe_in"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
