@@ -22,22 +22,23 @@
         <activity android:name=".Controller.Colorize.ColorizeMainActivity" />
         <activity android:name=".Controller.Colorize.ColorizeEndActivity" />
         <activity android:name=".Controller.Colorize.ColorizeInstructionsActivity" />
-        <activity android:name=".Controller.Calming.CalmingActivity" />
+        <activity android:name=".Controller.Calming.CalmingMode1Activity" />
         <activity android:name=".Controller.Calming.CalmingMode2Activity" />
         <activity android:name=".Controller.Calming.CalmingMode3Activity" />
         <activity android:name=".Controller.Home.HomeActivity" />
-        <activity android:name=".Controller.Calming.CalmingMode1Activity" />
-        <activity android:name=".Controller.Colorize.ColorizeStartActivity" />
-        <activity android:name=".Controller.Login.LoginActivity" />
         <activity android:name=".Controller.Post.PostActivity" />
-        <activity android:name=".Controller.BubblesGame.BubbleStartActivity" >
+        <activity android:name=".Controller.Calming.CalmingActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Controller.Login.LoginActivity">
+        </activity>
         <activity android:name=".Controller.Login.RegisterActivity"></activity>
+        <activity android:name=".Controller.Colorize.ColorizeStartActivity" />
+        <activity android:name=".Controller.BubblesGame.BubbleStartActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
