@@ -26,7 +26,6 @@ import edu.cis.sensational.R;
 
 public class CalmingMode1Activity extends AppCompatActivity
 {
-
     //Declaring the images and text on the GUI
     private ImageView circle;
     private TextView breathe;
@@ -50,21 +49,28 @@ public class CalmingMode1Activity extends AppCompatActivity
         breathe = findViewById(R.id.breatheTextView1);
         number = findViewById(R.id.numberTextView1);
 
+        //Calling methods to control the movement of the circle and the changing of the text
         sizeControl();
         text();
 
+        //Getting the song MP3 from the raw file and setting it to the media player
         mPlayer = MediaPlayer.create(this, R.raw.calming_music_2);
+
+        //Starting the song
         mPlayer.start();
 
     }
 
+    //Method to control the size of the circle
     public void sizeControl()
     {
         //https://developer.android.com/reference/android/view/animation/AnimationSet.html
         //Docs for animation set
 
+        //Creating a new final animation set that will be used on the circle
         final AnimationSet animSet = new AnimationSet(true);
 
+        //Getting the grow animation from anim file
         Animation grow = AnimationUtils.loadAnimation(this, R.anim.circleanimation2);
         grow.setDuration(4000);
         animSet.addAnimation(grow);
