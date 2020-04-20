@@ -10,17 +10,17 @@ public class Comment {
 
     private String comment;
     private String user_id;
-    private List<Likes> likes;
+    private int likes;
     private String date_created;
 
     public Comment() {
 
     }
 
-    public Comment(String comment, String user_id, List<Likes> likes, String date_created) {
+    public Comment(String comment, String user_id, int likes, String date_created) {
         this.comment = comment;
         this.user_id = user_id;
-        this.likes = likes;
+        this.likes = 0;
         this.date_created = date_created;
     }
 
@@ -40,11 +40,11 @@ public class Comment {
         this.user_id = user_id;
     }
 
-    public List<Likes> getLikes() {
+    public int getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Likes> likes) {
+    public void setLikes(int likes) {
         this.likes = likes;
     }
 
