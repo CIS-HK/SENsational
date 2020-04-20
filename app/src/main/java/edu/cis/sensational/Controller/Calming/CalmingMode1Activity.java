@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
@@ -31,10 +32,11 @@ public class CalmingMode1Activity extends AppCompatActivity
     private TextView breathe;
     private TextView number;
 
-
     //Declaring boolean for if screen has been paused
     private boolean pause = false;
 
+    //Declaring media player that will play a song
+    private MediaPlayer mPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,6 +52,9 @@ public class CalmingMode1Activity extends AppCompatActivity
 
         sizeControl();
         text();
+
+        mPlayer = MediaPlayer.create(this, R.raw.calming_music_2);
+        mPlayer.start();
 
     }
 
@@ -95,7 +100,7 @@ public class CalmingMode1Activity extends AppCompatActivity
 
     public void text() {
         //Numbers to be shown in order on the screen per 1 second
-        final String[] array1 = {"1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4"};
+        final String[] array1 = {"1", "2", "3", "4"};
 
         //Words to be shown in order on the screen for for seconds, then 6 seconds
         final String[] array2 = {"Breathe in", "Hold", "Breathe out"};
@@ -104,17 +109,19 @@ public class CalmingMode1Activity extends AppCompatActivity
             int i = 0;
             @Override
             public void run() {
+                number.postDelayed(this, 992);
                 number.setText(array1[i]);
                 i++;
-                if (i == 12)
+                if (pause == true)
                 {
-                    i = 0;
-                }
-                number.postDelayed(this, 1000);
-                if (pause == true) {
                     i = 0;
                     number.setText(array1[i]);
                 }
+                if (i == 4)
+                {
+                    i = 0;
+                }
+
             }
         });
 
@@ -123,18 +130,17 @@ public class CalmingMode1Activity extends AppCompatActivity
             @Override
             public void run()
             {
+                breathe.postDelayed(this, 4000);
                 breathe.setText(array2[x]);
                 x++;
-                if (x == 3)
-                {
-                    x = 0;
-                }
-
-                breathe.postDelayed(this, 4000);
                 if(pause == true)
                 {
                     x = 0;
                     breathe.setText(array2[x]);
+                }
+                if (x == 3)
+                {
+                    x = 0;
                 }
             }
         });
@@ -153,15 +159,15 @@ public class CalmingMode1Activity extends AppCompatActivity
             int width = (int)circle.getWidth();
             circle.setMaxHeight(height);
             circle.setMaxWidth(width);
+            mPlayer.pause();
 
         }
         else
         {
+            mPlayer.start();
             pause = false;
-
             // Continuing the circle
             sizeControl();
-            text();
 
         }
     }

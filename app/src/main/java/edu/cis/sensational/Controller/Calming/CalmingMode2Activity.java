@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
@@ -40,6 +41,9 @@ public class CalmingMode2Activity extends AppCompatActivity {
     float bf4Y;
     float bf5Y;
     float bf6Y;
+
+    //Declaring media player that will play a song
+    private MediaPlayer mPlayer2;
 
     //Getting the height and width of the screen
     private float screenHeight;
@@ -82,6 +86,9 @@ public class CalmingMode2Activity extends AppCompatActivity {
 
         sizeControl();
         text();
+
+        mPlayer2 = MediaPlayer.create(this, R.raw.calming_music);
+        mPlayer2.start();
 
         //Setting timer for movement on the screen
         timer.schedule(new TimerTask()
@@ -191,7 +198,7 @@ public class CalmingMode2Activity extends AppCompatActivity {
 
     public void text() {
         //Numbers to be shown in order on the screen per 1 second
-        final String[] array1 = {"1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4"};
+        final String[] array1 = {"1", "2", "3", "4"};
 
         //Words to be shown in order on the screen for for seconds, then 6 seconds
         final String[] array2 = {"Breathe in", "Hold", "Breathe out"};
@@ -200,17 +207,18 @@ public class CalmingMode2Activity extends AppCompatActivity {
             int i = 0;
             @Override
             public void run() {
+                number.postDelayed(this, 992);
                 number.setText(array1[i]);
                 i++;
-                if (i == 12)
-                {
-                    i = 0;
-                }
-                number.postDelayed(this, 1000);
                 if (pause == true) {
                     i = 0;
                     number.setText(array1[i]);
                 }
+                if (i == 4)
+                {
+                    i = 0;
+                }
+
             }
         });
 
@@ -219,18 +227,19 @@ public class CalmingMode2Activity extends AppCompatActivity {
             @Override
             public void run()
             {
+                breathe.postDelayed(this, 4000);
                 breathe.setText(array2[x]);
                 x++;
-                if (x == 3)
-                {
-                    x = 0;
-                }
-                breathe.postDelayed(this, 4000);
                 if(pause == true)
                 {
                     x = 0;
                     breathe.setText(array2[x]);
                 }
+                if (x == 3)
+                {
+                    x = 0;
+                }
+
             }
         });
 
@@ -250,17 +259,17 @@ public class CalmingMode2Activity extends AppCompatActivity {
             int width = (int)circle.getWidth();
             circle.setMaxHeight(height);
             circle.setMaxWidth(width);
-
+            mPlayer2.pause();
         }
         else
         {
+            mPlayer2.start();
             pause = false;
 
             // Continuing the circle
             sizeControl();
 
             //Creating and starting new timer if button is pressed and screen is paused
-            text();
             timer = new Timer();
             timer.schedule(new TimerTask()
             {

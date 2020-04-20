@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
@@ -50,9 +51,13 @@ public class CalmingMode3Activity extends AppCompatActivity
     float bubbles2X;
     float bubbles2Y;
 
+    //Declaring media player that will play a song
+    private MediaPlayer mPlayer3;
+
     //Getting the height and width of the screen
     private float screenWidth;
     private float screenHeight;
+
 
     //Creating things needed like Timer and handler for images to move on screen, and pause boolean
     //for the pause button
@@ -107,6 +112,10 @@ public class CalmingMode3Activity extends AppCompatActivity
 
         sizeControl();
         text();
+        number();
+
+        mPlayer3 = MediaPlayer.create(this, R.raw.calming_music_3);
+        mPlayer3.start();
 
         //Setting timer for movement on the screen
         timer.schedule(new TimerTask()
@@ -234,34 +243,39 @@ public class CalmingMode3Activity extends AppCompatActivity
     }
 
 
-    public void text() {
+    public void number() {
         //Numbers to be shown in order on the screen per 1 second
-        final String[] array1 = {"1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4"};
-
-        //Words to be shown in order on the screen for for seconds, then 6 seconds
-        final String[] array2 = {"Breathe in", "Hold", "Breathe out"};
+        final String[] array1 = {"1", "2", "3", "4"};
 
         number.post(new Runnable() {
             int i = 0;
             @Override
             public void run() {
+                number.postDelayed(this, 992);
                 number.setText(array1[i]);
                 i++;
-                if (i == 12) {
-                    i = 0;
-                }
-                number.postDelayed(this, 1000);
-                if (pause == true) {
+                if (pause == true)
+                {
                     i = 0;
                     number.setText(array1[i]);
                 }
+                if (i == 4) {
+                    i = 0;
+                }
             }
         });
+    }
+    public void text()
+    {
+        //Words to be shown in order on the screen for 4 seconds
+        final String[] array2 = {"Breathe in", "Hold", "Breathe out"};
+
         breathe.post(new Runnable() {
             int x = 0;
             @Override
             public void run() {
                 breathe.setText(array2[x]);
+                breathe.postDelayed(this, 4000);
                 x++;
                 if(pause == true)
                 {
@@ -272,10 +286,8 @@ public class CalmingMode3Activity extends AppCompatActivity
                 {
                     x = 0;
                 }
-                breathe.postDelayed(this, 4000);
             }
         });
-
 
     }
 
@@ -283,28 +295,27 @@ public class CalmingMode3Activity extends AppCompatActivity
     //Method to pause movement on screen
     public void pauseButton(View view)
     {
+
         //Checking if screen is paused
         if(pause == false)
         {
             pause = true;
             timer.cancel();
             timer = null;
-
             circle.clearAnimation();
             int height = (int)circle.getHeight();
             int width = (int)circle.getWidth();
             circle.setMaxHeight(height);
             circle.setMaxWidth(width);
+            mPlayer3.pause();
 
         }
         else
         {
+            mPlayer3.start();
             pause = false;
-
             // Continuing the circle
             sizeControl();
-            text();
-
             //Creating and starting new timer if button is pressed and screen is paused
             timer = new Timer();
             timer.schedule(new TimerTask()
