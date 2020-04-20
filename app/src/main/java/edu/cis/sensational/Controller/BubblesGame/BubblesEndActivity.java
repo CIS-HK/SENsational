@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import edu.cis.sensational.Controller.MainActivity;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 import edu.cis.sensational.R;
 
@@ -55,6 +57,15 @@ public class BubblesEndActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(BubblesEndActivity.this,
                                             BubbleStartActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        exitGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BubblesEndActivity.this,
+                                            MainActivity.class);
                 startActivity(intent);
             }
         });
