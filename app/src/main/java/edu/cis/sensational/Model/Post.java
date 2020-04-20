@@ -11,7 +11,7 @@ import java.util.List;
  * Created by User on 7/29/2017.
  */
 
-public class Post implements Parcelable { /*** TODO 3a finish constructor that takes in all possible instance variables ***/
+public class Post implements Parcelable {
 
     private String title;
     private String description;

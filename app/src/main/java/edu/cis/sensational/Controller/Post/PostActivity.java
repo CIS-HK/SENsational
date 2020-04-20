@@ -48,17 +48,7 @@ public class PostActivity extends AppCompatActivity {
         }
 
         initWidgets();
-
         init();
-
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
-
-        Log.d(TAG, "testing");
-
     }
 
     private void initWidgets(){
@@ -96,7 +86,4 @@ public class PostActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
-
 }

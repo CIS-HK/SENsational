@@ -22,9 +22,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-//import edu.cis.instagramclone.Controller.Home.HomeActivity;
-//import edu.cis.instagramclone.Controller.Home.HomeFragment;
-//import edu.cis.instagramclone.Controller.Profile.AccountSettingsActivity;
+import edu.cis.sensational.Controller.Home.HomeActivity;
+import edu.cis.sensational.Controller.Profile.AccountSettingsActivity;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.Model.User;
 import edu.cis.sensational.Model.UserAccountSettings;
@@ -35,9 +34,6 @@ import edu.cis.sensational.R;
 //import edu.cis.instagramclone.Model.Like;
 //import edu.cis.instagramclone.Model.Photo;
 //import edu.cis.instagramclone.Model.Story;
-
-//import edu.cis.instagramclone.Model.UserAccountSettings;
-//import edu.cis.instagramclone.Model.UserSettings;
 
 /**
  * Created by User on 6/26/2017.
@@ -79,8 +75,10 @@ public class FirebaseMethods {
 
     public void createNewPost(String title, String description, String tag){
 
+        // retrieve a key for the postID
         String newPostKey = myRef.child(mContext.getString(R.string.dbname_posts)).push().getKey();
 
+        // create a new Post object and set the values given
         Post post = new Post();
         post.setTitle(title);
         post.setDescription(description);
@@ -90,20 +88,17 @@ public class FirebaseMethods {
         post.setComments(post.getComments());
         post.setPostID(newPostKey);
 
-//        uploadNewPost(post);
+        // upload the post to the database
+        uploadNewPost(post);
     }
 
     public void uploadNewPost(Post post)
     {
         Log.d(TAG, "uploadNewPost: attempting to post.");
 
-        myRef = mFirebaseDatabase.getReference("message");
-
-        myRef.setValue("Hello, World!");
-//
-//        myRef.child("user_posts").child(post.getUser_id())
-//                .child(post.getPostID()).setValue(post);
-//        myRef.child("photos").child(post.getPostID()).setValue(post);
+        myRef.child("user_posts").child(post.getUser_id())
+                .child(post.getPostID()).setValue(post);
+        myRef.child("posts").child(post.getPostID()).setValue(post);
     }
 
     public void updateUserAccountSettings(String location, String age, String information) {
@@ -156,6 +151,7 @@ public class FirebaseMethods {
      *
      * @param email
      */
+
     public void updateEmail(String email) {
         Log.d(TAG, "updateEmail: updating email to: " + email);
 
@@ -173,6 +169,7 @@ public class FirebaseMethods {
                 .child(mContext.getString(R.string.field_password))
                 .setValue(password);
     }
+
     /**
      * Register a new email and password to Firebase Authentication
      *
@@ -180,27 +177,25 @@ public class FirebaseMethods {
      * @param password
      * @param username
      */
+
     public void registerNewEmail(final String email, String password, final String username) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    public void onComplete(@NonNull Task<AuthResult> task) { // Check if user creation is successful
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
+                        // If the task fails, display a message to the user.
                         if (!task.isSuccessful()) {
                             Toast.makeText(mContext, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
+                        // If task succeeds, this happens
                         } else if (task.isSuccessful()) {
-                            //send verificaton email
+                            //sends verification email to the registration email inbox
                             sendVerificationEmail();
-
+                            //the auth state listener will be notified and signed in user can be handled in the listener.
                             userID = mAuth.getCurrentUser().getUid();
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
                         }
-
                     }
                 });
     }
@@ -233,14 +228,18 @@ public class FirebaseMethods {
      * @param child_age
      * @param child_profile
      */
+
     public void addNewUser(String email, String username, String location, String child_age, String child_profile) {
 
+        // creates a new User object with the parameters given
         User user = new User(userID, StringManipulation.condenseUsername(username), email, location);
 
+        // saves the user to the database
         myRef.child(mContext.getString(R.string.dbname_users))
                 .child(userID)
                 .setValue(user);
 
+        // creates a new UserAccountSettings for this user
         UserAccountSettings settings = new UserAccountSettings(
                 StringManipulation.condenseUsername(username),
                 email,
@@ -251,6 +250,7 @@ public class FirebaseMethods {
                 userID
         );
 
+        // saves the settins to the databse
         myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                 .child(userID)
                 .setValue(settings);
