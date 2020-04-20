@@ -4,43 +4,158 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF7D1"
+    android:background="#FFFFCE"
     tools:context=".Controller.Calming.CalmingActivity">
 
+    <Button
+        android:id="@+id/mode1Button"
+        android:layout_width="135dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="307dp"
+        android:background="#FFEFFC"
+        android:ellipsize="none"
+        android:fontFamily="@font/bubbler_one"
+        android:text="@string/mode_1_candy"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/mode2Button"
+        android:layout_width="135dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="185dp"
+        android:background="#FFD9F9"
+        android:fontFamily="@font/bubbler_one"
+        android:text="@string/mode_2_garden"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/mode3Button"
+        android:layout_width="135dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="63dp"
+        android:background="#FFB8F5"
+        android:fontFamily="@font/bubbler_one"
+        android:text="@string/mode_3_ocean"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/level2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="145dp"
-        android:text="@string/select_mode_label"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="@string/medium_distraction"
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/mode2Button" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/level3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="@string/most_distraction"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mode3Button" />
+
+    <TextView
+        android:id="@+id/level1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="@string/least_distraction"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mode1Button" />
+
+    <ImageView
+        android:id="@+id/imageView20"
         android:layout_width="413dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="2dp"
-        android:background="#A9F6FF"
+        android:layout_height="364dp"
+        android:layout_marginBottom="367dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cap2bg" />
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/calming"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/Calming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:layout_marginBottom="604dp"
+        android:fontFamily="@font/bungee_inline"
+        android:text="@string/calming"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/instrucText"
+        android:layout_width="75dp"
+        android:layout_height="88dp"
+        android:layout_marginStart="91dp"
+        android:layout_marginTop="256dp"
+        android:layout_marginEnd="245dp"
+        android:layout_marginBottom="387dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="@string/follow_the_circle_and_breathe_in_hold_then_breathe_out"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/selectM"
+        android:layout_width="77dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="273dp"
+        android:layout_marginTop="246dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginBottom="414dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="@string/select_mode"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

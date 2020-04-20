@@ -85,8 +85,25 @@
     <string name="play_bubbles">PLAY</string>
     <string name="score_label">Score:</string>
     <string name="calming">Calming</string>
+    <string name="mode_1">Mode 1</string>
+    <string name="mode_2">Mode 2</string>
+    <string name="mode_3">Mode 3</string>
+    <string name="welcome_to_calming_this_function_will_help_you_calm_down_using_breathing_excercises_and_colorful_distractions_simply_follow_the_circle_with_your_breathing">Welcome to Calming! This function will help you calm down, using breathing excercises and colorful distractions. Simply follow the circle with your breathing.</string>
+    <string name="back">Back</string>
+    <string name="pause">II</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="breathe_in">Breathe In</string>
+    <string name="_1">1</string>
+    <string name="mode_1_garden">Mode 1: Garden</string>
+    <string name="mode_1_candy">Mode 1: Candy</string>
+    <string name="mode_2_garden">Mode 2: Garden</string>
+    <string name="least_distraction">Least distraction</string>
+    <string name="mode_3_ocean">Mode 3: Ocean</string>
+    <string name="follow_the_circle_and_breathe_in_hold_then_breathe_out">Follow the circle and breathe in, hold, then breathe out.</string>
+    <string name="medium_distraction">Medium distraction</string>
+    <string name="most_distraction">Most distraction</string>
+    <string name="select_mode">Select mode:</string>
 
 </resources>
