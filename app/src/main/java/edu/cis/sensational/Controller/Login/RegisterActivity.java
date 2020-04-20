@@ -64,20 +64,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void init(){
+        //when the REGISTER button is clicked, this happens
         btnRegister.setOnClickListener(new View.OnClickListener() { /***** Part 2: this a creates listener for the register button and register a new email *****/
         @Override
-        public void onClick(View v) { //when the button is clicked, this happens
+        public void onClick(View v) {
+            //Get email, username and password from EditTexts, store them in instance variables
             email = mEmail.getText().toString();
             username = mUsername.getText().toString();
             password = mPassword.getText().toString();
 
-            /*** TODO 2a: get email, username and password from EditTexts, store them in instance variables ***/
-
-            if(checkInputs(email, username, password)){ /*** TODO 2b: check if user input something valid, look at the email, username and password EditTexts and check that they aren't empty ***/
-                /*** TODO 2c : if true, set mProgressBar and loadingPleasWait visibility to View.VISIBLE ***/
+            // Check if the user input is valid (ie. check that the three variables aren't empty)
+            if(checkInputs(email, username, password)){
+                // Use a firebaseMethod to register the new email
                 firebaseMethods.registerNewEmail(email, password, username);
-
-                /*** TODO 2d: Use a firebaseMethod to register the new email, you will to looks at the FirebaseMethods class ***/
             }
         }
         });
@@ -85,12 +84,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean checkInputs(String email, String username, String password){
         Log.d(TAG, "checkInputs: checking inputs for null values.");
+
+        // Checking if any of the parameters are null
         if(email.equals("") || username.equals("") || password.equals("")){
             Toast.makeText(mContext, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
+
     /**
      * Initialize the activity widgets
      */

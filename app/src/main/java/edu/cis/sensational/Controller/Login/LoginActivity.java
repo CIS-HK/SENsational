@@ -75,16 +75,15 @@ public class LoginActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Log.d(TAG, "onClick: attempting to log in.");
 
-                /***TODO 1a: Get email and password strings from mEmail and mPassword EditText object. Research the EditText class documentation to find out which method(s) will help. ***/
                 String emailString = mEmail.getText().toString();
                 String pwString = mPassword.getText().toString();
 
                 /*** CODE for 1b inside if statement parenthesis, should not be boolean "true" ***/
-                if( emailString.isEmpty() || pwString.isEmpty()){ /*** TODO 1b. check whether the user gave a blank email or password, research which method(s) you can use from the EditText class ***/
-                    Toast.makeText(mContext, "Invalid input", Toast.LENGTH_SHORT).show(); /*** TODO 1c: if true this line uses Toast.makeText to inform the user of an error, give any error message you want ***/
+                if( emailString.isEmpty() || pwString.isEmpty()){
+                    Toast.makeText(mContext, "Invalid input", Toast.LENGTH_SHORT).show();
                 }else{
 
-                    mAuth.signInWithEmailAndPassword(emailString, pwString) /*** TODO 1d. If email and password are present, use mAuth.signInWithEmailAndPassword to send it to firebase, change the parameters here ***/
+                    mAuth.signInWithEmailAndPassword(emailString, pwString)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -97,19 +96,17 @@ public class LoginActivity extends AppCompatActivity{
                                     // signed in user can be handled in the listener.
 
                                     /*** CODE for 1e inside if statement parenthesis, should not be boolean "true" ***/
-                                    if (!task.isSuccessful()) { /*** TODO 1e: check if task was not successful, research the Android Task Class ***/
+                                    if (!task.isSuccessful()) {
                                         Log.w(TAG, "signInWithEmail:failed", task.getException());
 
-                                        /*** TODO 1f: inform the user with a Toast that something went wrong ***/
                                         Toast.makeText(mContext, "something went wrong.",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                     else{ //if task was successful
                                         try{
                                             /*** CODE for 1g inside if statement parenthesis, should not be boolean "true" ***/
-                                            if(currentUser.isEmailVerified()){ /*** TODO 1g: Check if the user's email has been verified, change true, research the FirebaseUser class documentation for helpful method(s) ***/
+                                            if(currentUser.isEmailVerified()){
                                                 Log.d(TAG, "onComplete: success. email is verified.");
-                                                /*** TODO 1h: create code to navigate from LoginActivity to HomeActivity, you'll have to research the Android Class used for navigating from one screen to another ***/
                                                 Intent intent = new Intent(context,
                                                         HomeActivity.class);
                                                 startActivity(intent);
@@ -181,8 +178,7 @@ public class LoginActivity extends AppCompatActivity{
     @Override
     public void onStart() {
         super.onStart();
-        //TODO figure out why this crashes the system
-//        mAuth.addAuthStateListener(mAuthListener);
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
