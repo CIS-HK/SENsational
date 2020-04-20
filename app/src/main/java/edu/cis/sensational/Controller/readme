@@ -1,0 +1,33 @@
+Program Title: SENsational
+Author: Bernice Tse, Malin Leven, Nicole Xiang, Samvitti Sharma
+Class: Yr12IBCS
+Date: 17th March, 2020
+
+---- Program Purpose ----
+This program aims to provide games, calming tools and parent forums for SEN families.
+
+---- Design ----
+There are 4 functions in this app in total: 2 games, 1 calming tool and 1 chat forum. Each function
+has its own activities. Each layer describes their methods.
+
+Colorize Game
+(Activity) ColorizeStartActivity:
+    onCreate -- creates and identifies the various components on screen
+    setUpButtons -- identify actions once the corresponding buttons on the screen is pressed
+
+(Activity) ColorizeInstructionsActivity:
+    onCreate -- creates and identifies the various components on screen
+    setUpButtons -- identify actions once the corresponding buttons on the screen is pressed
+
+(Activity) ColorizeMainActivity:
+    onCreate -- creates and identifies the various components on screen
+    setUpButtons -- identify actions once the corresponding buttons on the screen is pressed
+    addColors - adds colors and data that needs to be used and processed internally in the
+                corresponding data structures
+    setUpGame -- starts the timer, generates random text, color of text and background color onto
+                 screen, as well as the buttons for the users to click on
+    play -- identify actions once the buttons are clicked depending if they chose the right button.
+            If it is the right button, adds score, reset timer and repeats the game until the user
+            presses the wrong button.
+
+

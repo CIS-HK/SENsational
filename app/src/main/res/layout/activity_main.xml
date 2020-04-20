@@ -7,10 +7,10 @@
     tools:context=".Controller.MainActivity">
 
     <Button
-        android:id="@+id/bubblesButton"
+        android:id="@+id/gamesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bubbles_title"
+        android:text="@string/games"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -29,18 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.531" />
-
-    <Button
-        android:id="@+id/colorizeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/colorize"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.379" />
 
     <Button
         android:id="@+id/forumButton"
