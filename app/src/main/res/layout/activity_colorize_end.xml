@@ -80,10 +80,9 @@
 
     <TextView
         android:id="@+id/scoreLabel"
-        android:layout_width="170dp"
-        android:layout_height="71dp"
+        android:layout_width="73dp"
+        android:layout_height="61dp"
         android:fontFamily="@font/bubbler_one"
-        android:text="Score: 10"
         android:textColor="#03477C"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView17"
@@ -129,4 +128,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/instructionsButton"
         app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/highscorelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="256dp"
+        android:fontFamily="@font/bubbler_one"
+        android:text="High Score: 0"
+        android:textColor="#03477C"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/smiley"
+        android:layout_width="75dp"
+        android:layout_height="61dp"
+        android:layout_marginBottom="284dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView17"
+        app:layout_constraintHorizontal_bias="0.205"
+        app:layout_constraintStart_toStartOf="@+id/imageView17"
+        app:srcCompat="@drawable/smiley_face" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
 package edu.cis.sensational.Controller.Colorize;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -19,30 +18,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.R;
 
 
-public class ColorizeMainActivity extends AppCompatActivity {
+public class ColorizeMainActivity extends AppCompatActivity
+{
 
     Button answerOne, answerTwo, quitButton;
     TextView timeLabel, scoreLabel, colorWord;
     ImageView backgroundColor;
     ArrayList<String> colorWords;
-    ArrayList<Integer> colors;
-    int color, backColor;
+    ArrayList<Integer> colorInts;
     HashMap<Integer, String> answers;
+    //HashMap<List<Integer>, List<String>> answers;
     String word, correctAnswer, wrongAnswer;
     long timeLeft;
+    int color, backColor;
 
     CountDownTimer counter = new CountDownTimer(3000,1000)
     {
         @Override
         public void onTick(long millisUntilFinished) {
             timeLeft = millisUntilFinished/1000;
-            timeLabel.setText(GameConstants.DISPLAYTIME + timeLeft);
+            timeLabel.setText("" +timeLeft);
         }
 
         @Override
@@ -75,7 +77,7 @@ public class ColorizeMainActivity extends AppCompatActivity {
         backgroundColor = findViewById(R.id.backgroundColor);
         colorWords = new ArrayList<String>();
         answers = new HashMap<Integer, String>();
-        colors = new ArrayList<Integer>();
+        colorInts = new ArrayList<Integer>();
 
         setUpButtons();
         addColors();
@@ -87,17 +89,23 @@ public class ColorizeMainActivity extends AppCompatActivity {
     {
         quitButton.setOnClickListener(new View.OnClickListener()
         {
+
             @Override
             public void onClick(View view) {
+                counter.cancel();
                 startActivity(new Intent(ColorizeMainActivity.this,ColorizeEndActivity.class));
+
             }
         });
 
     }
 
+    //add colors to respective arraylists
     private void addColors()
     {
-        //change to constants
+        //answers.put(colorInts,colorWords);
+
+        //Hashmap<Integer, String> to define the corresponding correct answers
         answers.put(Color.RED, GameConstants.RED);
         answers.put(Color.YELLOW, GameConstants.YELLOW);
         answers.put(Color.GREEN, GameConstants.GREEN);
@@ -106,14 +114,16 @@ public class ColorizeMainActivity extends AppCompatActivity {
         answers.put(Color.MAGENTA, GameConstants.PINK);
         answers.put(Color.BLUE, GameConstants.BLUE);
 
-        colors.add(Color.RED);
-        colors.add(Color.YELLOW);
-        colors.add(Color.GREEN);
-        colors.add(Color.BLUE);
-        colors.add(Color.MAGENTA);
-        colors.add(Color.GRAY);
-        colors.add(Color.BLACK);
+        //Arraylist<Integer> containing android's predefined color constants
+        colorInts.add(Color.RED);
+        colorInts.add(Color.YELLOW);
+        colorInts.add(Color.GREEN);
+        colorInts.add(Color.BLACK);
+        colorInts.add(Color.GRAY);
+        colorInts.add(Color.MAGENTA);
+        colorInts.add(Color.BLUE);
 
+        //Arraylist<String> containing all the words that will be displayed on UI
         colorWords.add(GameConstants.RED);
         colorWords.add(GameConstants.YELLOW);
         colorWords.add(GameConstants.GREEN);
@@ -127,7 +137,7 @@ public class ColorizeMainActivity extends AppCompatActivity {
 
     private void setUpGame()
     {
-
+        // start time
         counter.start();
 
         //generate random word
@@ -135,8 +145,8 @@ public class ColorizeMainActivity extends AppCompatActivity {
         word = colorWords.get(index);
 
         //generate random color for word
-        int colorIndex = new Random().nextInt(colors.size());
-        color = colors.get(colorIndex);
+        int colorIndex = new Random().nextInt(colorInts.size());
+        color = colorInts.get(colorIndex);
 
         //set text to random word
         colorWord.setText(word);
@@ -144,12 +154,12 @@ public class ColorizeMainActivity extends AppCompatActivity {
         //set word to random color
         colorWord.setTextColor(color);
 
-        //loop through colors to find corresponding int, then get value from hashmap
-        for (int i = 0; i<= colors.size()-1; i ++)
+        //loop through colors to find corresponding int, then get value from hashmap for the correct answer
+        for (int i = 0; i<= colorInts.size()-1; i ++)
         {
-            if (color == colors.get(i))
+            if (color == colorInts.get(i))
             {
-             correctAnswer = answers.get(color);
+                correctAnswer = answers.get(color);
             }
         }
 
@@ -159,13 +169,12 @@ public class ColorizeMainActivity extends AppCompatActivity {
         wrongAnswer = colorWords.get(wrongIndex);
 
         // background color cannot be the same as color of word
-        colors.remove(colorIndex);
-        int backgroundIndex = new Random().nextInt(colors.size());
-        backColor = colors.get(backgroundIndex);
+        colorInts.remove(colorIndex);
+        int backgroundIndex = new Random().nextInt(colorInts.size());
+        backColor = colorInts.get(backgroundIndex);
         backgroundColor.setBackgroundColor(backColor);
 
-
-        // set buttons randomly
+        // set buttons randomly with random answers
         List<Button> buttons = Arrays.asList(answerOne, answerTwo);
         List<String> randomAnswers = Arrays.asList(correctAnswer, wrongAnswer);
         buttons.get(new Random().nextInt(2)).setText(randomAnswers.get(new Random().nextInt(1)));
@@ -180,7 +189,9 @@ public class ColorizeMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (answerOne.getText() == correctAnswer && timeLeft > 0 ){
+                counter.cancel();
+                if (answerOne.getText() == correctAnswer && timeLeft > 0 )
+                {
                     counter.cancel();
                     GameConstants.SCORE ++;
                     scoreLabel.setText(GameConstants.DISPLAYSCORE + GameConstants.SCORE);
@@ -189,10 +200,10 @@ public class ColorizeMainActivity extends AppCompatActivity {
                 }
 
                 else
-                    {
+                {
                     startActivity(new Intent(ColorizeMainActivity.this,ColorizeEndActivity.class));
                     finish();
-                    }
+                }
             }
         });
 
@@ -200,10 +211,12 @@ public class ColorizeMainActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
+                counter.cancel();
                 if (answerTwo.getText() == correctAnswer && timeLeft > 0)
                 {
+
                     GameConstants.SCORE++;
-                    scoreLabel.setText(GameConstants.DISPLAYSCORE + GameConstants.SCORE);
+                    scoreLabel.setText(""+ GameConstants.SCORE);
                     counter.cancel();
                     addColors();
                     setUpGame();
