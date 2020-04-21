@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import edu.cis.sensational.R;
 
 public class BubblesMiddleActivity extends AppCompatActivity
 {
-    private Button settings;
     private String mode;
     private int numBubbles;
     private ImageView bubble;
@@ -44,8 +42,7 @@ public class BubblesMiddleActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bubbles_middle);
 
-        // Set up buttons and ImageView
-        settings = findViewById(R.id.settings);
+        // Set up ImageViews
         bubble = findViewById(R.id.floatingBubble);
         bubbleNumber = findViewById(R.id.number);
         smiley1 = findViewById(R.id.smiley1);

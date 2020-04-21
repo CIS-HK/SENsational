@@ -24,8 +24,8 @@
 
     <ImageButton
         android:id="@+id/colorizeIcon"
-        android:layout_width="242dp"
-        android:layout_height="213dp"
+        android:layout_width="211dp"
+        android:layout_height="194dp"
         android:layout_marginTop="16dp"
         android:background="#FFF7FF"
         android:backgroundTint="#FFF7FF"
@@ -37,13 +37,28 @@
 
     <Button
         android:id="@+id/homePageButton"
-        android:layout_width="137dp"
-        android:layout_height="43dp"
+        android:layout_width="140dp"
+        android:layout_height="57dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="#A96DEE"
         android:fontFamily="@font/bubbler_one"
-        android:text="HomePage"
+        android:text="Home Page"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.94"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/bubblesButton"
+        android:layout_width="249dp"
+        android:layout_height="308dp"
+        android:background="@drawable/bubblesicon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.798" />
 </androidx.constraintlayout.widget.ConstraintLayout>

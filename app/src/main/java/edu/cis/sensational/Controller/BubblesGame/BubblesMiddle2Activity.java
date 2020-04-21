@@ -15,7 +15,6 @@ import edu.cis.sensational.R;
 
 public class BubblesMiddle2Activity extends AppCompatActivity
 {
-    private Button settings;
     private Button option1;
     private Button option2;
     private Button option3;
@@ -37,7 +36,6 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bubble_middle2);
 
-        settings = findViewById(R.id.settings2);
         option1 = findViewById(R.id.option1);
         option2 = findViewById(R.id.option2);
         option3 = findViewById(R.id.option3);
