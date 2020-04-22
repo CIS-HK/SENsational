@@ -36,21 +36,6 @@
         app:srcCompat="@drawable/smiley_face"
         tools:srcCompat="@drawable/smiley_face" />
 
-    <Button
-        android:id="@+id/settings"
-        android:layout_width="81dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="631dp"
-        android:layout_marginEnd="304dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/settings"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/smiley1"
-        app:layout_constraintVertical_bias="1.0" />
-
     <TextView
         android:id="@+id/scoreLabel1"
         android:layout_width="wrap_content"

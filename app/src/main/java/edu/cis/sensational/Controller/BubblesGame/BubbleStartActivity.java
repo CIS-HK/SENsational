@@ -7,12 +7,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import edu.cis.sensational.Controller.Colorize.GamesSharedActivity;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 import edu.cis.sensational.R;
 
 public class BubbleStartActivity extends AppCompatActivity
 {
     private Button play;
+    private Button back;
     private Button instructions;
     private Spinner spinner;
 
@@ -25,6 +28,8 @@ public class BubbleStartActivity extends AppCompatActivity
         // Set up buttons
         play = findViewById(R.id.playButton);
         instructions = findViewById(R.id.instructionsButton);
+        back = findViewById(R.id.back);
+
         play.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -38,6 +43,7 @@ public class BubbleStartActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
         instructions.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -45,6 +51,15 @@ public class BubbleStartActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(BubbleStartActivity.this,
                                                          BubblesInstructionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BubbleStartActivity.this,
+                        GamesSharedActivity.class);
                 startActivity(intent);
             }
         });

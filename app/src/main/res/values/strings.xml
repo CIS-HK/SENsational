@@ -78,7 +78,7 @@
     <string name="instructions1a">Bubbles will float up on the screen one by one. Try to remember the color of each bubble. </string>
     <string name="instructions2">Pick the color of each bubble in the right order.</string>
     <string name="instructionsLabel">Instructions:</string>
-    <string name="select_mode_label">Select the mode:</string>
+    <string name="select_mode_label">Mode:</string>
     <string name="targets_label">Targets:</string>
     <string name="working_memory">Working Memory</string>
     <string name="attention_span">Attention Span</string>
