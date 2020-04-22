@@ -19,6 +19,7 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import edu.cis.sensational.Model.CConstants;
 import edu.cis.sensational.R;
 
 public class CalmingMode2Activity extends AppCompatActivity {
@@ -33,6 +34,9 @@ public class CalmingMode2Activity extends AppCompatActivity {
     private ImageView circle;
     private TextView breathe;
     private TextView number;
+
+    //Declaring constants object
+    private CConstants c;
 
     //Setting location of the images
     float bf1Y;
@@ -65,6 +69,9 @@ public class CalmingMode2Activity extends AppCompatActivity {
         circle = findViewById(R.id.circle2);
         breathe = findViewById(R.id.breatheTextView2);
         number = findViewById(R.id.numberTextView2);
+
+        //Setting up CConstants variable to access constants
+        c = new CConstants();
 
         //Initialising the butterflies in the background
         bf1 = findViewById(R.id.bf1);
@@ -118,6 +125,7 @@ public class CalmingMode2Activity extends AppCompatActivity {
         },0,40);
     }
 
+    //Making the butterflies move up on the screen continuously
     public void goUp()
     {
         bf1Y -= 10;
@@ -164,32 +172,13 @@ public class CalmingMode2Activity extends AppCompatActivity {
         bf6.setY(bf6Y);
     }
 
-
     //Method to control the size of the circle
     public void sizeControl()
     {
-        //https://developer.android.com/reference/android/view/animation/AnimationSet.html
-        //Docs for animation set
-
-        //Creating a new final animation set that will be used on the circle
-        final AnimationSet animSet = new AnimationSet(true);
-
-        //Getting the grow animation from anim file and setting the duration to 4 seconds, and
-        //adding it to the animation set for the circle
-        Animation grow = AnimationUtils.loadAnimation(this, R.anim.circleanimation2);
-        grow.setDuration(4000);
-        animSet.addAnimation(grow);
-
-        //Getting the shrink animation from anim file and setting the duration to 4 seconds, and
-        //the start offset to 8 seconds so there will be a 4 second stop before shrink starts and
-        //adding it to the animation set for the circle
-        Animation shrink = AnimationUtils.loadAnimation(this, R.anim.circleanimation);
-        shrink.setDuration(4000);
-        shrink.setStartOffset(8000);
-        animSet.addAnimation(shrink);
+        final AnimationSet set = Util.sizeControl(circle, this);
 
         //Animation listener to see what is happening with the animation
-        animSet.setAnimationListener(new Animation.AnimationListener()
+        set.setAnimationListener(new Animation.AnimationListener()
         {
             //When the animation starts
             @Override
@@ -205,7 +194,7 @@ public class CalmingMode2Activity extends AppCompatActivity {
                 //end of the animation
                 if(pause == false)
                 {
-                    circle.startAnimation(animSet);
+                    circle.startAnimation(set);
                 }
             }
 
@@ -215,15 +204,13 @@ public class CalmingMode2Activity extends AppCompatActivity {
             {
             }
         });
-        //Circle starts to perform the animations in animation set
-        circle.startAnimation(animSet);
     }
 
     //Method to control number text view
     public void number()
     {
         //Array that hold the numbers to be shown in order on the screen per 1 second
-        final String[] array1 = {"1", "2", "3", "4"};
+        final String[] array1 = {c.one, c.two, c.three, c.four};
         //Making a new Runnable (loop) for the number string
         number.post(new Runnable()
         {
@@ -256,7 +243,7 @@ public class CalmingMode2Activity extends AppCompatActivity {
     public void text()
     {
         //Words to be shown in order on the screen for for seconds, then 6 seconds
-        final String[] array2 = {"Breathe in", "Hold", "Breathe out"};
+        final String[] array2 = {c.bIn, c.hold, c.bOut};
         //Making a new Runnable (loop) for the words string
         breathe.post(new Runnable()
         {
