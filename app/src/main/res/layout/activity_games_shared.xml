@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".Controller.Colorize.GamesSharedActivity">
 
+    <ImageButton
+        android:id="@+id/colorizeIcon"
+        android:layout_width="211dp"
+        android:layout_height="194dp"
+        android:layout_marginTop="44dp"
+        android:background="#FFF7FF"
+        android:backgroundTint="#FFF7FF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/colorize_icon" />
+
     <TextView
         android:id="@+id/gameName2"
         android:layout_width="wrap_content"
@@ -17,23 +29,10 @@
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/colorizeIcon"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/colorizeIcon"
-        android:layout_width="211dp"
-        android:layout_height="194dp"
-        android:layout_marginTop="16dp"
-        android:background="#FFF7FF"
-        android:backgroundTint="#FFF7FF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/colorize_icon" />
+        app:layout_constraintVertical_bias="0.001" />
 
     <Button
         android:id="@+id/homePageButton"
@@ -61,4 +60,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.798" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

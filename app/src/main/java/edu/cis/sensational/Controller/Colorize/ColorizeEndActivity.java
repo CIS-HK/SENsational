@@ -55,6 +55,8 @@ public class ColorizeEndActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ColorizeEndActivity.this,GamesSharedActivity.class));
+                finish();
+                GameConstants.SCORE = 0;
             }
         });
     }
