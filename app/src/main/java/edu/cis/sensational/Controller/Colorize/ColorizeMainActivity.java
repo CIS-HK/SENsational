@@ -107,8 +107,6 @@ public class ColorizeMainActivity extends AppCompatActivity
         colorInts.clear();
         colorWords.clear();
 
-        //answers.put(colorInts,colorWords);
-
         //Hashmap<Integer, String> to define the corresponding correct answers
         answers.put(Color.RED, GameConstants.RED);
         answers.put(Color.YELLOW, GameConstants.YELLOW);
@@ -176,11 +174,6 @@ public class ColorizeMainActivity extends AppCompatActivity
         int backgroundIndex = new Random().nextInt(colorInts.size());
         backColor = colorInts.get(backgroundIndex);
         backgroundColor.setBackgroundColor(backColor);
-
-        // set buttons randomly with random answers
-        // List<Button> buttons = Arrays.asList(answerOne, answerTwo);
-        // List<String> randomAnswers = Arrays.asList(correctAnswer, wrongAnswer);
-        // buttons.get(new Random().nextInt(2)).setText(randomAnswers.get(new Random().nextInt(1)));
 
         ArrayList<String> randomAnswers = new ArrayList<>();
         randomAnswers.add(correctAnswer);
