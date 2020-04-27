@@ -6,17 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".Controller.Colorize.GamesSharedActivity">
 
-    <ImageButton
-        android:id="@+id/colorizeIcon"
-        android:layout_width="211dp"
-        android:layout_height="194dp"
-        android:layout_marginTop="44dp"
-        android:background="#FFF7FF"
-        android:backgroundTint="#FFF7FF"
+    <TextView
+        android:id="@+id/totalScore3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bubbler_one"
+        android:text="0"
+        android:textColor="#A96DEE"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.928"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/colorize_icon" />
+        app:layout_constraintVertical_bias="0.02" />
+
+    <ImageView
+        android:id="@+id/userScore"
+        android:layout_width="139dp"
+        android:layout_height="67dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/score"
+        tools:srcCompat="@drawable/score" />
 
     <TextView
         android:id="@+id/gameName2"
@@ -31,8 +48,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorizeIcon"
-        app:layout_constraintVertical_bias="0.001" />
+        app:layout_constraintTop_toBottomOf="@id/colorizeIcon"
+        app:layout_constraintVertical_bias="0.011" />
 
     <Button
         android:id="@+id/homePageButton"
@@ -52,13 +69,25 @@
 
     <Button
         android:id="@+id/bubblesButton"
-        android:layout_width="249dp"
-        android:layout_height="308dp"
+        android:layout_width="248dp"
+        android:layout_height="291dp"
         android:background="@drawable/bubblesicon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.862" />
+
+    <Button
+        android:id="@+id/colorizeIcon"
+        android:layout_width="214dp"
+        android:layout_height="184dp"
+        android:background="@drawable/colorize_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.798" />
+        app:layout_constraintVertical_bias="0.107" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

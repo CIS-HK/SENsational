@@ -81,6 +81,6 @@
         app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toEndOf="@+id/floatingBubble"
         app:layout_constraintTop_toBottomOf="@+id/floatingBubble"
-        app:layout_constraintVertical_bias="0.498" />
+        app:layout_constraintVertical_bias="0.438" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
