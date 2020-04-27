@@ -31,6 +31,7 @@
         <activity android:name=".Controller.Colorize.ColorizeStartActivity" />
         <activity android:name=".Controller.BubblesGame.BubbleStartActivity" />
         <activity android:name=".Controller.Calming.CalmingActivity" />
+        <activity android:name=".Controller.Post.ViewPostActivity" />
         <activity android:name=".Controller.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

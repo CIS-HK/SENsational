@@ -2,6 +2,7 @@ package edu.cis.sensational.Controller.Post;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.Controller.Login.RegisterActivity;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
@@ -9,6 +10,7 @@ import edu.cis.sensational.R;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,13 +30,17 @@ public class PostActivity extends AppCompatActivity {
 
     private String title, description, tag;
 
-    private Button postButton;
+    private Button postButton, backButton;
 
     private Context mContext;
 
     private String userID;
 
     private FirebaseAuth mAuth;
+
+    final Context context = this;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,7 @@ public class PostActivity extends AppCompatActivity {
         mTag = (EditText) findViewById(R.id.tagInput);
 
         postButton = (Button) findViewById(R.id.newPostButton);
+        backButton = (Button) findViewById(R.id.backButton);
 
         mContext = PostActivity.this;
     }
@@ -76,6 +83,16 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,
+                        HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private boolean checkInputs(String title, String description, String tag){
