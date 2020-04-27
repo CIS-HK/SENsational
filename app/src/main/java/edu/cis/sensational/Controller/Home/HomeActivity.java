@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.ImageButton;
@@ -17,10 +19,19 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 //import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 //import com.nostra13.universalimageloader.core.ImageLoader;
 
 import edu.cis.sensational.Controller.Login.LoginActivity;
+import edu.cis.sensational.Controller.Post.PostActivity;
+import edu.cis.sensational.Controller.Post.ViewPostActivity;
+import edu.cis.sensational.Controller.Profile.ProfileActivity;
 import edu.cis.sensational.Controller.Profile.ProfileFragment;
 import edu.cis.sensational.R;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
@@ -57,15 +68,19 @@ public class HomeActivity extends AppCompatActivity {
     //firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase mFirebaseDatabase;
 
     //widgets
     private ViewPager mViewPager;
     private FrameLayout mFrameLayout;
     private RelativeLayout mRelativeLayout;
 
-    private ImageButton addPostButton;
-    private ImageButton profilePageButton;
-    private ImageButton starPageButton;
+    private Button addPostButton;
+    private Button profilePageButton;
+    private Button starPageButton;
+
+    private Button searchButton;
+    private EditText searchField;
 
     final Context context = this;
 
@@ -88,24 +103,92 @@ public class HomeActivity extends AppCompatActivity {
 //        setupViewPager();
 
         setUpButtons();
+        setUpSearch();
 
+
+    }
+
+    public void setUpSearch(){
+        searchField = (EditText) findViewById(R.id.searchField);
+        searchButton = (Button) findViewById(R.id.searchButton);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchText = searchField.getText().toString();
+                searchForTag(searchText);
+            }
+        });
+    }
+
+    public void searchForTag(String text){
+        Query query = FirebaseDatabase.getInstance().getReference()
+                .child(getString(R.string.dbname_posts))
+                .orderByChild(getString(R.string.field_tags))
+                .equalTo(text);
+//
+//        DatabaseReference scoresRef = mFirebaseDatabase.getReference("tags");
+//        scoresRef.orderByValue().addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
     }
 
     public void setUpButtons()
     {
-        addPostButton = (ImageButton) findViewById(R.id.addPostButton);
-        profilePageButton = (ImageButton) findViewById(R.id.profilePageButton);
-        starPageButton = (ImageButton) findViewById(R.id.starPageButton);
-//
-//        profilePageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context,
-//                        ProfileActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        addPostButton = (Button) findViewById(R.id.addPostButton);
+        profilePageButton = (Button) findViewById(R.id.profilePageButton);
+        starPageButton = (Button) findViewById(R.id.starPageButton);
+
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,
+                        PostActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        profilePageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,
+                        ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        starPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,
+                        ViewPostActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 //    public void onCommentThreadSelected(Photo photo, String callingActivity){

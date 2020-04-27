@@ -48,7 +48,7 @@ public class Post implements Parcelable {
         this.publicPost = publicPost;
     }
 
-    protected Post(Parcel in) {
+    public Post(Parcel in) {
         title = in.readString();
         date_created = in.readString();
         description = in.readString();
