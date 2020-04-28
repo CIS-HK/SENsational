@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import edu.cis.sensational.Controller.MainActivity;
 import edu.cis.sensational.R;
 
 public class CalmingActivity extends AppCompatActivity
@@ -15,6 +16,7 @@ public class CalmingActivity extends AppCompatActivity
     Button mode1;
     Button mode2;
     Button mode3;
+    Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,6 +29,7 @@ public class CalmingActivity extends AppCompatActivity
         mode1 = findViewById(R.id.mode1Button);
         mode2 = findViewById(R.id.mode2Button);
         mode3 = findViewById(R.id.mode3Button);
+        back = findViewById(R.id.backbutton);
 
         //Calling a method to set up the buttons
         setUpButtons();
@@ -62,6 +65,14 @@ public class CalmingActivity extends AppCompatActivity
             {
                 //Sends the user to the Mode 3 activity
                 Intent myIntent = new Intent(CalmingActivity.this, CalmingMode3Activity.class);
+                startActivity(myIntent);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(CalmingActivity.this, MainActivity.class);
                 startActivity(myIntent);
             }
         });

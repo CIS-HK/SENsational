@@ -47,7 +47,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
         myMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.colorizemusic);
 
         setUpButtons();
-        animation();
+        // animation();
     }
 
     private void setUpButtons() {
@@ -70,6 +70,9 @@ public class ColorizeStartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ColorizeStartActivity.this, GamesSharedActivity.class));
+                if (myMediaPlayer.isPlaying()){
+                    myMediaPlayer.release();
+                }
             }
         });
 
