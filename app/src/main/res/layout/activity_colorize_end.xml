@@ -98,7 +98,7 @@
         android:layout_height="62dp"
         android:layout_marginStart="182dp"
         android:layout_marginEnd="172dp"
-        android:layout_marginBottom="196dp"
+        android:layout_marginBottom="184dp"
         android:backgroundTint="#F790A4"
         android:fontFamily="@font/bubbler_one"
         android:text="Play Again?"
@@ -106,7 +106,7 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -133,7 +133,7 @@
         android:id="@+id/highscorelabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="256dp"
+        android:layout_marginBottom="248dp"
         android:fontFamily="@font/bubbler_one"
         android:text="High Score: 0"
         android:textColor="#03477C"
@@ -141,7 +141,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView

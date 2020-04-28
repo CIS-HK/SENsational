@@ -2,6 +2,7 @@ package edu.cis.sensational.Controller.Colorize;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
     TextView gameName;
     Switch musicSwitch;
     MediaPlayer myMediaPlayer;
+    ImageView bottomright, middleleft, middleright, topright, topleft;
 
 
     @Override
@@ -30,15 +33,21 @@ public class ColorizeStartActivity extends AppCompatActivity {
         playButton = findViewById(R.id.playButton);
         quitButton = findViewById(R.id.quitButton);
         instructionButton = findViewById(R.id.instructionsButton);
+        bottomright = findViewById(R.id.imageView7);
+        middleleft = findViewById(R.id.imageView4);
+        middleright = findViewById(R.id.imageView6);
+        topright = findViewById(R.id.imageView5);
+        topleft = findViewById(R.id.imageView3);
 
         //https://stackoverflow.com/questions/37244357/how-to-play-music-in-android-studio
-//        musicSwitch = findViewById(R.id.musicSwitch);
-//        musicSwitch.setChecked(false);
-//        musicSwitch.setTextOff("OFF");
-//        musicSwitch.setTextOn("ON");
-        //myMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.colorizemusic);
+        musicSwitch = findViewById(R.id.musicSwitch);
+        //musicSwitch.setChecked(false);
+        musicSwitch.setTextOff("OFF");
+        musicSwitch.setTextOn("ON");
+        myMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.colorizemusic);
 
         setUpButtons();
+        animation();
     }
 
     private void setUpButtons() {
@@ -67,22 +76,41 @@ public class ColorizeStartActivity extends AppCompatActivity {
         //https://abhiandroid.com/ui/switch
         //https://www.tutlane.com/tutorial/android/android-switch-on-off-button-with-examples
 
-//        musicSwitch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (musicSwitch.isChecked())
-//                {
-//                    myMediaPlayer.start();
-//                    myMediaPlayer.setVolume(20,20);
-//                }
-//                else
-//                {
-//                    myMediaPlayer.stop();
-//                }
-//            }
-//        });
-//
-//    }
+        musicSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (musicSwitch.isChecked())
+                {
+                    myMediaPlayer.start();
+                    myMediaPlayer.setVolume(20,20);
+                }
+                else
+                {
+                    myMediaPlayer.pause();
+                }
+            }
+        });
 
     }
+
+    private void animation()
+    {
+        ObjectAnimator animation = ObjectAnimator.ofFloat(bottomright,"translationX", -700f);
+        ObjectAnimator animation2 = ObjectAnimator.ofFloat(middleleft,"translationY", -300f);
+        ObjectAnimator animation3 = ObjectAnimator.ofFloat(middleright,"translationX", -300f);
+        ObjectAnimator animation4 = ObjectAnimator.ofFloat(topright,"translationY", 300f);
+        ObjectAnimator animation5 = ObjectAnimator.ofFloat(topleft, "translationX", 600f);
+        animation.setDuration(500);
+        animation.start();
+        animation2.setDuration(500);
+        animation2.start();
+        animation3.setDuration(500);
+        animation3.start();
+        animation4.setDuration(500);
+        animation4.start();
+        animation5.setDuration(500);
+        animation5.start();
+    }
+
+
 }

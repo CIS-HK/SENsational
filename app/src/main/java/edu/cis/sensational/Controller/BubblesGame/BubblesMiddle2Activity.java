@@ -47,8 +47,16 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         roundNumber = getIntent().getIntExtra(BubbleConstants.ROUND_NUM, roundNumber);
         numBubbles = getIntent().getIntExtra(BubbleConstants.NUM_BUBBLES, BubbleConstants.DEFAULT);
         colorsPicked = getIntent().getStringArrayListExtra(BubbleConstants.COLORS_PICKED);
-        allColors = getIntent().getStringArrayListExtra(BubbleConstants.ALL_COLORS);
         score = getIntent().getIntExtra(BubbleConstants.SCORE, BubbleConstants.DEFAULT);
+
+        allColors = new ArrayList<>();
+        allColors.add(BubbleConstants.BLACK);
+        allColors.add(BubbleConstants.BLUE);
+        allColors.add(BubbleConstants.GREEN);
+        allColors.add(BubbleConstants.RED);
+        allColors.add(BubbleConstants.YELLOW);
+        allColors.add(BubbleConstants.PINK);
+        allColors.add(BubbleConstants.PURPLE);
 
         if (score == 1)
         {
@@ -168,7 +176,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
                 checkOrCross.setImageResource(R.drawable.cross);
                 numTimes++;
                 checkOrCross.setVisibility(View.VISIBLE);
-                MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.wrong);
+                MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.incorrect);
                 mPlayer.setVolume(BubbleConstants.VOLUME, BubbleConstants.VOLUME);
                 mPlayer.start();
                 checkEnd();

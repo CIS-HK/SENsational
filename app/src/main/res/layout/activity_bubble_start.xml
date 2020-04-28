@@ -9,13 +9,15 @@
 
     <ImageView
         android:id="@+id/background1"
-        android:layout_width="447dp"
-        android:layout_height="114dp"
+        android:layout_width="0dp"
+        android:layout_height="119dp"
         android:background="@drawable/purple2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/purple2"
         tools:srcCompat="@drawable/purple2" />
 
@@ -26,24 +28,24 @@
         android:background="@drawable/yellowbubble"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.892"
+        app:layout_constraintHorizontal_bias="0.866"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.279"
+        app:layout_constraintVertical_bias="0.296"
         app:srcCompat="@drawable/yellowbubble"
         tools:src="@drawable/yellowbubble"
         tools:srcCompat="@drawable/yellowbubble" />
 
     <ImageView
         android:id="@+id/bubble1"
-        android:layout_width="194dp"
-        android:layout_height="178dp"
+        android:layout_width="173dp"
+        android:layout_height="160dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.161"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.604"
+        app:layout_constraintVertical_bias="0.579"
         app:srcCompat="@drawable/pinkbubble"
         tools:src="@drawable/pinkbubble"
         tools:srcCompat="@drawable/pinkbubble" />
@@ -59,27 +61,27 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.23" />
+        app:layout_constraintVertical_bias="0.197" />
 
     <TextView
         android:id="@+id/attentionSpan2"
-        android:layout_width="101dp"
-        android:layout_height="72dp"
+        android:layout_width="128dp"
+        android:layout_height="89dp"
         android:fontFamily="@font/bubbler_one"
         android:text="@string/attention_span"
         android:textAlignment="center"
         android:textColor="#FDFDFD"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/bubble2"
-        app:layout_constraintEnd_toStartOf="@+id/bubble2"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toEndOf="@+id/bubble2"
-        app:layout_constraintTop_toBottomOf="@+id/bubble2"
-        app:layout_constraintVertical_bias="0.403" />
+        app:layout_constraintBottom_toBottomOf="@id/bubble2"
+        app:layout_constraintEnd_toEndOf="@id/bubble2"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="@id/bubble2"
+        app:layout_constraintTop_toTopOf="@id/bubble2"
+        app:layout_constraintVertical_bias="0.793" />
 
     <TextView
         android:id="@+id/workingMemory"
@@ -91,39 +93,41 @@
         android:textColor="#FBFBFB"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/bubble1"
-        app:layout_constraintEnd_toStartOf="@+id/bubble1"
-        app:layout_constraintHorizontal_bias="0.471"
-        app:layout_constraintStart_toEndOf="@+id/bubble1"
-        app:layout_constraintTop_toBottomOf="@+id/bubble1"
-        app:layout_constraintVertical_bias="0.424" />
+        app:layout_constraintBottom_toBottomOf="@id/bubble1"
+        app:layout_constraintEnd_toEndOf="@id/bubble1"
+        app:layout_constraintHorizontal_bias="0.633"
+        app:layout_constraintStart_toStartOf="@id/bubble1"
+        app:layout_constraintTop_toTopOf="@id/bubble1"
+        app:layout_constraintVertical_bias="0.704" />
 
     <ImageView
         android:id="@+id/background"
-        android:layout_width="423dp"
-        android:layout_height="111dp"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
         android:background="@drawable/purple2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workingMemory"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/purple2"
         tools:srcCompat="@drawable/purple2" />
 
     <TextView
         android:id="@+id/bubblesTitle"
-        android:layout_width="371dp"
-        android:layout_height="84dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/bungee_inline"
         android:text="@string/bubbles_title"
         android:textAlignment="center"
         android:textColor="#F8F5F5"
         android:textSize="50sp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02" />
 
     <TextView
         android:id="@+id/selectModeLabel"
@@ -136,15 +140,15 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.099"
+        app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.914" />
+        app:layout_constraintVertical_bias="0.898" />
 
     <Button
         android:id="@+id/playButton"
-        android:layout_width="117dp"
-        android:layout_height="59dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:backgroundTint="#FAFBFC"
         android:fontFamily="@font/bubbler_one"
         android:text="@string/play_bubbles"
@@ -153,15 +157,15 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.653"
+        app:layout_constraintHorizontal_bias="0.907"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.99" />
+        app:layout_constraintVertical_bias="0.918" />
 
     <Button
         android:id="@+id/instructionsButton"
-        android:layout_width="161dp"
-        android:layout_height="56dp"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
         android:backgroundTint="#A96DEE"
         android:fontFamily="@font/bubbler_one"
         android:text="@string/instructions"
@@ -170,27 +174,27 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.224"
+        app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.805" />
+        app:layout_constraintVertical_bias="0.764" />
 
     <Button
         android:id="@+id/back"
-        android:layout_width="109dp"
-        android:layout_height="56dp"
-        android:backgroundTint="#A96DEE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FBFBFB"
         android:fontFamily="@font/bubbler_one"
         android:text="@string/back"
-        android:textColor="#FFFFFF"
+        android:textColor="#A96DEE"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.874"
+        app:layout_constraintHorizontal_bias="0.907"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.804" />
+        app:layout_constraintVertical_bias="0.99" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -198,9 +202,9 @@
         android:layout_height="38dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.979" />
+        app:layout_constraintVertical_bias="0.971" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

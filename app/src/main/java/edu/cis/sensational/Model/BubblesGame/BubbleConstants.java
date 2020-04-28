@@ -8,7 +8,6 @@ public class BubbleConstants
     public static final String NUM_BUBBLES = "numBubbles";
     public static final String SCORE = "score";
     public static final String ROUND_NUM = "roundNumber";
-    public static final String ALL_COLORS = "allColors";
     public static final String COLORS_PICKED = "colorsPicked";
     public static final String BUBBLE = "bubble";
     public static final String DRAWABLE = "drawable";
@@ -35,12 +34,12 @@ public class BubbleConstants
     public static final int DEFAULT = 0;
     public static final int MINUS_FROM_Y = 10;
     public static final int DELAY = 0;
-    public static final int PERIOD = 7;
+    public static final int PERIOD = 20;
     public static final int VOLUME = 20;
     public static final int MAX_ROUNDS = 3;
 
     // Floats
-    public static final float ADD_TO_Y = 200.0f;
+    public static final float ADD_TO_Y = 50.0f;
     public static final float ADD_TO_SCREEN_HEIGHT = 100.0f;
 
 }

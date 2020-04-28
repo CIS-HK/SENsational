@@ -105,8 +105,9 @@ public class BubblesMiddleActivity extends AppCompatActivity
     public void generateRandomSequence()
     {
         Random random = new Random();
-        String colorBubble = allColors.get(random.nextInt(7));
+        String colorBubble = allColors.get(random.nextInt(allColors.size()));
         colorsPicked.add(colorBubble);
+        allColors.remove(colorBubble);
         String imageName = colorBubble + BubbleConstants.BUBBLE;
         int imageID = getResources().getIdentifier(imageName,
                                                    BubbleConstants.DRAWABLE,
@@ -169,7 +170,6 @@ public class BubblesMiddleActivity extends AppCompatActivity
                                             BubblesMiddle2Activity.class);
                 intent.putExtra(BubbleConstants.NUM_BUBBLES, numBubbles);
                 intent.putExtra(BubbleConstants.COLORS_PICKED, colorsPicked);
-                intent.putExtra(BubbleConstants.ALL_COLORS, allColors);
                 intent.putExtra(BubbleConstants.SCORE, score);
                 intent.putExtra(BubbleConstants.ROUND_NUM, roundNumber);
                 startActivity(intent);

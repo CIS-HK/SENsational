@@ -12,16 +12,16 @@ public class UserAccountSettings implements Parcelable{
     private String username;
     private String location;
     private String child_age;
-    private String child_profile;
+    private String child_gender;
     private long posts;
     private String user_id;
 
     public UserAccountSettings(String username, String email, String location, String age,
-                               String profile, long posts, String user_id) {
+                               String gender, long posts, String user_id) {
         this.username = username;
         this.location = location;
         this.child_age = age;
-        this.child_profile = profile;
+        this.child_gender = gender;
         this.posts = posts;
         this.user_id = user_id;
     }
@@ -33,7 +33,7 @@ public class UserAccountSettings implements Parcelable{
     protected UserAccountSettings(Parcel in) {
         location = in.readString();
         child_age = in.readString();
-        child_profile = in.readString();
+        child_gender = in.readString();
         posts = in.readLong();
         username = in.readString();
         user_id = in.readString();
@@ -75,12 +75,12 @@ public class UserAccountSettings implements Parcelable{
         this.child_age = age;
     }
 
-    public String getChild_profile() {
-        return child_profile;
+    public String getChild_gender() {
+        return child_gender;
     }
 
-    public void setChild_profile(String profile) {
-        this.child_profile = profile;
+    public void setChild_gender(String gender) {
+        this.child_gender = gender;
     }
 
     public long getPosts() {
@@ -106,7 +106,7 @@ public class UserAccountSettings implements Parcelable{
                 ", username='" + username + '\'' +
                 ", location='" + location + '\'' +
                 ", child_age='" + child_age + '\'' +
-                ", child_profile'" + child_profile + '\'' +
+                ", child_profile'" + child_gender + '\'' +
                 ", posts=" + posts +
                 '}';
     }
@@ -121,7 +121,7 @@ public class UserAccountSettings implements Parcelable{
         dest.writeLong(posts);
         dest.writeString(username);
         dest.writeString(location);
-        dest.writeString(child_profile);
+        dest.writeString(child_gender);
         dest.writeString(user_id);
         dest.writeString(child_age);
     }

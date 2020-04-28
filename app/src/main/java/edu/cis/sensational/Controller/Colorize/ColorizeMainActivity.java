@@ -103,7 +103,9 @@ public class ColorizeMainActivity extends AppCompatActivity
     //add colors to respective arraylists
     private void addColors()
     {
-        //answers.put(colorInts,colorWords);
+        answers.clear();
+        colorInts.clear();
+        colorWords.clear();
 
         //Hashmap<Integer, String> to define the corresponding correct answers
         answers.put(Color.RED, GameConstants.RED);
@@ -131,7 +133,6 @@ public class ColorizeMainActivity extends AppCompatActivity
         colorWords.add(GameConstants.GRAY);
         colorWords.add(GameConstants.PINK);
         colorWords.add(GameConstants.BLUE);
-
     }
 
 
@@ -174,11 +175,14 @@ public class ColorizeMainActivity extends AppCompatActivity
         backColor = colorInts.get(backgroundIndex);
         backgroundColor.setBackgroundColor(backColor);
 
-        // set buttons randomly with random answers
-        List<Button> buttons = Arrays.asList(answerOne, answerTwo);
-        List<String> randomAnswers = Arrays.asList(correctAnswer, wrongAnswer);
-        buttons.get(new Random().nextInt(2)).setText(randomAnswers.get(new Random().nextInt(1)));
+        ArrayList<String> randomAnswers = new ArrayList<>();
+        randomAnswers.add(correctAnswer);
+        randomAnswers.add(wrongAnswer);
 
+        String answer = randomAnswers.get(new Random().nextInt(2));
+        answerOne.setText(answer);
+        randomAnswers.remove(answer);
+        answerTwo.setText(randomAnswers.get(0));
     }
 
 
@@ -194,7 +198,7 @@ public class ColorizeMainActivity extends AppCompatActivity
                 {
                     counter.cancel();
                     GameConstants.SCORE ++;
-                    scoreLabel.setText(GameConstants.DISPLAYSCORE + GameConstants.SCORE);
+                    scoreLabel.setText(""+ GameConstants.SCORE);
                     addColors();
                     setUpGame();
                 }
