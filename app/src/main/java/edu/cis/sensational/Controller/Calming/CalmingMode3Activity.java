@@ -377,6 +377,8 @@ public class CalmingMode3Activity extends AppCompatActivity
     //Button to go back to main activity
     public void backButton(View view)
     {
+        mPlayer3.stop();
+        mPlayer3.release();
         Intent myIntent = new Intent(CalmingMode3Activity.this, CalmingActivity.class);
         startActivity(myIntent);
     }
