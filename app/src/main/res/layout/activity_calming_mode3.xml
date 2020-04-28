@@ -88,9 +88,12 @@
         android:id="@+id/plant3"
         android:layout_width="145dp"
         android:layout_height="207dp"
+        android:layout_marginStart="6dp"
         android:layout_marginTop="96dp"
         android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fish5"
         app:layout_constraintTop_toBottomOf="@+id/circle3"
         app:srcCompat="@drawable/plant3" />
 
@@ -98,12 +101,11 @@
         android:id="@+id/bubbles_m_1"
         android:layout_width="105dp"
         android:layout_height="212dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="81dp"
+        android:layout_marginTop="8dp"
         android:rotation="180"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fish4"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toEndOf="@+id/circle3"
         app:layout_constraintTop_toBottomOf="@+id/fish4"
         app:srcCompat="@drawable/bubbles_m" />
 
@@ -111,12 +113,10 @@
         android:id="@+id/bubbles_m_2"
         android:layout_width="146dp"
         android:layout_height="230dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="146dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintEnd_toStartOf="@+id/fish4"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/fish1"
+        android:layout_marginTop="119dp"
+        app:layout_constraintEnd_toStartOf="@+id/breatheTextView3"
+        app:layout_constraintHorizontal_bias="0.877"
+        app:layout_constraintStart_toEndOf="@+id/breatheTextView3"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bubbles_m" />
 
@@ -169,7 +169,7 @@
         app:layout_constraintBottom_toTopOf="@+id/plant2"
         app:layout_constraintEnd_toStartOf="@+id/plant2"
         app:layout_constraintTop_toBottomOf="@+id/circle3"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.711"
         app:srcCompat="@drawable/fish3" />
 
     <TextView
