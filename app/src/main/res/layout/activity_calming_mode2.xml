@@ -37,10 +37,12 @@
         android:id="@+id/bf1"
         android:layout_width="110dp"
         android:layout_height="105dp"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="152dp"
-        android:layout_marginEnd="312dp"
+        android:layout_marginEnd="3dp"
         android:rotation="15"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/circle2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bf1" />
 
@@ -48,20 +50,21 @@
         android:id="@+id/bf4"
         android:layout_width="97dp"
         android:layout_height="80dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginStart="39dp"
         android:rotation="-5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bf2"
+        app:layout_constraintTop_toBottomOf="@+id/sun"
         app:srcCompat="@drawable/bf2" />
 
     <ImageView
         android:id="@+id/bf2"
         android:layout_width="102dp"
         android:layout_height="83dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="129dp"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="344dp"
         android:rotation="40"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bf3" />
@@ -70,9 +73,11 @@
         android:id="@+id/bf3"
         android:layout_width="132dp"
         android:layout_height="99dp"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="192dp"
+        android:layout_marginStart="243dp"
+        android:layout_marginTop="608dp"
+        android:layout_marginEnd="226dp"
         android:rotation="-15"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bf4" />
@@ -81,11 +86,13 @@
         android:id="@+id/bf5"
         android:layout_width="78dp"
         android:layout_height="54dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginBottom="3dp"
         android:rotation="-30"
+        app:layout_constraintBottom_toTopOf="@+id/bf4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bf2"
         app:srcCompat="@drawable/bf6" />
 
     <ImageView
@@ -97,40 +104,28 @@
         app:srcCompat="@drawable/sun" />
 
     <ImageView
-        android:id="@+id/grass"
-        android:layout_width="460dp"
-        android:layout_height="379dp"
-        android:layout_marginTop="469dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/grass" />
-
-    <ImageView
         android:id="@+id/bf6"
         android:layout_width="108dp"
         android:layout_height="76dp"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="276dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="73dp"
+        android:layout_marginEnd="39dp"
         android:rotation="-10"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/circle2"
+        app:layout_constraintTop_toBottomOf="@+id/sun"
         app:srcCompat="@drawable/bf5" />
 
     <ImageView
         android:id="@+id/circle2"
         android:layout_width="302dp"
         android:layout_height="298dp"
-        android:layout_marginTop="217dp"
-        android:layout_marginBottom="216dp"
         android:tint="#A0FFBA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/circle" />
 
     <TextView
@@ -138,25 +133,48 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="364dp"
+        android:layout_marginBottom="306dp"
         android:text="@string/_1"
         android:textColor="#000000"
         android:textSize="45sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/breatheTextView2"
+        android:id="@+id/breatheTextView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="315dp"
+        android:layout_marginBottom="367dp"
         android:text="@string/breathe_in"
         android:textColor="#000000"
         android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="635dp"
+        android:layout_height="206dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/grass"
+            android:layout_width="647dp"
+            android:layout_height="276dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/grass" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
