@@ -72,8 +72,8 @@ public class CalmingActivity extends AppCompatActivity
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(CalmingActivity.this, MainActivity.class);
-                startActivity(myIntent);
+                Intent intent = new Intent(CalmingActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
