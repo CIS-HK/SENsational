@@ -368,6 +368,7 @@ public class CalmingMode3Activity extends AppCompatActivity
                         {
                             goUp();
                             goLeft();
+                            goRight();
                         }
                     });
                 }
