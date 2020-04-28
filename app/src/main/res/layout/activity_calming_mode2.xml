@@ -159,21 +159,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="635dp"
-        android:layout_height="206dp"
+        android:layout_width="784dp"
+        android:layout_height="248dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/grass"
-            android:layout_width="647dp"
-            android:layout_height="276dp"
+            android:layout_width="1751dp"
+            android:layout_height="334dp"
             android:layout_marginTop="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.426"
             app:srcCompat="@drawable/grass" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

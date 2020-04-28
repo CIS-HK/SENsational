@@ -58,8 +58,10 @@
         android:rotation="-30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.304"
         app:layout_constraintStart_toEndOf="@+id/candy2"
         app:layout_constraintTop_toBottomOf="@+id/candy3"
+        app:layout_constraintVertical_bias="0.215"
         app:srcCompat="@drawable/candy1" />
 
     <ImageView
@@ -72,8 +74,10 @@
         android:layout_marginBottom="252dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.566"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.572"
         app:srcCompat="@drawable/candy2" />
 
     <ImageView
@@ -97,15 +101,17 @@
         android:id="@+id/cupcake"
         android:layout_width="190dp"
         android:layout_height="219dp"
-        android:layout_marginStart="85dp"
-        android:layout_marginTop="603dp"
-        android:layout_marginEnd="326dp"
-        android:layout_marginBottom="139dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="107dp"
+        android:layout_marginBottom="141dp"
         android:rotation="-10"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/candy2"
+        app:layout_constraintHorizontal_bias="0.603"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circle1"
+        app:layout_constraintVertical_bias="0.258"
         app:srcCompat="@drawable/cupcake" />
 
     <ImageView
@@ -179,8 +185,8 @@
 
     <ImageView
         android:id="@+id/imageView28"
-        android:layout_width="245dp"
-        android:layout_height="234dp"
+        android:layout_width="237dp"
+        android:layout_height="219dp"
         android:layout_marginStart="9dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="7dp"
@@ -195,8 +201,8 @@
 
     <ImageView
         android:id="@+id/imageView29"
-        android:layout_width="194dp"
-        android:layout_height="209dp"
+        android:layout_width="230dp"
+        android:layout_height="216dp"
         android:layout_marginStart="51dp"
         android:layout_marginTop="29dp"
         android:layout_marginEnd="167dp"

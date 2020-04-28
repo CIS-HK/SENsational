@@ -212,8 +212,8 @@
 
         <ImageView
             android:id="@+id/sand"
-            android:layout_width="787dp"
-            android:layout_height="217dp"
+            android:layout_width="1030dp"
+            android:layout_height="239dp"
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
