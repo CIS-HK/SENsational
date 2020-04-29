@@ -70,17 +70,21 @@
         android:id="@+id/number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/bubbler_one"
         android:text="1"
         android:textColor="#FFFFFF"
         android:textSize="60sp"
         android:textStyle="bold"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/floatingBubble"
-        app:layout_constraintEnd_toStartOf="@+id/floatingBubble"
-        app:layout_constraintHorizontal_bias="0.463"
-        app:layout_constraintStart_toEndOf="@+id/floatingBubble"
-        app:layout_constraintTop_toBottomOf="@+id/floatingBubble"
-        app:layout_constraintVertical_bias="0.438" />
+        app:layout_constraintBottom_toBottomOf="@id/floatingBubble"
+        app:layout_constraintEnd_toEndOf="@id/floatingBubble"
+        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintStart_toStartOf="@id/floatingBubble"
+        app:layout_constraintTop_toTopOf="@id/floatingBubble"
+        app:layout_constraintVertical_bias="0.577" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
