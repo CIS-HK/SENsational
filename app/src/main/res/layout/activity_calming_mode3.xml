@@ -37,12 +37,12 @@
         android:layout_width="159dp"
         android:layout_height="150dp"
         android:layout_marginTop="260dp"
-        android:layout_marginEnd="324dp"
+        android:layout_marginEnd="368dp"
         android:layout_marginBottom="291dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.18"
         app:srcCompat="@drawable/fish2" />
 
     <ImageView
@@ -57,70 +57,68 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/fish5" />
 
+
     <ImageView
         android:id="@+id/fish5"
         android:layout_width="107dp"
         android:layout_height="93dp"
-        android:layout_marginStart="335dp"
-        android:layout_marginBottom="73dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/plant3"
+        app:layout_constraintEnd_toStartOf="@+id/plant3"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/plant2"
+        app:layout_constraintTop_toBottomOf="@+id/circle3"
+        app:layout_constraintVertical_bias="0.47"
         app:srcCompat="@drawable/fish6" />
-
 
     <ImageView
         android:id="@+id/plant1"
         android:layout_width="117dp"
         android:layout_height="241dp"
-        android:layout_marginTop="474dp"
-        android:layout_marginEnd="308dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="200dp"
+        app:layout_constraintEnd_toStartOf="@+id/constraintLayout4"
+        app:layout_constraintHorizontal_bias="0.425"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fish3"
         app:srcCompat="@drawable/plant1" />
 
     <ImageView
         android:id="@+id/plant3"
         android:layout_width="145dp"
         android:layout_height="207dp"
-        android:layout_marginTop="508dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fish5"
+        app:layout_constraintTop_toBottomOf="@+id/circle3"
         app:srcCompat="@drawable/plant3" />
 
     <ImageView
         android:id="@+id/bubbles_m_1"
         android:layout_width="105dp"
         android:layout_height="212dp"
-        android:layout_marginStart="335dp"
-        android:layout_marginTop="358dp"
+        android:layout_marginTop="8dp"
         android:rotation="180"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toEndOf="@+id/circle3"
+        app:layout_constraintTop_toBottomOf="@+id/fish4"
         app:srcCompat="@drawable/bubbles_m" />
 
     <ImageView
         android:id="@+id/bubbles_m_2"
         android:layout_width="146dp"
         android:layout_height="230dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="235dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="119dp"
+        app:layout_constraintEnd_toStartOf="@+id/breatheTextView3"
+        app:layout_constraintHorizontal_bias="0.877"
+        app:layout_constraintStart_toEndOf="@+id/breatheTextView3"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bubbles_m" />
-
-    <ImageView
-        android:id="@+id/sand"
-        android:layout_width="470dp"
-        android:layout_height="201dp"
-        android:layout_marginTop="625dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sand" />
 
     <ImageView
         android:id="@+id/plant2"
@@ -132,20 +130,20 @@
         android:foregroundTintMode="add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.93"
         app:srcCompat="@drawable/plant2" />
 
     <ImageView
         android:id="@+id/circle3"
         android:layout_width="302dp"
         android:layout_height="298dp"
-        android:layout_marginTop="217dp"
-        android:layout_marginBottom="230dp"
         android:tint="#5C8EFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/circle" />
@@ -154,8 +152,10 @@
         android:id="@+id/fish2"
         android:layout_width="117dp"
         android:layout_height="108dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="118dp"
+        android:layout_marginTop="89dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="41dp"
+        app:layout_constraintBottom_toTopOf="@+id/fish4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/fish4" />
@@ -164,10 +164,12 @@
         android:id="@+id/fish3"
         android:layout_width="133dp"
         android:layout_height="100dp"
-        android:layout_marginTop="492dp"
-        android:layout_marginEnd="249dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/plant2"
+        app:layout_constraintEnd_toStartOf="@+id/plant2"
+        app:layout_constraintTop_toBottomOf="@+id/circle3"
+        app:layout_constraintVertical_bias="0.711"
         app:srcCompat="@drawable/fish3" />
 
     <TextView
@@ -175,9 +177,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="315dp"
+        android:layout_marginBottom="367dp"
         android:text="@string/breathe_in"
         android:textColor="#000000"
         android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -188,12 +192,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="364dp"
+        android:layout_marginBottom="306dp"
         android:text="@string/_1"
         android:textColor="#000000"
         android:textSize="45sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="771dp"
+        android:layout_height="112dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/sand"
+            android:layout_width="1030dp"
+            android:layout_height="239dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/sand" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

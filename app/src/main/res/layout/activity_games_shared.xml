@@ -20,7 +20,7 @@
         app:layout_constraintHorizontal_bias="0.779"
         app:layout_constraintStart_toStartOf="@id/userScore"
         app:layout_constraintTop_toTopOf="@id/userScore"
-        app:layout_constraintVertical_bias="0.009" />
+        app:layout_constraintVertical_bias="0.02" />
 
     <ImageView
         android:id="@+id/userScore"

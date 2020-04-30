@@ -3,24 +3,13 @@ package edu.cis.sensational.Controller.Calming;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Point;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import edu.cis.sensational.Model.CConstants;
 import edu.cis.sensational.R;
@@ -203,6 +192,8 @@ public class CalmingMode1Activity extends AppCompatActivity
     //Button to go back to main activity
     public void backButton(View view)
     {
+        mPlayer.stop();
+        mPlayer.release();
         Intent myIntent = new Intent(CalmingMode1Activity.this, CalmingActivity.class);
         startActivity(myIntent);
     }
