@@ -10,11 +10,14 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,14 +28,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 //import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 //import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import edu.cis.sensational.Controller.Login.LoginActivity;
 import edu.cis.sensational.Controller.Post.PostActivity;
 import edu.cis.sensational.Controller.Post.ViewPostActivity;
 import edu.cis.sensational.Controller.Profile.ProfileActivity;
 import edu.cis.sensational.Controller.Profile.ProfileFragment;
+import edu.cis.sensational.Model.Post;
+import edu.cis.sensational.Model.User;
 import edu.cis.sensational.R;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 //import edu.cis.sensational.Model.Utils.MainFeedListAdapter;
@@ -82,9 +94,16 @@ public class HomeActivity extends AppCompatActivity {
     private Button searchButton;
     private EditText searchField;
 
+    private RecyclerView recView;
+    HomeAdapter myAdapter;
+
+    private String userID;
+
+
     final Context context = this;
 
-
+    //vars
+    private ArrayList<Post> mPostList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -92,20 +111,75 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-//        mViewPager = (ViewPager) findViewById(R.id.viewpager_container);
-//        mFrameLayout = (FrameLayout) findViewById(R.id.container);
-//        mRelativeLayout = (RelativeLayout) findViewById(R.id.relLayoutParent);
-
         setupFirebaseAuth();
-//
-//        initImageLoader();
-//        setupBottomNavigationView();
-//        setupViewPager();
-
         setUpButtons();
         setUpSearch();
 
 
+        if (mAuth.getCurrentUser() != null) {
+            userID = mAuth.getCurrentUser().getUid();
+        }
+
+        setUpRecyclerView();
+
+    }
+
+    public void setUpRecyclerView(){
+        recView = findViewById(R.id.recView);
+        final ArrayList<Post> values = new ArrayList<>();
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference attendanceRef = rootRef
+                .child("user_posts")
+                .child(userID);
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Post value = ds.getValue(Post.class);
+                    values.add(value);
+                }
+                showPosts(values);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(TAG, databaseError.getMessage());
+            }
+        };
+        attendanceRef.addListenerForSingleValueEvent(valueEventListener);
+    }
+
+    public void showPosts(ArrayList<Post> values){
+
+        ArrayList<String> titleList = new ArrayList<>();
+        ArrayList<String> descriptionList = new ArrayList<>();
+        ArrayList<String> IDList = new ArrayList<>();
+
+
+        for(Post post: values)
+        {
+            titleList.add(post.getTitle());
+            descriptionList.add(post.getDescription());
+            IDList.add(post.getPostID());
+
+        }
+
+        myAdapter = new HomeAdapter(titleList, descriptionList, IDList);
+
+        recView.setAdapter(myAdapter);
+        recView.setLayoutManager(new LinearLayoutManager(this));
+
+        myAdapter.setOnItemClickListener(new HomeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(context,
+                        ViewPostActivity.class);
+                String postID = myAdapter.itemClicked(position);
+                intent.putExtra("Post", postID);
+                startActivity(intent);
+            }
+        });
     }
 
     public void setUpSearch(){
@@ -116,45 +190,36 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String searchText = searchField.getText().toString();
+                Log.d(TAG, "searching for post");
                 searchForTag(searchText);
             }
         });
     }
 
-    public void searchForTag(String text){
-        Query query = FirebaseDatabase.getInstance().getReference()
-                .child(getString(R.string.dbname_posts))
-                .orderByChild(getString(R.string.field_tags))
-                .equalTo(text);
-//
-//        DatabaseReference scoresRef = mFirebaseDatabase.getReference("tags");
-//        scoresRef.orderByValue().addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+    public void searchForTag(String searchWord){
+        mPostList.clear();
 
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference attendanceRef = rootRef
+                .child("tags")
+                .child(searchWord);
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String key = ds.getKey();
+                    Post value = ds.getValue(Post.class);
+                    mPostList.add(value);
+                }
+                showPosts(mPostList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(TAG, databaseError.getMessage());
+            }
+        };
+        attendanceRef.addListenerForSingleValueEvent(valueEventListener);
     }
 
     public void setUpButtons()

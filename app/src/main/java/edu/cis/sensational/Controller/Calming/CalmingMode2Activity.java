@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -67,7 +66,7 @@ public class CalmingMode2Activity extends AppCompatActivity {
 
         //Initialising the circle and text
         circle = findViewById(R.id.circle2);
-        breathe = findViewById(R.id.breatheTextView2);
+        breathe = findViewById(R.id.breatheTextView1);
         number = findViewById(R.id.numberTextView2);
 
         //Setting up CConstants variable to access constants
@@ -332,6 +331,8 @@ public class CalmingMode2Activity extends AppCompatActivity {
     //Button to go back to main activity
     public void backButton(View view)
     {
+        mPlayer2.stop();
+        mPlayer2.release();
         Intent myIntent = new Intent(CalmingMode2Activity.this, CalmingActivity.class);
         startActivity(myIntent);
     }

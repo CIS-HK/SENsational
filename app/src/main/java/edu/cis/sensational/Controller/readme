@@ -30,4 +30,24 @@ Colorize Game
             If it is the right button, adds score, reset timer and repeats the game until the user
             presses the wrong button.
 
+Calming
+(Activity) CalmingActivity
+    onCreate -- creates and identifies the various components on screen
+
+(Activity)CalmingMode1Activity
+    onCreate -- creates and identifies the various components on screen
+
+(Activity)CalmingMode2Activity
+    onCreate -- creates and identifies the various components on screen
+
+(Activity)CalmingMode3Activity
+    onCreate -- creates and identifies the various components on screen
+
+(Class) Util
+
+(anim) circleanimation
+
+(anim) circleanimation2
+
+
 

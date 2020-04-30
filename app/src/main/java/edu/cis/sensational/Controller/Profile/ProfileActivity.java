@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -31,6 +33,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private Context mContext = ProfileActivity.this;
 
+    private Button button;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +42,20 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         Log.d(TAG, "onCreate: started.");
 
-        init();
+//        init();
+
+        button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "init: inflating Profile");
+                ProfileFragment fragment = new ProfileFragment();
+                FragmentTransaction transaction = ProfileActivity.this.getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, fragment);
+                transaction.addToBackStack(getString(R.string.profile_fragment));
+                transaction.commit();
+            }
+        });
 
     }
 

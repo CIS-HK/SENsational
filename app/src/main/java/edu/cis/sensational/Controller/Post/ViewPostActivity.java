@@ -80,6 +80,8 @@ public class ViewPostActivity extends AppCompatActivity {
     private String mLikesString = "";
     private User mCurrentUser;
 
+    private String currentPost;
+
     @Nullable
 
 
@@ -93,18 +95,16 @@ public class ViewPostActivity extends AppCompatActivity {
         description = (TextView) findViewById(R.id.descriptionView);
         tags = (TextView) findViewById(R.id.tagView);
 
-        Log.d(TAG, "onCreate: initializing...");
-        init();
+        currentPost = getIntent().getStringExtra("Post");
 
-        Log.d(TAG, "onCreate: setting up Firebase.");
+        init();
         setupFirebaseAuth();
     }
 
 
     private void init(){
         try{
-            //mPhoto = getPhotoFromBundle();
-            String photo_id = "-M5p27XDQ8UFXyEW7pse";
+            String photo_id = currentPost;
 
             Query query = FirebaseDatabase.getInstance().getReference()
                     .child(getString(R.string.dbname_posts))
@@ -125,8 +125,8 @@ public class ViewPostActivity extends AppCompatActivity {
 
                         mPost = newPost;
 
-//                        getCurrentUser();
-//                        getPostDetails();
+                        getCurrentUser();
+                        getPostDetails();
                         setupWidgets();
 
                     }
@@ -188,6 +188,8 @@ public class ViewPostActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void setupWidgets(){
 
