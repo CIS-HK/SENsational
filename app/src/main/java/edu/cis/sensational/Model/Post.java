@@ -17,7 +17,7 @@ public class Post implements Parcelable {
     private String description;
     private String date_created;
     private String user_id;
-    private String tags;
+    private String tag;
     private List<Likes> likes;
     private List<Comment> comments;
     private boolean publicPost;
@@ -29,7 +29,7 @@ public class Post implements Parcelable {
         description = "";
         date_created = "";
         user_id = "";
-        tags = "";
+        tag = "";
         likes = new ArrayList<>();
         comments = new ArrayList<>();
         postID = "";
@@ -41,7 +41,7 @@ public class Post implements Parcelable {
         this.description = description;
         this.date_created = date_created;
         this.user_id = user_id;
-        this.tags = tags;
+        this.tag = tags;
         this.likes = likes;
         this.comments = comments;
         this.postID = post_id;
@@ -54,7 +54,7 @@ public class Post implements Parcelable {
         description = in.readString();
         user_id = in.readString();
         postID = in.readString();
-        tags = in.readString();
+        tag = in.readString();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Post implements Parcelable {
         dest.writeString(description);
         dest.writeString(user_id);
         dest.writeString(postID);
-        dest.writeString(tags);
+        dest.writeString(tag);
     }
 
     @Override
@@ -129,11 +129,11 @@ public class Post implements Parcelable {
     }
 
     public String getTags() {
-        return tags;
+        return tag;
     }
 
     public void setTags(String tags) {
-        this.tags = tags;
+        this.tag = tags;
     }
 
     public List<Likes> getLikes() {
@@ -167,7 +167,7 @@ public class Post implements Parcelable {
                 ", date_created='" + date_created + '\'' +
                 ", description='" + description + '\'' +
                 ", user_id='" + user_id + '\'' +
-                ", tags='" + tags + '\'' +
+                ", tags='" + tag + '\'' +
                 ", likes=" + likes +
                 ", public=" + publicPost +
                 ", postID=" + postID +

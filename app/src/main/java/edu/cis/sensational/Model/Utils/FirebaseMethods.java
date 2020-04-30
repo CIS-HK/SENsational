@@ -19,6 +19,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -73,7 +74,7 @@ public class FirebaseMethods {
         return sdf.format(new Date());
     }
 
-    public void createNewPost(String title, String description, String tag){
+    public void createNewPost(String title, String description, String tags){
 
         // retrieve a key for the postID
         String newPostKey = myRef.child(mContext.getString(R.string.dbname_posts)).push().getKey();
@@ -82,23 +83,24 @@ public class FirebaseMethods {
         Post post = new Post();
         post.setTitle(title);
         post.setDescription(description);
-        post.setTags(tag);
+        post.setTags(tags);
         post.setUser_id(userID);
         post.setDate_created(getTimestamp());
         post.setComments(post.getComments());
         post.setPostID(newPostKey);
 
         // upload the post to the database
-        uploadNewPost(post);
+        uploadNewPost(post, tags);
     }
 
-    public void uploadNewPost(Post post)
+    public void uploadNewPost(Post post, String tag)
     {
         Log.d(TAG, "uploadNewPost: attempting to post.");
 
         myRef.child("user_posts").child(post.getUser_id())
                 .child(post.getPostID()).setValue(post);
         myRef.child("posts").child(post.getPostID()).setValue(post);
+        myRef.child("tags").child(tag).child(post.getPostID()).setValue(post);
     }
 
     public void updateUserAccountSettings(String location, String age, String information) {

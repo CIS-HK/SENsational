@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.R;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 //import edu.cis.sensational.Model.Utils.GridImageAdapter;
@@ -53,6 +54,11 @@ public class ProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
 
+    public interface OnGridImageSelectedListener{
+        void onGridImageSelected(Post post, int activityNumber);
+    }
+    OnGridImageSelectedListener mOnGridImageSelectedListener;
+
     private static final int ACTIVITY_NUM = 4;
     private static final int NUM_GRID_COLUMNS = 3;
 
@@ -67,6 +73,8 @@ public class ProfileFragment extends Fragment {
     //widgets
     private TextView mUsername, mEmail, mLocation, mGender, mPassword, mChildGender, mChildAge;
     private Context mContext;
+
+    private GridView gridView;
 
     private Button backButton;
     private TextView editProfile;
@@ -98,10 +106,7 @@ public class ProfileFragment extends Fragment {
         Log.d(TAG, "onCreateView: stared.");
 
         setupFirebaseAuth();
-//        setupGridView();
 
-//        getFollowersCount();
-//        getFollowingCount();
 //        getPostsCount();
 
         editProfile.setOnClickListener(new View.OnClickListener() {
@@ -111,27 +116,26 @@ public class ProfileFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), AccountSettingsActivity.class);
                 intent.putExtra(getString(R.string.calling_activity), getString(R.string.profile_activity));
                 startActivity(intent);
-//                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
         return view;
     }
-//
-//    @Override
-//    public void onAttach(Context context) {
-//        try{
-//            mOnGridImageSelectedListener = (OnGridImageSelectedListener) getActivity();
-//        }catch (ClassCastException e){
-//            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
-//        }
-//        super.onAttach(context);
-//    }
+
+    @Override
+    public void onAttach(Context context) {
+        try{
+            mOnGridImageSelectedListener = (OnGridImageSelectedListener) getActivity();
+        }catch (ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
+        }
+        super.onAttach(context);
+    }
 //
 //    private void setupGridView(){
 //        Log.d(TAG, "setupGridView: Setting up image grid.");
 //
-//        final ArrayList<Photo> photos = new ArrayList<>();
+//        final ArrayList<Post> posts = new ArrayList<>();
 //        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 //        Query query = reference
 //                .child(getString(R.string.dbname_user_photos))
@@ -141,38 +145,37 @@ public class ProfileFragment extends Fragment {
 //            public void onDataChange(DataSnapshot dataSnapshot) {
 //                for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
 //
-//                    Photo photo = new Photo();
+//                    Post post = new Post();
 //                    Map<String, Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
 //
 //                    try {
-//                        photo.setCaption(objectMap.get(getString(R.string.field_caption)).toString());
-//                        photo.setTags(objectMap.get(getString(R.string.field_tags)).toString());
-//                        photo.setPhoto_id(objectMap.get(getString(R.string.field_photo_id)).toString());
-//                        photo.setUser_id(objectMap.get(getString(R.string.field_user_id)).toString());
-//                        photo.setDate_created(objectMap.get(getString(R.string.field_date_created)).toString());
-//                        photo.setImage_path(objectMap.get(getString(R.string.field_image_path)).toString());
+//                        post.setTitle(objectMap.get(getString(R.string.field_caption)).toString());
+//                        post.setTags(objectMap.get(getString(R.string.field_tags)).toString());
+//                        post.setPostID(objectMap.get(getString(R.string.field_post_id)).toString());
+//                        post.setUser_id(objectMap.get(getString(R.string.field_user_id)).toString());
+//                        post.setDate_created(objectMap.get(getString(R.string.field_date_created)).toString());
 //
-//                        ArrayList<Comment> comments = new ArrayList<Comment>();
-//                        for (DataSnapshot dSnapshot : singleSnapshot
-//                                .child(getString(R.string.field_comments)).getChildren()) {
-//                            Comment comment = new Comment();
-//                            comment.setUser_id(dSnapshot.getValue(Comment.class).getUser_id());
-//                            comment.setComment(dSnapshot.getValue(Comment.class).getComment());
-//                            comment.setDate_created(dSnapshot.getValue(Comment.class).getDate_created());
-//                            comments.add(comment);
-//                        }
+////                        ArrayList<Comment> comments = new ArrayList<Comment>();
+////                        for (DataSnapshot dSnapshot : singleSnapshot
+////                                .child(getString(R.string.field_comments)).getChildren()) {
+////                            Comment comment = new Comment();
+////                            comment.setUser_id(dSnapshot.getValue(Comment.class).getUser_id());
+////                            comment.setComment(dSnapshot.getValue(Comment.class).getComment());
+////                            comment.setDate_created(dSnapshot.getValue(Comment.class).getDate_created());
+////                            comments.add(comment);
+////                        }
 //
-//                        photo.setComments(comments);
+////                        post.setComments(comments);
 //
-//                        List<Like> likesList = new ArrayList<Like>();
-//                        for (DataSnapshot dSnapshot : singleSnapshot
-//                                .child(getString(R.string.field_likes)).getChildren()) {
-//                            Like like = new Like();
-//                            like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
-//                            likesList.add(like);
-//                        }
-//                        photo.setLikes(likesList);
-//                        photos.add(photo);
+////                        List<Like> likesList = new ArrayList<Like>();
+////                        for (DataSnapshot dSnapshot : singleSnapshot
+////                                .child(getString(R.string.field_likes)).getChildren()) {
+////                            Like like = new Like();
+////                            like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
+////                            likesList.add(like);
+////                        }
+////                        photo.setLikes(likesList);
+////                        photos.add(photo);
 //                    }catch(NullPointerException e){
 //                        Log.e(TAG, "onDataChange: NullPointerException: " + e.getMessage() );
 //                    }
@@ -184,8 +187,8 @@ public class ProfileFragment extends Fragment {
 //                gridView.setColumnWidth(imageWidth);
 //
 //                ArrayList<String> imgUrls = new ArrayList<String>();
-//                for(int i = 0; i < photos.size(); i++){
-//                    imgUrls.add(photos.get(i).getImage_path());
+//                for(int i = 0; i < posts.size(); i++){
+//                    imgUrls.add(posts.get(i).getImage_path());
 //                }
 //                GridImageAdapter adapter = new GridImageAdapter(getActivity(),R.layout.layout_grid_imageview,
 //                        "", imgUrls);
@@ -198,60 +201,14 @@ public class ProfileFragment extends Fragment {
 //                    }
 //                });
 //            }
-//
+
 //            @Override
 //            public void onCancelled(DatabaseError databaseError) {
 //                Log.d(TAG, "onCancelled: query cancelled.");
 //            }
 //        });
 //    }
-//
-//    private void getFollowersCount(){
-//        mFollowersCount = 0;
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-//        Query query = reference.child(getString(R.string.dbname_followers))
-//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-//                    Log.d(TAG, "onDataChange: found follower:" + singleSnapshot.getValue());
-//                    mFollowersCount++;
-//                }
-//                mFollowers.setText(String.valueOf(mFollowersCount));
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-//
-//    private void getFollowingCount(){
-//        mFollowingCount = 0;
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-//        Query query = reference.child(getString(R.string.dbname_following))
-//                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-//                    Log.d(TAG, "onDataChange: found following user:" + singleSnapshot.getValue());
-//                    mFollowingCount++;
-//                }
-//                mFollowing.setText(String.valueOf(mFollowingCount));
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-//
+
 //    private void getPostsCount(){
 //        mPostsCount = 0;
 //
