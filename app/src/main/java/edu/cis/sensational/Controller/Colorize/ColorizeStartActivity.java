@@ -96,6 +96,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
 
     }
 
+    //https://developer.android.com/training/animation/reposition-view
     private void animation()
     {
         ObjectAnimator animation = ObjectAnimator.ofFloat(bottomright,"translationX", -700f);
