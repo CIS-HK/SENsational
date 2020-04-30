@@ -56,17 +56,6 @@ import edu.cis.sensational.Model.Utils.FirebaseMethods;
 //import edu.cis.sensational.View.opengl.NewStoryActivity;
 
 public class HomeActivity extends AppCompatActivity {
-//        MainFeedListAdapter.OnLoadMoreItemsListener{
-
-//    @Override
-//    public void onLoadMoreItems() {
-//        Log.d(TAG, "onLoadMoreItems: displaying more photos");
-//        HomeFragment fragment = (HomeFragment)getSupportFragmentManager()
-//                .findFragmentByTag("android:switcher:" + R.id.viewpager_container + ":" + mViewPager.getCurrentItem());
-//        if(fragment != null){
-//            fragment.displayMorePhotos();
-//        }
-//    }
 
     private static final String TAG = "HomeActivity";
     private static final int ACTIVITY_NUM = 0;
@@ -98,7 +87,6 @@ public class HomeActivity extends AppCompatActivity {
     HomeAdapter myAdapter;
 
     private String userID;
-
 
     final Context context = this;
 
@@ -197,7 +185,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void searchForTag(String searchWord){
-        mPostList.clear();
+
+        final ArrayList<Post> mPostList = new ArrayList<>();
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference attendanceRef = rootRef
@@ -207,7 +196,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String key = ds.getKey();
                     Post value = ds.getValue(Post.class);
                     mPostList.add(value);
                 }

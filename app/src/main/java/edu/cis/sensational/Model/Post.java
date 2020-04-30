@@ -18,7 +18,7 @@ public class Post implements Parcelable {
     private String date_created;
     private String user_id;
     private String tag;
-    private List<Likes> likes;
+    private long likes;
     private List<Comment> comments;
     private boolean publicPost;
     private String postID;
@@ -30,13 +30,13 @@ public class Post implements Parcelable {
         date_created = "";
         user_id = "";
         tag = "";
-        likes = new ArrayList<>();
+        likes = 0;
         comments = new ArrayList<>();
         postID = "";
         publicPost = false;
     }
 
-    public Post (String title, String description, String date_created, boolean publicPost, String post_id, String user_id, String tags, List<Likes> likes, List<Comment> comments){
+    public Post (String title, String description, String date_created, boolean publicPost, String post_id, String user_id, String tags, long likes, List<Comment> comments){
         this.title = title;
         this.description = description;
         this.date_created = date_created;
@@ -136,11 +136,11 @@ public class Post implements Parcelable {
         this.tag = tags;
     }
 
-    public List<Likes> getLikes() {
+    public long getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Likes> likes) {
+    public void setLikes(int likes) {
         this.likes = likes;
     }
 
