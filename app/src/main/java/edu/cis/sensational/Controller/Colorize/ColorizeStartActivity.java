@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.R;
 
 public class ColorizeStartActivity extends AppCompatActivity {
@@ -39,15 +40,15 @@ public class ColorizeStartActivity extends AppCompatActivity {
         topright = findViewById(R.id.imageView5);
         topleft = findViewById(R.id.imageView3);
 
+
         //https://stackoverflow.com/questions/37244357/how-to-play-music-in-android-studio
         musicSwitch = findViewById(R.id.musicSwitch);
-        //musicSwitch.setChecked(false);
-        musicSwitch.setTextOff("OFF");
-        musicSwitch.setTextOn("ON");
         myMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.colorizemusic);
+        GameConstants.mediaPlayer = myMediaPlayer;
+        GameConstants.mediaPlayer.setLooping(true);
 
         setUpButtons();
-        // animation();
+        //animation();
     }
 
     private void setUpButtons() {
@@ -70,8 +71,8 @@ public class ColorizeStartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ColorizeStartActivity.this, GamesSharedActivity.class));
-                if (myMediaPlayer.isPlaying()){
-                    myMediaPlayer.release();
+                if (GameConstants.mediaPlayer.isPlaying()){
+                    GameConstants.mediaPlayer.stop();
                 }
             }
         });
@@ -84,12 +85,14 @@ public class ColorizeStartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (musicSwitch.isChecked())
                 {
-                    myMediaPlayer.start();
-                    myMediaPlayer.setVolume(20,20);
+                    GameConstants.mediaPlayer.start();
+                    GameConstants.mediaPlayer.setVolume(20,20);
+                    GameConstants.MUSIC = true;
                 }
                 else
                 {
-                    myMediaPlayer.pause();
+                    GameConstants.mediaPlayer.pause();
+                    GameConstants.MUSIC = false;
                 }
             }
         });
