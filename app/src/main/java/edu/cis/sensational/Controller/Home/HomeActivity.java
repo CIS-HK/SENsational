@@ -150,7 +150,6 @@ public class HomeActivity extends AppCompatActivity {
             titleList.add(post.getTitle());
             descriptionList.add(post.getDescription());
             IDList.add(post.getPostID());
-
         }
 
         myAdapter = new HomeAdapter(titleList, descriptionList, IDList);
@@ -243,108 +242,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
-//    public void onCommentThreadSelected(Photo photo, String callingActivity){
-//        Log.d(TAG, "onCommentThreadSelected: selected a coemment thread");
-//
-//        ViewCommentsFragment fragment  = new ViewCommentsFragment();
-//        Bundle args = new Bundle();
-//        args.putParcelable(getString(R.string.photo), photo);
-//        args.putString(getString(R.string.home_activity), getString(R.string.home_activity));
-//        fragment.setArguments(args);
-//
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.container, fragment);
-//        transaction.addToBackStack(getString(R.string.view_comments_fragment));
-//        transaction.commit();
-//
-//    }
-
-//    public void hideLayout(){
-//        Log.d(TAG, "hideLayout: hiding layout");
-//        mRelativeLayout.setVisibility(View.GONE);
-//        mFrameLayout.setVisibility(View.VISIBLE);
-//    }
-//
-//
-//    public void showLayout(){
-//        Log.d(TAG, "hideLayout: showing layout");
-//        mRelativeLayout.setVisibility(View.VISIBLE);
-//        mFrameLayout.setVisibility(View.GONE);
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        if(mFrameLayout.getVisibility() == View.VISIBLE){
-//            showLayout();
-//        }
-//    }
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        Log.d(TAG, "onActivityResult: incoming result.");
-//        // Received recording or error from MaterialCamera
-//
-//        if (requestCode == REQUEST_ADD_NEW_STORY) {
-//            Log.d(TAG, "onActivityResult: incoming new story.");
-//            if (resultCode == RESULT_ADD_NEW_STORY) {
-//                Log.d(TAG, "onActivityResult: got the new story.");
-//                Log.d(TAG, "onActivityResult: data type: " + data.getType());
-//
-//                final HomeFragment fragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager_container + ":" + 1);
-//                if (fragment != null) {
-//
-//                    FirebaseMethods firebaseMethods = new FirebaseMethods(this);
-//                    firebaseMethods.uploadNewStory(data, fragment);
-//
-//                }
-//                else{
-//                    Log.d(TAG, "onActivityResult: could not communicate with home fragment.");
-//                }
-//            }
-//        }
-//    }
-//
-//
-//    private void initImageLoader(){
-//        UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
-//        ImageLoader.getInstance().init(universalImageLoader.getConfig());
-//    }
-//
-//    /**
-//     * Responsible for adding the 3 tabs: Camera, Home, Messages
-//     */
-//    private void setupViewPager(){
-//        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-//        adapter.addFragment(new CameraFragment()); //index 0
-//        adapter.addFragment(new HomeFragment()); //index 1
-//        adapter.addFragment(new MessagesFragment()); //index 2
-//        mViewPager.setAdapter(adapter);
-//
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-//        tabLayout.setupWithViewPager(mViewPager);
-//
-//        tabLayout.getTabAt(0).setIcon(R.drawable.ic_camera);
-//        tabLayout.getTabAt(1).setIcon(R.drawable.ic_instagram_black);
-//        tabLayout.getTabAt(2).setIcon(R.drawable.ic_arrow);
-//    }
-//
-//    /**
-//     * BottomNavigationView setup
-//     */
-//    private void setupBottomNavigationView(){
-//        Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
-//        BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottomNavViewBar);
-//        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-//        BottomNavigationViewHelper.enableNavigation(mContext, this,bottomNavigationViewEx);
-//        Menu menu = bottomNavigationViewEx.getMenu();
-//        MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
-//        menuItem.setChecked(true);
-//    }
-
 
      /*
     ------------------------------------ Firebase ---------------------------------------------

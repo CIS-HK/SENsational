@@ -89,6 +89,9 @@ public class ViewPostActivity extends AppCompatActivity {
 
     final Context context = this;
 
+    private String userID;
+
+
     @Nullable
 
 
@@ -98,12 +101,19 @@ public class ViewPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_post);
         Log.d(TAG, "onCreate: started.");
 
+        setupFirebaseAuth();
+
+        if (mAuth.getCurrentUser() != null) {
+            userID = mAuth.getCurrentUser().getUid();
+        }
+
+        //https://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-in-android-application
         currentPost = getIntent().getStringExtra("Post");
 
-        initWidgets();
 
         init();
-        setupFirebaseAuth();
+
+        initWidgets();
     }
 
     private void initWidgets(){
@@ -129,8 +139,10 @@ public class ViewPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "upvote button clicked");
+
+
                 FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
-                firebaseMethods.setLikes(currentPost, 1);
+                firebaseMethods.upvoteButtonPressed(currentPost, userID, mPost);
             }
         });
 
@@ -138,7 +150,7 @@ public class ViewPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
-                firebaseMethods.setLikes(currentPost, 0);
+//                firebaseMethods.setLikes(currentPost, 0, userID);
             }
         });
     }

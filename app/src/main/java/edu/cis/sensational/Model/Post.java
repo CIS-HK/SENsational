@@ -3,6 +3,7 @@ package edu.cis.sensational.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +19,10 @@ public class Post implements Parcelable {
     private String date_created;
     private String user_id;
     private String tag;
-    private long likes;
+    private List<String> likes;
+    private List<String> unlikes;
     private List<Comment> comments;
+    private long likeCount;
     private boolean publicPost;
     private String postID;
 
@@ -30,13 +33,17 @@ public class Post implements Parcelable {
         date_created = "";
         user_id = "";
         tag = "";
-        likes = 0;
+        likes = new ArrayList<>();
         comments = new ArrayList<>();
+        unlikes = new ArrayList<>();
+        likeCount = 0;
         postID = "";
         publicPost = false;
     }
 
-    public Post (String title, String description, String date_created, boolean publicPost, String post_id, String user_id, String tags, long likes, List<Comment> comments){
+    public Post (String title, String description, String date_created, boolean publicPost,
+                 String post_id, String user_id, String tags, List<String> likes,
+                 List<Comment> comments, List<String> unlikes, long likeCount){
         this.title = title;
         this.description = description;
         this.date_created = date_created;
@@ -44,6 +51,8 @@ public class Post implements Parcelable {
         this.tag = tags;
         this.likes = likes;
         this.comments = comments;
+        this.unlikes = unlikes;
+        this.likeCount = likeCount;
         this.postID = post_id;
         this.publicPost = publicPost;
     }
@@ -136,12 +145,28 @@ public class Post implements Parcelable {
         this.tag = tags;
     }
 
-    public long getLikes() {
+    public List<String> getUnLikes() {
+        return unlikes;
+    }
+
+    public void setUnLikes(List<String> unlikes) {
+        this.unlikes = unlikes;
+    }
+
+    public List<String> getLikes() {
         return likes;
     }
 
-    public void setLikes(int likes) {
+    public void setLikes(List<String> likes) {
         this.likes = likes;
+    }
+
+    public long getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(long likeCount) {
+        this.likeCount = likeCount;
     }
 
     public void setPublic(boolean publicPost){
