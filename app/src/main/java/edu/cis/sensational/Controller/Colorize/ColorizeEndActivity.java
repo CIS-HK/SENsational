@@ -3,6 +3,7 @@ package edu.cis.sensational.Controller.Colorize;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,8 @@ public class ColorizeEndActivity extends AppCompatActivity {
     Button playAgainButton, quitButton;
     TextView scoreLabel, highScoreLabel;
     ImageView smiley;
+    Switch musicSwitch2;
+
 
 
     @Override
@@ -30,11 +33,23 @@ public class ColorizeEndActivity extends AppCompatActivity {
         scoreLabel = findViewById(R.id.scoreLabel);
         highScoreLabel = findViewById(R.id.highscorelabel);
         smiley = findViewById(R.id.smiley);
+        musicSwitch2 = findViewById(R.id.musicSwitch2);
 
 
+        //same as start screen
+        if (GameConstants.MUSIC = true)
+        {
+            musicSwitch2.setChecked(true);
+        }
+        else
+
+        {
+            musicSwitch2.setChecked(false);
+        }
 
         setUpButtons();
         displayScore();
+
 
     }
 
@@ -57,6 +72,24 @@ public class ColorizeEndActivity extends AppCompatActivity {
                 startActivity(new Intent(ColorizeEndActivity.this,GamesSharedActivity.class));
                 finish();
                 GameConstants.SCORE = 0;
+                GameConstants.mediaPlayer.stop();
+            }
+        });
+
+        musicSwitch2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (musicSwitch2.isChecked())
+                {
+                    GameConstants.mediaPlayer.start();
+                    GameConstants.mediaPlayer.setVolume(20,20);
+                    GameConstants.MUSIC = true;
+                }
+                else
+                {
+                    GameConstants.mediaPlayer.pause();
+                    GameConstants.MUSIC = false;
+                }
             }
         });
     }

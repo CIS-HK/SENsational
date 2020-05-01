@@ -34,7 +34,6 @@ public class ColorizeMainActivity extends AppCompatActivity
     ArrayList<String> colorWords;
     ArrayList<Integer> colorInts;
     HashMap<Integer, String> answers;
-    //HashMap<List<Integer>, List<String>> answers;
     String word, correctAnswer, wrongAnswer;
     long timeLeft;
     int color, backColor;
