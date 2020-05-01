@@ -3,6 +3,7 @@ package edu.cis.sensational.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,11 @@ public class Post implements Parcelable {
     private String description;
     private String date_created;
     private String user_id;
-    private String tags;
-    private List<Likes> likes;
+    private String tag;
+    private List<String> likes;
+    private List<String> unlikes;
     private List<Comment> comments;
+    private long likeCount;
     private boolean publicPost;
     private String postID;
 
@@ -29,21 +32,27 @@ public class Post implements Parcelable {
         description = "";
         date_created = "";
         user_id = "";
-        tags = "";
+        tag = "";
         likes = new ArrayList<>();
         comments = new ArrayList<>();
+        unlikes = new ArrayList<>();
+        likeCount = 0;
         postID = "";
         publicPost = false;
     }
 
-    public Post (String title, String description, String date_created, boolean publicPost, String post_id, String user_id, String tags, List<Likes> likes, List<Comment> comments){
+    public Post (String title, String description, String date_created, boolean publicPost,
+                 String post_id, String user_id, String tags, List<String> likes,
+                 List<Comment> comments, List<String> unlikes, long likeCount){
         this.title = title;
         this.description = description;
         this.date_created = date_created;
         this.user_id = user_id;
-        this.tags = tags;
+        this.tag = tags;
         this.likes = likes;
         this.comments = comments;
+        this.unlikes = unlikes;
+        this.likeCount = likeCount;
         this.postID = post_id;
         this.publicPost = publicPost;
     }
@@ -54,7 +63,7 @@ public class Post implements Parcelable {
         description = in.readString();
         user_id = in.readString();
         postID = in.readString();
-        tags = in.readString();
+        tag = in.readString();
     }
 
     @Override
@@ -64,7 +73,7 @@ public class Post implements Parcelable {
         dest.writeString(description);
         dest.writeString(user_id);
         dest.writeString(postID);
-        dest.writeString(tags);
+        dest.writeString(tag);
     }
 
     @Override
@@ -129,19 +138,35 @@ public class Post implements Parcelable {
     }
 
     public String getTags() {
-        return tags;
+        return tag;
     }
 
     public void setTags(String tags) {
-        this.tags = tags;
+        this.tag = tags;
     }
 
-    public List<Likes> getLikes() {
+    public List<String> getUnLikes() {
+        return unlikes;
+    }
+
+    public void setUnLikes(List<String> unlikes) {
+        this.unlikes = unlikes;
+    }
+
+    public List<String> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Likes> likes) {
+    public void setLikes(List<String> likes) {
         this.likes = likes;
+    }
+
+    public long getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(long likeCount) {
+        this.likeCount = likeCount;
     }
 
     public void setPublic(boolean publicPost){
@@ -167,7 +192,7 @@ public class Post implements Parcelable {
                 ", date_created='" + date_created + '\'' +
                 ", description='" + description + '\'' +
                 ", user_id='" + user_id + '\'' +
-                ", tags='" + tags + '\'' +
+                ", tags='" + tag + '\'' +
                 ", likes=" + likes +
                 ", public=" + publicPost +
                 ", postID=" + postID +

@@ -12,18 +12,23 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.Controller.Profile.AccountSettingsActivity;
+import edu.cis.sensational.Model.Likes;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.Model.User;
 import edu.cis.sensational.Model.UserAccountSettings;
@@ -73,7 +78,7 @@ public class FirebaseMethods {
         return sdf.format(new Date());
     }
 
-    public void createNewPost(String title, String description, String tag){
+    public void createNewPost(String title, String description, String tags){
 
         // retrieve a key for the postID
         String newPostKey = myRef.child(mContext.getString(R.string.dbname_posts)).push().getKey();
@@ -82,23 +87,163 @@ public class FirebaseMethods {
         Post post = new Post();
         post.setTitle(title);
         post.setDescription(description);
-        post.setTags(tag);
+        post.setTags(tags);
         post.setUser_id(userID);
         post.setDate_created(getTimestamp());
+        post.setLikeCount(0);
+        post.setLikes(post.getLikes());
         post.setComments(post.getComments());
         post.setPostID(newPostKey);
 
         // upload the post to the database
-        uploadNewPost(post);
+        uploadNewPost(post, tags);
     }
 
-    public void uploadNewPost(Post post)
+    public void upvoteButtonPressed(final String post_id, final String userID, final Post post){
+
+        final String postID = post_id;
+
+        final DatabaseReference userRef = myRef
+                .child("posts")
+                .child(postID)
+                .child("likes");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                // if the user hasn't liked this post
+                if(dataSnapshot.getValue() == null )
+                {
+                    Log.d(TAG, "Post: upvoting");
+
+                    List<String> userLikesList = new ArrayList<>();
+                    userLikesList.add(userID);
+
+                    myRef.child(mContext.getString(R.string.dbname_posts))
+                            .child(postID)
+                            .child(mContext.getString(R.string.field_likes))
+                            .setValue(userLikesList);
+                    myRef.child(mContext.getString(R.string.dbname_user_posts))
+                            .child(userID)
+                            .child(postID)
+                            .child(mContext.getString(R.string.field_likes))
+                            .setValue(userLikesList);
+                    myRef.child("user_likes")
+                            .child(userID)
+                            .child(postID)
+                            .setValue(post);
+
+                    upvote(post_id);
+
+                }
+                else if (!(dataSnapshot.getValue(List.class).contains(userID))){
+                    Log.d(TAG, "Post: upvoting");
+
+                    List<String> userLikesList = dataSnapshot.getValue(List.class);
+                    userLikesList.add(userID);
+
+                    myRef.child(mContext.getString(R.string.dbname_posts))
+                            .child(postID)
+                            .child(mContext.getString(R.string.field_likes))
+                            .setValue(userLikesList);
+                    myRef.child(mContext.getString(R.string.dbname_user_posts))
+                            .child(userID)
+                            .child(postID)
+                            .child(mContext.getString(R.string.field_likes))
+                            .setValue(userLikesList);
+                    myRef.child("user_likes")
+                            .child(userID)
+                            .child(postID)
+                            .setValue(post);
+
+                    upvote(post_id);
+                }
+                // if the user liked this post
+                else
+                {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w(TAG, "Failed to retrieve number of likes.", error.toException());
+            }
+        });
+    }
+
+    public void upvote(String post_id){
+        final String postID = post_id;
+
+        final DatabaseReference userRef = myRef
+                .child("posts")
+                .child(postID)
+                .child("likeCount");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                final long newLikeCount = dataSnapshot.getValue(Long.class) + 1;
+
+                myRef.child(mContext.getString(R.string.dbname_posts))
+                        .child(postID)
+                        .child(mContext.getString(R.string.field_like_count))
+                        .setValue(newLikeCount);
+                myRef.child(mContext.getString(R.string.dbname_user_posts))
+                        .child(userID)
+                        .child(postID)
+                        .child(mContext.getString(R.string.field_like_count))
+                        .setValue(newLikeCount);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w(TAG, "Failed to retrieve number of likes.", error.toException());
+            }
+        });
+    }
+
+    public void downvote(String post_id){
+        final String postID = post_id;
+
+        final DatabaseReference userRef = myRef
+                .child("posts")
+                .child(postID)
+                .child("likeCount");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getValue(Long.class) > 0){
+                    final long newLikeCount = dataSnapshot.getValue(Long.class) - 1;
+
+                    myRef.child(mContext.getString(R.string.dbname_posts))
+                            .child(postID)
+                            .child(mContext.getString(R.string.field_likes))
+                            .setValue(newLikeCount);
+                    myRef.child(mContext.getString(R.string.dbname_user_posts))
+                            .child(userID)
+                            .child(postID)
+                            .child(mContext.getString(R.string.field_likes))
+                            .setValue(newLikeCount);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w(TAG, "Failed to retrieve number of likes.", error.toException());
+            }
+        });
+    }
+
+    public void uploadNewPost(Post post, String tag)
     {
         Log.d(TAG, "uploadNewPost: attempting to post.");
 
         myRef.child("user_posts").child(post.getUser_id())
                 .child(post.getPostID()).setValue(post);
         myRef.child("posts").child(post.getPostID()).setValue(post);
+        myRef.child("tags").child(tag).child(post.getPostID()).setValue(post);
     }
 
     public void updateUserAccountSettings(String location, String age, String information) {

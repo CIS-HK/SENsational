@@ -2,6 +2,7 @@ package edu.cis.sensational.Controller.Post;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthProvider;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,6 +43,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
+import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
 import edu.cis.sensational.Model.Comment;
@@ -63,9 +69,8 @@ public class ViewPostActivity extends AppCompatActivity {
 
 
     //widgets
-    private TextView title, description, tags;
-    private ImageView mBackArrow, mEllipses, mHeartRed, mHeartWhite, mProfileImage, mComment;
-
+    private TextView title, description, tags, date;
+    private Button backButton, upvote, downvote;
 
     //vars
     private Post mPost;
@@ -80,6 +85,13 @@ public class ViewPostActivity extends AppCompatActivity {
     private String mLikesString = "";
     private User mCurrentUser;
 
+    private String currentPost;
+
+    final Context context = this;
+
+    private String userID;
+
+
     @Nullable
 
 
@@ -89,22 +101,63 @@ public class ViewPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_post);
         Log.d(TAG, "onCreate: started.");
 
+        setupFirebaseAuth();
+
+        if (mAuth.getCurrentUser() != null) {
+            userID = mAuth.getCurrentUser().getUid();
+        }
+
+        //https://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-in-android-application
+        currentPost = getIntent().getStringExtra("Post");
+
+
+        init();
+
+        initWidgets();
+    }
+
+    private void initWidgets(){
         title = (TextView) findViewById(R.id.titleView);
         description = (TextView) findViewById(R.id.descriptionView);
         tags = (TextView) findViewById(R.id.tagView);
+        date = (TextView) findViewById(R.id.dateView);
 
-        Log.d(TAG, "onCreate: initializing...");
-        init();
+        backButton = (Button) findViewById(R.id.backButton);
+        upvote = (Button) findViewById(R.id.upvoteButton);
+        downvote = (Button) findViewById(R.id.downvoteButton);
 
-        Log.d(TAG, "onCreate: setting up Firebase.");
-        setupFirebaseAuth();
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,
+                        HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        upvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "upvote button clicked");
+
+
+                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
+                firebaseMethods.upvoteButtonPressed(currentPost, userID, mPost);
+            }
+        });
+
+        downvote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
+//                firebaseMethods.setLikes(currentPost, 0, userID);
+            }
+        });
     }
-
 
     private void init(){
         try{
-            //mPhoto = getPhotoFromBundle();
-            String photo_id = "-M5p27XDQ8UFXyEW7pse";
+            String photo_id = currentPost;
 
             Query query = FirebaseDatabase.getInstance().getReference()
                     .child(getString(R.string.dbname_posts))
@@ -125,8 +178,8 @@ public class ViewPostActivity extends AppCompatActivity {
 
                         mPost = newPost;
 
-//                        getCurrentUser();
-//                        getPostDetails();
+                        getCurrentUser();
+                        getPostDetails();
                         setupWidgets();
 
                     }
@@ -189,11 +242,14 @@ public class ViewPostActivity extends AppCompatActivity {
         });
     }
 
-    private void setupWidgets(){
+
+
+    private void setupWidgets() {
 
         title.setText(mPost.getTitle());
         description.setText(mPost.getDescription());
         tags.setText(mPost.getTags());
+        date.setText(mPost.getDate_created().substring(0, 9));
 
     }
 

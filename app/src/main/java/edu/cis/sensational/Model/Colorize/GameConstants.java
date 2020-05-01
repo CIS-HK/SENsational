@@ -1,15 +1,17 @@
 package edu.cis.sensational.Model.Colorize;
 
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+
+import edu.cis.sensational.R;
 
 public class GameConstants {
 
-
+    public static boolean MUSIC = false;
     public static int SCORE = 0;
     public static int HIGHSCORE = 0;
-    public static final String DISPLAYSCORE = "Score: ";
+    public static MediaPlayer mediaPlayer = new MediaPlayer();
     public static final String DISPLAYHIGHSCORE = "High Score: ";
-    public static final String DISPLAYTIME = "Time: ";
     public static final String TOAST = "Time's up!";
     public static final String RED = "RED";
     public static final String YELLOW = "YELLOW";

@@ -43,10 +43,11 @@
     <string name="dbname_users">users</string>
     <string name="dbname_user_account_settings">user_account_settings</string>
     <string name="dbname_posts">posts</string>
-    <string name="dbname_user_photos">user_photos</string>
+    <string name="dbname_user_posts">user_posts</string>
     <string name="dbname_following">following</string>
     <string name="dbname_followers">followers</string>
     <string name="dbname_stories">stories</string>
+    <string name="dbname_tags">tags</string>
 
     <string name="field_username">username</string>
     <string name="field_email">email</string>
@@ -60,6 +61,7 @@
     <string name="field_information">information</string>
     <string name="field_user_id">user_id</string>
     <string name="field_likes">likes</string>
+    <string name="field_like_count">likeCount</string>
     <string name="field_caption">caption</string>
     <string name="field_date_created">date_created</string>
     <string name="field_post_id">postID</string>
@@ -76,7 +78,7 @@
     <string name="field_profile_photo">profile_photo</string>
     <string name="field_timestamp">timestamp</string>
     <string name="bubbles_title">BUBBLES!</string>
-    <string name="instructions1a">Bubbles will float up on the screen one by one. Try to remember the color of each bubble. </string>
+    <string name="instructions1a">Bubbles will float up on the screen one by one. \n Try to remember the color of each bubble. </string>
     <string name="instructions2">Pick the color of each bubble in the right order.</string>
     <string name="instructionsLabel">Instructions:</string>
     <string name="select_mode_label">Mode:</string>
@@ -107,5 +109,10 @@
     <string name="most_distraction">Most distraction</string>
     <string name="select_mode">Select mode:</string>
     <string name="games">Games</string>
+    <string name="instruction_3_main">3. For parents: Use the anonymous forum \n to reach out for support!</string>
+    <string name="instruction_1_main">1. Play some fun games to develop your executive function skills!</string>
+    <string name="welcome_main">Welcome to Clover!</string>
+    <string name="instruction_2_main">2. Use the calming feature when you\'re \n feeling upset or angry.</string>
+    <string name="forum">Forum</string>
 
 </resources>
