@@ -166,6 +166,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         // inverting the order of the list so the most recent posts appear first
+        //https://www.techiedelight.com/reverse-list-java-inplace/
         for (int i = 0, j = titleList.size() - 1; i < j; i++){
             titleList.add(i, titleList.remove(j));
             descriptionList.add(i, descriptionList.remove(j));
