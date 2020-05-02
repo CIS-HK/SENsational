@@ -19,11 +19,11 @@ public class Post implements Parcelable {
     private String date_created;
     private String user_id;
     private String tag;
-    private List<String> likes;
-    private List<String> unlikes;
-    private List<Comment> comments;
+    private ArrayList<String> likes;
+    private ArrayList<String> unlikes;
+    private ArrayList<Comment> comments;
     private long likeCount;
-    private boolean publicPost;
+    private boolean privatePost;
     private String postID;
 
     public Post()
@@ -38,12 +38,12 @@ public class Post implements Parcelable {
         unlikes = new ArrayList<>();
         likeCount = 0;
         postID = "";
-        publicPost = false;
+        privatePost = false;
     }
 
-    public Post (String title, String description, String date_created, boolean publicPost,
-                 String post_id, String user_id, String tags, List<String> likes,
-                 List<Comment> comments, List<String> unlikes, long likeCount){
+    public Post (String title, String description, String date_created, boolean privatePost,
+                 String post_id, String user_id, String tags, ArrayList<String> likes,
+                ArrayList<Comment> comments, ArrayList<String> unlikes, long likeCount){
         this.title = title;
         this.description = description;
         this.date_created = date_created;
@@ -54,7 +54,7 @@ public class Post implements Parcelable {
         this.unlikes = unlikes;
         this.likeCount = likeCount;
         this.postID = post_id;
-        this.publicPost = publicPost;
+        this.privatePost = privatePost;
     }
 
     public Post(Parcel in) {
@@ -93,11 +93,11 @@ public class Post implements Parcelable {
         }
     };
 
-    public List<Comment> getComments() {
+    public ArrayList<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
     }
 
@@ -149,7 +149,7 @@ public class Post implements Parcelable {
         return unlikes;
     }
 
-    public void setUnLikes(List<String> unlikes) {
+    public void setUnLikes(ArrayList<String> unlikes) {
         this.unlikes = unlikes;
     }
 
@@ -157,7 +157,7 @@ public class Post implements Parcelable {
         return likes;
     }
 
-    public void setLikes(List<String> likes) {
+    public void setLikes(ArrayList<String> likes) {
         this.likes = likes;
     }
 
@@ -169,12 +169,12 @@ public class Post implements Parcelable {
         this.likeCount = likeCount;
     }
 
-    public void setPublic(boolean publicPost){
-        this.publicPost = publicPost;
+    public void setPrivate(boolean privatePost){
+        this.privatePost = privatePost;
     }
 
-    public boolean getPublic(){
-        return publicPost;
+    public boolean getPrivate(){
+        return privatePost;
     }
 
     public void setPostID(String postID){
@@ -194,7 +194,7 @@ public class Post implements Parcelable {
                 ", user_id='" + user_id + '\'' +
                 ", tags='" + tag + '\'' +
                 ", likes=" + likes +
-                ", public=" + publicPost +
+                ", public=" + privatePost +
                 ", postID=" + postID +
                 '}';
     }

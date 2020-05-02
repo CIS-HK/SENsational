@@ -13,12 +13,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthProvider;
@@ -69,8 +72,9 @@ public class ViewPostActivity extends AppCompatActivity {
 
 
     //widgets
-    private TextView title, description, tags, date;
-    private Button backButton, upvote, downvote;
+    private TextView title, description, tags, date, likes;
+    private Button backButton, upvote, downvote, commentButton;
+    private EditText comment;
 
     //vars
     private Post mPost;
@@ -86,6 +90,9 @@ public class ViewPostActivity extends AppCompatActivity {
     private User mCurrentUser;
 
     private String currentPost;
+    private String commentText;
+
+    private RecyclerView commentsView;
 
     final Context context = this;
 
@@ -110,7 +117,6 @@ public class ViewPostActivity extends AppCompatActivity {
         //https://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-in-android-application
         currentPost = getIntent().getStringExtra("Post");
 
-
         init();
 
         initWidgets();
@@ -121,10 +127,15 @@ public class ViewPostActivity extends AppCompatActivity {
         description = (TextView) findViewById(R.id.descriptionView);
         tags = (TextView) findViewById(R.id.tagView);
         date = (TextView) findViewById(R.id.dateView);
+        likes = (TextView) findViewById(R.id.likes);
+        comment = (EditText) findViewById(R.id.commentField);
 
         backButton = (Button) findViewById(R.id.backButton);
         upvote = (Button) findViewById(R.id.upvoteButton);
         downvote = (Button) findViewById(R.id.downvoteButton);
+        commentButton = (Button) findViewById(R.id.commentButton);
+
+        commentsView = (RecyclerView) findViewById(R.id.commentView);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +164,15 @@ public class ViewPostActivity extends AppCompatActivity {
 //                firebaseMethods.setLikes(currentPost, 0, userID);
             }
         });
+
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commentText = comment.getText().toString();
+                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
+                firebaseMethods.makeComment(mPost, currentPost, commentText);
+            }
+        });
     }
 
     private void init(){
@@ -167,21 +187,12 @@ public class ViewPostActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-                        Post newPost = new Post();
-                        Map<String, Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
 
-                        newPost.setTitle(objectMap.get(getString(R.string.field_title)).toString());
-                        newPost.setTags(objectMap.get(getString(R.string.field_tags)).toString());
-                        newPost.setDescription(objectMap.get(getString(R.string.field_description)).toString());
-                        newPost.setUser_id(objectMap.get(getString(R.string.field_user_id)).toString());
-                        newPost.setDate_created(objectMap.get(getString(R.string.field_date_created)).toString());
-
-                        mPost = newPost;
+                        mPost = singleSnapshot.getValue(Post.class);
 
                         getCurrentUser();
                         getPostDetails();
                         setupWidgets();
-
                     }
 
                 }
@@ -220,7 +231,7 @@ public class ViewPostActivity extends AppCompatActivity {
     }
 
     private void getPostDetails(){
-        Log.d(TAG, "getPhotoDetails: retrieving photo details.");
+        Log.d(TAG, "getPostDetails: retrieving post details.");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
                 .child(getString(R.string.dbname_user_account_settings))
@@ -249,7 +260,15 @@ public class ViewPostActivity extends AppCompatActivity {
         title.setText(mPost.getTitle());
         description.setText(mPost.getDescription());
         tags.setText(mPost.getTags());
-        date.setText(mPost.getDate_created().substring(0, 9));
+        date.setText(mPost.getDate_created());
+        likes.setText(mPost.getLikeCount() + "");
+
+        ArrayList<Comment> commentsList = mPost.getComments();
+        Log.d(TAG, "" + commentsList.get(0).getComment());
+
+        CommentsAdapter myAdapter = new CommentsAdapter(commentsList);
+        commentsView.setAdapter(myAdapter);
+        commentsView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 

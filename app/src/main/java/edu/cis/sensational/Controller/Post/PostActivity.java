@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,8 +30,11 @@ public class PostActivity extends AppCompatActivity {
     private EditText mTitle, mDescription, mTag;
 
     private String title, description, tag;
+    private boolean privatePost;
 
     private Button postButton, backButton;
+
+    private Switch privateSwitch;
 
     private Context mContext;
 
@@ -39,8 +43,6 @@ public class PostActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     final Context context = this;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,9 @@ public class PostActivity extends AppCompatActivity {
         postButton = (Button) findViewById(R.id.newPostButton);
         backButton = (Button) findViewById(R.id.backButton);
 
+        privateSwitch = (Switch) findViewById(R.id.privateSwitch);
+        privateSwitch.setChecked(false);
+
         mContext = PostActivity.this;
     }
 
@@ -78,8 +83,17 @@ public class PostActivity extends AppCompatActivity {
                 tag = mTag.getText().toString();
 
                 if(checkInputs(title, description, tag)){
+                    if(privateSwitch.isChecked()){
+                        privatePost = true;
+                    }
+                    else{
+                        privatePost = false;
+                    }
                     FirebaseMethods firebaseMethods = new FirebaseMethods(PostActivity.this);
-                    firebaseMethods.createNewPost(title, description, tag);
+                    firebaseMethods.createNewPost(title, description, tag, privatePost);
+                }
+                else{
+                    Toast.makeText(mContext, "Inputs are invalid. Try again.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

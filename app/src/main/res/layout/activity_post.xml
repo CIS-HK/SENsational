@@ -91,6 +91,18 @@
             tools:layout_conversion_absoluteHeight="99dp"
             tools:layout_conversion_absoluteWidth="208dp" />
 
+        <Switch
+            android:id="@+id/privateSwitch"
+            android:layout_width="204dp"
+            android:layout_height="74dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:text="Make Private"
+            android:textSize="18sp"
+            android:textOff="No"
+            android:textOn="Yes"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="313dp">
