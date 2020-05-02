@@ -256,7 +256,7 @@ public class CalmingMode3Activity extends AppCompatActivity
     public void number()
     {
         //Array that hold the numbers to be shown in order on the screen per 1 second
-        final String[] array1 = {c.one, c.two, c.three, c.four};
+        final String[] array1 = {c.one, c.two, c.three, c.one, c.two,c.one, c.two, c.three};
         //Making a new Runnable (loop) for the number string
         number.post(new Runnable()
         {
@@ -276,14 +276,14 @@ public class CalmingMode3Activity extends AppCompatActivity
                     number.setText(array1[i]);
                 }
                 //When it reaches the end of array, goes back to beginning, continuing the loop
-                if (i == 4)
+                if (i == 8)
                 {
                     i = 0;
                 }
-
             }
         });
     }
+
     //Method to control the words text view
     public void text()
     {
@@ -296,8 +296,15 @@ public class CalmingMode3Activity extends AppCompatActivity
             @Override
             public void run()
             {
-                //Setting 4 second interval between the changing of words
-                breathe.postDelayed(this, 4000);
+                //Setting 3 second interval between the changing of words
+                if(x == 1)
+                {
+                    breathe.postDelayed(this, 2000);
+                }
+                else
+                {
+                    breathe.postDelayed(this, 3000);
+                }
                 //Setting the text to the words in the array and positively incrementing x
                 breathe.setText(array2[x]);
                 x++;

@@ -75,7 +75,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/bubbler_one"
-        android:text="1"
+        android:text="@string/one"
         android:textColor="#FFFFFF"
         android:textSize="60sp"
         android:textStyle="bold"

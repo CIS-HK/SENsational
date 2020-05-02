@@ -115,5 +115,20 @@
     <string name="welcome_main">Welcome to Clover!</string>
     <string name="instruction_2_main">2. Use the calming feature when you\'re \n feeling upset or angry.</string>
     <string name="forum">Forum</string>
+    <string name="play_again">Play Again</string>
+    <string name="exit_game">Exit Game</string>
+    <string name="finished_game">You finished the game!</string>
+    <string name="yay">YAY!</string>
+    <string name="dash">-</string>
+    <string name="total">Total:</string>
+    <string name="you_won">You won:</string>
+    <string name="what_color_was_the">What color was the</string>
+    <string name="bubble">bubble?</string>
+    <string name="first">first</string>
+    <string name="red">Red</string>
+    <string name="blue">Blue</string>
+    <string name="purple">Purple</string>
+    <string name="one">1</string>
+    <string name="home_page">Home Page</string>
 
 </resources>
