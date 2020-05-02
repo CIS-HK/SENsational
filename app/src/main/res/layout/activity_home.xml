@@ -71,13 +71,13 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/starPageButton"
+                android:id="@+id/switchButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="27dp"
                 android:layout_marginTop="29dp"
                 android:layout_marginBottom="30dp"
-                android:text="View Posts"
+                android:text="See Private"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +93,7 @@
                 android:text="Add Post"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/profilePageButton"
-                app:layout_constraintStart_toEndOf="@+id/starPageButton"
+                app:layout_constraintStart_toEndOf="@+id/switchButton"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button

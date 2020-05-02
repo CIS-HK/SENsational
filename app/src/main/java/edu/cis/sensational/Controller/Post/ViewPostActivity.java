@@ -260,11 +260,14 @@ public class ViewPostActivity extends AppCompatActivity {
         title.setText(mPost.getTitle());
         description.setText(mPost.getDescription());
         tags.setText(mPost.getTags());
-        date.setText(mPost.getDate_created());
-        likes.setText(mPost.getLikeCount() + "");
 
+        String postDate = mPost.getDate_created().substring(0,10);
+
+        Log.d(TAG, "" + postDate);
+
+        date.setText(postDate);
+        likes.setText(mPost.getLikeCount() + "");
         ArrayList<Comment> commentsList = mPost.getComments();
-        Log.d(TAG, "" + commentsList.get(0).getComment());
 
         CommentsAdapter myAdapter = new CommentsAdapter(commentsList);
         commentsView.setAdapter(myAdapter);

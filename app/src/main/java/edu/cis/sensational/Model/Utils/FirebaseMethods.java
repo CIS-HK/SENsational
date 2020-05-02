@@ -80,7 +80,7 @@ public class FirebaseMethods {
         return sdf.format(new Date());
     }
 
-    public void createNewPost(String title, String description, String tags, boolean privatePost){
+    public boolean createNewPost(String title, String description, String tags, boolean privatePost){
 
         ArrayList<String> initLikes = new ArrayList();
         ArrayList<Comment> initComments = new ArrayList();
@@ -92,7 +92,7 @@ public class FirebaseMethods {
         Post post = new Post();
         post.setTitle(title);
         post.setDescription(description);
-        post.setTags(tags);
+        post.setTags(tags.toLowerCase());
         post.setUser_id(userID);
         post.setDate_created(getTimestamp());
         post.setLikeCount(0);
@@ -103,6 +103,9 @@ public class FirebaseMethods {
 
         // upload the post to the database
         uploadNewPost(post, tags, privatePost);
+
+        return true;
+        // TODO figure out a way to listen back from the databse whether or not this has succeeded.
     }
 
     //TODO change the parameters so you use the getters from Post instead of individual IDs
@@ -432,7 +435,7 @@ public class FirebaseMethods {
                 userID
         );
 
-        // saves the settins to the databse
+        // saves the settings to the databse
         myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                 .child(userID)
                 .setValue(settings);

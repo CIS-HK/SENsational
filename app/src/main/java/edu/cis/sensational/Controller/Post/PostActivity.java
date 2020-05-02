@@ -82,15 +82,25 @@ public class PostActivity extends AppCompatActivity {
                 description = mDescription.getText().toString();
                 tag = mTag.getText().toString();
 
+                if(privateSwitch.isChecked()){
+                    privatePost = true;
+                }
+                else{
+                    privatePost = false;
+                }
+
                 if(checkInputs(title, description, tag)){
-                    if(privateSwitch.isChecked()){
-                        privatePost = true;
+
+                    FirebaseMethods firebaseMethods = new FirebaseMethods(PostActivity.this);
+                    if(firebaseMethods.createNewPost(title, description, tag, privatePost)){
+                        Toast.makeText(mContext, "Successfully posted.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context,
+                                HomeActivity.class);
+                        startActivity(intent);
                     }
                     else{
-                        privatePost = false;
+                        Toast.makeText(mContext, "Posting unsuccessful. Try again.", Toast.LENGTH_SHORT).show();
                     }
-                    FirebaseMethods firebaseMethods = new FirebaseMethods(PostActivity.this);
-                    firebaseMethods.createNewPost(title, description, tag, privatePost);
                 }
                 else{
                     Toast.makeText(mContext, "Inputs are invalid. Try again.", Toast.LENGTH_SHORT).show();

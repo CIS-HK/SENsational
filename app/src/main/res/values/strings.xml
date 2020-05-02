@@ -54,6 +54,7 @@
     <string name="field_password">password</string>
     <string name="field_display_name">display_name</string>
     <string name="field_website">website</string>
+    <string name="field_private">private</string>
     <string name="field_description">description</string>
     <string name="field_phone_number">phone_number</string>
     <string name="field_location">location</string>
