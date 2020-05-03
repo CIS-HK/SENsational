@@ -157,9 +157,12 @@ public class BubblesMiddle2Activity extends AppCompatActivity
                 checkOrCross.setVisibility(View.VISIBLE);
                 numTimes++;
                 numberCorrect++;
+
+                // Play a sound effect
                 MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.correct);
                 mPlayer.setVolume(BubbleConstants.VOLUME, BubbleConstants.VOLUME);
                 mPlayer.start();
+
                 checkEnd();
             }
         });
@@ -174,11 +177,14 @@ public class BubblesMiddle2Activity extends AppCompatActivity
             public void onClick(View v)
             {
                 checkOrCross.setImageResource(R.drawable.cross);
-                numTimes++;
                 checkOrCross.setVisibility(View.VISIBLE);
+                numTimes++;
+
+                // Play a sound effect
                 MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.incorrect);
                 mPlayer.setVolume(BubbleConstants.VOLUME, BubbleConstants.VOLUME);
                 mPlayer.start();
+
                 checkEnd();
             }
         });
