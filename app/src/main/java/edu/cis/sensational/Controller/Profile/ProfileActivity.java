@@ -113,8 +113,10 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 //retrieve user information from the database
-                setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
-
+                if (mFirebaseMethods != null)
+                {
+                    setProfileWidgets(mFirebaseMethods.getUserSettings(dataSnapshot));
+                }
                 //retrieve images for the user in question
 
             }

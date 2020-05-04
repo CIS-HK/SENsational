@@ -97,8 +97,8 @@ public class CalmingMode2Activity extends AppCompatActivity {
 
         //Calling methods to control the movement of the circle and the changing of the text
         sizeControl();
-        text();
-        number();
+        Util.text(c, breathe, pause);
+        Util.number(c, number, pause);
 
         //Getting the song MP3 from the raw file and setting it to the media player
         mPlayer2 = MediaPlayer.create(this, R.raw.calming_music);
@@ -201,77 +201,6 @@ public class CalmingMode2Activity extends AppCompatActivity {
             @Override
             public void onAnimationRepeat(Animation animation)
             {
-            }
-        });
-    }
-
-    //Method to control number text view
-    public void number()
-    {
-        //Array that hold the numbers to be shown in order on the screen per 1 second
-        final String[] array1 = {c.one, c.two, c.three, c.one, c.two,c.one, c.two, c.three};
-        //Making a new Runnable (loop) for the number string
-        number.post(new Runnable()
-        {
-            int i = 0;
-            @Override
-            public void run()
-            {
-                //Setting almost 1 second interval between the changing of numbers
-                number.postDelayed(this, 992);
-                //Setting the text to the number in the array and positively incrementing i
-                number.setText(array1[i]);
-                i++;
-                //If paused, i is zero again and it is back to the start
-                if (pause == true)
-                {
-                    i = 0;
-                    number.setText(array1[i]);
-                }
-                //When it reaches the end of array, goes back to beginning, continuing the loop
-                if (i == 8)
-                {
-                    i = 0;
-                }
-            }
-        });
-    }
-
-    //Method to control the words text view
-    public void text()
-    {
-        //Words to be shown in order on the screen for for seconds, then 6 seconds
-        final String[] array2 = {c.bIn, c.hold, c.bOut};
-        //Making a new Runnable (loop) for the words string
-        breathe.post(new Runnable()
-        {
-            int x = 0;
-            @Override
-            public void run()
-            {
-                //Setting 3 second interval between the changing of words
-                if(x == 1)
-                {
-                    breathe.postDelayed(this, 2000);
-                }
-                else
-                {
-                    breathe.postDelayed(this, 3000);
-                }
-                //Setting the text to the words in the array and positively incrementing x
-                breathe.setText(array2[x]);
-                x++;
-                //If paused, i is zero again and it is back to the start
-                if(pause == true)
-                {
-                    x = 0;
-                    breathe.setText(array2[x]);
-                }
-                //When it reaches the end of array, goes back to beginning, continuing the loop
-                if (x == 3)
-                {
-                    x = 0;
-                }
             }
         });
     }
