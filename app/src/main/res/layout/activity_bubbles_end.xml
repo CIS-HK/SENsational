@@ -24,8 +24,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.991"
         app:layout_constraintStart_toEndOf="@id/exitGame"
-        app:layout_constraintTop_toBottomOf="@id/youWonBubble"
-        app:layout_constraintVertical_bias="0.995" />
+        app:layout_constraintTop_toBottomOf="@id/totalBubble"
+        app:layout_constraintVertical_bias="0.793" />
 
     <Button
         android:id="@+id/exitGame"
