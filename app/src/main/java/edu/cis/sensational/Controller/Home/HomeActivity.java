@@ -240,7 +240,7 @@ public class HomeActivity extends AppCompatActivity {
     public void setUpButtons()
     {
         addPostButton = (Button) findViewById(R.id.addPostButton);
-        profilePageButton = (Button) findViewById(R.id.profilePageButton);
+//        profilePageButton = (Button) findViewById(R.id.profilePageButton);
         switchButton = (Button) findViewById(R.id.switchButton);
 
         addPostButton.setOnClickListener(new View.OnClickListener() {
