@@ -252,14 +252,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        profilePageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context,
-                        ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+//        profilePageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context,
+//                        ProfileActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         switchButton.setOnClickListener(new View.OnClickListener() {
             @Override
