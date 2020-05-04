@@ -6,9 +6,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.logging.Handler;
 
+import edu.cis.sensational.Model.CConstants;
 import edu.cis.sensational.R;
 
 public final class Util

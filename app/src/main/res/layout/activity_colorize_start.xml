@@ -128,9 +128,9 @@
 
     <Switch
         android:id="@+id/musicSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_width="121dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="28dp"
         android:layout_marginBottom="28dp"
         android:checked="false"
         android:fontFamily="@font/bubbler_one"
@@ -138,8 +138,20 @@
         android:textColor="#03477C"
         android:textOff="OFF"
         android:textOn="ON"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/settingButton"
+        android:layout_width="52dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/settings"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

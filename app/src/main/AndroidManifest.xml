@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Controller.Colorize.ColorizeSettingsActivity"></activity>
         <activity android:name=".Controller.Colorize.GamesSharedActivity" />
         <activity android:name=".Controller.Profile.AccountSettingsActivity" />
         <activity android:name=".Controller.Profile.ProfileActivity" />
@@ -32,7 +33,7 @@
         <activity android:name=".Controller.BubblesGame.BubbleStartActivity" />
         <activity android:name=".Controller.Calming.CalmingActivity" />
         <activity android:name=".Controller.Post.ViewPostActivity" />
-        <activity android:name=".Controller.MainActivity" >
+        <activity android:name=".Controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -17,10 +17,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.779"
+        app:layout_constraintHorizontal_bias="0.619"
         app:layout_constraintStart_toStartOf="@id/userScore"
         app:layout_constraintTop_toTopOf="@id/userScore"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintVertical_bias="0.009" />
 
     <ImageView
         android:id="@+id/userScore"
