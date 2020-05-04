@@ -36,7 +36,7 @@ public class ColorizeMainActivity extends AppCompatActivity
     HashMap<Integer, String> answers;
     String word, correctAnswer, wrongAnswer;
     long timeLeft;
-    int color, backColor;
+    int color, backColor, colorIndex;
 
     CountDownTimer counter = new CountDownTimer(3000,1000)
     {
@@ -145,7 +145,7 @@ public class ColorizeMainActivity extends AppCompatActivity
         word = colorWords.get(index);
 
         //generate random color for word
-        int colorIndex = new Random().nextInt(colorInts.size());
+        colorIndex = new Random().nextInt(colorInts.size());
         color = colorInts.get(colorIndex);
 
         //set text to random word
@@ -168,11 +168,7 @@ public class ColorizeMainActivity extends AppCompatActivity
         int wrongIndex = new Random().nextInt(colorWords.size());
         wrongAnswer = colorWords.get(wrongIndex);
 
-        // background color cannot be the same as color of word
-        colorInts.remove(colorIndex);
-        int backgroundIndex = new Random().nextInt(colorInts.size());
-        backColor = colorInts.get(backgroundIndex);
-        backgroundColor.setBackgroundColor(backColor);
+        setBackgroundColor();
 
         ArrayList<String> randomAnswers = new ArrayList<>();
         randomAnswers.add(correctAnswer);
@@ -184,6 +180,22 @@ public class ColorizeMainActivity extends AppCompatActivity
         answerTwo.setText(randomAnswers.get(0));
     }
 
+    private void setBackgroundColor()
+    {
+        if (GameConstants.BACKGROUND = false)
+        {
+            backgroundColor.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        if (GameConstants.BACKGROUND = true)
+        {
+            // background color cannot be the same as color of word
+            colorInts.remove(colorIndex);
+            int backgroundIndex = new Random().nextInt(colorInts.size());
+            backColor = colorInts.get(backgroundIndex);
+            backgroundColor.setBackgroundColor(backColor);
+        }
+    }
 
     private void play()
     {

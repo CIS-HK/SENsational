@@ -19,7 +19,7 @@ import edu.cis.sensational.R;
 
 public class ColorizeStartActivity extends AppCompatActivity {
 
-    Button playButton, quitButton, instructionButton;
+    Button playButton, quitButton, instructionButton, settingsButton;
     TextView gameName;
     Switch musicSwitch;
     MediaPlayer myMediaPlayer;
@@ -34,6 +34,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
         playButton = findViewById(R.id.playButton);
         quitButton = findViewById(R.id.quitButton);
         instructionButton = findViewById(R.id.instructionsButton);
+        settingsButton = findViewById(R.id.settingButton);
         bottomright = findViewById(R.id.imageView7);
         middleleft = findViewById(R.id.imageView4);
         middleright = findViewById(R.id.imageView6);
@@ -74,6 +75,13 @@ public class ColorizeStartActivity extends AppCompatActivity {
                 if (GameConstants.mediaPlayer.isPlaying()){
                     GameConstants.mediaPlayer.stop();
                 }
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ColorizeStartActivity.this,ColorizeSettingsActivity.class));
             }
         });
 
