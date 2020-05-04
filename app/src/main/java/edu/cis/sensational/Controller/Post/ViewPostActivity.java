@@ -146,24 +146,24 @@ public class ViewPostActivity extends AppCompatActivity {
             }
         });
 
-        upvote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "upvote button clicked");
-
-
-                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
-                firebaseMethods.upvoteButtonPressed(currentPost, userID, mPost);
-            }
-        });
-
-        downvote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
-//                firebaseMethods.setLikes(currentPost, 0, userID);
-            }
-        });
+//        upvote.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(TAG, "upvote button clicked");
+//
+//
+//                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
+//                firebaseMethods.upvoteButtonPressed(currentPost, userID, mPost);
+//            }
+//        });
+//
+//        downvote.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
+////                firebaseMethods.setLikes(currentPost, 0, userID);
+//            }
+//        });
 
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
