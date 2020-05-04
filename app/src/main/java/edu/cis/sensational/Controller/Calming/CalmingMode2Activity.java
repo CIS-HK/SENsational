@@ -97,8 +97,8 @@ public class CalmingMode2Activity extends AppCompatActivity {
 
         //Calling methods to control the movement of the circle and the changing of the text
         sizeControl();
-        Util.text(c, breathe, pause);
-        Util.number(c, number, pause);
+        text();
+        number();
 
         //Getting the song MP3 from the raw file and setting it to the media player
         mPlayer2 = MediaPlayer.create(this, R.raw.calming_music);
