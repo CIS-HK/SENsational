@@ -8,6 +8,7 @@ import edu.cis.sensational.R;
 public class GameConstants {
 
     public static boolean MUSIC = false;
+    public static boolean BACKGROUND = false;
     public static int SCORE = 0;
     public static int HIGHSCORE = 0;
     public static MediaPlayer mediaPlayer = new MediaPlayer();
