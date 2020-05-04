@@ -187,6 +187,7 @@ public class HomeActivity extends AppCompatActivity {
                         ViewPostActivity.class);
                 String postID = myAdapter.itemClicked(position);
                 intent.putExtra("Post", postID);
+                intent.putExtra("User", userID);
                 startActivity(intent);
             }
         });

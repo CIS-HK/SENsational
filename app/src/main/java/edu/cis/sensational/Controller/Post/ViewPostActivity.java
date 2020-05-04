@@ -89,6 +89,8 @@ public class ViewPostActivity extends AppCompatActivity {
     private String mLikesString = "";
     private User mCurrentUser;
 
+    private String currentUser;
+
     private String currentPost;
     private String commentText;
 
@@ -116,6 +118,8 @@ public class ViewPostActivity extends AppCompatActivity {
 
         //https://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-in-android-application
         currentPost = getIntent().getStringExtra("Post");
+
+        currentUser = getIntent().getStringExtra("User");
 
         init();
 
@@ -180,7 +184,8 @@ public class ViewPostActivity extends AppCompatActivity {
             String photo_id = currentPost;
 
             Query query = FirebaseDatabase.getInstance().getReference()
-                    .child(getString(R.string.dbname_posts))
+                    .child(getString(R.string.dbname_user_posts))
+                    .child(currentUser)
                     .orderByChild(getString(R.string.field_post_id))
                     .equalTo(photo_id);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
