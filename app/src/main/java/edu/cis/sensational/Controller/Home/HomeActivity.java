@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -22,7 +20,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,21 +29,14 @@ import com.google.firebase.database.ValueEventListener;
 //import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 //import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import edu.cis.sensational.Controller.Login.LoginActivity;
 import edu.cis.sensational.Controller.Post.PostActivity;
 import edu.cis.sensational.Controller.Post.ViewPostActivity;
 import edu.cis.sensational.Controller.Profile.ProfileActivity;
-import edu.cis.sensational.Controller.Profile.ProfileFragment;
 import edu.cis.sensational.Model.Post;
-import edu.cis.sensational.Model.User;
 import edu.cis.sensational.R;
-import edu.cis.sensational.Model.Utils.FirebaseMethods;
 //import edu.cis.sensational.Model.Utils.MainFeedListAdapter;
 //import edu.cis.sensational.Model.Utils.SectionsPagerAdapter;
 //import edu.cis.sensational.Model.Utils.UniversalImageLoader;
@@ -78,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private Button addPostButton;
     private Button profilePageButton;
-    private Button starPageButton;
+    private Button switchButton;
 
     private Button searchButton;
     private EditText searchField;
@@ -103,23 +93,21 @@ public class HomeActivity extends AppCompatActivity {
         setUpButtons();
         setUpSearch();
 
-
         if (mAuth.getCurrentUser() != null) {
             userID = mAuth.getCurrentUser().getUid();
         }
 
-        setUpRecyclerView();
-
+        setUpPublicRecyclerView();
     }
 
-    public void setUpRecyclerView(){
+
+    public void setUpPublicRecyclerView(){
         recView = findViewById(R.id.recView);
         final ArrayList<Post> values = new ArrayList<>();
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference attendanceRef = rootRef
-                .child("user_posts")
-                .child(userID);
+                .child("posts");
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -138,18 +126,51 @@ public class HomeActivity extends AppCompatActivity {
         attendanceRef.addListenerForSingleValueEvent(valueEventListener);
     }
 
+    public void setUpPrivateRecyclerView(){
+        recView = findViewById(R.id.recView);
+        final ArrayList<Post> values = new ArrayList<>();
+
+        Query query = FirebaseDatabase.getInstance().getReference()
+                .child(getString(R.string.dbname_user_posts))
+                .child(userID)
+                .orderByChild(getString(R.string.field_private))
+                .equalTo(true);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+                    Post value = singleSnapshot.getValue(Post.class);
+                    values.add(value);
+                }
+                showPosts(values);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: query cancelled.");
+            }
+        });
+    }
+
     public void showPosts(ArrayList<Post> values){
 
         ArrayList<String> titleList = new ArrayList<>();
         ArrayList<String> descriptionList = new ArrayList<>();
         ArrayList<String> IDList = new ArrayList<>();
 
-
         for(Post post: values)
         {
             titleList.add(post.getTitle());
             descriptionList.add(post.getDescription());
             IDList.add(post.getPostID());
+        }
+
+        // inverting the order of the list so the most recent posts appear first
+        //https://www.techiedelight.com/reverse-list-java-inplace/
+        for (int i = 0, j = titleList.size() - 1; i < j; i++){
+            titleList.add(i, titleList.remove(j));
+            descriptionList.add(i, descriptionList.remove(j));
+            IDList.add(i, IDList.remove(j));
         }
 
         myAdapter = new HomeAdapter(titleList, descriptionList, IDList);
@@ -177,8 +198,15 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String searchText = searchField.getText().toString();
-                Log.d(TAG, "searching for post");
-                searchForTag(searchText);
+                if(!(searchText.equals("")))
+                {
+                    Log.d(TAG, "searching for post");
+                    searchForTag(searchText);
+                }
+                else
+                {
+                    setUpPublicRecyclerView();
+                }
             }
         });
     }
@@ -213,7 +241,7 @@ public class HomeActivity extends AppCompatActivity {
     {
         addPostButton = (Button) findViewById(R.id.addPostButton);
         profilePageButton = (Button) findViewById(R.id.profilePageButton);
-        starPageButton = (Button) findViewById(R.id.starPageButton);
+        switchButton = (Button) findViewById(R.id.switchButton);
 
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,12 +261,17 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        starPageButton.setOnClickListener(new View.OnClickListener() {
+        switchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,
-                        ViewPostActivity.class);
-                startActivity(intent);
+                if(switchButton.getText().equals("See Public")){
+                    switchButton.setText("See Private");
+                    setUpPublicRecyclerView();
+                }
+                else if(switchButton.getText().equals("See Private")){
+                    switchButton.setText("See Public");
+                    setUpPrivateRecyclerView();
+                }
             }
         });
     }

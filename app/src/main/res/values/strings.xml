@@ -54,6 +54,7 @@
     <string name="field_password">password</string>
     <string name="field_display_name">display_name</string>
     <string name="field_website">website</string>
+    <string name="field_private">private</string>
     <string name="field_description">description</string>
     <string name="field_phone_number">phone_number</string>
     <string name="field_location">location</string>
@@ -78,7 +79,8 @@
     <string name="field_profile_photo">profile_photo</string>
     <string name="field_timestamp">timestamp</string>
     <string name="bubbles_title">BUBBLES!</string>
-    <string name="instructions1a">Bubbles will float up on the screen one by one. \n Try to remember the color of each bubble. </string>
+    <string name="instructions1a">Bubbles will float up on the screen one by one. \n Try to remember
+        the color of each bubble. </string>
     <string name="instructions2">Pick the color of each bubble in the right order.</string>
     <string name="instructionsLabel">Instructions:</string>
     <string name="select_mode_label">Mode:</string>
@@ -91,7 +93,9 @@
     <string name="mode_1">Mode 1</string>
     <string name="mode_2">Mode 2</string>
     <string name="mode_3">Mode 3</string>
-    <string name="welcome_to_calming_this_function_will_help_you_calm_down_using_breathing_excercises_and_colorful_distractions_simply_follow_the_circle_with_your_breathing">Welcome to Calming! This function will help you calm down, using breathing excercises and colorful distractions. Simply follow the circle with your breathing.</string>
+    <string name="welcome_to_calming">Welcome to Calming! This function will help you calm down,
+        using breathing exercises and colorful distractions. Simply follow the circle with your
+        breathing.</string>
     <string name="back">Back</string>
     <string name="pause">II</string>
 
@@ -104,15 +108,34 @@
     <string name="mode_2_garden">Mode 2: Garden</string>
     <string name="least_distraction">Least distraction</string>
     <string name="mode_3_ocean">Mode 3: Ocean</string>
-    <string name="follow_the_circle_and_breathe_in_hold_then_breathe_out">Follow the circle and breathe in, hold, then breathe out.</string>
+    <string name="follow_the_circle_and_breathe_in_hold_then_breathe_out">Follow the circle and
+        breathe in, hold, then breathe out.</string>
     <string name="medium_distraction">Medium distraction</string>
     <string name="most_distraction">Most distraction</string>
     <string name="select_mode">Select mode:</string>
     <string name="games">Games</string>
-    <string name="instruction_3_main">3. For parents: Use the anonymous forum \n to reach out for support!</string>
-    <string name="instruction_1_main">1. Play some fun games to develop your executive function skills!</string>
+    <string name="instruction_3_main">3. For parents: Use the anonymous forum \n to reach out for
+        support!</string>
+    <string name="instruction_1_main">1. Play some fun games to develop your executive function
+        skills!</string>
     <string name="welcome_main">Welcome to Clover!</string>
-    <string name="instruction_2_main">2. Use the calming feature when you\'re \n feeling upset or angry.</string>
+    <string name="instruction_2_main">2. Use the calming feature when you\'re \n feeling upset or
+        angry.</string>
     <string name="forum">Forum</string>
+    <string name="play_again">Play Again</string>
+    <string name="exit_game">Exit Game</string>
+    <string name="finished_game">You finished the game!</string>
+    <string name="yay">YAY!</string>
+    <string name="dash">-</string>
+    <string name="total">Total:</string>
+    <string name="you_won">You won:</string>
+    <string name="what_color_was_the">What color was the</string>
+    <string name="bubble">bubble?</string>
+    <string name="first">first</string>
+    <string name="red">Red</string>
+    <string name="blue">Blue</string>
+    <string name="purple">Purple</string>
+    <string name="one">1</string>
+    <string name="home_page">Home Page</string>
 
 </resources>

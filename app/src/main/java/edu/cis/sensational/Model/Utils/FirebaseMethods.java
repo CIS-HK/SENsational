@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +29,7 @@ import java.util.TimeZone;
 
 import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.Controller.Profile.AccountSettingsActivity;
+import edu.cis.sensational.Model.Comment;
 import edu.cis.sensational.Model.Likes;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.Model.User;
@@ -78,7 +80,10 @@ public class FirebaseMethods {
         return sdf.format(new Date());
     }
 
-    public void createNewPost(String title, String description, String tags){
+    public boolean createNewPost(String title, String description, String tags, boolean privatePost){
+
+        ArrayList<String> initLikes = new ArrayList();
+        ArrayList<Comment> initComments = new ArrayList();
 
         // retrieve a key for the postID
         String newPostKey = myRef.child(mContext.getString(R.string.dbname_posts)).push().getKey();
@@ -87,18 +92,23 @@ public class FirebaseMethods {
         Post post = new Post();
         post.setTitle(title);
         post.setDescription(description);
-        post.setTags(tags);
+        post.setTags(tags.toLowerCase());
         post.setUser_id(userID);
         post.setDate_created(getTimestamp());
         post.setLikeCount(0);
-        post.setLikes(post.getLikes());
-        post.setComments(post.getComments());
+        post.setLikes(initLikes);
+        post.setComments(initComments);
+        post.setPrivate(privatePost);
         post.setPostID(newPostKey);
 
         // upload the post to the database
-        uploadNewPost(post, tags);
+        uploadNewPost(post, tags, privatePost);
+
+        return true;
+        // TODO figure out a way to listen back from the databse whether or not this has succeeded.
     }
 
+    //TODO change the parameters so you use the getters from Post instead of individual IDs
     public void upvoteButtonPressed(final String post_id, final String userID, final Post post){
 
         final String postID = post_id;
@@ -236,14 +246,44 @@ public class FirebaseMethods {
         });
     }
 
-    public void uploadNewPost(Post post, String tag)
+    public void uploadNewPost(Post post, String tag, boolean privatePost)
     {
-        Log.d(TAG, "uploadNewPost: attempting to post.");
+        if(privatePost == true){
+            Log.d(TAG, "uploadNewPost: attempting to post privately.");
+            myRef.child("user_posts").child(post.getUser_id())
+                    .child(post.getPostID()).setValue(post);
+        }
+        else if(privatePost == false){
+            Log.d(TAG, "uploadNewPost: attempting to post publicly.");
+            myRef.child("user_posts").child(post.getUser_id())
+                    .child(post.getPostID()).setValue(post);
+            myRef.child("posts").child(post.getPostID()).setValue(post);
+            myRef.child("tags").child(tag).child(post.getPostID()).setValue(post);
+        }
+    }
 
-        myRef.child("user_posts").child(post.getUser_id())
-                .child(post.getPostID()).setValue(post);
-        myRef.child("posts").child(post.getPostID()).setValue(post);
-        myRef.child("tags").child(tag).child(post.getPostID()).setValue(post);
+    public void makeComment(Post post, String post_id, String comment){
+        Comment newComment = new Comment(comment, userID, 0, getTimestamp());
+        ArrayList<Comment> currentComments = post.getComments();
+
+        Log.d(TAG, "current comments = " + currentComments);
+
+        currentComments.add(newComment);
+        post.setComments(currentComments);
+
+        Log.d(TAG, post.getComments() + "");
+
+        myRef.child(mContext.getString(R.string.dbname_user_posts))
+                .child(userID)
+                .child(post_id)
+                .child(mContext.getString(R.string.field_comments))
+                .setValue(currentComments);
+        myRef.child(mContext.getString(R.string.dbname_posts))
+                .child(post_id)
+                .child(mContext.getString(R.string.field_comments))
+                .setValue(currentComments);
+
+        Log.d(TAG, "comments set.");
     }
 
     public void updateUserAccountSettings(String location, String age, String information) {
@@ -395,7 +435,7 @@ public class FirebaseMethods {
                 userID
         );
 
-        // saves the settins to the databse
+        // saves the settings to the databse
         myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                 .child(userID)
                 .setValue(settings);

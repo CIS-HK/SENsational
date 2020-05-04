@@ -48,11 +48,14 @@ public class BubblesMiddleActivity extends AppCompatActivity
         smiley1 = findViewById(R.id.smiley1);
         smiley2 = findViewById(R.id.smiley2);
 
-        // Set up mode (if this is the first time starting the screen)
+        // Get whether or not this is the first time starting the screen
         firstTime = getIntent().getBooleanExtra(BubbleConstants.FIRST_TIME, false);
+
         if (firstTime)
         {
+            // Gets the mode of the game
             mode = getIntent().getStringExtra(BubbleConstants.MODE);
+
             if (mode != null && mode.equals(BubbleConstants.EASY))
             {
                 numBubbles = BubbleConstants.NUM_BUBBLES_EASY;
@@ -65,16 +68,26 @@ public class BubblesMiddleActivity extends AppCompatActivity
             {
                 numBubbles = BubbleConstants.NUM_BUBBLES_HARD;
             }
+
+            // Sets the number of rounds that have already occurred to 0
             roundNumber = BubbleConstants.DEFAULT;
+
+            // Sets the score to 0
             score = BubbleConstants.DEFAULT;
         }
         else
         {
+            // Gets the number of bubbles to display
             numBubbles = getIntent().getIntExtra(BubbleConstants.NUM_BUBBLES,
                                                  BubbleConstants.DEFAULT);
+
+            // Gets the user's score
             score = getIntent().getIntExtra(BubbleConstants.SCORE, BubbleConstants.DEFAULT);
+
+            // Gets the number of rounds that have already occurred
             roundNumber = getIntent().getIntExtra(BubbleConstants.ROUND_NUM,
                                                   BubbleConstants.DEFAULT);
+
             if (score == 1)
             {
                 smiley1.setVisibility(View.VISIBLE);
@@ -117,10 +130,13 @@ public class BubblesMiddleActivity extends AppCompatActivity
 
     public void setUpBubbles()
     {
+        // Get the size of the screen
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         Point sizeOfScreen = new Point();
         display.getSize(sizeOfScreen);
+
+        // Store the height of the screen
         heightOfScreen = sizeOfScreen.y;
 
         playBubble();
@@ -130,9 +146,15 @@ public class BubblesMiddleActivity extends AppCompatActivity
     {
         timer = new Timer();
         handler = new Handler();
+
+        // Move the bubble to the bottom of the screen
         bubbleY = heightOfScreen + BubbleConstants.ADD_TO_SCREEN_HEIGHT;
-        bubbleNumber.setY(bubbleY + BubbleConstants.ADD_TO_Y);
         bubble.setY(bubbleY);
+
+        // Move the number on the bubble so that it's at the center of the bubble
+        bubbleNumber.setY(bubbleY + BubbleConstants.ADD_TO_Y);
+
+        // Move the bubble towards the top of the screen
         timer.schedule(new TimerTask()
         {
             @Override
@@ -179,3 +201,4 @@ public class BubblesMiddleActivity extends AppCompatActivity
         bubbleNumber.setY(bubbleY + BubbleConstants.ADD_TO_Y);
     }
 }
+
