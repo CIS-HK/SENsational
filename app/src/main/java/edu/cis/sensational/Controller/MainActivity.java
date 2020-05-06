@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import edu.cis.sensational.Controller.BubblesGame.BubbleStartActivity;
 import edu.cis.sensational.Controller.Calming.CalmingActivity;
-import edu.cis.sensational.Controller.Colorize.ColorizeStartActivity;
-import edu.cis.sensational.Controller.Colorize.GamesSharedActivity;
-import edu.cis.sensational.Controller.Login.LoginActivity;
+import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
+import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         forum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });

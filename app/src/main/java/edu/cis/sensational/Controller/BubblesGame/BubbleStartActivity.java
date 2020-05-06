@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import edu.cis.sensational.Controller.Colorize.GamesSharedActivity;
+import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 import edu.cis.sensational.R;
 
