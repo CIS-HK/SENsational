@@ -184,8 +184,49 @@ public class FirebaseMethods {
         });
     }
 
-    public void downvoteButtonPressed(String post_id, String userID, Post post){
+    public void downvoteButtonPressed(final String post_id, final String userID, final Post post){
 
+        post.setLikeCount(post.getLikeCount() - 1);
+
+        final DatabaseReference userRef = myRef
+                .child("posts")
+                .child(post_id)
+                .child("likes");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                // if the user hasn't liked this post
+//                if(dataSnapshot.getValue() == null || !(dataSnapshot.getValue(List.class).contains(userID)))
+//                {
+                Log.d(TAG, "Post: downvoting");
+
+                List<String> userLikesList = new ArrayList<>();
+                userLikesList.add(userID);
+
+                myRef.child(mContext.getString(R.string.dbname_posts))
+                        .child(post_id)
+                        .child(mContext.getString(R.string.field_likes))
+                        .setValue(userLikesList);
+                myRef.child(mContext.getString(R.string.dbname_user_posts))
+                        .child(userID)
+                        .child(post_id)
+                        .child(mContext.getString(R.string.field_likes))
+                        .setValue(userLikesList);
+                myRef.child("user_likes")
+                        .child(userID)
+                        .child(post_id)
+                        .setValue(post);
+
+                downvote(post_id);
+//                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w(TAG, "Failed to retrieve number of likes.", error.toException());
+            }
+        });
     }
 
     public void downvote(String post_id){
@@ -204,12 +245,12 @@ public class FirebaseMethods {
 
                     myRef.child(mContext.getString(R.string.dbname_posts))
                             .child(postID)
-                            .child(mContext.getString(R.string.field_likes))
+                            .child(mContext.getString(R.string.field_like_count))
                             .setValue(newLikeCount);
                     myRef.child(mContext.getString(R.string.dbname_user_posts))
                             .child(userID)
                             .child(postID)
-                            .child(mContext.getString(R.string.field_likes))
+                            .child(mContext.getString(R.string.field_like_count))
                             .setValue(newLikeCount);
                 }
             }

@@ -110,8 +110,6 @@ public class ViewPostActivity extends AppCompatActivity {
         init();
 
         initWidgets();
-//        displayLikeCount();
-
     }
 
     private void initWidgets(){
@@ -138,12 +136,21 @@ public class ViewPostActivity extends AppCompatActivity {
             }
         });
 
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commentText = comment.getText().toString();
+                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
+                firebaseMethods.makeComment(mPost, currentPost, commentText);
+                displayComments();
+                comment.setText("");
+            }
+        });
+
         upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "upvote button clicked");
-
-
                 FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
                 firebaseMethods.upvoteButtonPressed(currentPost, userID, mPost);
                 displayLikeCount();
@@ -155,34 +162,41 @@ public class ViewPostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
                 firebaseMethods.downvoteButtonPressed(currentPost, userID, mPost);
+                displayLikeCount();
             }
         });
 
-        commentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                commentText = comment.getText().toString();
-                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
-                firebaseMethods.makeComment(mPost, currentPost, commentText);
-            }
-        });
+        displayLikeCount();
+    }
+
+    public void displayComments(){
+        ArrayList<Comment> commentsList = mPost.getComments();
+
+        CommentsAdapter myAdapter = new CommentsAdapter(commentsList);
+        commentsView.setAdapter(myAdapter);
+        commentsView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public void displayLikeCount(){
 
         final DatabaseReference userRef = myRef
-                .child("user_likes")
-                .child(userID);
+                .child("posts")
+                .child(currentPost)
+                .child("likes");
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Post post = snapshot.getValue(Post.class);
-                    if (mPost.equals(post)) {
+                    Log.d(TAG, snapshot +"");
+                    if (userID.equals(snapshot.getValue())) {
                         upvote.setBackgroundColor(Color.BLUE);
+                        likes.setText(mPost.getLikeCount() + "");
+                        downvote.setEnabled(true);
+                        upvote.setEnabled(false);
                     }
                     else{
                         upvote.setBackgroundColor(Color.WHITE);
+                        likes.setText(mPost.getLikeCount() + "");
                     }
                 }
 
@@ -194,9 +208,6 @@ public class ViewPostActivity extends AppCompatActivity {
                 Log.w(TAG, "Failed.", error.toException());
             }
         });
-
-
-        likes.setText(mPost.getLikeCount() + "");
     }
 
     private void setUpHeart(){
@@ -234,7 +245,6 @@ public class ViewPostActivity extends AppCompatActivity {
                         getPostDetails();
                         setupWidgets();
                     }
-
                 }
 
                 @Override
@@ -293,8 +303,6 @@ public class ViewPostActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void setupWidgets() {
 
         title.setText(mPost.getTitle());
@@ -306,6 +314,7 @@ public class ViewPostActivity extends AppCompatActivity {
         Log.d(TAG, "" + postDate);
 
         date.setText(postDate);
+
         ArrayList<Comment> commentsList = mPost.getComments();
 
         CommentsAdapter myAdapter = new CommentsAdapter(commentsList);
