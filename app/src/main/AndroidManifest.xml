@@ -12,11 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".Controller.Calming.CalmingSettingsActivity"
-            android:label="@string/title_activity_calming_settings"></activity>
+        <activity android:name=".Controller.SharedGames.TrophiesActivity"></activity>
         <activity android:name=".Controller.Colorize.ColorizeSettingsActivity" />
-        <activity android:name=".Controller.Colorize.GamesSharedActivity" />
+        <activity android:name=".Controller.SharedGames.GamesSharedActivity" />
         <activity android:name=".Controller.Profile.AccountSettingsActivity" />
         <activity android:name=".Controller.Profile.ProfileActivity" />
         <activity android:name=".Controller.Search.SearchActivity" />
@@ -32,19 +30,19 @@
         <activity android:name=".Controller.Calming.CalmingMode3Activity" />
         <activity android:name=".Controller.Home.HomeActivity" />
         <activity android:name=".Controller.Post.PostActivity" />
+        <activity android:name=".Controller.Login.RegisterActivity" />
         <activity android:name=".Controller.Colorize.ColorizeStartActivity" />
         <activity android:name=".Controller.BubblesGame.BubbleStartActivity" />
         <activity android:name=".Controller.Calming.CalmingActivity" />
         <activity android:name=".Controller.Post.ViewPostActivity" />
-        <activity android:name=".Controller.MainActivity">
+        <activity android:name=".Controller.MainActivity" />
+        <activity android:name=".Controller.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.Login.LoginActivity" />
-        <activity android:name=".Controller.Login.RegisterActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

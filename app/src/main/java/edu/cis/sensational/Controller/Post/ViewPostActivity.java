@@ -3,18 +3,15 @@ package edu.cis.sensational.Controller.Post;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthProvider;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,24 +29,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
 
 import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
 import edu.cis.sensational.Model.Comment;
-import edu.cis.sensational.Model.Likes;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.Model.User;
 import edu.cis.sensational.Model.UserAccountSettings;
@@ -75,6 +60,7 @@ public class ViewPostActivity extends AppCompatActivity {
     private TextView title, description, tags, date, likes;
     private Button backButton, upvote, downvote, commentButton;
     private EditText comment;
+    private ImageButton heartButton;
 
     //vars
     private Post mPost;
@@ -88,6 +74,8 @@ public class ViewPostActivity extends AppCompatActivity {
     private StringBuilder mUsers;
     private String mLikesString = "";
     private User mCurrentUser;
+
+    private String currentUser;
 
     private String currentPost;
     private String commentText;
@@ -117,9 +105,13 @@ public class ViewPostActivity extends AppCompatActivity {
         //https://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-in-android-application
         currentPost = getIntent().getStringExtra("Post");
 
+        currentUser = getIntent().getStringExtra("User");
+
         init();
 
         initWidgets();
+//        displayLikeCount();
+
     }
 
     private void initWidgets(){
@@ -154,6 +146,7 @@ public class ViewPostActivity extends AppCompatActivity {
 
                 FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
                 firebaseMethods.upvoteButtonPressed(currentPost, userID, mPost);
+                displayLikeCount();
             }
         });
 
@@ -161,7 +154,7 @@ public class ViewPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
-//                firebaseMethods.setLikes(currentPost, 0, userID);
+                firebaseMethods.downvoteButtonPressed(currentPost, userID, mPost);
             }
         });
 
@@ -175,12 +168,59 @@ public class ViewPostActivity extends AppCompatActivity {
         });
     }
 
+    public void displayLikeCount(){
+
+        final DatabaseReference userRef = myRef
+                .child("user_likes")
+                .child(userID);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Post post = snapshot.getValue(Post.class);
+                    if (mPost.equals(post)) {
+                        upvote.setBackgroundColor(Color.BLUE);
+                    }
+                    else{
+                        upvote.setBackgroundColor(Color.WHITE);
+                    }
+                }
+
+                Log.d(TAG, dataSnapshot +"");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w(TAG, "Failed.", error.toException());
+            }
+        });
+
+
+        likes.setText(mPost.getLikeCount() + "");
+    }
+
+    private void setUpHeart(){
+
+        heartButton = (ImageButton) findViewById(R.id.heartButton);
+
+        heartButton.setBackgroundResource(R.drawable.heart_hollow);
+
+        heartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+    }
+
     private void init(){
         try{
             String photo_id = currentPost;
 
             Query query = FirebaseDatabase.getInstance().getReference()
-                    .child(getString(R.string.dbname_posts))
+                    .child(getString(R.string.dbname_user_posts))
+                    .child(currentUser)
                     .orderByChild(getString(R.string.field_post_id))
                     .equalTo(photo_id);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -266,7 +306,6 @@ public class ViewPostActivity extends AppCompatActivity {
         Log.d(TAG, "" + postDate);
 
         date.setText(postDate);
-        likes.setText(mPost.getLikeCount() + "");
         ArrayList<Comment> commentsList = mPost.getComments();
 
         CommentsAdapter myAdapter = new CommentsAdapter(commentsList);

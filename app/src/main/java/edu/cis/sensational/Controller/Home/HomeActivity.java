@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import edu.cis.sensational.Controller.Login.LoginActivity;
+import edu.cis.sensational.Controller.MainActivity;
 import edu.cis.sensational.Controller.Post.PostActivity;
 import edu.cis.sensational.Controller.Post.ViewPostActivity;
 import edu.cis.sensational.Controller.Profile.ProfileActivity;
@@ -69,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button addPostButton;
     private Button profilePageButton;
     private Button switchButton;
+    private Button mainButton;
 
     private Button searchButton;
     private EditText searchField;
@@ -185,6 +187,7 @@ public class HomeActivity extends AppCompatActivity {
                         ViewPostActivity.class);
                 String postID = myAdapter.itemClicked(position);
                 intent.putExtra("Post", postID);
+                intent.putExtra("User", userID);
                 startActivity(intent);
             }
         });
@@ -242,12 +245,22 @@ public class HomeActivity extends AppCompatActivity {
         addPostButton = (Button) findViewById(R.id.addPostButton);
 //        profilePageButton = (Button) findViewById(R.id.profilePageButton);
         switchButton = (Button) findViewById(R.id.switchButton);
+        mainButton = (Button) findViewById(R.id.mainButton);
 
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,
                         PostActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,
+                        MainActivity.class);
                 startActivity(intent);
             }
         });
