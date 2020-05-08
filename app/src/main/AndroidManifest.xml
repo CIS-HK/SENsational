@@ -28,6 +28,7 @@
         <activity android:name=".Controller.Calming.CalmingMode1Activity" />
         <activity android:name=".Controller.Calming.CalmingMode2Activity" />
         <activity android:name=".Controller.Calming.CalmingMode3Activity" />
+        <activity android:name=".Controller.Calming.CalmingSettingsActivity" />
         <activity android:name=".Controller.Home.HomeActivity" />
         <activity android:name=".Controller.Post.PostActivity" />
         <activity android:name=".Controller.Login.RegisterActivity" />
