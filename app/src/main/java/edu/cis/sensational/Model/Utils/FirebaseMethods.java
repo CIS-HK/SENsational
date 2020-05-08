@@ -141,7 +141,6 @@ public class FirebaseMethods {
                             .child(userID)
                             .child(post_id)
                             .setValue(post);
-
                     upvote(post_id);
 //                }
             }
