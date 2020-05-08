@@ -16,6 +16,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -221,7 +223,7 @@ public class CalmingMode3Activity extends AppCompatActivity
     //Method to control the size of the circle
     public void sizeControl()
     {
-        final AnimationSet set = Util.sizeControl(circle, this);
+        final AnimationSet set = Util.sizeControl(circle, this, 3, 2, 3);
 
         //Animation listener to see what is happening with the animation
         set.setAnimationListener(new Animation.AnimationListener()
@@ -256,9 +258,10 @@ public class CalmingMode3Activity extends AppCompatActivity
     public void text()
     {
         //Words to be shown in order on the screen for for seconds, then 6 seconds
-        final String[] array2 = {c.bIn, c.hold, c.bOut};
+        final ArrayList<String> array2 = c.array2;
+
         //Making a new Runnable (loop) for the words string
-        Thread t = new Thread(new Runnable()
+        breathe.post(new Runnable()
         {
             int x = 0;
             @Override
@@ -274,13 +277,13 @@ public class CalmingMode3Activity extends AppCompatActivity
                     breathe.postDelayed(this, 3000);
                 }
                 //Setting the text to the words in the array and positively incrementing x
-                breathe.setText(array2[x]);
+                breathe.setText(array2.get(x));
                 x++;
                 //If paused, i is zero again and it is back to the start
                 if(pause == true)
                 {
                     x = 0;
-                    breathe.setText(array2[x]);
+                    breathe.setText(array2.get(x));
                 }
                 //When it reaches the end of array, goes back to beginning, continuing the loop
                 if (x == 3)
@@ -296,7 +299,8 @@ public class CalmingMode3Activity extends AppCompatActivity
     public void number()
     {
         //Array that hold the numbers to be shown in order on the screen per 1 second
-        final String[] array1 = {c.one, c.two, c.three, c.one, c.two,c.one, c.two, c.three};
+        final ArrayList <String> array1 = c.array1;
+
         //Making a new Runnable (loop) for the number string
         number.post(new Runnable()
         {
@@ -307,13 +311,13 @@ public class CalmingMode3Activity extends AppCompatActivity
                 //Setting almost 1 second interval between the changing of numbers
                 number.postDelayed(this, 992);
                 //Setting the text to the number in the array and positively incrementing i
-                number.setText(array1[i]);
+                number.setText(array1.get(i));
                 i++;
                 //If paused, i is zero again and it is back to the start
                 if (pause == true)
                 {
                     i = 0;
-                    number.setText(array1[i]);
+                    number.setText(array1.get(i));
                 }
                 //When it reaches the end of array, goes back to beginning, continuing the loop
                 if (i == 8)

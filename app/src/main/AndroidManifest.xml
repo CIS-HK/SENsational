@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.Colorize.ColorizeSettingsActivity"></activity>
+        <activity
+            android:name=".Controller.Calming.CalmingSettingsActivity"
+            android:label="@string/title_activity_calming_settings"></activity>
+        <activity android:name=".Controller.Colorize.ColorizeSettingsActivity" />
         <activity android:name=".Controller.Colorize.GamesSharedActivity" />
         <activity android:name=".Controller.Profile.AccountSettingsActivity" />
         <activity android:name=".Controller.Profile.ProfileActivity" />
