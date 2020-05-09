@@ -18,8 +18,6 @@ public class User implements Parcelable{
     private String user_child_gender;
     private int user_child_age;
     private String user_child_profile;
-    private int totalScore;
-
 
     public User()
     {
@@ -130,14 +128,6 @@ public class User implements Parcelable{
 
     public void setUser_child_profile(String profile) {
         this.user_child_profile = profile;
-    }
-
-    public int getTotalScore() {
-        return totalScore;
-    }
-
-    public void setTotalScore(int totalScore) {
-        this.totalScore = totalScore;
     }
 
     @Override
