@@ -11,7 +11,11 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import edu.cis.sensational.Model.Colorize.GameConstants;
+import edu.cis.sensational.Model.User;
+import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
 
 public class ColorizeEndActivity extends AppCompatActivity {
@@ -20,12 +24,13 @@ public class ColorizeEndActivity extends AppCompatActivity {
     TextView scoreLabel, highScoreLabel;
     ImageView smiley;
     Switch musicSwitch2;
-
-
+    FirebaseAuth mAuth;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colorize_end);
         playAgainButton = findViewById(R.id.playAgainButton);
@@ -41,15 +46,13 @@ public class ColorizeEndActivity extends AppCompatActivity {
         {
             musicSwitch2.setChecked(true);
         }
-        else
-
+        if (GameConstants.MUSIC = false)
         {
             musicSwitch2.setChecked(false);
         }
 
         setUpButtons();
         displayScore();
-
 
     }
 
@@ -95,13 +98,16 @@ public class ColorizeEndActivity extends AppCompatActivity {
     }
     public void displayScore()
     {
-        if (GameConstants.SCORE > GameConstants.HIGHSCORE)
+        //if getHighScore from firebase >
+        if (GameConstants.HIGHSCORE> GameConstants.HIGHSCORE)
         {
             GameConstants.HIGHSCORE = GameConstants.SCORE;
         }
         scoreLabel.setText(""+GameConstants.SCORE);
         highScoreLabel.setText(GameConstants.DISPLAYHIGHSCORE + GameConstants.HIGHSCORE);
 
-        //store highscore on firebase
+//        FirebaseMethods firebasemethods = new FirebaseMethods(ColorizeEndActivity.this);
+//        firebasemethods.storeHighScore(10);
+
     }
 }

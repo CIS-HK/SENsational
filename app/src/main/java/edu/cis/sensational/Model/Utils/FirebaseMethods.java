@@ -108,6 +108,12 @@ public class FirebaseMethods {
         // TODO figure out a way to listen back from the databse whether or not this has succeeded.
     }
 
+    public void storeHighScore(final int score)
+    {
+        myRef.child("user_awards").child(userID).child("total_smiley_faces").child("Colorize_HighScore").setValue(score);
+
+    }
+
     //TODO change the parameters so you use the getters from Post instead of individual IDs
     public void upvoteButtonPressed(final String post_id, final String userID, final Post post){
 
