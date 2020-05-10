@@ -11,16 +11,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bubbler_one"
-        android:text="@string/dash"
         android:textColor="#A96DEE"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.619"
+        app:layout_constraintHorizontal_bias="0.611"
         app:layout_constraintStart_toStartOf="@id/userScore"
         app:layout_constraintTop_toTopOf="@id/userScore"
-        app:layout_constraintVertical_bias="0.009" />
+        app:layout_constraintVertical_bias="0.016" />
 
     <ImageView
         android:id="@+id/userScore"

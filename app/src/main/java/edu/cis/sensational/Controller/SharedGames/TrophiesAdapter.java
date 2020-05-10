@@ -12,12 +12,10 @@ import java.util.ArrayList;
 import edu.cis.sensational.R;
 
 public class TrophiesAdapter extends RecyclerView.Adapter<TrophiesViewHolder>{
-    ArrayList<String> trophyNames;
-    ArrayList<Integer> trophyNums;
+    ArrayList<Trophy> trophies;
 
-    public TrophiesAdapter(ArrayList<String> trophyNames, ArrayList<Integer> trophyNums){
-        this.trophyNames = trophyNames;
-        this.trophyNums = trophyNums;
+    public TrophiesAdapter(ArrayList<Trophy> trophies){
+        this.trophies = trophies;
     }
 
     @NonNull
@@ -30,14 +28,14 @@ public class TrophiesAdapter extends RecyclerView.Adapter<TrophiesViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull TrophiesViewHolder holder, int position) {
-        String trophy = trophyNames.get(position) + " trophy";
+        String trophy = trophies.get(position).getName();
         holder.trophyName.setText(trophy);
-        String num = " " + trophyNums.get(position);
+        String num = "" + trophies.get(position).getSmileyFaces();
         holder.numSmileys.setText(num);
     }
 
     @Override
     public int getItemCount() {
-        return trophyNames.size();
+        return trophies.size();
     }
 }
