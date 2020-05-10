@@ -8,6 +8,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Handler;
 
 import edu.cis.sensational.Model.CConstants;
@@ -15,8 +17,8 @@ import edu.cis.sensational.R;
 
 public final class Util
 {
-    public static AnimationSet sizeControl(ImageView circle, Context context, Integer growTime,
-                                           Integer offsetTime, Integer shrinkTime)
+    public static AnimationSet circleControl(ImageView circle, Context context, Integer growTime,
+                                             Integer offsetTime, Integer shrinkTime)
     {
         //https://developer.android.com/reference/android/view/animation/AnimationSet.html
         //Docs for animation set
@@ -27,7 +29,7 @@ public final class Util
         //Getting the grow animation from anim file and setting the duration to 3 seconds, and
         //adding it to the animation set for the circle
         Animation grow = AnimationUtils.loadAnimation(context, R.anim.circleanimation2);
-        //3000
+        //Time selected * 1000 so it is in milliseconds
         grow.setDuration(growTime * 1000);
         animSet.addAnimation(grow);
 
@@ -35,10 +37,10 @@ public final class Util
         //the start offset to 5 seconds so there will be a 2 second stop before shrink starts and
         //adding it to the animation set for the circle
         Animation shrink = AnimationUtils.loadAnimation(context, R.anim.circleanimation);
-        //3000
+        //Time selected * 1000 so it is in milliseconds
         shrink.setDuration(shrinkTime * 1000);
 
-        //5000
+        //Time selected * 1000 so it is in milliseconds
         shrink.setStartOffset((offsetTime + growTime) * 1000);
         animSet.addAnimation(shrink);
 
@@ -48,82 +50,29 @@ public final class Util
         return animSet;
     }
 
-    //Method to control the words text view
-    public static void text(CConstants c, final TextView breathe, final boolean pause)
+    //Method to make number arraylist for the number on the circle
+    public static ArrayList<String> numberArrayList(int in, int hold, int out)
     {
-        //Words to be shown in order on the screen for for seconds, then 6 seconds
-        final String[] array2 = {c.bIn, c.hold, c.bOut};
-        //Making a new Runnable (loop) for the words string
+        ArrayList<String> array1 = new ArrayList<>();
 
-        Thread t = new Thread(new Runnable()
+        for (int i = 1; i <= in; i++)
         {
-            int x = 0;
-            @Override
-            public void run()
-            {
+            array1.add(i + "");
+        }
 
-                //Setting 3 second interval between the changing of words
-                if(x == 1)
-                {
-                    breathe.postDelayed(this, 2000);
-                }
-                else
-                {
-                    breathe.postDelayed(this, 3000);
-                }
-                //Setting the text to the words in the array and positively incrementing x
-                breathe.setText(array2[x]);
-                x++;
-                //If paused, i is zero again and it is back to the start
-                if(pause == true)
-                {
-                    x = 0;
-                    breathe.setText(array2[x]);
-                }
-                //When it reaches the end of array, goes back to beginning, continuing the loop
-                if (x == 3)
-                {
-                    x = 0;
-                }
-
-            }
-        });
-    }
-
-    //Method to control number text view
-    public static void number(CConstants c, final TextView number, final boolean pause, final Handler handler)
-    {
-
-        //Array that hold the numbers to be shown in order on the screen per 1 second
-        final String[] array1 = {c.one, c.two, c.three, c.one, c.two,c.one, c.two, c.three};
-        //Making a new Runnable (loop) for the number string
-
-
-        number.post(new Runnable()
+        for (int i = 1; i <= hold; i++)
         {
-            int i = 0;
-            @Override
-            public void run()
-            {
-                //Setting almost 1 second interval between the changing of numbers
-                number.postDelayed(this, 992);
-                //Setting the text to the number in the array and positively incrementing i
-                number.setText(array1[i]);
-                i++;
-                //If paused, i is zero again and it is back to the start
-                if (pause == true)
-                {
-                    i = 0;
-                    number.setText(array1[i]);
-                }
-                //When it reaches the end of array, goes back to beginning, continuing the loop
-                if (i == 8)
-                {
-                    i = 0;
-                }
-            }
-        });
+            array1.add(i + "");
+        }
+
+        for (int i = 1; i <= out; i++)
+        {
+            array1.add(i + "");
+        }
+        return array1;
     }
 }
+
+
 
 

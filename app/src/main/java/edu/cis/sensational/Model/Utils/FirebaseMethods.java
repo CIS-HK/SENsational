@@ -131,41 +131,77 @@ public class FirebaseMethods {
         // TODO figure out a way to listen back from the databse whether or not this has succeeded.
     }
 
+    public void storeHighScore(final int score)
+    {
+        myRef.child("user_awards").child(userID).child("total_smiley_faces").child("Colorize_HighScore").setValue(score);
+
+    }
+
+    //TODO change the parameters so you use the getters from Post instead of individual IDs
     public void upvoteButtonPressed(final String post_id, final String userID, final Post post){
 
-        post.setLikeCount(post.getLikeCount() + 1);
+        final String postID = post_id;
 
         final DatabaseReference userRef = myRef
                 .child("posts")
-                .child(post_id)
+                .child(postID)
                 .child("likes");
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 // if the user hasn't liked this post
-//                if(dataSnapshot.getValue() == null || !(dataSnapshot.getValue(List.class).contains(userID)))
-//                {
+                if(dataSnapshot.getValue() == null )
+                {
                     Log.d(TAG, "Post: upvoting");
 
                     List<String> userLikesList = new ArrayList<>();
                     userLikesList.add(userID);
 
                     myRef.child(mContext.getString(R.string.dbname_posts))
-                            .child(post_id)
+                            .child(postID)
                             .child(mContext.getString(R.string.field_likes))
                             .setValue(userLikesList);
                     myRef.child(mContext.getString(R.string.dbname_user_posts))
                             .child(userID)
-                            .child(post_id)
+                            .child(postID)
                             .child(mContext.getString(R.string.field_likes))
                             .setValue(userLikesList);
                     myRef.child("user_likes")
                             .child(userID)
-                            .child(post_id)
+                            .child(postID)
                             .setValue(post);
+
                     upvote(post_id);
-//                }
+
+                }
+                else if (!(dataSnapshot.getValue(List.class).contains(userID))){
+                    Log.d(TAG, "Post: upvoting");
+
+                    List<String> userLikesList = dataSnapshot.getValue(List.class);
+                    userLikesList.add(userID);
+
+                    myRef.child(mContext.getString(R.string.dbname_posts))
+                            .child(postID)
+                            .child(mContext.getString(R.string.field_likes))
+                            .setValue(userLikesList);
+                    myRef.child(mContext.getString(R.string.dbname_user_posts))
+                            .child(userID)
+                            .child(postID)
+                            .child(mContext.getString(R.string.field_likes))
+                            .setValue(userLikesList);
+                    myRef.child("user_likes")
+                            .child(userID)
+                            .child(postID)
+                            .setValue(post);
+
+                    upvote(post_id);
+                }
+                // if the user liked this post
+                else
+                {
+
+                }
             }
 
             @Override
@@ -204,10 +240,6 @@ public class FirebaseMethods {
                 Log.w(TAG, "Failed to retrieve number of likes.", error.toException());
             }
         });
-    }
-
-    public void downvoteButtonPressed(String post_id, String userID, Post post){
-
     }
 
     public void downvote(String post_id){

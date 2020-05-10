@@ -1,6 +1,7 @@
 package edu.cis.sensational.Controller.SharedGames;
 
-public class Trophy {
+public class Trophy
+{
     int smileyFaces;
     String name;
 

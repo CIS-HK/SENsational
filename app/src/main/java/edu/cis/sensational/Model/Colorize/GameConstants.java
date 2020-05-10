@@ -8,9 +8,11 @@ import edu.cis.sensational.R;
 public class GameConstants {
 
     public static boolean MUSIC = false;
-    public static boolean BACKGROUND = false;
+    public static boolean BACKGROUND;
     public static int SCORE = 0;
     public static int HIGHSCORE = 0;
+    public static int TIME;
+    public static String MODE;
     public static MediaPlayer mediaPlayer = new MediaPlayer();
     public static final String DISPLAYHIGHSCORE = "High Score: ";
     public static final String TOAST = "Time's up!";
@@ -21,5 +23,6 @@ public class GameConstants {
     public static final String GRAY = "GRAY";
     public static final String PINK = "PINK";
     public static final String BLUE = "BLUE";
+
 
 }
