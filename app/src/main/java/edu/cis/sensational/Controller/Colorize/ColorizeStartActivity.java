@@ -61,6 +61,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
 
         setUpButtons();
         animation();
+
     }
 
     private void setUpButtons() {
@@ -143,7 +144,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
 
     }
 
-    public void changePosition() {
+    private void changePosition() {
 
         //go up
         mlY -= 10;
@@ -180,5 +181,26 @@ public class ColorizeStartActivity extends AppCompatActivity {
         }
 
     }
+
+//    private ObjectAnimator imageMovement(ImageView imageView, String propertyName, Float value, int duration)
+//    {
+//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(imageView,propertyName,value);
+//        objectAnimator.setDuration(duration);
+//        objectAnimator.start();
+//        return objectAnimator;
+//
+//    }
+//
+//    private void animationtwo()
+//    {
+//        imageMovement(bottomright,"translationX",-700f,500);
+//        imageMovement(middleleft,"translationY", -300f,500);
+//        imageMovement(middleright,"translationX",-300f, 500);
+//        imageMovement(topright,"translationY", 300f, 500);
+//        imageMovement(topleft,"translationX", 600f, 500);
+//
+//    }
+
+
 }
 

@@ -110,7 +110,7 @@ public class FirebaseMethods {
 
     public void storeHighScore(final int score)
     {
-        myRef.child("user_awards").child(userID).child("total_smiley_faces").child("Colorize_HighScore").setValue(score);
+        myRef.child("user_scores").child(userID).child("total_smiley_faces").child("Colorize_HighScore").setValue(score);
 
     }
 
