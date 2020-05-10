@@ -43,11 +43,14 @@ Calming
 (Activity)CalmingMode3Activity
     onCreate -- creates and identifies the various components on screen
 
-(Class) Util
+(Activity)CalmingSettingsActivity
 
-(anim) circleanimation
+(Class)Util
 
-(anim) circleanimation2
+(anim)circleanimation
+
+(anim)circleanimation2
+
 
 
 

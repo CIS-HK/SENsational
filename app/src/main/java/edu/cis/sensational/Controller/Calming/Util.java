@@ -17,8 +17,9 @@ import edu.cis.sensational.R;
 
 public final class Util
 {
-    public static AnimationSet sizeControl(ImageView circle, Context context, Integer growTime,
-                                           Integer offsetTime, Integer shrinkTime) {
+    public static AnimationSet circleControl(ImageView circle, Context context, Integer growTime,
+                                             Integer offsetTime, Integer shrinkTime)
+    {
         //https://developer.android.com/reference/android/view/animation/AnimationSet.html
         //Docs for animation set
 
@@ -28,7 +29,7 @@ public final class Util
         //Getting the grow animation from anim file and setting the duration to 3 seconds, and
         //adding it to the animation set for the circle
         Animation grow = AnimationUtils.loadAnimation(context, R.anim.circleanimation2);
-        //3000
+        //Time selected * 1000 so it is in milliseconds
         grow.setDuration(growTime * 1000);
         animSet.addAnimation(grow);
 
@@ -36,10 +37,10 @@ public final class Util
         //the start offset to 5 seconds so there will be a 2 second stop before shrink starts and
         //adding it to the animation set for the circle
         Animation shrink = AnimationUtils.loadAnimation(context, R.anim.circleanimation);
-        //3000
+        //Time selected * 1000 so it is in milliseconds
         shrink.setDuration(shrinkTime * 1000);
 
-        //5000
+        //Time selected * 1000 so it is in milliseconds
         shrink.setStartOffset((offsetTime + growTime) * 1000);
         animSet.addAnimation(shrink);
 
@@ -49,23 +50,24 @@ public final class Util
         return animSet;
     }
 
-    public static ArrayList<Integer> numberArrayList(int in, int hold, int out)
+    //Method to make number arraylist for the number on the circle
+    public static ArrayList<String> numberArrayList(int in, int hold, int out)
     {
-        ArrayList<Integer> array1 = new ArrayList<>();
+        ArrayList<String> array1 = new ArrayList<>();
 
-        for (int i = 1; i == in; i++)
+        for (int i = 1; i <= in; i++)
         {
-            array1.add(i);
+            array1.add(i + "");
         }
 
-        for (int i = 1; i == hold; i++)
+        for (int i = 1; i <= hold; i++)
         {
-            array1.add(i);
+            array1.add(i + "");
         }
 
-        for (int i = 1; i == out; i++)
+        for (int i = 1; i <= out; i++)
         {
-            array1.add(i);
+            array1.add(i + "");
         }
         return array1;
     }
