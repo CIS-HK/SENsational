@@ -130,7 +130,6 @@ public class User implements Parcelable{
         this.user_child_profile = profile;
     }
 
-
     @Override
     public String toString() {
         return "User{" +
