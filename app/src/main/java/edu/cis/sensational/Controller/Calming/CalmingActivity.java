@@ -14,11 +14,17 @@ import edu.cis.sensational.R;
 public class CalmingActivity extends AppCompatActivity
 {
     //Declaring the buttons for each mode on the start page
-    Button mode1;
-    Button mode2;
-    Button mode3;
-    Button back;
-    ImageButton settings;
+    private Button mode1;
+    private Button mode2;
+    private Button mode3;
+    private Button back;
+    private ImageButton settings;
+
+    private int inInt;
+    private int holdInt;
+    private int outInt;
+
+    private boolean goneSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,7 +42,27 @@ public class CalmingActivity extends AppCompatActivity
 
         //Calling a method to set up the buttons
         setUpButtons();
+
+        System.out.println("gone: " + goneSettings);
+
+
+//        @Override
+//        public void onSaveInstanceState(Bundle savedInstanceState)
+//        {
+//            super.onSaveInstanceState(savedInstanceState);
+//            savedInstanceState.putBoolean("goneSettings", goneSettings);
+//        }
+//
+//        @Override
+//        public void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        goneSettings = savedInstanceState.getBoolean("goneSettings");
+
     }
+
+
+
+
 
     //Method to send the user to different pages for the mode they click
     public void setUpButtons()
@@ -46,9 +72,12 @@ public class CalmingActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                getBundle();
                 //Sends the user to the Mode 1 activity
                 Intent myIntent = new Intent(CalmingActivity.this,
                         CalmingMode1Activity.class);
+                //Sending information to next intent
+                addBundle(myIntent);
                 startActivity(myIntent);
             }
         });
@@ -60,6 +89,8 @@ public class CalmingActivity extends AppCompatActivity
                 //Sends the user to the Mode 2 activity
                 Intent myIntent = new Intent(CalmingActivity.this,
                         CalmingMode2Activity.class);
+                //Sending information to next intent
+//                addBundle(myIntent);
                 startActivity(myIntent);
             }
         });
@@ -71,6 +102,8 @@ public class CalmingActivity extends AppCompatActivity
                 //Sends the user to the Mode 3 activity
                 Intent myIntent = new Intent(CalmingActivity.this,
                         CalmingMode3Activity.class);
+                //Sending information to next intent
+//                addBundle(myIntent);
                 startActivity(myIntent);
             }
         });
@@ -90,10 +123,31 @@ public class CalmingActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                goneSettings = true;
                 Intent intent = new Intent(CalmingActivity.this,
                         CalmingSettingsActivity.class);
                 startActivity(intent);
             }
         });
     }
+
+    public void getBundle()
+    {
+        if(getIntent().getExtras() != null) {
+            Bundle b = getIntent().getExtras();
+            inInt = b.getInt("In");
+            holdInt = b.getInt("Hold");
+            outInt = b.getInt("Out");
+            System.out.println(inInt + ". " + holdInt + " . " + outInt);
+        }
+    }
+
+    //Adding information for circle growth and shrinking into an intent
+    public void addBundle(Intent intent)
+    {
+        intent.putExtra("In", inInt);
+        intent.putExtra("Hold", holdInt);
+        intent.putExtra("Out", outInt);
+    }
+
 }

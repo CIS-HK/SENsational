@@ -34,6 +34,11 @@ public class CalmingMode1Activity extends AppCompatActivity
     //Declaring media player that will play a song
     private MediaPlayer mPlayer;
 
+    private int inInt;
+    private int holdInt;
+    private int outInt;
+
+    private ArrayList<String> array1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,6 +51,10 @@ public class CalmingMode1Activity extends AppCompatActivity
         circle = findViewById(R.id.circle1);
         breathe = findViewById(R.id.breatheTextView1);
         number = findViewById(R.id.numberTextView1);
+
+        inInt = 3;
+        holdInt = 2;
+        outInt = 3;
 
         //Setting up CConstants variable to access constants
         c = new CConstants();
@@ -62,10 +71,51 @@ public class CalmingMode1Activity extends AppCompatActivity
         mPlayer.start();
     }
 
+//    //https://stackoverflow.com/questions/151777/how-to-save-an-activity-state-using-save-instance-state
+//    @Override
+//    public void onSaveInstanceState(Bundle savedInstanceState)
+//    {
+//        super.onSaveInstanceState(savedInstanceState);
+//        // Save UI state changes to the savedInstanceState.
+//        // This bundle will be passed to onCreate if the process is
+//        // killed and restarted.
+//        savedInstanceState.putInt("inInt", inInt);
+//        savedInstanceState.putInt("holdInt", holdInt);
+//        savedInstanceState.putInt("outInt", outInt);
+//    }
+//
+//    @Override
+//    public void onRestoreInstanceState(Bundle savedInstanceState)
+//    {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        // Restore UI state from the savedInstanceState.
+//        // This bundle has also been passed to onCreate.
+//        inInt = savedInstanceState.getInt("inInt");
+//        holdInt = savedInstanceState.getInt("holdInt");
+//        outInt = savedInstanceState.getInt("outInt");
+//    }
+
     //Method to control the size of the circle
     public void sizeControl()
     {
-        final AnimationSet set = Util.sizeControl(circle, this, 3, 2, 3);
+        if(getIntent().getExtras().getInt("In") != 0)
+        {
+            Bundle b = getIntent().getExtras();
+            inInt = b.getInt("In");
+            holdInt = b.getInt("Hold");
+            outInt = b.getInt("Out");
+        }
+
+        ArrayList array = Util.numberArrayList(5,6,7);
+        System.out.println("arraylist: ");
+        for(int i=0; i < array.size(); i++){
+            System.out.println( array.get(i) );
+        }
+
+
+        final AnimationSet set = Util.sizeControl(circle, this, inInt, holdInt, outInt);
+
+
 
         //Animation listener to see what is happening with the animation
         set.setAnimationListener(new Animation.AnimationListener()
@@ -110,14 +160,19 @@ public class CalmingMode1Activity extends AppCompatActivity
             public void run()
             {
                 //Setting 3 second interval between the changing of words
+                if(x == 0)
+                {
+                    breathe.postDelayed(this, 3000);
+                }
                 if(x == 1)
                 {
                     breathe.postDelayed(this, 2000);
                 }
-                else
+                if(x == 2)
                 {
-                    breathe.postDelayed(this, 3000);
+                    breathe.postDelayed(this,3000);
                 }
+
                 //Setting the text to the words in the array and positively incrementing x
                 breathe.setText(array2.get(x));
                 x++;
@@ -141,7 +196,7 @@ public class CalmingMode1Activity extends AppCompatActivity
     public void number()
     {
         //Array that hold the numbers to be shown in order on the screen per 1 second
-        final ArrayList <String> array1 = c.array1;
+        array1 = c.array1;
 
         //Making a new Runnable (loop) for the number string
         number.post(new Runnable()
@@ -151,7 +206,7 @@ public class CalmingMode1Activity extends AppCompatActivity
             public void run()
             {
                 //Setting almost 1 second interval between the changing of numbers
-                number.postDelayed(this, 992);
+                number.postDelayed(this, 998);
                 //Setting the text to the number in the array and positively incrementing i
                 number.setText(array1.get(i));
                 i++;
