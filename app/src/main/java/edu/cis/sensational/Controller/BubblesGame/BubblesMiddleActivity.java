@@ -122,6 +122,8 @@ public class BubblesMiddleActivity extends AppCompatActivity
         colorsPicked.add(colorBubble);
         allColors.remove(colorBubble);
         String imageName = colorBubble + BubbleConstants.BUBBLE;
+
+        // https://stackoverflow.com/questions/15545753/random-genaration-of-image-from-drawable-folder-in-android
         int imageID = getResources().getIdentifier(imageName,
                                                    BubbleConstants.DRAWABLE,
                                                    getPackageName());
@@ -130,6 +132,7 @@ public class BubblesMiddleActivity extends AppCompatActivity
 
     public void setUpBubbles()
     {
+        // https://www.youtube.com/watch?v=UxbJKNjQWD8
         // Get the size of the screen
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
@@ -144,6 +147,7 @@ public class BubblesMiddleActivity extends AppCompatActivity
 
     public void playBubble()
     {
+        // https://www.youtube.com/watch?v=UxbJKNjQWD8
         timer = new Timer();
         handler = new Handler();
 
@@ -174,6 +178,7 @@ public class BubblesMiddleActivity extends AppCompatActivity
 
     public void changeBubbleCoordinates()
     {
+        // https://www.youtube.com/watch?v=UxbJKNjQWD8
         bubbleY -= BubbleConstants.MINUS_FROM_Y;
         if (bubble.getY() + bubble.getHeight() < 0)
         {

@@ -87,9 +87,11 @@ public class BubblesMiddle2Activity extends AppCompatActivity
                         intent.putExtra(BubbleConstants.ROUND_NUM, roundNumber);
                         intent.putExtra(BubbleConstants.FIRST_TIME, false);
                         startActivity(intent);
-                    } else {
+                    }
+                    else {
                         Intent intent = new Intent(BubblesMiddle2Activity.this,
                                 BubblesEndActivity.class);
+                        intent.putExtra(BubbleConstants.SCORE, score);
                         startActivity(intent);
                     }
                     canProceed = false;
@@ -136,9 +138,12 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         String answer1 = options.get(index);
         options.remove(index);
         String imageName = answer1 + BubbleConstants.BUBBLE;
+
+        // https://stackoverflow.com/questions/15545753/random-genaration-of-image-from-drawable-folder-in-android
         int imageID = getResources().getIdentifier(imageName,
                                                    BubbleConstants.DRAWABLE,
                                                    getPackageName());
+
         option1.setBackgroundResource(imageID);
         option1.setText(answer1);
         if (answer1.equals(correctAnswer))
@@ -200,6 +205,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
                     numberCorrect++;
 
                     // Play a sound effect
+                    // https://stackoverflow.com/questions/10451092/how-to-play-a-sound-effect-in-android
                     MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.correct);
                     mPlayer.setVolume(BubbleConstants.VOLUME, BubbleConstants.VOLUME);
                     mPlayer.start();
@@ -227,6 +233,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
                     numTimes++;
 
                     // Play a sound effect
+                    // https://stackoverflow.com/questions/10451092/how-to-play-a-sound-effect-in-android
                     MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.incorrect);
                     mPlayer.setVolume(BubbleConstants.VOLUME, BubbleConstants.VOLUME);
                     mPlayer.start();
@@ -247,7 +254,6 @@ public class BubblesMiddle2Activity extends AppCompatActivity
                 score++;
             }
             roundNumber++;
-            numberCorrect = BubbleConstants.DEFAULT;
             if (roundNumber == BubbleConstants.MAX_ROUNDS){
                 nextRound.setText(BubbleConstants.END_PAGE);
             }
@@ -276,3 +282,5 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         }
     }
 }
+
+

@@ -2,12 +2,14 @@ package edu.cis.sensational.Model.Utils;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -78,6 +80,27 @@ public class FirebaseMethods {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
         sdf.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));
         return sdf.format(new Date());
+    }
+
+    public void updateUserScore(final String userID, final int bubbleScore, final TextView text) {
+        final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
+                .child(userID).child("user_score");
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    int score = bubbleScore + dataSnapshot.getValue(int.class);
+                    userRef.setValue(score);
+                    text.setText("" + score);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to retrieve user score.", error.toException());
+            }
+        });
     }
 
     public boolean createNewPost(String title, String description, String tags, boolean privatePost){

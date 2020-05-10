@@ -12,7 +12,7 @@ public class BubbleConstants
     public static final String BUBBLE = "bubble";
     public static final String DRAWABLE = "drawable";
     public static final String SECOND = "second (2nd)";
-    public static final String THIRD = "third (3rd)";
+    public static final String THIRD = "third";
     public static final String FOURTH = "fourth (4th)";
     public static final String FIFTH = "fifth (5th)";
     public static final String EASY = "Easy";
