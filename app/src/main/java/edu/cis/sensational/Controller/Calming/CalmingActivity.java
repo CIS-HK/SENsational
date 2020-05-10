@@ -20,11 +20,10 @@ public class CalmingActivity extends AppCompatActivity
     private Button back;
     private ImageButton settings;
 
+    //Declaring numbers for circle
     private int inInt;
     private int holdInt;
     private int outInt;
-
-    private boolean goneSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,36 +41,18 @@ public class CalmingActivity extends AppCompatActivity
 
         //Calling a method to set up the buttons
         setUpButtons();
-
-        System.out.println("gone: " + goneSettings);
-
-
-//        @Override
-//        public void onSaveInstanceState(Bundle savedInstanceState)
-//        {
-//            super.onSaveInstanceState(savedInstanceState);
-//            savedInstanceState.putBoolean("goneSettings", goneSettings);
-//        }
-//
-//        @Override
-//        public void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        goneSettings = savedInstanceState.getBoolean("goneSettings");
-
     }
-
-
-
-
 
     //Method to send the user to different pages for the mode they click
     public void setUpButtons()
     {
+        //Method to go mode 1 page
         mode1.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                //Getting info from bundle
                 getBundle();
                 //Sends the user to the Mode 1 activity
                 Intent myIntent = new Intent(CalmingActivity.this,
@@ -81,33 +62,42 @@ public class CalmingActivity extends AppCompatActivity
                 startActivity(myIntent);
             }
         });
+
+        //Method to go mode 2 page
         mode2.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                //Getting info from bundle
+                getBundle();
                 //Sends the user to the Mode 2 activity
                 Intent myIntent = new Intent(CalmingActivity.this,
                         CalmingMode2Activity.class);
                 //Sending information to next intent
-//                addBundle(myIntent);
+                addBundle(myIntent);
                 startActivity(myIntent);
             }
         });
+
+        //Method to go mode 3 page
         mode3.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                //Getting info from bundle
+                getBundle();
                 //Sends the user to the Mode 3 activity
                 Intent myIntent = new Intent(CalmingActivity.this,
                         CalmingMode3Activity.class);
                 //Sending information to next intent
-//                addBundle(myIntent);
+                addBundle(myIntent);
                 startActivity(myIntent);
             }
         });
 
+        //Method to go back to start page
         back.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -118,12 +108,13 @@ public class CalmingActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        //Method to go to settings page
         settings.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                goneSettings = true;
                 Intent intent = new Intent(CalmingActivity.this,
                         CalmingSettingsActivity.class);
                 startActivity(intent);
@@ -131,14 +122,16 @@ public class CalmingActivity extends AppCompatActivity
         });
     }
 
+    //Getting information from bundle from settings page
     public void getBundle()
     {
-        if(getIntent().getExtras() != null) {
+        //Checking if bundle is empty (if setting have been saved or not)
+        if(getIntent().getExtras() != null)
+        {
             Bundle b = getIntent().getExtras();
             inInt = b.getInt("In");
             holdInt = b.getInt("Hold");
             outInt = b.getInt("Out");
-            System.out.println(inInt + ". " + holdInt + " . " + outInt);
         }
     }
 
@@ -149,5 +142,4 @@ public class CalmingActivity extends AppCompatActivity
         intent.putExtra("Hold", holdInt);
         intent.putExtra("Out", outInt);
     }
-
 }

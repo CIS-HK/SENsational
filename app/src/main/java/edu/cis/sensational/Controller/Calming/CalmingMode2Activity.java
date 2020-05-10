@@ -23,8 +23,8 @@ import java.util.TimerTask;
 import edu.cis.sensational.Model.CConstants;
 import edu.cis.sensational.R;
 
-public class CalmingMode2Activity extends AppCompatActivity {
-
+public class CalmingMode2Activity extends AppCompatActivity
+{
     //Declaring the images and text on the GUI
     private ImageView bf1;
     private ImageView bf2;
@@ -59,6 +59,14 @@ public class CalmingMode2Activity extends AppCompatActivity {
     private Handler handler = new Handler();
     private Timer timer = new Timer();
 
+    //Declaring integers for the selected growth, hold, and shrink times
+    private int inInt;
+    private int holdInt;
+    private int outInt;
+
+    //Declaring arraylist for the growth, hold, and shrink times that will be added
+    private ArrayList<String> array1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -70,6 +78,11 @@ public class CalmingMode2Activity extends AppCompatActivity {
         circle = findViewById(R.id.circle2);
         breathe = findViewById(R.id.breatheTextView1);
         number = findViewById(R.id.numberTextView2);
+
+        //Setting default growth, hold, and shrink time to 3-2-3
+        inInt = 3;
+        holdInt = 2;
+        outInt = 3;
 
         //Setting up CConstants variable to access constants
         c = new CConstants();
@@ -99,11 +112,9 @@ public class CalmingMode2Activity extends AppCompatActivity {
 
         //Calling methods to control the movement of the circle and the changing of the text
         sizeControl();
-        text();
-        number();
 
         //Getting the song MP3 from the raw file and setting it to the media player
-        mPlayer2 = MediaPlayer.create(this, R.raw.calming_music);
+        mPlayer2 = MediaPlayer.create(this, R.raw.calming_music_2);
 
         //Starting the song
         mPlayer2.start();
@@ -176,7 +187,21 @@ public class CalmingMode2Activity extends AppCompatActivity {
     //Method to control the size of the circle
     public void sizeControl()
     {
-        final AnimationSet set = Util.sizeControl(circle, this, 3, 2, 3);
+        //Checking if intent is empty (if settings have been chosen and saved)
+        if(getIntent().getExtras().getInt("In") != 0)
+        {
+            //Getting values from bundle in the extras
+            Bundle b = getIntent().getExtras();
+            inInt = b.getInt("In");
+            holdInt = b.getInt("Hold");
+            outInt = b.getInt("Out");
+        }
+        //Initialising arraylist for numbers using the util class method numberArrayList
+        array1 = Util.numberArrayList(inInt,holdInt,outInt);
+
+        //Adding util circle control method to the animation set using number values for growth,
+        // hold, and shrink times
+        final AnimationSet set = Util.circleControl(circle, this, inInt, holdInt, outInt);
 
         //Animation listener to see what is happening with the animation
         set.setAnimationListener(new Animation.AnimationListener()
@@ -205,13 +230,17 @@ public class CalmingMode2Activity extends AppCompatActivity {
             {
             }
         });
+
+        //Running methods to control the text and number on the circle
+        text(inInt, holdInt, outInt);
+        number();
     }
 
-    //Method to control the words text view
-    public void text()
+    //Method to control the words text view, taking in variables for length of growth, hold, shrink
+    public void text(final int in, final int hold, final int out)
     {
-        //Words to be shown in order on the screen for for seconds, then 6 seconds
-        final ArrayList<String> array2 = c.array2;
+        //Words to be shown in order on the screen
+        final ArrayList<String> array2 = c.wordArray;
 
         //Making a new Runnable (loop) for the words string
         breathe.post(new Runnable()
@@ -220,18 +249,29 @@ public class CalmingMode2Activity extends AppCompatActivity {
             @Override
             public void run()
             {
-                //Setting 3 second interval between the changing of words
+                //Setting  second interval between the changing of words to the values from the
+                //parameters
+
+                //Breathe in
+                if(x == 0)
+                {
+                    breathe.postDelayed(this, in * 1000);
+                }
+                //Hold
                 if(x == 1)
                 {
-                    breathe.postDelayed(this, 2000);
+                    breathe.postDelayed(this, hold * 1000);
                 }
-                else
+                //Breathe out
+                if(x == 2)
                 {
-                    breathe.postDelayed(this, 3000);
+                    breathe.postDelayed(this,out * 1000);
                 }
+
                 //Setting the text to the words in the array and positively incrementing x
                 breathe.setText(array2.get(x));
                 x++;
+
                 //If paused, i is zero again and it is back to the start
                 if(pause == true)
                 {
@@ -243,7 +283,6 @@ public class CalmingMode2Activity extends AppCompatActivity {
                 {
                     x = 0;
                 }
-
             }
         });
     }
@@ -251,9 +290,6 @@ public class CalmingMode2Activity extends AppCompatActivity {
     //Method to control number text view
     public void number()
     {
-        //Array that hold the numbers to be shown in order on the screen per 1 second
-        final ArrayList <String> array1 = c.array1;
-
         //Making a new Runnable (loop) for the number string
         number.post(new Runnable()
         {
@@ -262,7 +298,8 @@ public class CalmingMode2Activity extends AppCompatActivity {
             public void run()
             {
                 //Setting almost 1 second interval between the changing of numbers
-                number.postDelayed(this, 992);
+                number.postDelayed(this, 998);
+
                 //Setting the text to the number in the array and positively incrementing i
                 number.setText(array1.get(i));
                 i++;
@@ -273,7 +310,7 @@ public class CalmingMode2Activity extends AppCompatActivity {
                     number.setText(array1.get(i));
                 }
                 //When it reaches the end of array, goes back to beginning, continuing the loop
-                if (i == 8)
+                if (i == array1.size())
                 {
                     i = 0;
                 }
@@ -290,7 +327,6 @@ public class CalmingMode2Activity extends AppCompatActivity {
             //Setting pause boolean to true
             pause = true;
 
-            ;
             //Cancelling timer so butterflies stop moving
             timer.cancel();
             timer = null;
@@ -336,7 +372,6 @@ public class CalmingMode2Activity extends AppCompatActivity {
                     });
                 }
             },0,40);
-
         }
     }
 
@@ -348,5 +383,4 @@ public class CalmingMode2Activity extends AppCompatActivity {
         Intent myIntent = new Intent(CalmingMode2Activity.this, CalmingActivity.class);
         startActivity(myIntent);
     }
-
 }

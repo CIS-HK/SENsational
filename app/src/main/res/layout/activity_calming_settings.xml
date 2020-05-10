@@ -18,19 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calmingInSpinner" />
 
-    <Switch
-        android:id="@+id/musicSwitch"
-        android:layout_width="139dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="95dp"
-        android:checked="true"
-        android:text="@string/music"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Spinner
         android:id="@+id/calmingInSpinner"
         android:layout_width="100dp"
@@ -68,14 +55,14 @@
         android:id="@+id/breatheInTimeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="60dp"
         android:text="@string/select_breathe_in_time"
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/musicSwitch" />
+        app:layout_constraintTop_toBottomOf="@+id/backButton" />
 
     <TextView
         android:id="@+id/breatheOutTimeTV"
