@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.Model.User;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
@@ -30,7 +31,6 @@ public class ColorizeEndActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colorize_end);
         playAgainButton = findViewById(R.id.playAgainButton);
@@ -46,13 +46,15 @@ public class ColorizeEndActivity extends AppCompatActivity {
         {
             musicSwitch2.setChecked(true);
         }
-        if (GameConstants.MUSIC = false)
+        else
+
         {
             musicSwitch2.setChecked(false);
         }
 
         setUpButtons();
         displayScore();
+
 
     }
 
@@ -72,7 +74,7 @@ public class ColorizeEndActivity extends AppCompatActivity {
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ColorizeEndActivity.this,GamesSharedActivity.class));
+                startActivity(new Intent(ColorizeEndActivity.this, GamesSharedActivity.class));
                 finish();
                 GameConstants.SCORE = 0;
                 GameConstants.mediaPlayer.stop();
@@ -98,16 +100,17 @@ public class ColorizeEndActivity extends AppCompatActivity {
     }
     public void displayScore()
     {
-        //if getHighScore from firebase >
-        if (GameConstants.HIGHSCORE> GameConstants.HIGHSCORE)
+        //if current score is greater than high score, update highscore
+        if (GameConstants.SCORE > GameConstants.HIGHSCORE)
         {
             GameConstants.HIGHSCORE = GameConstants.SCORE;
         }
         scoreLabel.setText(""+GameConstants.SCORE);
         highScoreLabel.setText(GameConstants.DISPLAYHIGHSCORE + GameConstants.HIGHSCORE);
 
-//        FirebaseMethods firebasemethods = new FirebaseMethods(ColorizeEndActivity.this);
-//        firebasemethods.storeHighScore(10);
+        //store highscore on firebsae
+        FirebaseMethods firebasemethods = new FirebaseMethods(ColorizeEndActivity.this);
+        firebasemethods.storeHighScore(GameConstants.HIGHSCORE);
 
     }
 }

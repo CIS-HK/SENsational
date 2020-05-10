@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.cis.sensational.Controller.Home.HomeActivity;
+import edu.cis.sensational.Controller.MainActivity;
 import edu.cis.sensational.R;
 
 public class LoginActivity extends AppCompatActivity{
@@ -107,8 +108,11 @@ public class LoginActivity extends AppCompatActivity{
                                             /*** CODE for 1g inside if statement parenthesis, should not be boolean "true" ***/
                                             if(currentUser.isEmailVerified()){
                                                 Log.d(TAG, "onComplete: success. email is verified.");
-                                                Intent intent = new Intent(context,
+                                                /* Intent intent = new Intent(context,
                                                         HomeActivity.class);
+                                                 */
+                                                Intent intent = new Intent(context,
+                                                        MainActivity.class);
                                                 startActivity(intent);
                                             }
                                             else
@@ -144,7 +148,8 @@ public class LoginActivity extends AppCompatActivity{
          If the user is logged in then navigate to HomeActivity and call 'finish()'
           */
         if(mAuth.getCurrentUser() != null){
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            // Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
             finish();
         }

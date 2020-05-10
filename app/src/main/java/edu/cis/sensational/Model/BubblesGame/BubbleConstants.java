@@ -11,10 +11,10 @@ public class BubbleConstants
     public static final String COLORS_PICKED = "colorsPicked";
     public static final String BUBBLE = "bubble";
     public static final String DRAWABLE = "drawable";
-    public static final String SECOND = "second";
-    public static final String THIRD = "third";
-    public static final String FOURTH = "fourth";
-    public static final String FIFTH = "fifth";
+    public static final String SECOND = "second (2nd)";
+    public static final String THIRD = "third (3rd)";
+    public static final String FOURTH = "fourth (4th)";
+    public static final String FIFTH = "fifth (5th)";
     public static final String EASY = "Easy";
     public static final String MED = "Medium";
     public static final String HARD = "Hard";
@@ -26,6 +26,7 @@ public class BubbleConstants
     public static final String PINK = "pink";
     public static final String PURPLE = "purple";
     public static final String EMPTY_STR = "";
+    public static final String END_PAGE = "Go to end page!";
 
     // Ints
     public static final int NUM_BUBBLES_EASY = 3;

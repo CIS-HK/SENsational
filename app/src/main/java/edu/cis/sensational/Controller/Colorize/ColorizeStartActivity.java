@@ -9,9 +9,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -21,6 +19,7 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.R;
 
@@ -52,9 +51,6 @@ public class ColorizeStartActivity extends AppCompatActivity {
         middleright = findViewById(R.id.imageView6);
         topright = findViewById(R.id.imageView5);
         topleft = findViewById(R.id.imageView3);
-        timer = new Timer();
-        handler = new Handler();
-
 
 
         //https://stackoverflow.com/questions/37244357/how-to-play-music-in-android-studio
@@ -108,16 +104,14 @@ public class ColorizeStartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (musicSwitch.isChecked())
                 {
-                    GameConstants.MUSIC = true;
                     GameConstants.mediaPlayer.start();
                     GameConstants.mediaPlayer.setVolume(20,20);
-
+                    GameConstants.MUSIC = true;
                 }
                 else
                 {
-                    GameConstants.MUSIC = false;
                     GameConstants.mediaPlayer.pause();
-
+                    GameConstants.MUSIC = false;
                 }
             }
         });
@@ -131,12 +125,16 @@ public class ColorizeStartActivity extends AppCompatActivity {
         screenWidth = size.x;
         screenHeight = size.y;
 
-        timer.schedule(new TimerTask() {
+        timer.schedule(new TimerTask()
+        {
             @Override
-            public void run() {
-                handler.post(new Runnable() {
+            public void run()
+            {
+                handler.post(new Runnable()
+                {
                     @Override
-                    public void run() {
+                    public void run()
+                    {
                         changePosition();
                     }
                 });
@@ -145,7 +143,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
 
     }
 
-    public void changePosition(){
+    public void changePosition() {
 
         //go up
         mlY -= 10;
@@ -176,21 +174,11 @@ public class ColorizeStartActivity extends AppCompatActivity {
 
         //go left
         brX -= 10;
-        if (bottomright.getX() + bottomright.getWidth() < 0 )
+        if (bottomright.getX() + bottomright.getWidth() < 0)
         {
             brX = screenWidth + 800.0f;
         }
 
-        bottomright.setX(brX);
-
-        //go left
-        trX -= 10;
-        if (topright.getX() + topright.getWidth() < 0 )
-        {
-            trX = screenWidth + 800.0f;
-        }
-
-        topright.setX(brX);
     }
-
 }
+
