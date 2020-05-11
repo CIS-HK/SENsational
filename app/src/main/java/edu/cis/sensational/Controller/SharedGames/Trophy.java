@@ -1,13 +1,12 @@
 package edu.cis.sensational.Controller.SharedGames;
 
-public class Trophy {
+public class Trophy
+{
     int smileyFaces;
-    int trophyImage;
     String name;
 
-    public Trophy(int smileyFaces, int trophyImage, String name){
+    public Trophy(int smileyFaces, String name){
         this.smileyFaces = smileyFaces;
-        this.trophyImage = trophyImage;
         this.name = name;
     }
 
@@ -26,12 +25,5 @@ public class Trophy {
     public int getSmileyFaces() {
         return smileyFaces;
     }
-
-    public void setTrophyImage(int trophyImage) {
-        this.trophyImage = trophyImage;
-    }
-
-    public int getTrophyImage() {
-        return trophyImage;
-    }
 }
+

@@ -4,7 +4,8 @@ Class: Yr12IBCS
 Date: 17th March, 2020
 
 ---- Program Purpose ----
-This program aims to provide games, calming tools and parent forums for SEN families.
+This program consists of games training executive function, calming tools and a parent forum
+ for parents of SEN children.
 
 ---- Design ----
 There are 4 functions in this app in total: 2 games, 1 calming tool and 1 chat forum. Each function
@@ -29,6 +30,54 @@ Colorize Game
     play -- identify actions once the buttons are clicked depending if they chose the right button.
             If it is the right button, adds score, reset timer and repeats the game until the user
             presses the wrong button.
+
+
+Bubbles Game
+(Activity) BubblesStartActivity - this is the start screen of the game
+    onCreate -- creates and displays components on the screen, allows users to select the game mode,
+                and sets up the Instructions and Play buttons so that they complete the right
+                actions when pressed
+
+(Activity) BubblesInstructionActivity - this activity displays the instructions of the game
+    onCreate -- creates and displays components on the instructions screen and sets up the Back
+                button so that users can play the game
+
+(Activity) BubblesMiddleActivity - this activity shows various bubbles floating on the screen
+    onCreate -- sets up ImageViews, displays the user's score so far, and initializes instance
+                variables that will be used in other methods
+
+    generateRandomSequence - randomly generates a color for the bubble that will be displayed
+
+    setUpBubbles - gets the dimensions of the screen and calls on the playBubble method
+
+    playBubble - displays the bubble floating on the screen at a certain speed. Makes use of the
+                 changeBubbleCoordinates method
+
+    changeBubbleCoordinates - changes the y-coordinate of the appropriate ImageViews. Checks when
+                              to display the next bubble/move on to the next activity
+
+(Activity) BubblesMiddle2Activity - this activity asks users to identify the color of each bubble
+                                    in the sequence by selecting one of three answer choices.
+     onCreate -- sets up ImageViews, displays the user's score so far, sets up the Next Round
+                 button and initializes instance variables that will be used later on
+
+     randomizeOptions -- randomly selects three answer options that the user can choose from. One
+                         of them is the correct answer.
+
+     setUpCorrectButton -- sets up the button that displays the correct answer so that it completes
+                           the right actions when pressed
+
+     setUpWrongButton -- sets up the button that displays the wrong answer so that it completes
+                         the right actions when pressed
+
+     checkEnd-- checks whether the user has identified the color of each of the bubbles in the
+                sequence. Transitions to the end screen or back to BubblesMiddleActivity depending on
+                the number of rounds that the user has completed.
+
+(Activity) BubblesEndActivity -- this is the end screen of the game
+    onCreate -- displays the user's final score, updates and displays the user's total number of
+                smiley faces, and sets up the Exit Game and Play Again buttons.
+
 
 Calming
 (Activity) CalmingActivity:

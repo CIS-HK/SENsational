@@ -38,7 +38,7 @@ public class ColorizeMainActivity extends AppCompatActivity
     long timeLeft;
     int color, backColor, colorIndex;
 
-    CountDownTimer counter = new CountDownTimer(3000,1000)
+    CountDownTimer counter = new CountDownTimer(GameConstants.TIME,1000)
     {
         @Override
         public void onTick(long millisUntilFinished) {
@@ -182,7 +182,7 @@ public class ColorizeMainActivity extends AppCompatActivity
 
     private void setBackgroundColor()
     {
-        if (GameConstants.BACKGROUND = false)
+        if (!GameConstants.BACKGROUND)
         {
             backgroundColor.setBackgroundColor(Color.TRANSPARENT);
         }
