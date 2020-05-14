@@ -31,6 +31,7 @@ import java.util.TimeZone;
 
 import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.Controller.Profile.AccountSettingsActivity;
+import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.Model.Comment;
 import edu.cis.sensational.Model.Likes;
 import edu.cis.sensational.Model.Post;
@@ -89,8 +90,10 @@ public class FirebaseMethods {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot != null) {
-                    int score = bubbleScore + dataSnapshot.getValue(int.class);
+                if (dataSnapshot.getValue() != null)
+                {
+                    int score = bubbleScore + dataSnapshot.getValue(Integer.class);
+
                     userRef.setValue(score);
                     text.setText("" + score);
                 }
@@ -131,10 +134,24 @@ public class FirebaseMethods {
         // TODO figure out a way to listen back from the databse whether or not this has succeeded.
     }
 
-    public void storeHighScore(final int score)
+    public void storeHighScore(final String userID, final int score)
     {
-        myRef.child("user_scores").child(userID).child("total_smiley_faces").child("Colorize_HighScore").setValue(score);
+        final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
+                .child(userID).child("user_score").child("ColorizeHighScore");
 
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    userRef.setValue(score);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to retrieve user score.", error.toException());
+            }
+        });
     }
 
     //TODO change the parameters so you use the getters from Post instead of individual IDs
