@@ -76,6 +76,8 @@ public class FirebaseMethods {
         return sdf.format(new Date());
     }
 
+    // https://stackoverflow.com/questions/47847694/how-to-return-datasnapshot-value-as-a-result-of-a-method
+
     public interface Callback{
         void onCallBack(int value);
     }

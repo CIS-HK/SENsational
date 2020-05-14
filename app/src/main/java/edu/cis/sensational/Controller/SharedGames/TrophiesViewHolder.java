@@ -13,11 +13,13 @@ public class TrophiesViewHolder extends RecyclerView.ViewHolder
 {
     protected TextView trophyName;
     protected TextView numSmileys;
+    protected ImageView trophyImage;
 
     public TrophiesViewHolder(@NonNull View itemView)
     {
         super(itemView);
         numSmileys = itemView.findViewById(R.id.trophyNum);
         trophyName = itemView.findViewById(R.id.trophyName);
+        trophyImage = itemView.findViewById(R.id.trophyImage);
     }
 }
