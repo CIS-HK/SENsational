@@ -1,6 +1,7 @@
 package edu.cis.sensational.Model.Utils;
 
 import android.content.Context;
+import android.telecom.Call;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,7 +10,6 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,20 +20,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import edu.cis.sensational.Controller.Home.HomeActivity;
-import edu.cis.sensational.Controller.Profile.AccountSettingsActivity;
-import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.Model.Comment;
-import edu.cis.sensational.Model.Likes;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.Model.User;
 import edu.cis.sensational.Model.UserAccountSettings;
@@ -83,7 +76,11 @@ public class FirebaseMethods {
         return sdf.format(new Date());
     }
 
-    public void updateUserScore(final String userID, final int bubbleScore, final TextView text) {
+    public interface Callback{
+        void onCallBack(int value);
+    }
+
+    public void updateUserScore(final String userID, final int bubbleScore, final Callback callback) {
         final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
                 .child(userID).child("user_score");
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -92,9 +89,8 @@ public class FirebaseMethods {
                 if (dataSnapshot.getValue() != null)
                 {
                     int score = bubbleScore + dataSnapshot.getValue(Integer.class);
-
                     userRef.setValue(score);
-                    text.setText("" + score);
+                    callback.onCallBack(score);
                 }
             }
 
