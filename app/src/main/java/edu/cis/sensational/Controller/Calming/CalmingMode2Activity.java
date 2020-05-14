@@ -381,6 +381,9 @@ public class CalmingMode2Activity extends AppCompatActivity
         mPlayer2.stop();
         mPlayer2.release();
         Intent myIntent = new Intent(CalmingMode2Activity.this, CalmingActivity.class);
+        myIntent.putExtra("In", inInt);
+        myIntent.putExtra("Hold", holdInt);
+        myIntent.putExtra("Out", outInt);
         startActivity(myIntent);
     }
 }
