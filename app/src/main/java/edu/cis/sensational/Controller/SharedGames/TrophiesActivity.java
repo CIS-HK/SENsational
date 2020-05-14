@@ -65,22 +65,9 @@ public class TrophiesActivity extends AppCompatActivity {
             userID = mAuth.getCurrentUser().getUid();
         }
 
-        myRef = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
-                .child(userID).child("user_score");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot != null) {
-                    userScore = dataSnapshot.getValue(int.class);
-                }
-            }
+        FirebaseMethods firebaseMethods = new FirebaseMethods(TrophiesActivity.this);
+        firebaseMethods.updateUserScore(userID,0,totalScore);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to retrieve user score.", error.toException());
-            }
-        });
 
         if (userScore >= redTrophy.getSmileyFaces()){
             trophies.add(redTrophy);

@@ -26,6 +26,7 @@ public class GamesSharedActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String userID;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

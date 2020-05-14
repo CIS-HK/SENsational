@@ -26,7 +26,7 @@ Colorize Game
     addColors - adds colors and data that needs to be used and processed internally in the
                 corresponding data structures
     setUpGame -- starts the timer, generates random text, color of text and background color onto
-                 screen, as well as the buttons for the users to click on
+                screen, as well as the buttons for the users to click on
     play -- identify actions once the buttons are clicked depending if they chose the right button.
             If it is the right button, adds score, reset timer and repeats the game until the user
             presses the wrong button.
@@ -80,26 +80,64 @@ Bubbles Game
 
 
 Calming
-(Activity) CalmingActivity
+(Activity) CalmingActivity:
     onCreate -- creates and identifies the various components on screen
+    setUpButtons -- sets up buttons to go to mode 1, 2 and 3 activities, settings page, and back to
+                Clover home page
+    getBundle -- gets settings information from bundle from setting activity intent
+    addBundle -- adds setting information (from get bundle) to bundle to be sent to mode 1, 2, 3
 
-(Activity)CalmingMode1Activity
+(Activity) CalmingMode1Activity:
     onCreate -- creates and identifies the various components on screen
+    sizeControl -- controls growth and shrinking of circle using default 3-2-3 or information from
+                settings unpacked in bundle from  home activity. Runs Util class method to create
+                number array. Runs Util class method circle control to get animation set, sets an
+                animation listener to repeat animation when finished. Calls the methods to control
+                breathe and number text views.
+    text -- controls breathe in/hold/breathe out text view
+    number -- controls number text view
+    pausebutton -- method to control pause button, pausing animations, and resuming when paused
 
-(Activity)CalmingMode2Activity
+(Activity) CalmingMode2Activity:
+   onCreate -- creates and identifies the various components on screen
+   sizeControl -- controls growth and shrinking of circle using default 3-2-3 or information from
+                settings unpacked in bundle from  home activity. Runs Util class method to create
+                number array. Runs Util class method circle control to get animation set, sets an
+                animation listener to repeat animation when finished. Calls the methods to control
+                breathe and number text views.
+   goUp -- controls movements of butterflies up the screen
+   text -- controls breathe in/hold/breathe out text view
+   number -- controls number text view
+   pausebutton -- method to control pause button, pausing animations, and resuming when paused
+
+(Activity) CalmingMode3Activity:
     onCreate -- creates and identifies the various components on screen
+    sizeControl -- controls growth and shrinking of circle using default 3-2-3 or information from
+                 settings unpacked in bundle from  home activity. Runs Util class method to create
+                 number array. Runs Util class method circle control to get animation set, sets an
+                 animation listener to repeat animation when finished. Calls the methods to control
+                 breathe and number text views.
+    goUp -- controls movements of bubbles up the screen
+    goLeft -- controls movements of fishes going left on screen
+    goRight -- controls movements of fishes going right on screen
+    text -- controls breathe in/hold/breathe out text view
+    number -- controls number text view
+    pausebutton -- method to control pause button, pausing animations, and resuming when paused
 
-(Activity)CalmingMode3Activity
+(Activity) CalmingSettingsActivity:
     onCreate -- creates and identifies the various components on screen
+    addSpinner -- creates adaptor for spinner, sets the adaptor to the three spinners
+    saveSettings -- method to control save button, saving settings chosen on spinner for breathing
+                  exercise time
+    backButton -- method to control back button to go back to main activity, saving the spinner
+                  details in a bundle to send to main activity intent
 
-(Activity)CalmingSettingsActivity
+(Class) Util
+    circleControl -- creates animation set and add animations from anim files, setting duration
+                  specific to the setting (or default 3-2-3).
+    numberArrayList -- creates a number ArrayList to be used for the number text view, counting from
+                  1 - chosen number for the breathe in, hold, and breathe out numbers.
 
-(Class)Util
+(anim) circleanimation -- Shrinks circle to 0.7 scale
 
-(anim)circleanimation
-
-(anim)circleanimation2
-
-
-
-
+(anim) circleanimation2 -- Grows circle to 1.3 scale

@@ -154,7 +154,7 @@ public class ViewPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
-                firebaseMethods.downvoteButtonPressed(currentPost, userID, mPost);
+                //firebaseMethods.downvoteButtonPressed(currentPost, userID, mPost);
             }
         });
 
