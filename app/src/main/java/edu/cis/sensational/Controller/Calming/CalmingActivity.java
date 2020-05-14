@@ -41,6 +41,9 @@ public class CalmingActivity extends AppCompatActivity
 
         //Calling a method to set up the buttons
         setUpButtons();
+
+        //Getting info from bundle
+        getBundle();
     }
 
     //Method to send the user to different pages for the mode they click
@@ -52,12 +55,11 @@ public class CalmingActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                //Getting info from bundle
-                getBundle();
                 //Sends the user to the Mode 1 activity
                 Intent myIntent = new Intent(CalmingActivity.this,
                         CalmingMode1Activity.class);
                 //Sending information to next intent
+                addBundle(getIntent());
                 addBundle(myIntent);
                 startActivity(myIntent);
             }
@@ -69,8 +71,6 @@ public class CalmingActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                //Getting info from bundle
-                getBundle();
                 //Sends the user to the Mode 2 activity
                 Intent myIntent = new Intent(CalmingActivity.this,
                         CalmingMode2Activity.class);
@@ -86,8 +86,6 @@ public class CalmingActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                //Getting info from bundle
-                getBundle();
                 //Sends the user to the Mode 3 activity
                 Intent myIntent = new Intent(CalmingActivity.this,
                         CalmingMode3Activity.class);

@@ -429,6 +429,9 @@ public class CalmingMode3Activity extends AppCompatActivity
         mPlayer3.stop();
         mPlayer3.release();
         Intent myIntent = new Intent(CalmingMode3Activity.this, CalmingActivity.class);
+        myIntent.putExtra("In", inInt);
+        myIntent.putExtra("Hold", holdInt);
+        myIntent.putExtra("Out", outInt);
         startActivity(myIntent);
     }
 }
