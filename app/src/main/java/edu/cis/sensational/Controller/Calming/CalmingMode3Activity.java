@@ -76,7 +76,7 @@ public class CalmingMode3Activity extends AppCompatActivity
     private int outInt;
 
     //Declaring arraylist for the growth, hold, and shrink times that will be added
-    private ArrayList<String> array1;
+    private ArrayList<String> numberArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -243,7 +243,7 @@ public class CalmingMode3Activity extends AppCompatActivity
             outInt = b.getInt("Out");
         }
         //Initialising arraylist for numbers using the util class method numberArrayList
-        array1 = Util.numberArrayList(inInt,holdInt,outInt);
+        numberArray = Util.numberArrayList(inInt,holdInt,outInt);
 
         //Adding util circle control method to the animation set using number values for growth,
         // hold, and shrink times
@@ -286,7 +286,7 @@ public class CalmingMode3Activity extends AppCompatActivity
     public void text(final int in, final int hold, final int out)
     {
         //Words to be shown in order on the screen
-        final ArrayList<String> array2 = c.wordArray;
+        final ArrayList<String> wordArray = c.wordArray;
 
         //Making a new Runnable (loop) for the words string
         breathe.post(new Runnable()
@@ -315,14 +315,14 @@ public class CalmingMode3Activity extends AppCompatActivity
                 }
 
                 //Setting the text to the words in the array and positively incrementing x
-                breathe.setText(array2.get(x));
+                breathe.setText(wordArray.get(x));
                 x++;
 
                 //If paused, i is zero again and it is back to the start
                 if(pause == true)
                 {
                     x = 0;
-                    breathe.setText(array2.get(x));
+                    breathe.setText(wordArray.get(x));
                 }
                 //When it reaches the end of array, goes back to beginning, continuing the loop
                 if (x == 3)
@@ -347,16 +347,16 @@ public class CalmingMode3Activity extends AppCompatActivity
                 number.postDelayed(this, 998);
 
                 //Setting the text to the number in the array and positively incrementing i
-                number.setText(array1.get(i));
+                number.setText(numberArray.get(i));
                 i++;
                 //If paused, i is zero again and it is back to the start
                 if (pause == true)
                 {
                     i = 0;
-                    number.setText(array1.get(i));
+                    number.setText(numberArray.get(i));
                 }
                 //When it reaches the end of array, goes back to beginning, continuing the loop
-                if (i == array1.size())
+                if (i == numberArray.size())
                 {
                     i = 0;
                 }

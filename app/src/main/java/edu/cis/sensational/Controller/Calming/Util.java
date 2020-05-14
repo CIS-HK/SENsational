@@ -72,7 +72,3 @@ public final class Util
         return array1;
     }
 }
-
-
-
-
