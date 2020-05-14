@@ -85,7 +85,6 @@ public class FirebaseMethods {
     public void updateUserScore(final String userID, final int bubbleScore, final TextView text) {
         final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
                 .child(userID).child("user_score");
-
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

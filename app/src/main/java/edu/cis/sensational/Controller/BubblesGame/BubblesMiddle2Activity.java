@@ -197,19 +197,33 @@ public class BubblesMiddle2Activity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                message.setVisibility(View.GONE);
+                /* canProceed is true when users have answered all questions and should proceed to
+                the next screen */
                 if (!canProceed) {
+                    /* Ensures that users can't answer the last question multiple times to get it
+                    correct before pressing the nextRound button */
+
+                    // If an encouraging message is displayed, make it disappear from the screen
+                    message.setVisibility(View.GONE);
+
+                    // Displays the check image on the screen
                     checkOrCross.setImageResource(R.drawable.check);
                     checkOrCross.setVisibility(View.VISIBLE);
+
+                    /* Updates the user's score and how many times the user has selected the color
+                    of a bubble in the sequence */
                     numTimes++;
                     numberCorrect++;
 
-                    // Play a sound effect
+                    // Plays a sound effect
                     // https://stackoverflow.com/questions/10451092/how-to-play-a-sound-effect-in-android
+                    //https://freesound.org/people/LittleRainySeasons/sounds/335908/
+
                     MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.correct);
                     mPlayer.setVolume(BubbleConstants.VOLUME, BubbleConstants.VOLUME);
                     mPlayer.start();
 
+                    // Checks if this is the end of the round
                     checkEnd();
                 }
             }
@@ -224,20 +238,35 @@ public class BubblesMiddle2Activity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                /* canProceed is true when users have answered all questions and should proceed to
+                the next screen */
                 if (! canProceed) {
+                    /* Ensures that users can't answer the last question multiple times to get it
+                    correct before pressing the nextRound button */
+
+                    // Displays the cross image on the screen
                     checkOrCross.setImageResource(R.drawable.cross);
                     checkOrCross.setVisibility(View.VISIBLE);
+
+                    // Displays a random encouraging message
                     Random random = new Random();
                     message.setText(encouragingMessages.get(random.nextInt(3)));
                     message.setVisibility(View.VISIBLE);
+
+                    /* Updates the number of times the user has selected the color of a bubble in
+                    the sequence */
                     numTimes++;
 
-                    // Play a sound effect
+                    // Plays a sound effect
                     // https://stackoverflow.com/questions/10451092/how-to-play-a-sound-effect-in-android
-                    MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.incorrect);
+                    // // https://freesound.org/people/KevinVG207/sounds/331912/
+
+                    MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(),
+                                                              R.raw.incorrect);
                     mPlayer.setVolume(BubbleConstants.VOLUME, BubbleConstants.VOLUME);
                     mPlayer.start();
 
+                    // Checks if this is the end of the round
                     checkEnd();
                 }
             }
