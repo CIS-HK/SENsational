@@ -3,6 +3,7 @@ package edu.cis.sensational.Controller.BubblesGame;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -64,7 +65,12 @@ public class BubblesEndActivity extends AppCompatActivity
         }
 
         FirebaseMethods firebaseMethods = new FirebaseMethods(BubblesEndActivity.this);
-        firebaseMethods.updateUserScore(userID, score, totalScore);
+        firebaseMethods.updateUserScore(userID, score, new FirebaseMethods.Callback() {
+            @Override
+            public void onCallBack(int value) {
+                totalScore.setText("" + value);
+            }
+        });
 
         playAgain.setOnClickListener(new View.OnClickListener()
         {

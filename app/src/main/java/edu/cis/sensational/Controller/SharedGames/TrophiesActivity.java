@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +33,6 @@ public class TrophiesActivity extends AppCompatActivity {
     private TextView totalScore;
     private FirebaseAuth mAuth;
     private String userID;
-    private DatabaseReference myRef;
 
     private static final String TAG = "TrophiesActivity";
 
@@ -65,44 +65,42 @@ public class TrophiesActivity extends AppCompatActivity {
             userID = mAuth.getCurrentUser().getUid();
         }
 
-        myRef = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
-                .child(userID).child("user_score");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot != null) {
-                    userScore = dataSnapshot.getValue(int.class);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to retrieve user score.", error.toException());
-            }
-        });
-
-        if (userScore >= redTrophy.getSmileyFaces()){
-            trophies.add(redTrophy);
-        }
-        if (userScore >= orangeTrophy.getSmileyFaces()){
-            trophies.add(orangeTrophy);
-        }
-        if (userScore >= yellowTrophy.getSmileyFaces()){
-            trophies.add(yellowTrophy);
-        }
-        if (userScore >= greenTrophy.getSmileyFaces()){
-            trophies.add(greenTrophy);
-        }
-        if (userScore >= blueTrophy.getSmileyFaces()){
-            trophies.add(blueTrophy);
-        }
-        if (userScore >= purpleTrophy.getSmileyFaces()){
-            trophies.add(purpleTrophy);
-        }
-
-        TrophiesAdapter adapter = new TrophiesAdapter(trophies);
+        final TrophiesAdapter adapter = new TrophiesAdapter(trophies);
         allTrophies.setAdapter(adapter);
         allTrophies.setLayoutManager(new LinearLayoutManager(this));
+
+        FirebaseMethods firebaseMethods = new FirebaseMethods(TrophiesActivity.this);
+        firebaseMethods.updateUserScore(userID, 0, new FirebaseMethods.Callback() {
+            @Override
+            public void onCallBack(int value) {
+                userScore = value;
+                totalScore.setText("" + value);
+                if (userScore >= redTrophy.getSmileyFaces()){
+                    trophies.add(redTrophy);
+                    adapter.notifyItemInserted(0);
+                }
+                if (userScore >= orangeTrophy.getSmileyFaces()){
+                    trophies.add(orangeTrophy);
+                    adapter.notifyItemInserted(1);
+                }
+                if (userScore >= yellowTrophy.getSmileyFaces()){
+                    trophies.add(yellowTrophy);
+                    adapter.notifyItemInserted(2);
+                }
+                if (userScore >= greenTrophy.getSmileyFaces()){
+                    trophies.add(greenTrophy);
+                    adapter.notifyItemInserted(3);
+                }
+                if (userScore >= blueTrophy.getSmileyFaces()){
+                    trophies.add(blueTrophy);
+                    adapter.notifyItemInserted(4);
+                }
+                if (userScore >= purpleTrophy.getSmileyFaces()){
+                    trophies.add(purpleTrophy);
+                    adapter.notifyItemInserted(5);
+                }
+
+            }
+        });
     }
 }

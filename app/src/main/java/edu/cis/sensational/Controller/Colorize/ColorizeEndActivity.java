@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import edu.cis.sensational.Controller.BubblesGame.BubblesEndActivity;
 import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.Model.User;
@@ -26,7 +27,7 @@ public class ColorizeEndActivity extends AppCompatActivity {
     ImageView smiley;
     Switch musicSwitch2;
     FirebaseAuth mAuth;
-    User user;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -55,6 +56,9 @@ public class ColorizeEndActivity extends AppCompatActivity {
         setUpButtons();
         displayScore();
 
+
+//        FirebaseMethods firebasemethods = new FirebaseMethods(ColorizeEndActivity.this);
+//        firebasemethods.storeHighScore(userID,GameConstants.HIGHSCORE);
 
     }
 
@@ -108,9 +112,11 @@ public class ColorizeEndActivity extends AppCompatActivity {
         scoreLabel.setText(""+GameConstants.SCORE);
         highScoreLabel.setText(GameConstants.DISPLAYHIGHSCORE + GameConstants.HIGHSCORE);
 
-        //store highscore on firebsae
-        FirebaseMethods firebasemethods = new FirebaseMethods(ColorizeEndActivity.this);
-        firebasemethods.storeHighScore(GameConstants.HIGHSCORE);
+        if(mAuth.getCurrentUser() != null){
+            userID = mAuth.getCurrentUser().getUid();
+        }
+
+
 
     }
 }

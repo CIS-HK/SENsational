@@ -39,3 +39,5 @@ public class TrophiesAdapter extends RecyclerView.Adapter<TrophiesViewHolder>{
         return trophies.size();
     }
 }
+
+
