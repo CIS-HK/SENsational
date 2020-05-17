@@ -31,12 +31,11 @@ public class User implements Parcelable{
         user_child_age = 0;
     }
 
-    public User(String id, String n, String e, String l)
+    public User(String id, String n, String e)
     {
         user_id = id;
         user_name = n;
         user_email = e;
-        user_location = l;
     }
 
     protected User(Parcel in)

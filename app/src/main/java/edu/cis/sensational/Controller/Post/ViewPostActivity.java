@@ -104,12 +104,11 @@ public class ViewPostActivity extends AppCompatActivity {
 
         //https://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-in-android-application
         currentPost = getIntent().getStringExtra("Post");
-
         currentUser = getIntent().getStringExtra("User");
 
         init();
-
         initWidgets();
+
     }
 
     private void initWidgets(){
@@ -139,11 +138,17 @@ public class ViewPostActivity extends AppCompatActivity {
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Get the inputted comment text
                 commentText = comment.getText().toString();
-                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
+                // Call the makeComment method with the corresponding arguments
+                FirebaseMethods firebaseMethods =
+                        new FirebaseMethods(ViewPostActivity.this);
                 firebaseMethods.makeComment(mPost, currentPost, commentText);
+                // Update the comments displayed on the page
                 displayComments();
+                // Clear the comment input text box
                 comment.setText("");
+                // TODO need to check inputs to ensure they are valid.
             }
         });
 
@@ -151,22 +156,34 @@ public class ViewPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "upvote button clicked");
-                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
+                // Call method to upvote the post in Firebase
+                FirebaseMethods firebaseMethods =
+                        new FirebaseMethods(ViewPostActivity.this);
                 firebaseMethods.upvoteButtonPressed(currentPost, userID, mPost);
-                displayLikeCount();
+                ArrayList <String> likesList = mPost.getLikes();
+                likesList.add(userID);
+                mPost.setLikes(likesList);
+                // Refresh the page with the new like count
+                setUpVotes();
             }
         });
 
         downvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseMethods firebaseMethods = new FirebaseMethods(ViewPostActivity.this);
+                Log.d(TAG, "downvote button clicked");
+                // Call method to downvote the post in Firebase
+                FirebaseMethods firebaseMethods =
+                        new FirebaseMethods(ViewPostActivity.this);
                 firebaseMethods.downvoteButtonPressed(currentPost, userID, mPost);
-                displayLikeCount();
+                ArrayList <String> unlikes = mPost.getUnLikes();
+                unlikes.add(userID);
+                mPost.setUnLikes(unlikes);
+                // Refresh the page with the new like count
+                setUpVotes();
             }
         });
 
-        displayLikeCount();
     }
 
     public void displayComments(){
@@ -177,70 +194,23 @@ public class ViewPostActivity extends AppCompatActivity {
         commentsView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void displayLikeCount(){
-
-        final DatabaseReference userRef = myRef
-                .child("posts")
-                .child(currentPost)
-                .child("likes");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Log.d(TAG, snapshot +"");
-                    if (userID.equals(snapshot.getValue())) {
-                        upvote.setBackgroundColor(Color.BLUE);
-                        likes.setText(mPost.getLikeCount() + "");
-                        downvote.setEnabled(true);
-                        upvote.setEnabled(false);
-                    }
-                    else{
-                        upvote.setBackgroundColor(Color.WHITE);
-                        likes.setText(mPost.getLikeCount() + "");
-                    }
-                }
-
-                Log.d(TAG, dataSnapshot +"");
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w(TAG, "Failed.", error.toException());
-            }
-        });
-    }
-
-    private void setUpHeart(){
-
-        heartButton = (ImageButton) findViewById(R.id.heartButton);
-
-        heartButton.setBackgroundResource(R.drawable.heart_hollow);
-
-        heartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-    }
 
     private void init(){
         try{
-            String photo_id = currentPost;
-
+            // Create a new query that goes through the user_posts node
             Query query = FirebaseDatabase.getInstance().getReference()
-                    .child(getString(R.string.dbname_user_posts))
-                    .child(currentUser)
+                    .child("posts")
                     .orderByChild(getString(R.string.field_post_id))
-                    .equalTo(photo_id);
+                    .equalTo(currentPost); // Finds the post that matches the current PostID
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
 
+                        // Retrieves the Post and sets it to the class Post variable
                         mPost = singleSnapshot.getValue(Post.class);
 
+                        // Calls the methods which sets up the information on the page
                         getCurrentUser();
                         getPostDetails();
                         setupWidgets();
@@ -270,7 +240,6 @@ public class ViewPostActivity extends AppCompatActivity {
                 for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
                     mCurrentUser = singleSnapshot.getValue(User.class);
                 }
-//                getLikesString();
             }
 
             @Override
@@ -304,25 +273,47 @@ public class ViewPostActivity extends AppCompatActivity {
     }
 
     private void setupWidgets() {
-
+        // Retrieves the main post information and displays it on the page
         title.setText(mPost.getTitle());
         description.setText(mPost.getDescription());
         tags.setText(mPost.getTags());
-
         String postDate = mPost.getDate_created().substring(0,10);
-
-        Log.d(TAG, "" + postDate);
-
         date.setText(postDate);
 
+        // Retrieves the comments from this post and displays using RecyclerView
         ArrayList<Comment> commentsList = mPost.getComments();
-
         CommentsAdapter myAdapter = new CommentsAdapter(commentsList);
         commentsView.setAdapter(myAdapter);
         commentsView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Checks if the user has upvoted / downvoted this post
+        setUpVotes();
+        likes.setText(mPost.getLikeCount() + "");
     }
 
+    private void setUpVotes()
+    {
+        for(String like: mPost.getLikes()){
+            if(like.equals(userID)){
+                upvote.setBackgroundColor(Color.BLUE);
+                upvote.setEnabled(false);
+                downvote.setEnabled(false);
+                upvote.setTextColor(Color.WHITE);
+            }
+        }
+
+        for(String unlike: mPost.getUnLikes()){
+            if (unlike.equals(userID)) {
+                downvote.setBackgroundColor(Color.RED);
+                downvote.setEnabled(false);
+                upvote.setEnabled(false);
+                downvote.setTextColor(Color.WHITE);
+            }
+        }
+
+        likes.setText(mPost.getLikeCount() + "");
+
+    }
        /*
     ------------------------------------ Firebase ---------------------------------------------
      */

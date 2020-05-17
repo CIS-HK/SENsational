@@ -13,15 +13,13 @@ public class UserAccountSettings implements Parcelable{
     private String location;
     private String child_age;
     private String child_gender;
+    private String email;
     private long posts;
     private String user_id;
 
-    public UserAccountSettings(String username, String email, String location, String age,
-                               String gender, long posts, String user_id) {
+    public UserAccountSettings(String username, String email, long posts, String user_id) {
         this.username = username;
-        this.location = location;
-        this.child_age = age;
-        this.child_gender = gender;
+        this.email = email;
         this.posts = posts;
         this.user_id = user_id;
     }
