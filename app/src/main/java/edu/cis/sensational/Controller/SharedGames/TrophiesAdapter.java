@@ -3,12 +3,9 @@ package edu.cis.sensational.Controller.SharedGames;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import edu.cis.sensational.R;
 
 public class TrophiesAdapter extends RecyclerView.Adapter<TrophiesViewHolder>{
@@ -32,6 +29,8 @@ public class TrophiesAdapter extends RecyclerView.Adapter<TrophiesViewHolder>{
         holder.trophyName.setText(trophy);
         String num = "" + trophies.get(position).getSmileyFaces();
         holder.numSmileys.setText(num);
+        int imageID = trophies.get(position).getImageID();
+        holder.trophyImage.setImageResource(imageID);
     }
 
     @Override
