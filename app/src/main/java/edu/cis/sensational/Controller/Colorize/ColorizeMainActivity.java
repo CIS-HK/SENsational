@@ -182,7 +182,7 @@ public class ColorizeMainActivity extends AppCompatActivity
 
     private void setBackgroundColor()
     {
-        if (GameConstants.BACKGROUND = false)
+        if (!GameConstants.BACKGROUND)
         {
             backgroundColor.setBackgroundColor(Color.TRANSPARENT);
         }

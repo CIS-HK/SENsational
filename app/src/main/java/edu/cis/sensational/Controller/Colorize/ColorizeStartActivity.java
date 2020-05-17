@@ -4,13 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.Colorize.GameConstants;
@@ -23,6 +30,11 @@ public class ColorizeStartActivity extends AppCompatActivity {
     Switch musicSwitch;
     MediaPlayer myMediaPlayer;
     ImageView bottomright, middleleft, middleright, topright, topleft;
+    int screenWidth, screenHeight;
+    float brX,mlY,mrY,trX,tlX;
+
+    Handler handler;
+    Timer timer;
 
 
     @Override
@@ -49,6 +61,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
 
         setUpButtons();
         //animation();
+
     }
 
     private void setUpButtons() {
@@ -106,25 +119,70 @@ public class ColorizeStartActivity extends AppCompatActivity {
 
     }
 
-    //https://developer.android.com/training/animation/reposition-view
+    //https://www.youtube.com/watch?v=UxbJKNjQWD8&app=desktop
     private void animation()
     {
-        ObjectAnimator animation = ObjectAnimator.ofFloat(bottomright,"translationX", -700f);
-        ObjectAnimator animation2 = ObjectAnimator.ofFloat(middleleft,"translationY", -300f);
-        ObjectAnimator animation3 = ObjectAnimator.ofFloat(middleright,"translationX", -300f);
-        ObjectAnimator animation4 = ObjectAnimator.ofFloat(topright,"translationY", 300f);
-        ObjectAnimator animation5 = ObjectAnimator.ofFloat(topleft, "translationX", 600f);
-        animation.setDuration(500);
-        animation.start();
-        animation2.setDuration(500);
-        animation2.start();
-        animation3.setDuration(500);
-        animation3.start();
-        animation4.setDuration(500);
-        animation4.start();
-        animation5.setDuration(500);
-        animation5.start();
+        Point size = new Point();
+        screenWidth = size.x;
+        screenHeight = size.y;
+
+
+        final Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                changePosition();
+            }
+        };
+
+        TimerTask update = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(run);
+            }
+        };
+
+        timer.schedule(update,0,13);
+
+    }
+
+    private void changePosition() {
+
+        //go up
+        mlY -= 10;
+        if (middleleft.getY() + middleleft.getHeight() < 0)
+        {
+            mlY = screenHeight + 2000.0f;
+        }
+
+        middleleft.setY(mlY);
+
+        //go down
+        mrY += 10;
+        if (middleright.getY() - 1700 > screenHeight)
+        {
+            mrY = -1000.0f;
+        }
+
+        middleright.setY(mrY);
+
+        //go right
+        tlX += 10;
+        if (topleft.getX() - 1200 > screenWidth)
+        {
+            tlX = -800.0f;
+        }
+
+        topleft.setX(tlX);
+
+        //go left
+        brX -= 10;
+        if (bottomright.getX() + bottomright.getWidth() < 0)
+        {
+            brX = screenWidth + 800.0f;
+        }
+
     }
 
 
 }
+

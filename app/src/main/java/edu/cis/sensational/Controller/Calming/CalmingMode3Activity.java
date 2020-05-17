@@ -16,6 +16,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -62,12 +64,19 @@ public class CalmingMode3Activity extends AppCompatActivity
     private float screenWidth;
     private float screenHeight;
 
-
     //Creating things needed like Timer and handler for images to move on screen, and pause boolean
     //for the pause button
     private boolean pause = false;
     private Handler handler = new Handler();
     private Timer timer = new Timer();
+
+    //Declaring integers for the selected growth, hold, and shrink times
+    private int inInt;
+    private int holdInt;
+    private int outInt;
+
+    //Declaring arraylist for the growth, hold, and shrink times that will be added
+    private ArrayList<String> numberArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -80,6 +89,11 @@ public class CalmingMode3Activity extends AppCompatActivity
         circle = findViewById(R.id.circle3);
         breathe = findViewById(R.id.breatheTextView3);
         number = findViewById(R.id.numberTextView3);
+
+        //Setting default growth, hold, and shrink time to 3-2-3
+        inInt = 3;
+        holdInt = 2;
+        outInt = 3;
 
         //Setting up CConstants variable to access constants
         c = new CConstants();
@@ -125,11 +139,9 @@ public class CalmingMode3Activity extends AppCompatActivity
 
         //Calling methods to control the movement of the circle and the changing of the text
         sizeControl();
-        text();
-        number();
 
         //Getting the song MP3 from the raw file and setting it to the media player
-        mPlayer3 = MediaPlayer.create(this, R.raw.calming_music_3);
+        mPlayer3 = MediaPlayer.create(this, R.raw.calming_music_2);
 
         //Starting the song
         mPlayer3.start();
@@ -152,7 +164,6 @@ public class CalmingMode3Activity extends AppCompatActivity
                 });
             }
         },0,40);
-
     }
 
     //Method to make fish move to the right
@@ -200,6 +211,7 @@ public class CalmingMode3Activity extends AppCompatActivity
         fish4.setX(fish4X);
     }
 
+    //Method to make the bubbles move up
     public void goUp()
     {
         bubbles1Y -= 10;
@@ -221,7 +233,21 @@ public class CalmingMode3Activity extends AppCompatActivity
     //Method to control the size of the circle
     public void sizeControl()
     {
-        final AnimationSet set = Util.sizeControl(circle, this);
+        //Checking if intent is empty (if settings have been chosen and saved)
+        if(getIntent().getExtras().getInt("In") != 0)
+        {
+            //Getting values from bundle in the extras
+            Bundle b = getIntent().getExtras();
+            inInt = b.getInt("In");
+            holdInt = b.getInt("Hold");
+            outInt = b.getInt("Out");
+        }
+        //Initialising arraylist for numbers using the util class method numberArrayList
+        numberArray = Util.numberArrayList(inInt,holdInt,outInt);
+
+        //Adding util circle control method to the animation set using number values for growth,
+        // hold, and shrink times
+        final AnimationSet set = Util.circleControl(circle, this, inInt, holdInt, outInt);
 
         //Animation listener to see what is happening with the animation
         set.setAnimationListener(new Animation.AnimationListener()
@@ -250,44 +276,59 @@ public class CalmingMode3Activity extends AppCompatActivity
             {
             }
         });
+
+        //Running methods to control the text and number on the circle
+        text(inInt, holdInt, outInt);
+        number();
     }
 
-    //Method to control the words text view
-    public void text()
+    //Method to control the words text view, taking in variables for length of growth, hold, shrink
+    public void text(final int in, final int hold, final int out)
     {
-        //Words to be shown in order on the screen for for seconds, then 6 seconds
-        final String[] array2 = {c.bIn, c.hold, c.bOut};
+        //Words to be shown in order on the screen
+        final ArrayList<String> wordArray = c.wordArray;
+
         //Making a new Runnable (loop) for the words string
-        Thread t = new Thread(new Runnable()
+        breathe.post(new Runnable()
         {
             int x = 0;
             @Override
             public void run()
             {
-                //Setting 3 second interval between the changing of words
+                //Setting  second interval between the changing of words to the values from the
+                //parameters
+
+                //Breathe in
+                if(x == 0)
+                {
+                    breathe.postDelayed(this, in * 1000);
+                }
+                //Hold
                 if(x == 1)
                 {
-                    breathe.postDelayed(this, 2000);
+                    breathe.postDelayed(this, hold * 1000);
                 }
-                else
+                //Breathe out
+                if(x == 2)
                 {
-                    breathe.postDelayed(this, 3000);
+                    breathe.postDelayed(this,out * 1000);
                 }
+
                 //Setting the text to the words in the array and positively incrementing x
-                breathe.setText(array2[x]);
+                breathe.setText(wordArray.get(x));
                 x++;
+
                 //If paused, i is zero again and it is back to the start
                 if(pause == true)
                 {
                     x = 0;
-                    breathe.setText(array2[x]);
+                    breathe.setText(wordArray.get(x));
                 }
                 //When it reaches the end of array, goes back to beginning, continuing the loop
                 if (x == 3)
                 {
                     x = 0;
                 }
-
             }
         });
     }
@@ -295,8 +336,6 @@ public class CalmingMode3Activity extends AppCompatActivity
     //Method to control number text view
     public void number()
     {
-        //Array that hold the numbers to be shown in order on the screen per 1 second
-        final String[] array1 = {c.one, c.two, c.three, c.one, c.two,c.one, c.two, c.three};
         //Making a new Runnable (loop) for the number string
         number.post(new Runnable()
         {
@@ -305,18 +344,19 @@ public class CalmingMode3Activity extends AppCompatActivity
             public void run()
             {
                 //Setting almost 1 second interval between the changing of numbers
-                number.postDelayed(this, 992);
+                number.postDelayed(this, 998);
+
                 //Setting the text to the number in the array and positively incrementing i
-                number.setText(array1[i]);
+                number.setText(numberArray.get(i));
                 i++;
                 //If paused, i is zero again and it is back to the start
                 if (pause == true)
                 {
                     i = 0;
-                    number.setText(array1[i]);
+                    number.setText(numberArray.get(i));
                 }
                 //When it reaches the end of array, goes back to beginning, continuing the loop
-                if (i == 8)
+                if (i == numberArray.size())
                 {
                     i = 0;
                 }
@@ -389,7 +429,9 @@ public class CalmingMode3Activity extends AppCompatActivity
         mPlayer3.stop();
         mPlayer3.release();
         Intent myIntent = new Intent(CalmingMode3Activity.this, CalmingActivity.class);
+        myIntent.putExtra("In", inInt);
+        myIntent.putExtra("Hold", holdInt);
+        myIntent.putExtra("Out", outInt);
         startActivity(myIntent);
     }
-
 }

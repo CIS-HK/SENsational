@@ -1,7 +1,6 @@
 package edu.cis.sensational.Model.Utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,7 +28,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import edu.cis.sensational.Controller.Home.HomeActivity;
-import edu.cis.sensational.Controller.Login.LoginActivity;
 import edu.cis.sensational.Controller.Profile.AccountSettingsActivity;
 import edu.cis.sensational.Model.Comment;
 import edu.cis.sensational.Model.Likes;
@@ -82,10 +80,8 @@ public class FirebaseMethods {
         return sdf.format(new Date());
     }
 
-    public boolean createNewPost(String title, String description,
-                                 String tags, boolean privatePost){
+    public boolean createNewPost(String title, String description, String tags, boolean privatePost){
 
-        // Create empty ArrayLists to initialize the Comments and Likes fields
         ArrayList<String> initLikes = new ArrayList();
         ArrayList<Comment> initComments = new ArrayList();
 
@@ -188,49 +184,8 @@ public class FirebaseMethods {
         });
     }
 
-    public void downvoteButtonPressed(final String post_id, final String userID, final Post post){
+    public void downvoteButtonPressed(String post_id, String userID, Post post){
 
-        post.setLikeCount(post.getLikeCount() - 1);
-
-        final DatabaseReference userRef = myRef
-                .child("posts")
-                .child(post_id)
-                .child("unlikes");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                // if the user hasn't liked this post
-//                if(dataSnapshot.getValue() == null || !(dataSnapshot.getValue(List.class).contains(userID)))
-//                {
-                Log.d(TAG, "Post: downvoting");
-
-                List<String> userUnLikesList = new ArrayList<>();
-                userUnLikesList.add(userID);
-
-                myRef.child(mContext.getString(R.string.dbname_posts))
-                        .child(post_id)
-                        .child("unlikes")
-                        .setValue(userUnLikesList);
-                myRef.child(mContext.getString(R.string.dbname_user_posts))
-                        .child(userID)
-                        .child(post_id)
-                        .child("unlikes")
-                        .setValue(userUnLikesList);
-                myRef.child("user_unlikes")
-                        .child(userID)
-                        .child(post_id)
-                        .setValue(post);
-
-                downvote(post_id);
-//                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w(TAG, "Failed to retrieve number of likes.", error.toException());
-            }
-        });
     }
 
     public void downvote(String post_id){
@@ -249,12 +204,12 @@ public class FirebaseMethods {
 
                     myRef.child(mContext.getString(R.string.dbname_posts))
                             .child(postID)
-                            .child(mContext.getString(R.string.field_like_count))
+                            .child(mContext.getString(R.string.field_likes))
                             .setValue(newLikeCount);
                     myRef.child(mContext.getString(R.string.dbname_user_posts))
                             .child(userID)
                             .child(postID)
-                            .child(mContext.getString(R.string.field_like_count))
+                            .child(mContext.getString(R.string.field_likes))
                             .setValue(newLikeCount);
                 }
             }
@@ -268,52 +223,31 @@ public class FirebaseMethods {
 
     public void uploadNewPost(Post post, String tag, boolean privatePost)
     {
-        // If the user has selected to make the post private:
         if(privatePost == true){
             Log.d(TAG, "uploadNewPost: attempting to post privately.");
-            // Store the post in the user_posts node
-            myRef.child("user_posts")
-                    .child(post.getUser_id())
-                    .child(post.getPostID())
-                    .setValue(post);
-            // Store the post under the tag keyword in the tags node
-            myRef.child("tags")
-                    .child(tag)
-                    .child(post.getPostID())
-                    .setValue(post);
-            myRef.child("posts")
-                    .child(post.getPostID())
-                    .setValue(post);
+            myRef.child("user_posts").child(post.getUser_id())
+                    .child(post.getPostID()).setValue(post);
         }
-        // If the user has selected to make the post public:
         else if(privatePost == false){
             Log.d(TAG, "uploadNewPost: attempting to post publicly.");
-            // Store the post in the posts node and the tags node
-            myRef.child("user_posts")
-                    .child(post.getUser_id())
-                    .child(post.getPostID())
-                    .setValue(post);
-            myRef.child("posts")
-                    .child(post.getPostID())
-                    .setValue(post);
-            myRef.child("tags")
-                    .child(tag)
-                    .child(post.getPostID())
-                    .setValue(post);
+            myRef.child("user_posts").child(post.getUser_id())
+                    .child(post.getPostID()).setValue(post);
+            myRef.child("posts").child(post.getPostID()).setValue(post);
+            myRef.child("tags").child(tag).child(post.getPostID()).setValue(post);
         }
     }
 
     public void makeComment(Post post, String post_id, String comment){
-        // Create a new Comment instantiation and store the corresponding values
         Comment newComment = new Comment(comment, userID, 0, getTimestamp());
-        // Retrieve the ArrayList of Comments already present for this post
         ArrayList<Comment> currentComments = post.getComments();
-        // Add the new Comment to the ArrayList of Comments
+
+        Log.d(TAG, "current comments = " + currentComments);
+
         currentComments.add(newComment);
-        // Set the Comments ArrayList with the newest addition to the corresponding Post
         post.setComments(currentComments);
 
-        // Store the new ArrayList of Comments into the database under the corresponding Post
+        Log.d(TAG, post.getComments() + "");
+
         myRef.child(mContext.getString(R.string.dbname_user_posts))
                 .child(userID)
                 .child(post_id)
@@ -323,7 +257,8 @@ public class FirebaseMethods {
                 .child(post_id)
                 .child(mContext.getString(R.string.field_comments))
                 .setValue(currentComments);
-        Log.d(TAG, "New comment set.");
+
+        Log.d(TAG, "comments set.");
     }
 
     public void updateUserAccountSettings(String location, String age, String information) {
@@ -420,9 +355,6 @@ public class FirebaseMethods {
                             //the auth state listener will be notified and signed in user can be handled in the listener.
                             userID = mAuth.getCurrentUser().getUid();
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
-                            Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
-                            addNewUser(email, username);
-
                         }
                     }
                 });
@@ -452,13 +384,15 @@ public class FirebaseMethods {
      *
      * @param email
      * @param username
+     * @param location
+     * @param child_age
+     * @param child_profile
      */
 
-    public void addNewUser(String email, String username) {
+    public void addNewUser(String email, String username, String location, String child_age, String child_profile) {
 
         // creates a new User object with the parameters given
-        User user = new User(userID, StringManipulation.condenseUsername(username),
-                email);
+        User user = new User(userID, StringManipulation.condenseUsername(username), email, location);
 
         // saves the user to the database
         myRef.child(mContext.getString(R.string.dbname_users))
@@ -469,6 +403,9 @@ public class FirebaseMethods {
         UserAccountSettings settings = new UserAccountSettings(
                 StringManipulation.condenseUsername(username),
                 email,
+                location,
+                child_age,
+                child_profile,
                 0,
                 userID
         );

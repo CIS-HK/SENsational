@@ -65,6 +65,7 @@ public class BubbleStartActivity extends AppCompatActivity
         });
 
         // Set up spinner
+        // https://www.youtube.com/watch?v=urQp7KsQhW8
         spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> sAdapter = new ArrayAdapter<String>(BubbleStartActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.modes));

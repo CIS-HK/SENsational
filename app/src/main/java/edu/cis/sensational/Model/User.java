@@ -18,6 +18,7 @@ public class User implements Parcelable{
     private String user_child_gender;
     private int user_child_age;
     private String user_child_profile;
+    private int colorizehighscore;
 
     public User()
     {
@@ -29,6 +30,7 @@ public class User implements Parcelable{
         user_password = "";
         user_child_gender = "";
         user_child_age = 0;
+        colorizehighscore = 0;
     }
 
     public User(String id, String n, String e)
@@ -129,6 +131,13 @@ public class User implements Parcelable{
         this.user_child_profile = profile;
     }
 
+    public int getColorizehighscore() {
+        return colorizehighscore;
+    }
+
+    public void setColorizehighscore(int colorizehighscore) {
+        this.colorizehighscore = colorizehighscore;
+    }
 
     @Override
     public String toString() {

@@ -10,7 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colorize_settings);
         displayBackground = findViewById(R.id.backgroundCheck);
+        displayBackground.setChecked(true);
         times = new ArrayList<String>();
 
         //https://www.javatpoint.com/android-spinner-example
@@ -41,21 +44,33 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
 
 
+
+
         setupButtons();
         addTime();
 
+//        String selected = timeSpinner.getSelectedItem().toString();
+//        Toast.makeText(this, selected, Toast.LENGTH_SHORT).show();
     }
+
 
     private void setupButtons()
     {
-       if (displayBackground.isChecked())
-       {
-           GameConstants.BACKGROUND = true;
-       }
-       if (!displayBackground.isChecked())
-           {
-           GameConstants.BACKGROUND = false;
-       }
+
+       displayBackground.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+               if (displayBackground.isChecked())
+               {
+                   GameConstants.BACKGROUND = true;
+               }
+               if (!displayBackground.isChecked())
+               {
+                   GameConstants.BACKGROUND = false;
+               }
+           }
+       });
+
 
        backButton.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -63,6 +78,7 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
                startActivity(new Intent(ColorizeSettingsActivity.this,ColorizeStartActivity.class));
            }
        });
+
 
     }
 
@@ -72,4 +88,6 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         times.add("4 seconds");
         times.add("5 seconds");
     }
+
+
 }

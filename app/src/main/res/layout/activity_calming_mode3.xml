@@ -25,6 +25,7 @@
         android:layout_marginBottom="24dp"
         android:onClick="pauseButton"
         android:text="@string/pause"
+        android:textColor="#A0BAFF"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

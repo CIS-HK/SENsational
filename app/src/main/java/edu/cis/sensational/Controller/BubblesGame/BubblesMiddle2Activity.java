@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Random;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
@@ -18,17 +20,21 @@ public class BubblesMiddle2Activity extends AppCompatActivity
     private Button option1;
     private Button option2;
     private Button option3;
+    private Button nextRound;
     private ImageView checkOrCross;
     private ImageView smiley1;
     private ImageView smiley2;
     private TextView whichBubble;
+    public TextView message;
     private int numBubbles;
     private ArrayList<String> colorsPicked;
     private ArrayList<String> allColors;
+    private ArrayList<String> encouragingMessages;
     private int numTimes;
     private int numberCorrect;
     private int score;
     private int roundNumber;
+    private boolean canProceed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,11 +49,17 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         smiley2 = findViewById(R.id.smiley2_2);
         checkOrCross = findViewById(R.id.checkOrCross);
         whichBubble = findViewById(R.id.whichBubble);
+        message = findViewById(R.id.soClose);
+        nextRound = findViewById(R.id.nextRound);
+        message.setVisibility(View.GONE);
+        nextRound.setVisibility(View.GONE);
 
         roundNumber = getIntent().getIntExtra(BubbleConstants.ROUND_NUM, roundNumber);
         numBubbles = getIntent().getIntExtra(BubbleConstants.NUM_BUBBLES, BubbleConstants.DEFAULT);
         colorsPicked = getIntent().getStringArrayListExtra(BubbleConstants.COLORS_PICKED);
         score = getIntent().getIntExtra(BubbleConstants.SCORE, BubbleConstants.DEFAULT);
+
+        canProceed = false;
 
         allColors = new ArrayList<>();
         allColors.add(BubbleConstants.BLACK);
@@ -57,6 +69,35 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         allColors.add(BubbleConstants.YELLOW);
         allColors.add(BubbleConstants.PINK);
         allColors.add(BubbleConstants.PURPLE);
+
+        encouragingMessages = new ArrayList<>();
+        encouragingMessages.add("So close!");
+        encouragingMessages.add("Nice try!");
+        encouragingMessages.add("Keep trying!");
+
+        nextRound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (canProceed) {
+                    if (roundNumber != BubbleConstants.MAX_ROUNDS) {
+                        Intent intent = new Intent(BubblesMiddle2Activity.this,
+                                BubblesMiddleActivity.class);
+                        intent.putExtra(BubbleConstants.SCORE, score);
+                        intent.putExtra(BubbleConstants.NUM_BUBBLES, numBubbles);
+                        intent.putExtra(BubbleConstants.ROUND_NUM, roundNumber);
+                        intent.putExtra(BubbleConstants.FIRST_TIME, false);
+                        startActivity(intent);
+                    }
+                    else {
+                        Intent intent = new Intent(BubblesMiddle2Activity.this,
+                                BubblesEndActivity.class);
+                        intent.putExtra(BubbleConstants.SCORE, score);
+                        startActivity(intent);
+                    }
+                    canProceed = false;
+                }
+            }
+        });
 
         if (score == 1)
         {
@@ -97,9 +138,12 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         String answer1 = options.get(index);
         options.remove(index);
         String imageName = answer1 + BubbleConstants.BUBBLE;
+
+        // https://stackoverflow.com/questions/15545753/random-genaration-of-image-from-drawable-folder-in-android
         int imageID = getResources().getIdentifier(imageName,
                                                    BubbleConstants.DRAWABLE,
                                                    getPackageName());
+
         option1.setBackgroundResource(imageID);
         option1.setText(answer1);
         if (answer1.equals(correctAnswer))
@@ -153,17 +197,35 @@ public class BubblesMiddle2Activity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                checkOrCross.setImageResource(R.drawable.check);
-                checkOrCross.setVisibility(View.VISIBLE);
-                numTimes++;
-                numberCorrect++;
+                /* canProceed is true when users have answered all questions and should proceed to
+                the next screen */
+                if (!canProceed) {
+                    /* Ensures that users can't answer the last question multiple times to get it
+                    correct before pressing the nextRound button */
 
-                // Play a sound effect
-                MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.correct);
-                mPlayer.setVolume(BubbleConstants.VOLUME, BubbleConstants.VOLUME);
-                mPlayer.start();
+                    // If an encouraging message is displayed, make it disappear from the screen
+                    message.setVisibility(View.GONE);
 
-                checkEnd();
+                    // Displays the check image on the screen
+                    checkOrCross.setImageResource(R.drawable.check);
+                    checkOrCross.setVisibility(View.VISIBLE);
+
+                    /* Updates the user's score and how many times the user has selected the color
+                    of a bubble in the sequence */
+                    numTimes++;
+                    numberCorrect++;
+
+                    // Plays a sound effect
+                    // https://stackoverflow.com/questions/10451092/how-to-play-a-sound-effect-in-android
+                    //https://freesound.org/people/LittleRainySeasons/sounds/335908/
+
+                    MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.correct);
+                    mPlayer.setVolume(BubbleConstants.VOLUME, BubbleConstants.VOLUME);
+                    mPlayer.start();
+
+                    // Checks if this is the end of the round
+                    checkEnd();
+                }
             }
         });
 
@@ -176,20 +238,42 @@ public class BubblesMiddle2Activity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                checkOrCross.setImageResource(R.drawable.cross);
-                checkOrCross.setVisibility(View.VISIBLE);
-                numTimes++;
+                /* canProceed is true when users have answered all questions and should proceed to
+                the next screen */
+                if (! canProceed) {
+                    /* Ensures that users can't answer the last question multiple times to get it
+                    correct before pressing the nextRound button */
 
-                // Play a sound effect
-                MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(), R.raw.incorrect);
-                mPlayer.setVolume(BubbleConstants.VOLUME, BubbleConstants.VOLUME);
-                mPlayer.start();
+                    // Displays the cross image on the screen
+                    checkOrCross.setImageResource(R.drawable.cross);
+                    checkOrCross.setVisibility(View.VISIBLE);
 
-                checkEnd();
+                    // Displays a random encouraging message
+                    Random random = new Random();
+                    message.setText(encouragingMessages.get(random.nextInt(3)));
+                    message.setVisibility(View.VISIBLE);
+
+                    /* Updates the number of times the user has selected the color of a bubble in
+                    the sequence */
+                    numTimes++;
+
+                    // Plays a sound effect
+                    // https://stackoverflow.com/questions/10451092/how-to-play-a-sound-effect-in-android
+                    // // https://freesound.org/people/KevinVG207/sounds/331912/
+
+                    MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(),
+                                                              R.raw.incorrect);
+                    mPlayer.setVolume(BubbleConstants.VOLUME, BubbleConstants.VOLUME);
+                    mPlayer.start();
+
+                    // Checks if this is the end of the round
+                    checkEnd();
+                }
             }
         });
 
     }
+
     public void checkEnd()
     {
         if (numTimes > numBubbles)
@@ -199,24 +283,11 @@ public class BubblesMiddle2Activity extends AppCompatActivity
                 score++;
             }
             roundNumber++;
-            numberCorrect = BubbleConstants.DEFAULT;
-            if (roundNumber == BubbleConstants.MAX_ROUNDS)
-            {
-                Intent intent = new Intent(BubblesMiddle2Activity.this,
-                                            BubblesEndActivity.class);
-                intent.putExtra(BubbleConstants.SCORE, score);
-                startActivity(intent);
+            if (roundNumber == BubbleConstants.MAX_ROUNDS){
+                nextRound.setText(BubbleConstants.END_PAGE);
             }
-            else
-            {
-                Intent intent = new Intent(BubblesMiddle2Activity.this,
-                                            BubblesMiddleActivity.class);
-                intent.putExtra(BubbleConstants.SCORE, score);
-                intent.putExtra(BubbleConstants.NUM_BUBBLES, numBubbles);
-                intent.putExtra(BubbleConstants.ROUND_NUM, roundNumber);
-                intent.putExtra(BubbleConstants.FIRST_TIME, false);
-                startActivity(intent);
-            }
+            canProceed = true;
+            nextRound.setVisibility(View.VISIBLE);
         }
         else
         {
@@ -240,3 +311,5 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         }
     }
 }
+
+
