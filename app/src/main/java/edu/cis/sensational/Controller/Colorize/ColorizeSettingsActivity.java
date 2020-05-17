@@ -49,8 +49,8 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         setupButtons();
         addTime();
 
-        //String selected = timeSpinner.getSelectedItem().toString();
-        //Toast.makeText(this, selected, Toast.LENGTH_SHORT).show();
+//        String selected = timeSpinner.getSelectedItem().toString();
+//        Toast.makeText(this, selected, Toast.LENGTH_SHORT).show();
     }
 
 

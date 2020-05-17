@@ -80,7 +80,7 @@ public class FirebaseMethods {
         void onCallBack(int value);
     }
 
-    public void updateUserScore(final String userID, final int bubbleScore, final Callback callback) {
+    public void updateUserScore(final String userID, final int scoretoinsert, final Callback callback) {
         final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
                 .child(userID).child("user_score");
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -88,7 +88,7 @@ public class FirebaseMethods {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null)
                 {
-                    int score = bubbleScore + dataSnapshot.getValue(Integer.class);
+                    int score = scoretoinsert + dataSnapshot.getValue(Integer.class);
                     userRef.setValue(score);
                     callback.onCallBack(score);
                 }
@@ -129,10 +129,31 @@ public class FirebaseMethods {
         // TODO figure out a way to listen back from the databse whether or not this has succeeded.
     }
 
+    public void checkHighScore(final String userID, final Callback callback)
+    {
+        final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
+                .child(userID).child("user_score").child("colorizehighscore");
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    int score = dataSnapshot.getValue(Integer.class);
+                    callback.onCallBack(score);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to retrieve user score.", error.toException());
+            }
+        });
+    }
+
     public void storeHighScore(final String userID, final int score)
     {
         final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
-                .child(userID).child("user_score").child("ColorizeHighScore");
+                .child(userID).child("user_score").child("colorizehighscore");
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
