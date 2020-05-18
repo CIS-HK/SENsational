@@ -145,7 +145,7 @@ public class Post implements Parcelable {
         this.tag = tags;
     }
 
-    public List<String> getUnLikes() {
+    public ArrayList<String> getUnLikes() {
         return unlikes;
     }
 
@@ -153,7 +153,7 @@ public class Post implements Parcelable {
         this.unlikes = unlikes;
     }
 
-    public List<String> getLikes() {
+    public ArrayList<String> getLikes() {
         return likes;
     }
 

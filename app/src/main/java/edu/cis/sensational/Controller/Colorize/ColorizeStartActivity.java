@@ -60,7 +60,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
         GameConstants.mediaPlayer.setLooping(true);
 
         setUpButtons();
-        animation();
+        //animation();
 
     }
 
@@ -126,21 +126,22 @@ public class ColorizeStartActivity extends AppCompatActivity {
         screenWidth = size.x;
         screenHeight = size.y;
 
-        timer.schedule(new TimerTask()
-        {
+
+        final Runnable run = new Runnable() {
             @Override
-            public void run()
-            {
-                handler.post(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        changePosition();
-                    }
-                });
+            public void run() {
+                changePosition();
             }
-        },0,13);
+        };
+
+        TimerTask update = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(run);
+            }
+        };
+
+        timer.schedule(update,0,13);
 
     }
 
@@ -181,25 +182,6 @@ public class ColorizeStartActivity extends AppCompatActivity {
         }
 
     }
-
-//    private ObjectAnimator imageMovement(ImageView imageView, String propertyName, Float value, int duration)
-//    {
-//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(imageView,propertyName,value);
-//        objectAnimator.setDuration(duration);
-//        objectAnimator.start();
-//        return objectAnimator;
-//
-//    }
-//
-//    private void animationtwo()
-//    {
-//        imageMovement(bottomright,"translationX",-700f,500);
-//        imageMovement(middleleft,"translationY", -300f,500);
-//        imageMovement(middleright,"translationX",-300f, 500);
-//        imageMovement(topright,"translationY", 300f, 500);
-//        imageMovement(topleft,"translationX", 600f, 500);
-//
-//    }
 
 
 }

@@ -104,9 +104,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void setUpPublicRecyclerView(){
+        // initialize the recyclerView
         recView = findViewById(R.id.recView);
-        final ArrayList<Post> values = new ArrayList<>();
+        final ArrayList<Post> values = new ArrayList<>(); // create a new ArrayList to hold Posts
 
+        // Look through the posts node
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference attendanceRef = rootRef
                 .child("posts");
@@ -114,9 +116,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    // Get the Post object
                     Post value = ds.getValue(Post.class);
-                    values.add(value);
+                    if(value.getPrivate() == false){
+                        values.add(value);
+                    }
+                    // Add the Post to the list of Posts
                 }
+                // Display the Posts on the page
                 showPosts(values);
             }
 
@@ -129,21 +136,26 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void setUpPrivateRecyclerView(){
+        // initialize the recyclerView
         recView = findViewById(R.id.recView);
-        final ArrayList<Post> values = new ArrayList<>();
+        final ArrayList<Post> values = new ArrayList<>(); // create a new ArrayList to hold Posts
 
+        // Look through the user_posts node
         Query query = FirebaseDatabase.getInstance().getReference()
                 .child(getString(R.string.dbname_user_posts))
                 .child(userID)
                 .orderByChild(getString(R.string.field_private))
-                .equalTo(true);
+                .equalTo(true); // check that the post was selected as private
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+                    // Get the Post object
                     Post value = singleSnapshot.getValue(Post.class);
+                    // Add the Post to the list of Posts
                     values.add(value);
                 }
+                // Display the Posts on the page
                 showPosts(values);
             }
 
@@ -156,10 +168,12 @@ public class HomeActivity extends AppCompatActivity {
 
     public void showPosts(ArrayList<Post> values){
 
+        // Create empty ArrayLists to separate the main information from each Post
         ArrayList<String> titleList = new ArrayList<>();
         ArrayList<String> descriptionList = new ArrayList<>();
         ArrayList<String> IDList = new ArrayList<>();
 
+        // Fill the ArrayLists with the retrieved values
         for(Post post: values)
         {
             titleList.add(post.getTitle());
@@ -175,20 +189,22 @@ public class HomeActivity extends AppCompatActivity {
             IDList.add(i, IDList.remove(j));
         }
 
+        // Initializing and setting up the RecyclerView with the three ArrayLists
+        // Displaying the information on the page
         myAdapter = new HomeAdapter(titleList, descriptionList, IDList);
-
         recView.setAdapter(myAdapter);
         recView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Allowing the Posts to be clicked on, which then opens the Post in ViewPostActivity
         myAdapter.setOnItemClickListener(new HomeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(context,
                         ViewPostActivity.class);
-                String postID = myAdapter.itemClicked(position);
-                intent.putExtra("Post", postID);
-                intent.putExtra("User", userID);
-                startActivity(intent);
+                String postID = myAdapter.itemClicked(position); // Retrieves the selected postID
+                intent.putExtra("Post", postID); // Passes the PostID into the next Activity
+                intent.putExtra("User", userID); // Passes the UserID into the next Activity
+                startActivity(intent); // Starts ViewPostActivity with the above information passed
             }
         });
     }
@@ -216,6 +232,8 @@ public class HomeActivity extends AppCompatActivity {
 
     public void searchForTag(String searchWord){
 
+        //TODO make the search public/private sensitive
+        //TODO make the search accept extreme values
         final ArrayList<Post> mPostList = new ArrayList<>();
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
