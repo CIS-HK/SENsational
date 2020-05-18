@@ -203,7 +203,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
                     /* Ensures that users can't answer the last question multiple times to get it
                     correct before pressing the nextRound button */
 
-                    // If an encouraging message is displayed, make it disappear from the screen
+                    // If an encouraging message is displayed from before, stop displaying it
                     message.setVisibility(View.GONE);
 
                     // Displays the check image on the screen
