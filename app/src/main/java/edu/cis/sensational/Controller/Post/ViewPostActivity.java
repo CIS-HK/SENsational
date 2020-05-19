@@ -187,8 +187,10 @@ public class ViewPostActivity extends AppCompatActivity {
     }
 
     public void displayComments(){
+        // Retrieve the current comments from the Post object
         ArrayList<Comment> commentsList = mPost.getComments();
 
+        // Displays the comments on a RecyclerView adapter
         CommentsAdapter myAdapter = new CommentsAdapter(commentsList);
         commentsView.setAdapter(myAdapter);
         commentsView.setLayoutManager(new LinearLayoutManager(this));
@@ -197,7 +199,7 @@ public class ViewPostActivity extends AppCompatActivity {
 
     private void init(){
         try{
-            // Create a new query that goes through the user_posts node
+            // Create a new query that goes through the posts node
             Query query = FirebaseDatabase.getInstance().getReference()
                     .child("posts")
                     .orderByChild(getString(R.string.field_post_id))
@@ -291,6 +293,12 @@ public class ViewPostActivity extends AppCompatActivity {
         likes.setText(mPost.getLikeCount() + "");
     }
 
+    /**
+     * Sets up the display for the voting function of the page
+     * Checks whether the user has liked/unliked this post and reflects that information
+     * Disables the buttons if the user has already made their vote
+     * Displays the vote count
+     */
     private void setUpVotes()
     {
         for(String like: mPost.getLikes()){
@@ -314,9 +322,10 @@ public class ViewPostActivity extends AppCompatActivity {
         likes.setText(mPost.getLikeCount() + "");
 
     }
-       /*
+
+    /*
     ------------------------------------ Firebase ---------------------------------------------
-     */
+    */
 
     /**
      * Setup the firebase auth object
@@ -344,8 +353,6 @@ public class ViewPostActivity extends AppCompatActivity {
                 // ...
             }
         };
-
-
     }
 
     @Override

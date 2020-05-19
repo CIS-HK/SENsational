@@ -132,6 +132,15 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Checks that all the parameters are valid (ie. not null)
+     *
+     * @param title
+     * @param description
+     * @param tag
+     *
+     * @return boolean
+     */
     private boolean checkInputs(String title, String description, String tag){
         Log.d(TAG, "checkInputs: checking inputs for null values.");
         if(title.equals("") || description.equals("") || tag.equals("")){
