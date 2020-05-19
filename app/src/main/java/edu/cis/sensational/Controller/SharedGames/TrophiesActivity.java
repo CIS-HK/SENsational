@@ -55,64 +55,65 @@ public class TrophiesActivity extends AppCompatActivity {
 
         trophies = new ArrayList<>();
         int imageID = getResources().getIdentifier("redtrophy",
-                                                    BubbleConstants.DRAWABLE,
-                                                    getPackageName());
+                BubbleConstants.DRAWABLE,
+                getPackageName());
         final Trophy redTrophy = new Trophy(10, "Red Trophy", imageID);
         imageID = getResources().getIdentifier("orangetrophy",
-                                                BubbleConstants.DRAWABLE,
-                                                getPackageName());
+                BubbleConstants.DRAWABLE,
+                getPackageName());
         final Trophy orangeTrophy = new Trophy(20, "Orange Trophy", imageID);
         imageID = getResources().getIdentifier("greentrophy",
-                                                BubbleConstants.DRAWABLE,
-                                                getPackageName());
+                BubbleConstants.DRAWABLE,
+                getPackageName());
         final Trophy greenTrophy = new Trophy(50, "Green Trophy", imageID);
         imageID = getResources().getIdentifier("bluetrophy",
-                                                BubbleConstants.DRAWABLE,
-                                                getPackageName());
+                BubbleConstants.DRAWABLE,
+                getPackageName());
         final Trophy blueTrophy = new Trophy(100, "Blue Trophy", imageID);
         imageID = getResources().getIdentifier("purpletrophy",
-                                                BubbleConstants.DRAWABLE,
-                                                getPackageName());
+                BubbleConstants.DRAWABLE,
+                getPackageName());
         final Trophy purpleTrophy = new Trophy(200, "Purple Trophy", imageID);
 
         mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() != null){
+        if (mAuth.getCurrentUser() != null) {
             userID = mAuth.getCurrentUser().getUid();
         }
+        if (userID != null) {
+            final TrophiesAdapter adapter = new TrophiesAdapter(trophies);
+            allTrophies.setAdapter(adapter);
+            allTrophies.setLayoutManager(new LinearLayoutManager(this));
 
-        final TrophiesAdapter adapter = new TrophiesAdapter(trophies);
-        allTrophies.setAdapter(adapter);
-        allTrophies.setLayoutManager(new LinearLayoutManager(this));
+            FirebaseMethods firebaseMethods = new FirebaseMethods(TrophiesActivity.this);
+            firebaseMethods.updateUserScore(userID, 0, new FirebaseMethods.Callback() {
+                @Override
+                public void onCallBack(int value) {
+                    userScore = value;
+                    totalScore.setText("" + value);
+                    if (userScore >= redTrophy.getSmileyFaces()) {
+                        trophies.add(redTrophy);
+                        // https://stackoverflow.com/questions/31367599/how-to-update-recyclerview-adapter-data
+                        adapter.notifyItemInserted(0);
+                    }
+                    if (userScore >= orangeTrophy.getSmileyFaces()) {
+                        trophies.add(orangeTrophy);
+                        adapter.notifyItemInserted(1);
+                    }
+                    if (userScore >= greenTrophy.getSmileyFaces()) {
+                        trophies.add(greenTrophy);
+                        adapter.notifyItemInserted(2);
+                    }
+                    if (userScore >= blueTrophy.getSmileyFaces()) {
+                        trophies.add(blueTrophy);
+                        adapter.notifyItemInserted(3);
+                    }
+                    if (userScore >= purpleTrophy.getSmileyFaces()) {
+                        trophies.add(purpleTrophy);
+                        adapter.notifyItemInserted(4);
+                    }
 
-        FirebaseMethods firebaseMethods = new FirebaseMethods(TrophiesActivity.this);
-        firebaseMethods.updateUserScore(userID, 0, new FirebaseMethods.Callback() {
-            @Override
-            public void onCallBack(int value) {
-                userScore = value;
-                totalScore.setText("" + value);
-                if (userScore >= redTrophy.getSmileyFaces()){
-                    trophies.add(redTrophy);
-                    // https://stackoverflow.com/questions/31367599/how-to-update-recyclerview-adapter-data
-                    adapter.notifyItemInserted(0);
                 }
-                if (userScore >= orangeTrophy.getSmileyFaces()){
-                    trophies.add(orangeTrophy);
-                    adapter.notifyItemInserted(1);
-                }
-                if (userScore >= greenTrophy.getSmileyFaces()){
-                    trophies.add(greenTrophy);
-                    adapter.notifyItemInserted(2);
-                }
-                if (userScore >= blueTrophy.getSmileyFaces()){
-                    trophies.add(blueTrophy);
-                    adapter.notifyItemInserted(3);
-                }
-                if (userScore >= purpleTrophy.getSmileyFaces()){
-                    trophies.add(purpleTrophy);
-                    adapter.notifyItemInserted(4);
-                }
-
-            }
-        });
+            });
+        }
     }
 }

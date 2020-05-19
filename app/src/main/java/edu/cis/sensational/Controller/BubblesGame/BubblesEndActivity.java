@@ -77,13 +77,15 @@ public class BubblesEndActivity extends AppCompatActivity
             userID = mAuth.getCurrentUser().getUid();
         }
 
-        FirebaseMethods firebaseMethods = new FirebaseMethods(BubblesEndActivity.this);
-        firebaseMethods.updateUserScore(userID, score, new FirebaseMethods.Callback() {
-            @Override
-            public void onCallBack(int value) {
-                totalScore.setText("" + value);
-            }
-        });
+        if (userID != null) {
+            FirebaseMethods firebaseMethods = new FirebaseMethods(BubblesEndActivity.this);
+            firebaseMethods.updateUserScore(userID, score, new FirebaseMethods.Callback() {
+                @Override
+                public void onCallBack(int value) {
+                    totalScore.setText("" + value);
+                }
+            });
+        }
 
         playAgain.setOnClickListener(new View.OnClickListener()
         {

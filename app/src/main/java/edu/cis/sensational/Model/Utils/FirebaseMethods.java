@@ -609,24 +609,25 @@ public class FirebaseMethods {
     }
 
     public void updateUserScore(final String userID, final int scoretoinsert, final Callback callback) {
-        final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
-                .child(userID).child("user_score");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null)
-                {
-                    int score = scoretoinsert + dataSnapshot.getValue(Integer.class);
-                    userRef.setValue(score);
-                    callback.onCallBack(score);
-                }
-            }
+        if (myRef != null) {
+            final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
+                    .child(userID).child("user_score");
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() != null) {
+                            int score = scoretoinsert + dataSnapshot.getValue(Integer.class);
+                            userRef.setValue(score);
+                            callback.onCallBack(score);
+                        }
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to retrieve user score.", error.toException());
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.w(TAG, "Failed to retrieve user score.", error.toException());
+                    }
+                });
+        }
     }
 
     public void checkHighScore(final String userID, final Callback callback)
