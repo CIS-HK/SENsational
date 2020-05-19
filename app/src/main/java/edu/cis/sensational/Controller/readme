@@ -53,8 +53,8 @@ Bubbles Game
     playBubble - displays the bubble floating on the screen at a certain speed. Makes use of the
                  changeBubbleCoordinates method
 
-    changeBubbleCoordinates - changes the y-coordinate of the appropriate ImageViews. Checks when
-                              to display the next bubble/move on to the next activity
+    changeBubbleCoordinates - changes the y-coordinate of the appropriate ImageViews and TextViews.
+                              Checks when to display the next bubble/move on to the next activity
 
 (Activity) BubblesMiddle2Activity - this activity asks users to identify the color of each bubble
                                     in the sequence by selecting one of three answer choices.

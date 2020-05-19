@@ -15,6 +15,11 @@ import java.util.Random;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 import edu.cis.sensational.R;
 
+/**
+ * Asks users to identify the color of each bubble in the sequence. Users can select from three
+ * answer choices displayed on the screen.
+ */
+
 public class BubblesMiddle2Activity extends AppCompatActivity
 {
     private Button option1;
@@ -36,6 +41,10 @@ public class BubblesMiddle2Activity extends AppCompatActivity
     private int roundNumber;
     private boolean canProceed;
 
+    /**
+     * Creates and displays components on the screen (such as ImageViews and buttons) and displays
+     * the user's score so far.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -112,6 +121,12 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         randomizeOptions(numTimes - 1);
     }
 
+    /**
+     * Randomly selects three answer options that the user can choose from. One of them is the
+     * correct answer.
+     * @param index the index in the colorsPicked ArrayList that stores the correct color
+     *              of the bubble.
+     */
     public void randomizeOptions(int index)
     {
         ArrayList<String> options = new ArrayList<>();
@@ -190,6 +205,11 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         }
     }
 
+    /**
+     * Sets up the button that displays the correct answer so that it completes the right actions
+     * when pressed.
+     * @param button the button that displays the correct answer
+     */
     public void setUpCorrectButton(Button button)
     {
         button.setOnClickListener(new View.OnClickListener()
@@ -231,6 +251,11 @@ public class BubblesMiddle2Activity extends AppCompatActivity
 
     }
 
+    /**
+     * Sets up the button that displays an incorrect answer so that it completes the right actions
+     * when pressed.
+     * @param button the button that displays a wrong answer
+     */
     public void setUpWrongButton(Button button)
     {
         button.setOnClickListener(new View.OnClickListener()
@@ -274,6 +299,11 @@ public class BubblesMiddle2Activity extends AppCompatActivity
 
     }
 
+    /**
+     * Checks whether the user has identified the color of each bubble in the sequence. Transitions
+     * to the end screen or back to BubblesMiddleActivity depending on the number of rounds that
+     * the user has completed.
+     */
     public void checkEnd()
     {
         if (numTimes > numBubbles)
