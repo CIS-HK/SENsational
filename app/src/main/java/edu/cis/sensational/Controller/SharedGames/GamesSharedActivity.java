@@ -42,13 +42,15 @@ public class GamesSharedActivity extends AppCompatActivity {
         if(mAuth.getCurrentUser() != null){
             userID = mAuth.getCurrentUser().getUid();
         }
-        FirebaseMethods firebaseMethods = new FirebaseMethods(GamesSharedActivity.this);
-        firebaseMethods.updateUserScore(userID, 0, new FirebaseMethods.Callback() {
-            @Override
-            public void onCallBack(int value) {
-                userTotalScore.setText("" + value);
-            }
-        });
+        if (userID != null) {
+            FirebaseMethods firebaseMethods = new FirebaseMethods(GamesSharedActivity.this);
+            firebaseMethods.updateUserScore(userID, 0, new FirebaseMethods.Callback() {
+                @Override
+                public void onCallBack(int value) {
+                    userTotalScore.setText("" + value);
+                }
+            });
+        }
 
         setUpButtons();
     }
