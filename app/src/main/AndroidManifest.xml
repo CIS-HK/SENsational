@@ -37,15 +37,13 @@
         <activity android:name=".Controller.BubblesGame.BubbleStartActivity" />
         <activity android:name=".Controller.Calming.CalmingActivity" />
         <activity android:name=".Controller.Post.ViewPostActivity" />
-        <activity android:name=".Controller.MainActivity" >
+        <activity android:name=".Controller.MainActivity" />
+        <activity android:name=".Controller.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".Controller.Login.LoginActivity">
-
         </activity>
 
         <meta-data
