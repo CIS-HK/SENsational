@@ -35,6 +35,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
 
     Handler handler;
     Timer timer;
+    Integer seconds;
 
 
     @Override
@@ -52,6 +53,9 @@ public class ColorizeStartActivity extends AppCompatActivity {
         topright = findViewById(R.id.imageView5);
         topleft = findViewById(R.id.imageView3);
 
+        timer = new Timer();
+        handler = new Handler();
+
 
         //https://stackoverflow.com/questions/37244357/how-to-play-music-in-android-studio
         musicSwitch = findViewById(R.id.musicSwitch);
@@ -60,7 +64,8 @@ public class ColorizeStartActivity extends AppCompatActivity {
         GameConstants.mediaPlayer.setLooping(true);
 
         setUpButtons();
-        //animation();
+        animation();
+        getBundle();
 
     }
 
@@ -68,7 +73,10 @@ public class ColorizeStartActivity extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ColorizeStartActivity.this, ColorizeMainActivity.class));
+                Intent intent = new Intent(ColorizeStartActivity.this, ColorizeMainActivity.class);
+                addBundle(getIntent());
+                addBundle(intent);
+                startActivity(intent);
 
             }
         });
@@ -180,6 +188,23 @@ public class ColorizeStartActivity extends AppCompatActivity {
         {
             brX = screenWidth + 800.0f;
         }
+
+    }
+    public void getBundle()
+    {
+        //Checking if bundle is empty (if setting have been saved or not)
+        if(getIntent().getExtras() != null)
+        {
+            Bundle b = getIntent().getExtras();
+            seconds = b.getInt("Time");
+
+        }
+    }
+
+    //Adding information for circle growth and shrinking into an intent
+    public void addBundle(Intent intent)
+    {
+        intent.putExtra("Time", seconds);
 
     }
 

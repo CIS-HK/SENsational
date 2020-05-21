@@ -27,6 +27,8 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
     Button backButton;
     ArrayList<String> times;
     ArrayAdapter myArrayAdapter;
+    String selectedTime;
+    Integer seconds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,7 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         setupButtons();
         addTime();
 
-//        String selected = timeSpinner.getSelectedItem().toString();
-//        Toast.makeText(this, selected, Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -75,7 +76,26 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
        backButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               startActivity(new Intent(ColorizeSettingsActivity.this,ColorizeStartActivity.class));
+               Intent intent = new Intent(ColorizeSettingsActivity.this,ColorizeStartActivity.class);
+               if(!selectedTime.isEmpty())
+               {
+                   if (selectedTime.equals("3 seconds"))
+                   {
+                       seconds = 3000;
+                   }
+                   if (selectedTime.equals("4 seconds"))
+                   {
+                       seconds = 4000;
+                   }
+                   if (selectedTime.equals("5 seconds"))
+                   {
+                       seconds = 5000;
+                   }
+               }
+               intent.putExtra("Time",seconds);
+
+               startActivity(intent);
+
            }
        });
 
@@ -88,6 +108,8 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         times.add("4 seconds");
         times.add("5 seconds");
     }
+
+
 
 
 }

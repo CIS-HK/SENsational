@@ -122,16 +122,16 @@ public class CalmingActivity extends AppCompatActivity
 
     //Getting information from bundle from settings page
     public void getBundle()
+{
+    //Checking if bundle is empty (if setting have been saved or not)
+    if(getIntent().getExtras() != null)
     {
-        //Checking if bundle is empty (if setting have been saved or not)
-        if(getIntent().getExtras() != null)
-        {
-            Bundle b = getIntent().getExtras();
-            inInt = b.getInt("In");
-            holdInt = b.getInt("Hold");
-            outInt = b.getInt("Out");
-        }
+        Bundle b = getIntent().getExtras();
+        inInt = b.getInt("In");
+        holdInt = b.getInt("Hold");
+        outInt = b.getInt("Out");
     }
+}
 
     //Adding information for circle growth and shrinking into an intent
     public void addBundle(Intent intent)
