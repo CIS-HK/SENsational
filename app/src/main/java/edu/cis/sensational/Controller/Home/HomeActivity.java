@@ -102,7 +102,9 @@ public class HomeActivity extends AppCompatActivity {
         setUpPublicRecyclerView();
     }
 
-
+    /**
+     * Sets up the home page for the
+     */
     public void setUpPublicRecyclerView(){
         // initialize the recyclerView
         recView = findViewById(R.id.recView);
@@ -366,6 +368,4 @@ public class HomeActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
-
 }
