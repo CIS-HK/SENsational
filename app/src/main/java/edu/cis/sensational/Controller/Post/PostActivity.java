@@ -75,35 +75,48 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void init(){
+        // When the Post Button is clicked
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Retrieve the inputted values
                 title = mTitle.getText().toString();
                 description = mDescription.getText().toString();
                 tag = mTag.getText().toString();
-
-                if(privateSwitch.isChecked()){
-                    privatePost = true;
+                // Retrieve the status of the private/public posting setting
+                if(privateSwitch.isChecked()) // If private posting was selected
+                {
+                    privatePost = true; // Set private status to true
                 }
-                else{
-                    privatePost = false;
+                else // If public posting was selected
+                {
+                    privatePost = false; // Set private status to false
                 }
-
+                // Check that the inputs are valid
                 if(checkInputs(title, description, tag)){
-
-                    FirebaseMethods firebaseMethods = new FirebaseMethods(PostActivity.this);
+                    // TODO make the tag input accept only one word and checks for errors
+                    // Call for the creation of a new Post on Firebase
+                    FirebaseMethods firebaseMethods =
+                            new FirebaseMethods(PostActivity.this);
+                    // If posting was successful:
                     if(firebaseMethods.createNewPost(title, description, tag, privatePost)){
-                        Toast.makeText(mContext, "Successfully posted.", Toast.LENGTH_SHORT).show();
+                        // Return to main page
+                        Toast.makeText(mContext, "Successfully posted."
+                                , Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(context,
                                 HomeActivity.class);
                         startActivity(intent);
                     }
-                    else{
-                        Toast.makeText(mContext, "Posting unsuccessful. Try again.", Toast.LENGTH_SHORT).show();
+                    // If posting was unsuccessful:
+                    else
+                    {
+                        Toast.makeText(mContext, "Posting unsuccessful. Try again."
+                                , Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
-                    Toast.makeText(mContext, "Inputs are invalid. Try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Inputs are invalid. Try again."
+                            , Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -119,6 +132,15 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Checks that all the parameters are valid (ie. not null)
+     *
+     * @param title
+     * @param description
+     * @param tag
+     *
+     * @return boolean
+     */
     private boolean checkInputs(String title, String description, String tag){
         Log.d(TAG, "checkInputs: checking inputs for null values.");
         if(title.equals("") || description.equals("") || tag.equals("")){

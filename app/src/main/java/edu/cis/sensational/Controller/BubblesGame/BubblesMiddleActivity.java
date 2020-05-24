@@ -17,6 +17,11 @@ import java.util.TimerTask;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 import edu.cis.sensational.R;
 
+/**
+ * Displays a sequence of bubbles with different colors floating to the top of the screen. Users
+ * need to try to remember the colors of each bubble.
+ */
+
 public class BubblesMiddleActivity extends AppCompatActivity
 {
     private String mode;
@@ -36,6 +41,10 @@ public class BubblesMiddleActivity extends AppCompatActivity
     private int score;
     private int roundNumber;
 
+    /**
+     * Creates and displays components on the screen (such as ImageViews) and
+     * displays the user's score so far.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -115,6 +124,9 @@ public class BubblesMiddleActivity extends AppCompatActivity
         setUpBubbles();
     }
 
+    /**
+     * Randomly generates a color for the bubble that will be displayed on the screen.
+     */
     public void generateRandomSequence()
     {
         Random random = new Random();
@@ -130,6 +142,10 @@ public class BubblesMiddleActivity extends AppCompatActivity
         bubble.setImageResource(imageID);
     }
 
+    /**
+     * Gets the dimensions of the screen and calls on the playBubble method to display the bubble
+     * floating up.
+     */
     public void setUpBubbles()
     {
         // https://www.youtube.com/watch?v=UxbJKNjQWD8
@@ -145,6 +161,10 @@ public class BubblesMiddleActivity extends AppCompatActivity
         playBubble();
     }
 
+    /**
+     * Displays the bubble ImageView floating on the screen at a certain speed. Makes use of the
+     * changeBubbleCoordinates method to do so.
+     */
     public void playBubble()
     {
         // https://www.youtube.com/watch?v=UxbJKNjQWD8
@@ -176,6 +196,11 @@ public class BubblesMiddleActivity extends AppCompatActivity
         }, BubbleConstants.DELAY, BubbleConstants.PERIOD);
     }
 
+    /**
+     * Changes the y-coordinate of the bubble ImageView and the TextView displaying the bubble
+     * number. Checks when to display the next bubble or, once all the bubbles have been displayed,
+     * when to move on to the next activity.
+     */
     public void changeBubbleCoordinates()
     {
         // https://www.youtube.com/watch?v=UxbJKNjQWD8

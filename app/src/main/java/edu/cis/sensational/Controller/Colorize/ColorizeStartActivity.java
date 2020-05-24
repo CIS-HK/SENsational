@@ -35,6 +35,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
 
     Handler handler;
     Timer timer;
+    Integer seconds;
 
 
     @Override
@@ -52,6 +53,9 @@ public class ColorizeStartActivity extends AppCompatActivity {
         topright = findViewById(R.id.imageView5);
         topleft = findViewById(R.id.imageView3);
 
+        timer = new Timer();
+        handler = new Handler();
+
 
         //https://stackoverflow.com/questions/37244357/how-to-play-music-in-android-studio
         musicSwitch = findViewById(R.id.musicSwitch);
@@ -61,6 +65,7 @@ public class ColorizeStartActivity extends AppCompatActivity {
 
         setUpButtons();
         animation();
+        getBundle();
 
     }
 
@@ -68,7 +73,10 @@ public class ColorizeStartActivity extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ColorizeStartActivity.this, ColorizeMainActivity.class));
+                Intent intent = new Intent(ColorizeStartActivity.this, ColorizeMainActivity.class);
+                addBundle(getIntent());
+                addBundle(intent);
+                startActivity(intent);
 
             }
         });
@@ -126,21 +134,22 @@ public class ColorizeStartActivity extends AppCompatActivity {
         screenWidth = size.x;
         screenHeight = size.y;
 
-        timer.schedule(new TimerTask()
-        {
+
+        final Runnable run = new Runnable() {
             @Override
-            public void run()
-            {
-                handler.post(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        changePosition();
-                    }
-                });
+            public void run() {
+                changePosition();
             }
-        },0,13);
+        };
+
+        TimerTask update = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(run);
+            }
+        };
+
+        timer.schedule(update,0,13);
 
     }
 
@@ -181,25 +190,23 @@ public class ColorizeStartActivity extends AppCompatActivity {
         }
 
     }
+    public void getBundle()
+    {
+        //Checking if bundle is empty (if setting have been saved or not)
+        if(getIntent().getExtras() != null)
+        {
+            Bundle b = getIntent().getExtras();
+            seconds = b.getInt("Time");
 
-//    private ObjectAnimator imageMovement(ImageView imageView, String propertyName, Float value, int duration)
-//    {
-//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(imageView,propertyName,value);
-//        objectAnimator.setDuration(duration);
-//        objectAnimator.start();
-//        return objectAnimator;
-//
-//    }
-//
-//    private void animationtwo()
-//    {
-//        imageMovement(bottomright,"translationX",-700f,500);
-//        imageMovement(middleleft,"translationY", -300f,500);
-//        imageMovement(middleright,"translationX",-300f, 500);
-//        imageMovement(topright,"translationY", 300f, 500);
-//        imageMovement(topleft,"translationX", 600f, 500);
-//
-//    }
+        }
+    }
+
+    //Adding information for circle growth and shrinking into an intent
+    public void addBundle(Intent intent)
+    {
+        intent.putExtra("Time", seconds);
+
+    }
 
 
 }

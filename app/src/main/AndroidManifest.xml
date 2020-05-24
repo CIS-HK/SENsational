@@ -31,7 +31,8 @@
         <activity android:name=".Controller.Calming.CalmingSettingsActivity" />
         <activity android:name=".Controller.Home.HomeActivity" />
         <activity android:name=".Controller.Post.PostActivity" />
-        <activity android:name=".Controller.Login.RegisterActivity" />
+        <activity android:name=".Controller.Login.RegisterActivity" >
+        </activity>
         <activity android:name=".Controller.Colorize.ColorizeStartActivity" />
         <activity android:name=".Controller.BubblesGame.BubbleStartActivity" />
         <activity android:name=".Controller.Calming.CalmingActivity" />

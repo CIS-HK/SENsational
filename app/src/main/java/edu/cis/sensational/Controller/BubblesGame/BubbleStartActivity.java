@@ -12,6 +12,11 @@ import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 import edu.cis.sensational.R;
 
+/**
+ * The start page - it displays the aspects of EF that the game targets, allows users to select
+ * the mode of the game, and has buttons proceeding to the instructions page and the start of
+ * the game.
+ */
 public class BubbleStartActivity extends AppCompatActivity
 {
     private Button play;
@@ -19,6 +24,9 @@ public class BubbleStartActivity extends AppCompatActivity
     private Button instructions;
     private Spinner spinner;
 
+    /**
+     * Creates and displays the components on the screen (such as buttons and the drop-down menu).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

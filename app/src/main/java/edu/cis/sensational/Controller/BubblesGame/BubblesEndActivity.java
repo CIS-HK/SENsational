@@ -16,6 +16,12 @@ import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
 
+/**
+ * The end page- displays the user’s final score (in smiley faces), updates and displays the total
+ * number of smiley faces that the user has won overall, and allows users to exit the game or play
+ * again.
+ */
+
 public class BubblesEndActivity extends AppCompatActivity
 {
     private int score;
@@ -27,6 +33,12 @@ public class BubblesEndActivity extends AppCompatActivity
     private Button exitGame;
     private FirebaseAuth mAuth;
     private String userID;
+
+    /**
+     * Creates and displays the components on the screen (such as ImageViews, TextViews and
+     * buttons). Updates the user's total number of smiley faces and sends the updated score back
+     * to Firebase.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,6 +53,7 @@ public class BubblesEndActivity extends AppCompatActivity
         exitGame = findViewById(R.id.exitGame);
         totalScore = findViewById(R.id.totalScore);
 
+        // Displays the user's final score
         score = getIntent().getIntExtra(BubbleConstants.SCORE, BubbleConstants.DEFAULT);
         if (score == 1)
         {
@@ -58,19 +71,21 @@ public class BubblesEndActivity extends AppCompatActivity
             smiley3.setVisibility(View.VISIBLE);
         }
 
-        // Send score to Firebase
+        // Updates and sends total number of smiley faces to Firebase
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null){
             userID = mAuth.getCurrentUser().getUid();
         }
 
-        FirebaseMethods firebaseMethods = new FirebaseMethods(BubblesEndActivity.this);
-        firebaseMethods.updateUserScore(userID, score, new FirebaseMethods.Callback() {
-            @Override
-            public void onCallBack(int value) {
-                totalScore.setText("" + value);
-            }
-        });
+        if (userID != null) {
+            FirebaseMethods firebaseMethods = new FirebaseMethods(BubblesEndActivity.this);
+            firebaseMethods.updateUserScore(userID, score, new FirebaseMethods.Callback() {
+                @Override
+                public void onCallBack(int value) {
+                    totalScore.setText("" + value);
+                }
+            });
+        }
 
         playAgain.setOnClickListener(new View.OnClickListener()
         {

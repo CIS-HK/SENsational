@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import edu.cis.sensational.Controller.Calming.CalmingActivity;
+import edu.cis.sensational.Controller.Login.LoginActivity;
 import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.R;
@@ -16,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private Button games;
     private Button calming;
     private Button forum;
+    private Button logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,16 @@ public class MainActivity extends AppCompatActivity {
         games = findViewById(R.id.gamesButton);
         calming = findViewById(R.id.calmingButton);
         forum = findViewById(R.id.forumButton);
+        logout = findViewById(R.id.logOutButton);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         games.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         forum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });

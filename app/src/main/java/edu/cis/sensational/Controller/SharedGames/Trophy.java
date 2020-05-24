@@ -4,10 +4,12 @@ public class Trophy
 {
     int smileyFaces;
     String name;
+    int imageID;
 
-    public Trophy(int smileyFaces, String name){
+    public Trophy(int smileyFaces, String name, int imageID){
         this.smileyFaces = smileyFaces;
         this.name = name;
+        this.imageID = imageID;
     }
 
     public void setName(String name) {
@@ -24,6 +26,14 @@ public class Trophy
 
     public int getSmileyFaces() {
         return smileyFaces;
+    }
+
+    public void getImageID(int imageID) {
+        this.imageID = imageID;
+    }
+
+    public int getImageID() {
+        return imageID;
     }
 }
 
