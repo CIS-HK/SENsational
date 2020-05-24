@@ -80,14 +80,14 @@ Bubbles Game
 
 
 Calming
-(Activity) CalmingActivity:
+(Activity) CalmingActivity - This is the activity for the start page of the calming function
     onCreate -- creates and identifies the various components on screen
     setUpButtons -- sets up buttons to go to mode 1, 2 and 3 activities, settings page, and back to
                 Clover home page
     getBundle -- gets settings information from bundle from setting activity intent
     addBundle -- adds setting information (from get bundle) to bundle to be sent to mode 1, 2, 3
 
-(Activity) CalmingMode1Activity:
+(Activity) CalmingMode1Activity - This is the activity for the mode 1 page
     onCreate -- creates and identifies the various components on screen
     sizeControl -- controls growth and shrinking of circle using default 3-2-3 or information from
                 settings unpacked in bundle from  home activity. Runs Util class method to create
@@ -98,7 +98,7 @@ Calming
     number -- controls number text view
     pausebutton -- method to control pause button, pausing animations, and resuming when paused
 
-(Activity) CalmingMode2Activity:
+(Activity) CalmingMode2Activity - This is the activity for the mode 2 page
    onCreate -- creates and identifies the various components on screen
    sizeControl -- controls growth and shrinking of circle using default 3-2-3 or information from
                 settings unpacked in bundle from  home activity. Runs Util class method to create
@@ -110,7 +110,7 @@ Calming
    number -- controls number text view
    pausebutton -- method to control pause button, pausing animations, and resuming when paused
 
-(Activity) CalmingMode3Activity:
+(Activity) CalmingMode3Activity - This is the activity for the mode 3 page
     onCreate -- creates and identifies the various components on screen
     sizeControl -- controls growth and shrinking of circle using default 3-2-3 or information from
                  settings unpacked in bundle from  home activity. Runs Util class method to create
@@ -124,7 +124,7 @@ Calming
     number -- controls number text view
     pausebutton -- method to control pause button, pausing animations, and resuming when paused
 
-(Activity) CalmingSettingsActivity:
+(Activity) CalmingSettingsActivity - This is the activity for the calming settings page
     onCreate -- creates and identifies the various components on screen
     addSpinner -- creates adaptor for spinner, sets the adaptor to the three spinners
     saveSettings -- method to control save button, saving settings chosen on spinner for breathing
@@ -132,7 +132,7 @@ Calming
     backButton -- method to control back button to go back to main activity, saving the spinner
                   details in a bundle to send to main activity intent
 
-(Class) Util
+(Class) Util - This is the util class for different methods to be used in the activity classes
     circleControl -- creates animation set and add animations from anim files, setting duration
                   specific to the setting (or default 3-2-3).
     numberArrayList -- creates a number ArrayList to be used for the number text view, counting from

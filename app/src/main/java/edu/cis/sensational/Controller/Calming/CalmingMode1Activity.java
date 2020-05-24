@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -13,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import edu.cis.sensational.Model.CConstants;
 import edu.cis.sensational.R;
 
+/**
+ * Class for calming mode 1 activity
+ */
 public class CalmingMode1Activity extends AppCompatActivity
 {
     //Declaring the images and text on the GUI
@@ -42,6 +43,11 @@ public class CalmingMode1Activity extends AppCompatActivity
     //Declaring arraylist for the growth, hold, and shrink times that will be added
     private ArrayList<String> numberArray;
 
+    /**
+     * Creates and identifies the various components for mode 1 on screen, including buttons, text,
+     * and images
+     * @param savedInstanceState Saved instance of mode 1 activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -72,17 +78,23 @@ public class CalmingMode1Activity extends AppCompatActivity
         mPlayer.start();
     }
 
-    //Method to control the size of the circle
+    /**
+     * Controls growth and shrinking of circle using default 3-2-3 or information from
+     * settings unpacked in bundle from  home activity. Runs Util class method to create
+     * number array. Runs Util class method circle control to get animation set, sets an
+     * animation listener to repeat animation when finished. Calls the methods to control
+     * breathe and number text views.
+     */
     public void sizeControl()
     {
         //Checking if intent is empty (if settings have been chosen and saved)
-        if(getIntent().getExtras().getInt("In") != 0)
+        if(getIntent().getExtras().getInt(c.IN) != 0)
         {
             //Getting values from bundle in the extras
             Bundle b = getIntent().getExtras();
-            inInt = b.getInt("In");
-            holdInt = b.getInt("Hold");
-            outInt = b.getInt("Out");
+            inInt = b.getInt(c.IN);
+            holdInt = b.getInt(c.HOLD);
+            outInt = b.getInt(c.OUT);
         }
         //Initialising arraylist for numbers using the util class method numberArrayList
         numberArray = Util.numberArrayList(inInt,holdInt,outInt);
@@ -124,11 +136,16 @@ public class CalmingMode1Activity extends AppCompatActivity
         number();
     }
 
-    //Method to control the words text view, taking in variables for length of growth, hold, shrink
+    /**
+     * Method to control the breathe text view
+     * @param in Breathe in time
+     * @param hold Hold time
+     * @param out Breathe out time
+     */
     public void text(final int in, final int hold, final int out)
     {
         //Words to be shown in order on the screen
-        final ArrayList<String> wordArray = c.wordArray;
+        final ArrayList<String> wordArray = c.WORD_ARRAY;
 
         //Making a new Runnable (loop) for the words string
         breathe.post(new Runnable()
@@ -175,7 +192,9 @@ public class CalmingMode1Activity extends AppCompatActivity
         });
     }
 
-    //Method to control number text view
+    /**
+     * Method to control number text view
+     */
     public void number()
     {
         //Making a new Runnable (loop) for the number string
@@ -206,7 +225,10 @@ public class CalmingMode1Activity extends AppCompatActivity
         });
     }
 
-    //Method of pause button
+    /**
+     * Method for pause button in order to pause all animations and music
+     * @param view The view for mode 1 activity
+     */
     public void pauseButton(View view)
     {
         //Checking if screen is paused
@@ -241,15 +263,18 @@ public class CalmingMode1Activity extends AppCompatActivity
         }
     }
 
-    //Button to go back to main activity
+    /**
+     * Method for button to go back to main activity from mode 1 activity
+     * @param view The view for this activity
+     */
     public void backButton(View view)
     {
         mPlayer.stop();
         mPlayer.release();
         Intent myIntent = new Intent(CalmingMode1Activity.this, CalmingActivity.class);
-        myIntent.putExtra("In", inInt);
-        myIntent.putExtra("Hold", holdInt);
-        myIntent.putExtra("Out", outInt);
+        myIntent.putExtra(c.IN, inInt);
+        myIntent.putExtra(c.HOLD, holdInt);
+        myIntent.putExtra(c.OUT, outInt);
         startActivity(myIntent);
     }
 }
