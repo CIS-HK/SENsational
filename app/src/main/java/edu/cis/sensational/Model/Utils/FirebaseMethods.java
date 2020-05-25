@@ -412,7 +412,6 @@ public class FirebaseMethods {
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
                             Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
                             addNewUser(email, username);
-
                         }
                     }
                 });
@@ -474,7 +473,7 @@ public class FirebaseMethods {
 
     /**
      * Retrieves the account settings for the user currently logged in
-     * Database: user_acount_Settings node
+     * Database: user_account_settings node
      *
      * @param dataSnapshot
      * @return UserSettings
