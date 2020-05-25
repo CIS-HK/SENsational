@@ -655,18 +655,20 @@ public class FirebaseMethods {
         final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
                 .child(userID).child("user_score").child("colorizehighscore");
 
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    userRef.setValue(score);
-                }
-            }
+        myRef.setValue(score);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to retrieve user score.", error.toException());
-            }
-        });
+//        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.getValue() != null) {
+//                    userRef.setValue(score);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.w(TAG, "Failed to retrieve user score.", error.toException());
+//            }
+//        });
     }
 }
