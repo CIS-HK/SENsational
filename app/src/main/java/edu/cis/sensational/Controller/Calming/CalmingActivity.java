@@ -9,8 +9,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import edu.cis.sensational.Controller.MainActivity;
+import edu.cis.sensational.Model.CConstants;
 import edu.cis.sensational.R;
 
+/**
+ * Class for calming start page activity
+ */
 public class CalmingActivity extends AppCompatActivity
 {
     //Declaring the buttons for each mode on the start page
@@ -25,6 +29,13 @@ public class CalmingActivity extends AppCompatActivity
     private int holdInt;
     private int outInt;
 
+    private CConstants c = new CConstants();
+
+    /**
+     * Creates and identifies the various components for calming home activity on screen, including
+     * buttons, text, and images
+     * @param savedInstanceState Saved instance of main page activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -46,7 +57,10 @@ public class CalmingActivity extends AppCompatActivity
         getBundle();
     }
 
-    //Method to send the user to different pages for the mode they click
+    /**
+     * Method to set up buttons to go to mode 1, mode 2, mode 3 or settings activity, or back to
+     * main home page
+     */
     public void setUpButtons()
     {
         //Method to go mode 1 page
@@ -120,24 +134,29 @@ public class CalmingActivity extends AppCompatActivity
         });
     }
 
-    //Getting information from bundle from settings page
+    /**
+     * Getting bundle from extras of an intent, setting variables to information from bundle
+     */
     public void getBundle()
-{
-    //Checking if bundle is empty (if setting have been saved or not)
-    if(getIntent().getExtras() != null)
     {
-        Bundle b = getIntent().getExtras();
-        inInt = b.getInt("In");
-        holdInt = b.getInt("Hold");
-        outInt = b.getInt("Out");
+        //Checking if bundle is empty (if setting have been saved or not)
+        if(getIntent().getExtras() != null)
+        {
+            Bundle b = getIntent().getExtras();
+            inInt = b.getInt(c.IN);
+            holdInt = b.getInt(c.HOLD);
+            outInt = b.getInt(c.OUT);
+        }
     }
-}
 
-    //Adding information for circle growth and shrinking into an intent
+    /**
+     * Method to add a bundle of Strings with settings about breathing exercise timing to an intent
+     * @param intent is the intent the extra information should be added to
+     */
     public void addBundle(Intent intent)
     {
-        intent.putExtra("In", inInt);
-        intent.putExtra("Hold", holdInt);
-        intent.putExtra("Out", outInt);
+        intent.putExtra(c.IN, inInt);
+        intent.putExtra(c.HOLD, holdInt);
+        intent.putExtra(c.OUT, outInt);
     }
 }

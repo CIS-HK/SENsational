@@ -12,18 +12,19 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import edu.cis.sensational.Model.CConstants;
 import edu.cis.sensational.R;
 
+/**
+ * Class for calming mode 3 activity
+ */
 public class CalmingMode3Activity extends AppCompatActivity
 {
     //Declaring the images and text on the GUI
@@ -78,6 +79,11 @@ public class CalmingMode3Activity extends AppCompatActivity
     //Declaring arraylist for the growth, hold, and shrink times that will be added
     private ArrayList<String> numberArray;
 
+    /**
+     * Creates and identifies the various components for mode 3 screen, including buttons, text,
+     * and images
+     * @param savedInstanceState Saved instance of mode 3 activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -166,7 +172,9 @@ public class CalmingMode3Activity extends AppCompatActivity
         },0,40);
     }
 
-    //Method to make fish move to the right
+    /**
+     * Method to make fish images move right across the screen continuously
+     */
     public void goRight()
     {
         fish1X += 10;
@@ -192,7 +200,9 @@ public class CalmingMode3Activity extends AppCompatActivity
         fish5.setX(fish5X);
     }
 
-    //Method to make fish move to the left
+    /**
+     * Method to make fish images move left across the screen continuously
+     */
     public void goLeft()
     {
         fish3X -= 10;
@@ -211,7 +221,9 @@ public class CalmingMode3Activity extends AppCompatActivity
         fish4.setX(fish4X);
     }
 
-    //Method to make the bubbles move up
+    /**
+     * Method to make bubble images move up across the screen continuously
+     */
     public void goUp()
     {
         bubbles1Y -= 10;
@@ -230,17 +242,23 @@ public class CalmingMode3Activity extends AppCompatActivity
         bubbles2.setY(bubbles2Y);
     }
 
-    //Method to control the size of the circle
+    /**
+     * Controls growth and shrinking of circle using default 3-2-3 or information from
+     * settings unpacked in bundle from  home activity. Runs Util class method to create
+     * number array. Runs Util class method circle control to get animation set, sets an
+     * animation listener to repeat animation when finished. Calls the methods to control
+     * breathe and number text views.
+     */
     public void sizeControl()
     {
         //Checking if intent is empty (if settings have been chosen and saved)
-        if(getIntent().getExtras().getInt("In") != 0)
+        if(getIntent().getExtras().getInt(c.IN) != 0)
         {
             //Getting values from bundle in the extras
             Bundle b = getIntent().getExtras();
-            inInt = b.getInt("In");
-            holdInt = b.getInt("Hold");
-            outInt = b.getInt("Out");
+            inInt = b.getInt(c.IN);
+            holdInt = b.getInt(c.HOLD);
+            outInt = b.getInt(c.OUT);
         }
         //Initialising arraylist for numbers using the util class method numberArrayList
         numberArray = Util.numberArrayList(inInt,holdInt,outInt);
@@ -282,11 +300,16 @@ public class CalmingMode3Activity extends AppCompatActivity
         number();
     }
 
-    //Method to control the words text view, taking in variables for length of growth, hold, shrink
+    /**
+     * Method to control the breathe text view
+     * @param in Breathe in time
+     * @param hold Hold time
+     * @param out Breathe out time
+     */
     public void text(final int in, final int hold, final int out)
     {
         //Words to be shown in order on the screen
-        final ArrayList<String> wordArray = c.wordArray;
+        final ArrayList<String> wordArray = c.WORD_ARRAY;
 
         //Making a new Runnable (loop) for the words string
         breathe.post(new Runnable()
@@ -333,7 +356,9 @@ public class CalmingMode3Activity extends AppCompatActivity
         });
     }
 
-    //Method to control number text view
+    /**
+     * Method to control number text view
+     */
     public void number()
     {
         //Making a new Runnable (loop) for the number string
@@ -364,7 +389,10 @@ public class CalmingMode3Activity extends AppCompatActivity
         });
     }
 
-    //Method to pause movement on screen
+    /**
+     * Method for pause button in order to pause all animations and music
+     * @param view The view for mode 3 activity
+     */
     public void pauseButton(View view)
     {
         //Checking if screen is paused
@@ -423,15 +451,17 @@ public class CalmingMode3Activity extends AppCompatActivity
         }
     }
 
-    //Button to go back to main activity
+    /**
+     * Method for button to go back to main activity from mode 3 activity
+     */
     public void backButton(View view)
     {
         mPlayer3.stop();
         mPlayer3.release();
         Intent myIntent = new Intent(CalmingMode3Activity.this, CalmingActivity.class);
-        myIntent.putExtra("In", inInt);
-        myIntent.putExtra("Hold", holdInt);
-        myIntent.putExtra("Out", outInt);
+        myIntent.putExtra(c.IN, inInt);
+        myIntent.putExtra(c.HOLD, holdInt);
+        myIntent.putExtra(c.OUT, outInt);
         startActivity(myIntent);
     }
 }
