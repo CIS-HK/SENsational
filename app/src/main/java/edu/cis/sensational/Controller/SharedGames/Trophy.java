@@ -28,7 +28,7 @@ public class Trophy
         return smileyFaces;
     }
 
-    public void getImageID(int imageID) {
+    public void setImageID(int imageID) {
         this.imageID = imageID;
     }
 

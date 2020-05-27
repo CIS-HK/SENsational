@@ -43,31 +43,14 @@ public class ColorizeEndActivity extends AppCompatActivity {
         smiley = findViewById(R.id.smiley);
         musicSwitch2 = findViewById(R.id.musicSwitch2);
         firebaseMethods = new FirebaseMethods(ColorizeEndActivity.this);
-        //same as start screen
-        if (GameConstants.MUSIC = true)
-        {
-            musicSwitch2.setChecked(true);
-        }
-        else
 
-        {
-            musicSwitch2.setChecked(false);
-        }
-
-        mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() != null){
-            userID = mAuth.getCurrentUser().getUid();
-        }
-
-
-
+        setUpMusicSwitch();
         setUpButtons();
         displayScore();
 
-
     }
 
-    public void setUpButtons()
+    private void setUpButtons()
     {
         playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,40 +90,69 @@ public class ColorizeEndActivity extends AppCompatActivity {
             }
         });
     }
-    public void displayScore()
+
+    private void setUpMusicSwitch()
     {
-        firebaseMethods.storeHighScore(userID,GameConstants.SCORE);
+        //same as start screen
+        if (GameConstants.MUSIC = true)
+        {
+            musicSwitch2.setChecked(true);
+        }
+        else
+
+        {
+            musicSwitch2.setChecked(false);
+        }
+    }
+    private void displayScore()
+    {
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() != null)
+        {
+            userID = mAuth.getCurrentUser().getUid();
+        }
+
+
+        firebaseMethods.updateUserScore(userID, GameConstants.SCORE, new FirebaseMethods.Callback()
+        {
+            @Override
+            public void onCallBack(int value)
+            {
+
+            }
+        });
+
+
+        //need to fix if new user
+
 
         //if current score is greater than high score, update highscore
         firebaseMethods.checkHighScore(userID, new FirebaseMethods.Callback() {
             @Override
-            public void onCallBack(int value) {
+            public void onCallBack(int value)
+            {
+                //retrieve the current high score from the database and compare it to the current
+                //user score
                 int currentHighScore = value;
+
+                //if current user score is greater than the high score stored on database, replace
+                //the value on firebase and display updated highscore on UI
                 if(GameConstants.SCORE > currentHighScore)
                 {
                     GameConstants.HIGHSCORE = GameConstants.SCORE;
+                    firebaseMethods.storeHighScore(userID,GameConstants.HIGHSCORE);
+                    highScoreLabel.setText(GameConstants.DISPLAYHIGHSCORE + GameConstants.HIGHSCORE);
+                    scoreLabel.setText(""+GameConstants.HIGHSCORE);
+                }
+
+                //if the current user score isn't greater, don't update the scores
+                else
+                {
+                    scoreLabel.setText(""+GameConstants.SCORE);
+                    highScoreLabel.setText(GameConstants.DISPLAYHIGHSCORE + currentHighScore);
                 }
             }
         });
-
-        firebaseMethods.storeHighScore(userID,GameConstants.HIGHSCORE);
-
-
-        scoreLabel.setText(""+GameConstants.SCORE);
-        highScoreLabel.setText(GameConstants.DISPLAYHIGHSCORE + GameConstants.HIGHSCORE);
-
-
-        // Send score to Firebase
-
-        firebaseMethods.updateUserScore(userID, GameConstants.SCORE, new FirebaseMethods.Callback() {
-            @Override
-            public void onCallBack(int value) {
-
-            }
-        });
-
-
-
 
     }
 }
