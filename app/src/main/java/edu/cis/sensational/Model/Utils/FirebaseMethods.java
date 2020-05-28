@@ -76,6 +76,16 @@ public class FirebaseMethods {
         return sdf.format(new Date());
     }
 
+    /**
+     * Creates a new Post object with the parameters
+     * Calls to upload the Post to Firebase
+     *
+     * @param title
+     * @param description
+     * @param tags
+     * @param privatePost
+     *
+     */
     public boolean createNewPost(String title, String description,
                                  String tags, boolean privatePost){
 
@@ -100,7 +110,7 @@ public class FirebaseMethods {
         post.setPostID(newPostKey);
 
         // upload the post to the database
-        uploadNewPost(post, tags, privatePost);
+        uploadNewPost(post, tags);
 
         return true;
         // TODO figure out a way to listen back from the databse whether or not this has succeeded.
@@ -118,9 +128,6 @@ public class FirebaseMethods {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                // if the user hasn't liked this post
-//                if(dataSnapshot.getValue() == null || !(dataSnapshot.getValue(List.class).contains(userID)))
-//                {
                 Log.d(TAG, "Post: upvoting");
 
                 List<String> userLikesList = new ArrayList<>();
@@ -141,7 +148,6 @@ public class FirebaseMethods {
                         .setValue(post);
 
                 upvote(post_id);
-//                }
             }
 
             @Override
@@ -194,9 +200,6 @@ public class FirebaseMethods {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                // if the user hasn't liked this post
-//                if(dataSnapshot.getValue() == null || !(dataSnapshot.getValue(List.class).contains(userID)))
-//                {
                 Log.d(TAG, "Post: downvoting");
 
                 List<String> userUnLikesList = new ArrayList<>();
@@ -217,7 +220,6 @@ public class FirebaseMethods {
                         .setValue(post);
 
                 downvote(post_id);
-//                }
             }
 
             @Override
@@ -260,40 +262,37 @@ public class FirebaseMethods {
         });
     }
 
-    public void uploadNewPost(Post post, String tag, boolean privatePost)
+    /**
+     * Uploads the Post to Firebase under all relevant nodes
+     * Database: user_posts, posts, tags nodes
+     *
+     * @param post
+     * @param tag
+     */
+    public void uploadNewPost(Post post, String tag)
     {
-        // If the user has selected to make the post private:
-        if(privatePost == true){
-            Log.d(TAG, "uploadNewPost: attempting to post privately.");
-            // Store the post in the user_posts node
-            myRef.child("user_posts")
-                    .child(post.getUser_id())
-                    .child(post.getPostID())
-                    .setValue(post);
-            // Store the post under the tag keyword in the tags node
-            myRef.child("tags")
-                    .child(tag)
-                    .child(post.getPostID())
-                    .setValue(post);
-        }
-        // If the user has selected to make the post public:
-        else if(privatePost == false){
-            Log.d(TAG, "uploadNewPost: attempting to post publicly.");
-            // Store the post in the posts node and the tags node
-            myRef.child("user_posts")
-                    .child(post.getUser_id())
-                    .child(post.getPostID())
-                    .setValue(post);
-            myRef.child("posts")
-                    .child(post.getPostID())
-                    .setValue(post);
-            myRef.child("tags")
-                    .child(tag)
-                    .child(post.getPostID())
-                    .setValue(post);
-        }
+        myRef.child("user_posts")
+                .child(post.getUser_id())
+                .child(post.getPostID())
+                .setValue(post);
+        myRef.child("posts")
+                .child(post.getPostID())
+                .setValue(post);
+        myRef.child("tags")
+                .child(tag)
+                .child(post.getPostID())
+                .setValue(post);
     }
 
+    /**
+     * Creates a new Comment object with the arguments
+     * Stores the comment to the corresponding post both locally and on Firebase
+     * Database: user_posts, posts node
+     *
+     * @param post
+     * @param post_id
+     * @param comment
+     */
     public void makeComment(Post post, String post_id, String comment){
         // Create a new Comment instantiation and store the corresponding values
         Comment newComment = new Comment(comment, userID, 0, getTimestamp());
@@ -413,12 +412,14 @@ public class FirebaseMethods {
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
                             Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
                             addNewUser(email, username);
-
                         }
                     }
                 });
     }
 
+    /**
+     * Sends verification email to the email used to register new user
+     */
     public void sendVerificationEmail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -444,7 +445,6 @@ public class FirebaseMethods {
      * @param email
      * @param username
      */
-
     public void addNewUser(String email, String username) {
 
         // creates a new User object with the parameters given
@@ -472,11 +472,11 @@ public class FirebaseMethods {
 
 
     /**
-     * Retrieves the account settings for teh user currently logged in
-     * Database: user_acount_Settings node
+     * Retrieves the account settings for the user currently logged in
+     * Database: user_account_settings node
      *
      * @param dataSnapshot
-     * @return
+     * @return UserSettings
      */
     public UserSettings getUserSettings(DataSnapshot dataSnapshot) {
         Log.d(TAG, "getUserSettings: retrieving user account settings from firebase.");
@@ -597,28 +597,36 @@ public class FirebaseMethods {
         return post;
     }
 
-
-
-// __________________________________________-
+    /*
+    ---------------------------------- Games Highscore ------------------------------------------
+    */
 
     // https://stackoverflow.com/questions/47847694/how-to-return-datasnapshot-value-as-a-result-of-a-method
 
-
-    public interface Callback {
+    public interface Callback
+    {
         void onCallBack(int value);
     }
 
     public void updateUserScore(final String userID, final int scoretoinsert, final Callback callback) {
         if (myRef != null) {
-            final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
-                    .child(userID).child("user_score");
+            final DatabaseReference userRef = myRef.child("user_scores")
+                    .child("user_id")
+                    .child(userID)
+                    .child("user_score")
+                    .child("totalscore");
+
                 userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getValue() != null) {
+                        if (dataSnapshot != null && dataSnapshot.getValue() != null){
                             int score = scoretoinsert + dataSnapshot.getValue(Integer.class);
                             userRef.setValue(score);
                             callback.onCallBack(score);
+                        }
+                        else
+                        {
+                            userRef.setValue(scoretoinsert);
                         }
                     }
 
@@ -630,44 +638,47 @@ public class FirebaseMethods {
         }
     }
 
+
     public void checkHighScore(final String userID, final Callback callback)
     {
-        final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
-                .child(userID).child("user_score").child("colorizehighscore");
+        final DatabaseReference userRef = myRef.child("user_scores")
+                .child("user_id")
+                .child(userID)
+                .child("user_score")
+                .child("colorizehighscore");
 
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.getValue() != null)
+                {
                     int score = dataSnapshot.getValue(Integer.class);
                     callback.onCallBack(score);
                 }
+
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error)
+            {
                 Log.w(TAG, "Failed to retrieve user score.", error.toException());
             }
         });
+
     }
 
     public void storeHighScore(final String userID, final int score)
     {
-        final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
-                .child(userID).child("user_score").child("colorizehighscore");
+        final DatabaseReference userRef = myRef.child("user_scores")
+                .child("user_id")
+                .child(userID)
+                .child("user_score")
+                .child("colorizehighscore");
 
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    userRef.setValue(score);
-                }
-            }
+        userRef.setValue(score);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to retrieve user score.", error.toException());
-            }
-        });
     }
 }

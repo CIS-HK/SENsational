@@ -79,7 +79,7 @@
     <string name="field_profile_photo">profile_photo</string>
     <string name="field_timestamp">timestamp</string>
     <string name="bubbles_title">BUBBLES!</string>
-    <string name="instructions1a">Bubbles will float up on the screen one by one. \n Try to remember
+    <string name="instructions1a">Bubbles will float up on the screen one by one. Try to remember
         the color of each bubble. </string>
     <string name="instructions2">Pick the color of each bubble in the right order.</string>
     <string name="instructionsLabel">Instructions:</string>
@@ -119,7 +119,7 @@
     <string name="instruction_1_main">1. Play some fun games to develop your executive function
         skills!</string>
     <string name="welcome_main">Welcome to Clover!</string>
-    <string name="instruction_2_main">2. Use the calming feature when you\'re \n feeling upset or
+    <string name="instruction_2_main">2. Use the calming feature when you\'re feeling upset or
         angry.</string>
     <string name="forum">Forum</string>
     <string name="play_again">Play Again</string>

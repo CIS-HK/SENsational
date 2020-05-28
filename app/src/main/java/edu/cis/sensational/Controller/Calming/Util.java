@@ -15,8 +15,20 @@ import java.util.logging.Handler;
 import edu.cis.sensational.Model.CConstants;
 import edu.cis.sensational.R;
 
+/**
+ * Class for util methods to be used in mode activity classes
+ */
 public final class Util
 {
+    /**
+     * Method to create AnimationSet for circle using animation XML files
+     * @param circle The circle image that will use the animation set
+     * @param context The context of the screen
+     * @param growTime The time the circle will grow for
+     * @param offsetTime The time the circle will stay the same size after growing
+     * @param shrinkTime The time the circle will shrink for
+     * @return AnimationSet for the circle growing and shrinking animation
+     */
     public static AnimationSet circleControl(ImageView circle, Context context, Integer growTime,
                                              Integer offsetTime, Integer shrinkTime)
     {
@@ -50,7 +62,14 @@ public final class Util
         return animSet;
     }
 
-    //Method to make number arraylist for the number on the circle
+    /**
+     * Method to make number ArrayList using numbers 1-chosen number for each parameter, and adding
+     * them all to one ArrayList
+     * @param in The time the circle will grow for
+     * @param hold The time the circle will stay the same size after growing
+     * @param out  The time the circle will shrink for
+     * @return ArrayList with all the numbers from 1-in, 1-hold, and 1-out
+     */
     public static ArrayList<String> numberArrayList(int in, int hold, int out)
     {
         ArrayList<String> array1 = new ArrayList<>();

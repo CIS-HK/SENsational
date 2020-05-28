@@ -16,6 +16,9 @@ import java.util.Arrays;
 import edu.cis.sensational.Model.CConstants;
 import edu.cis.sensational.R;
 
+/**
+ * Class for calming settings activity
+ */
 public class CalmingSettingsActivity extends AppCompatActivity
 {
     //Declaring spinners on GUI
@@ -34,6 +37,11 @@ public class CalmingSettingsActivity extends AppCompatActivity
     //Declaring arraylist for spinner
     private ArrayList<String> list = new ArrayList();
 
+    /**
+     * Creates and identifies the various components for settings on screen, including buttons, text,
+     * and images
+     * @param savedInstanceState Saved instance of settings activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -52,12 +60,14 @@ public class CalmingSettingsActivity extends AppCompatActivity
         c = new CConstants();
 
         //Add numbers 1-5 to spinner list
-        list.addAll(Arrays.asList(c.one, c.two, c.three, c.four, c.five));
+        list.addAll(Arrays.asList(c.ONE, c.TWO, c.THREE, c.FOUR, c.FIVE));
         addSpinner();
     }
 
-    //https://www.javatpoint.com/android-spinner-example
-    //Adding spinners to settings screen and initialising them to have 1-5
+    /**
+     * Adds spinners to settings screen and initializes them to show number options 1-5
+     * https://www.javatpoint.com/android-spinner-example
+     */
     public void addSpinner()
     {
         //Creating new adaptor
@@ -69,7 +79,10 @@ public class CalmingSettingsActivity extends AppCompatActivity
         outSpinner.setAdapter(myArrayAdaptor);
     }
 
-    //Method to save in, hold, and out settings
+    /**
+     * Method to save in, hold, and out settings selections as strings from spinners
+     * @param view The view for settings activity
+     */
     public void saveSettings(View view)
     {
         inString = inSpinner.getSelectedItem().toString();
@@ -77,7 +90,10 @@ public class CalmingSettingsActivity extends AppCompatActivity
         outString = outSpinner.getSelectedItem().toString();
     }
 
-    //Button to go back to main activity
+    /**
+     * Method for button to go back to main activity from settings activity
+     * @param view The view for settings activity
+     */
     public void backButton(View view)
     {
         Intent myIntent = new Intent(CalmingSettingsActivity.this, CalmingActivity.class);
@@ -86,9 +102,9 @@ public class CalmingSettingsActivity extends AppCompatActivity
         //https://developer.android.com/reference/android/os/Bundle
         if(!inString.isEmpty() && !holdString.isEmpty() && !outString.isEmpty())
         {
-            myIntent.putExtra("In", Integer.parseInt(inString));
-            myIntent.putExtra("Hold", Integer.parseInt(holdString));
-            myIntent.putExtra("Out", Integer.parseInt(outString));
+            myIntent.putExtra(c.IN, Integer.parseInt(inString));
+            myIntent.putExtra(c.HOLD, Integer.parseInt(holdString));
+            myIntent.putExtra(c.OUT, Integer.parseInt(outString));
         }
         startActivity(myIntent);
     }
