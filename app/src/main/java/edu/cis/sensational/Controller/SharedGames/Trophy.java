@@ -37,7 +37,8 @@ public class Trophy
         return imageID;
     }
 
-    public void setNextTrophy(Trophy nextTrophy) {
+    public void setNextTrophy(Trophy nextTrophy)
+    {
         this.nextTrophy = nextTrophy;
     }
 

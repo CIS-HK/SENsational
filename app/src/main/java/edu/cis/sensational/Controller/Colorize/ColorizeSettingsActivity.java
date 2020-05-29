@@ -56,6 +56,7 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         timeSpinner.setAdapter(myArrayAdapter);
         myArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        setUpMusicChoice();
         setBackgroundcheck();
         setupButtons();
         setUpMediaPlayer();
@@ -98,6 +99,7 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
                 }
                 else
                 {
+
                     GameConstants.mediaPlayer.pause();
                     GameConstants.MUSIC = false;
                 }
@@ -136,6 +138,19 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         });
 
     }
+
+    private void setUpMusicChoice()
+    {
+        if (!GameConstants.MUSIC)
+        {
+            musicSwitch.setChecked(false);
+        }
+        else if (GameConstants.MUSIC)
+        {
+            musicSwitch.setChecked(true);
+        }
+    }
+
     private void setUpMediaPlayer()
     {
         myMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.colorizemusic);

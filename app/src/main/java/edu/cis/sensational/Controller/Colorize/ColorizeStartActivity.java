@@ -41,7 +41,7 @@ public class ColorizeStartActivity extends AppCompatActivity
         setContentView(R.layout.activity_colorize_start);
         gameName = findViewById(R.id.gameName);
         playButton = findViewById(R.id.playButton);
-        quitButton = findViewById(R.id.stopButton);
+        quitButton = findViewById(R.id.quitButton);
         instructionButton = findViewById(R.id.instructionsButton);
         settingsButton = findViewById(R.id.settingButton);
         bottomright = findViewById(R.id.imageView7);
