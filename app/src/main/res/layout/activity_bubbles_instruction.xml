@@ -30,7 +30,7 @@
         android:fontFamily="@font/bubbler_one"
         android:text="@string/instructionsLabel"
         android:textColor="#A96DEE"
-        android:textSize="28sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,19 +41,19 @@
 
     <TextView
         android:id="@+id/instructionsText1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bubbler_one"
         android:text="@string/instructions1a"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.084" />
+        app:layout_constraintVertical_bias="0.108" />
 
     <ImageView
         android:id="@+id/instructions1"
@@ -61,10 +61,9 @@
         android:layout_height="225dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.239"
+        app:layout_constraintVertical_bias="0.267"
         app:srcCompat="@drawable/instructions1a"
         tools:srcCompat="@drawable/instructions1a" />
 
@@ -77,17 +76,18 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.968"
+        app:layout_constraintVertical_bias="0.933"
         app:srcCompat="@drawable/instructions1b"
         tools:srcCompat="@drawable/instructions1b" />
 
     <TextView
         android:id="@+id/instructionsText2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bubbler_one"
         android:text="@string/instructions2"
-        android:textSize="20sp"
+        android:textAlignment="center"
+        android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

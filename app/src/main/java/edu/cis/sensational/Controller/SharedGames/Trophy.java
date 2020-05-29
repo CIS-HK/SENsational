@@ -5,6 +5,7 @@ public class Trophy
     int smileyFaces;
     String name;
     int imageID;
+    Trophy nextTrophy;
 
     public Trophy(int smileyFaces, String name, int imageID){
         this.smileyFaces = smileyFaces;
@@ -34,6 +35,14 @@ public class Trophy
 
     public int getImageID() {
         return imageID;
+    }
+
+    public void setNextTrophy(Trophy nextTrophy) {
+        this.nextTrophy = nextTrophy;
+    }
+
+    public Trophy getNextTrophy() {
+        return nextTrophy;
     }
 }
 

@@ -91,7 +91,7 @@ public class ColorizeEndActivity extends AppCompatActivity {
             @Override
             public void onCallBack(int value)
             {
-
+                scoreLabel.setText("" + value);
             }
         });
 
