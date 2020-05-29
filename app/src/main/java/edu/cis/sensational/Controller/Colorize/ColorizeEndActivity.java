@@ -87,8 +87,6 @@ public class ColorizeEndActivity extends AppCompatActivity {
         {
             userID = mAuth.getCurrentUser().getUid();
         }
-
-
         firebaseMethods.updateUserScore(userID, GameConstants.SCORE, new FirebaseMethods.Callback()
         {
             @Override

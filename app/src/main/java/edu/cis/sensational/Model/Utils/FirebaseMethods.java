@@ -625,7 +625,7 @@ public class FirebaseMethods {
                             userRef.setValue(score);
                             callback.onCallBack(score);
                         }
-                        if(dataSnapshot.getValue() ==null)
+                        if(dataSnapshot.getValue() == null)
                         {
                             userRef.setValue(scoretoinsert);
                         }
