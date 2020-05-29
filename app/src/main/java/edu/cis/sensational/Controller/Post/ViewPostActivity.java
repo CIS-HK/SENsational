@@ -4,14 +4,11 @@ package edu.cis.sensational.Controller.Post;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +27,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
@@ -41,7 +37,7 @@ import edu.cis.sensational.Model.User;
 import edu.cis.sensational.Model.UserAccountSettings;
 
 /**
- * Created by User on 8/12/2017.
+ * Created by Nicole Xiang on 29/04/2020.
  */
 
 public class ViewPostActivity extends AppCompatActivity {
@@ -53,42 +49,25 @@ public class ViewPostActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
-    private FirebaseMethods mFirebaseMethods;
-
 
     //widgets
     private TextView title, description, tags, date, likes;
     private Button backButton, upvote, downvote, commentButton;
     private EditText comment;
-    private ImageButton heartButton;
 
     //vars
     private Post mPost;
-    private int mActivityNumber = 0;
-    private String photoUsername = "";
-    private String profilePhotoUrl = "";
-    private UserAccountSettings mUserAccountSettings;
-    private GestureDetector mGestureDetector;
-//    private Heart mHeart;
-    private Boolean mLikedByCurrentUser;
-    private StringBuilder mUsers;
-    private String mLikesString = "";
     private User mCurrentUser;
-
+    private UserAccountSettings mUserAccountSettings;
     private String currentUser;
-
     private String currentPost;
     private String commentText;
-
+    private String userID;
     private RecyclerView commentsView;
 
     final Context context = this;
 
-    private String userID;
-
-
     @Nullable
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,6 +91,7 @@ public class ViewPostActivity extends AppCompatActivity {
     }
 
     private void initWidgets(){
+        // initialize the text widgets
         title = (TextView) findViewById(R.id.titleView);
         description = (TextView) findViewById(R.id.descriptionView);
         tags = (TextView) findViewById(R.id.tagView);
@@ -119,11 +99,13 @@ public class ViewPostActivity extends AppCompatActivity {
         likes = (TextView) findViewById(R.id.likes);
         comment = (EditText) findViewById(R.id.commentField);
 
+        // initialize the buttons
         backButton = (Button) findViewById(R.id.backButton);
         upvote = (Button) findViewById(R.id.upvoteButton);
         downvote = (Button) findViewById(R.id.downvoteButton);
         commentButton = (Button) findViewById(R.id.commentButton);
 
+        // initialize the recyclerView
         commentsView = (RecyclerView) findViewById(R.id.commentView);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -186,6 +168,9 @@ public class ViewPostActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Displays the RecyclerView with Comments for this Post
+     */
     public void displayComments(){
         // Retrieve the current comments from the Post object
         ArrayList<Comment> commentsList = mPost.getComments();
@@ -230,6 +215,9 @@ public class ViewPostActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Retrieves the current user's information from Firebase
+     */
     private void getCurrentUser(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
@@ -252,7 +240,9 @@ public class ViewPostActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Retrieves the user information of this Post from Firebase
+     */
     private void getPostDetails(){
         Log.d(TAG, "getPostDetails: retrieving post details.");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -276,6 +266,9 @@ public class ViewPostActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up the display of the widgets on the page
+     */
     private void setupWidgets() {
         // Retrieves the main post information and displays it on the page
         title.setText(mPost.getTitle());
