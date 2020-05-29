@@ -97,7 +97,6 @@ public class ColorizeEndActivity extends AppCompatActivity {
         });
 
 
-
         //if current score is greater than high score, update highscore
         firebaseMethods.checkHighScore(userID, new FirebaseMethods.Callback() {
             @Override

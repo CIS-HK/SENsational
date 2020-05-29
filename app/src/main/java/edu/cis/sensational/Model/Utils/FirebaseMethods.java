@@ -616,7 +616,6 @@ public class FirebaseMethods {
                     .child("user_score")
                     .child("totalscore");
 
-
                 userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -625,9 +624,10 @@ public class FirebaseMethods {
                             userRef.setValue(score);
                             callback.onCallBack(score);
                         }
-                        if(dataSnapshot.getValue() == null)
+                        else
                         {
                             userRef.setValue(scoretoinsert);
+                            callback.onCallBack(scoretoinsert);
                         }
                     }
 
