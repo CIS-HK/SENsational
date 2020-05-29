@@ -142,14 +142,19 @@ public class PostActivity extends AppCompatActivity {
      */
     private boolean checkInputs(String title, String description, String tag){
 
-        String [] array = tag.trim().split(" ");
+        String [] tagArray = tag.trim().split(" ");
 
         Log.d(TAG, "checkInputs: checking inputs for null values.");
         if(title.equals("") || description.equals("") || tag.equals("")){
             Toast.makeText(mContext, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if(array.length != 1){
+        else if (title.length() > 45){
+            Log.d(TAG, "checkInputs: checking title input for more than 40 characters.");
+            Toast.makeText(mContext,"Please input shorter title.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(tagArray.length != 1){
             Log.d(TAG, "checkInputs: checking tag input for more than one value.");
             Toast.makeText(mContext,"Please input only one tag.", Toast.LENGTH_SHORT).show();
             return false;
