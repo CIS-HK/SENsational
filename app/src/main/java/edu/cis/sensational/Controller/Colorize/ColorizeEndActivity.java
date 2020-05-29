@@ -3,18 +3,14 @@ package edu.cis.sensational.Controller.Colorize;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import edu.cis.sensational.Controller.BubblesGame.BubblesEndActivity;
 import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.Model.User;
@@ -23,13 +19,13 @@ import edu.cis.sensational.R;
 
 public class ColorizeEndActivity extends AppCompatActivity {
 
-    Button playAgainButton, quitButton;
+    Button playAgainButton, quitButton, homePageButton;
     TextView scoreLabel, highScoreLabel;
     ImageView smiley;
-    Switch musicSwitch2;
     FirebaseAuth mAuth;
     String userID;
     FirebaseMethods firebaseMethods;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,14 +33,14 @@ public class ColorizeEndActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colorize_end);
         playAgainButton = findViewById(R.id.playAgainButton);
-        quitButton = findViewById(R.id.quitButton);
+        quitButton = findViewById(R.id.stopButton);
+        homePageButton = findViewById(R.id.homePageButton);
         scoreLabel = findViewById(R.id.scoreLabel);
         highScoreLabel = findViewById(R.id.highscorelabel);
         smiley = findViewById(R.id.smiley);
-        musicSwitch2 = findViewById(R.id.musicSwitch2);
+
         firebaseMethods = new FirebaseMethods(ColorizeEndActivity.this);
 
-        setUpMusicSwitch();
         setUpButtons();
         displayScore();
 
@@ -58,52 +54,29 @@ public class ColorizeEndActivity extends AppCompatActivity {
 
                 startActivity(new Intent(ColorizeEndActivity.this,ColorizeMainActivity.class));
                 finish();
-                GameConstants.SCORE = 0;
+                GameConstants.SCORE = GameConstants.ZERO;
 
             }
         });
 
+        homePageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ColorizeEndActivity.this,ColorizeStartActivity.class));
+            }
+        });
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ColorizeEndActivity.this, GamesSharedActivity.class));
                 finish();
-                GameConstants.SCORE = 0;
+                GameConstants.SCORE = GameConstants.ZERO;
                 GameConstants.mediaPlayer.stop();
             }
         });
 
-        musicSwitch2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (musicSwitch2.isChecked())
-                {
-                    GameConstants.mediaPlayer.start();
-                    GameConstants.mediaPlayer.setVolume(20,20);
-                    GameConstants.MUSIC = true;
-                }
-                else
-                {
-                    GameConstants.mediaPlayer.pause();
-                    GameConstants.MUSIC = false;
-                }
-            }
-        });
     }
 
-    private void setUpMusicSwitch()
-    {
-        //same as start screen
-        if (GameConstants.MUSIC = true)
-        {
-            musicSwitch2.setChecked(true);
-        }
-        else
-
-        {
-            musicSwitch2.setChecked(false);
-        }
-    }
     private void displayScore()
     {
         mAuth = FirebaseAuth.getInstance();
