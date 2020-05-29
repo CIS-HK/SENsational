@@ -26,6 +26,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="PostTitle"
                 android:textSize="30sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/postDescriptionView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
