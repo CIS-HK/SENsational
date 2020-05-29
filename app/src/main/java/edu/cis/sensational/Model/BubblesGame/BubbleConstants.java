@@ -40,7 +40,7 @@ public class BubbleConstants
     public static final int MAX_ROUNDS = 3;
 
     // Floats
-    public static final float ADD_TO_Y = 60.0f;
-    public static final float ADD_TO_SCREEN_HEIGHT = 160.0f;
+    public static final float ADD_TO_Y = 170.0f;
+    public static final float ADD_TO_SCREEN_HEIGHT = 100.0f;
 
 }
