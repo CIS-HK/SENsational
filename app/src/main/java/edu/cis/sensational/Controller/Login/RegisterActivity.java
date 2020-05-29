@@ -65,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void init(){
+        backButton = findViewById(R.id.backButton);
         //when the REGISTER button is clicked, this happens
         btnRegister.setOnClickListener(new View.OnClickListener() { /***** Part 2: this a creates listener for the register button and register a new email *****/
         @Override
