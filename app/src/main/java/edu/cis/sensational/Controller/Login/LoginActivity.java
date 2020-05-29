@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity{
                                     if (!task.isSuccessful()) {
                                         Log.w(TAG, "signInWithEmail:failed", task.getException());
 
-                                        Toast.makeText(mContext, "something went wrong.",
+                                        Toast.makeText(mContext, "Something went wrong. Please try again.",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                     else{ //if task was successful
@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity{
           */
         if(mAuth.getCurrentUser() != null){
             // Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-            Intent intent = new Intent(context, HomeActivity.class);
+            Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
             finish();
         }

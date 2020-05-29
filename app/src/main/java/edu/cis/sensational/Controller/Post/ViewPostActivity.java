@@ -249,7 +249,9 @@ public class ViewPostActivity extends AppCompatActivity {
                 Log.d(TAG, "onCancelled: query cancelled.");
             }
         });
+
     }
+
 
     private void getPostDetails(){
         Log.d(TAG, "getPostDetails: retrieving post details.");

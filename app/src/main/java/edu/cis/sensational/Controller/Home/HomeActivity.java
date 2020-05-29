@@ -7,8 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,8 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-//import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-//import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -35,55 +32,35 @@ import edu.cis.sensational.Controller.Login.LoginActivity;
 import edu.cis.sensational.Controller.MainActivity;
 import edu.cis.sensational.Controller.Post.PostActivity;
 import edu.cis.sensational.Controller.Post.ViewPostActivity;
-import edu.cis.sensational.Controller.Profile.ProfileActivity;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.R;
-//import edu.cis.sensational.Model.Utils.MainFeedListAdapter;
-//import edu.cis.sensational.Model.Utils.SectionsPagerAdapter;
-//import edu.cis.sensational.Model.Utils.UniversalImageLoader;
-//import edu.cis.sensational.Model.Utils.ViewCommentsFragment;
-//import edu.cis.sensational.Model.Photo;
-//import edu.cis.sensational.View.opengl.AddToStoryDialog;
-//import edu.cis.sensational.View.opengl.NewStoryActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "HomeActivity";
-    private static final int ACTIVITY_NUM = 0;
-    private static final int HOME_FRAGMENT = 1;
-    private static final int RESULT_ADD_NEW_STORY = 7891;
-    private final static int CAMERA_RQ = 6969;
-    private static final int REQUEST_ADD_NEW_STORY = 8719;
-
     private Context mContext = HomeActivity.this;
 
     //firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseDatabase mFirebaseDatabase;
 
-    //widgets
-    private ViewPager mViewPager;
-    private FrameLayout mFrameLayout;
-    private RelativeLayout mRelativeLayout;
-
+    //buttons
     private Button addPostButton;
-    private Button profilePageButton;
     private Button switchButton;
     private Button mainButton;
-
     private Button searchButton;
+    private ImageButton refresh;
+
+    //text widgets
     private EditText searchField;
 
+    //recyclerView
     private RecyclerView recView;
     HomeAdapter myAdapter;
 
-    private String userID;
-
-    final Context context = this;
-
     //vars
-    private ArrayList<Post> mPostList;
+    private String userID;
+    final Context context = this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -103,7 +80,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up the home page for the
+     * Sets up the home page
      */
     public void setUpPublicRecyclerView(){
         // initialize the recyclerView
@@ -214,27 +191,65 @@ public class HomeActivity extends AppCompatActivity {
     public void setUpSearch(){
         searchField = (EditText) findViewById(R.id.searchField);
         searchButton = (Button) findViewById(R.id.searchButton);
+        refresh = (ImageButton) findViewById(R.id.refreshButton);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String searchText = searchField.getText().toString();
-                if(!(searchText.equals("")))
-                {
-                    Log.d(TAG, "searching for post");
+                String searchText = searchField.getText().toString().toLowerCase();
+
+                if(checkInputs(searchText)){
+                    Log.d(TAG, "Searching for posts.");
                     searchForTag(searchText);
                 }
-                else
-                {
-                    setUpPublicRecyclerView();
-                }
+            }
+        });
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "Refreshing page.", Toast.LENGTH_SHORT).show();
+                setUpPublicRecyclerView();
+                searchField.setText("");
             }
         });
     }
 
-    public void searchForTag(String searchWord){
+    private boolean checkInputs(String text){
 
-        //TODO make the search public/private sensitive
+        String [] array = text.trim().split(" ");
+
+        Log.d(TAG, "checkInputs: checking input for null values.");
+        if(text.equals("")){
+            Log.d(TAG, "checkInputs: checking input for null.");
+            Toast.makeText(mContext, "Please input a search word.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(array.length != 1){
+            Log.d(TAG, "checkInputs: checking tag input for more than one value.");
+            Toast.makeText(mContext,"Please input only one tag.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(isAlpha(text)){
+            Log.d(TAG, "checkInputs: checking tag input ");
+            Toast.makeText(mContext, "Please input a tag that only contains letters.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isAlpha(String name) {
+        char[] chars = name.toCharArray();
+
+        for (char c : chars) {
+            if(!Character.isLetter(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void searchForTag(final String searchWord){
         //TODO make the search accept extreme values
         final ArrayList<Post> mPostList = new ArrayList<>();
 
@@ -247,9 +262,22 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     Post value = ds.getValue(Post.class);
-                    mPostList.add(value);
+                    if(switchButton.getText().equals("See Public")){
+                        if(value.getPrivate() == true){
+                            mPostList.add(value);
+                        }
+                    }
+                    else if(switchButton.getText().equals("See Private")){
+                        if(value.getPrivate() == false){
+                            mPostList.add(value);
+                        }
+
+                    }
                 }
                 showPosts(mPostList);
+                if(mPostList.size() == 0){
+                    Toast.makeText(mContext, "No posts with the tag: " + searchWord, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -297,13 +325,17 @@ public class HomeActivity extends AppCompatActivity {
         switchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If the user wants to display public posts
                 if(switchButton.getText().equals("See Public")){
                     switchButton.setText("See Private");
                     setUpPublicRecyclerView();
+                    Toast.makeText(mContext, "Displaying public posts.", Toast.LENGTH_SHORT).show();
                 }
+                // If the user wants to disaply private posts
                 else if(switchButton.getText().equals("See Private")){
                     switchButton.setText("See Public");
                     setUpPrivateRecyclerView();
+                    Toast.makeText(mContext, "Displaying private posts.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

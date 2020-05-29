@@ -1,13 +1,18 @@
 package edu.cis.sensational.Controller;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import edu.cis.sensational.Controller.Calming.CalmingActivity;
 import edu.cis.sensational.Controller.Login.LoginActivity;
@@ -20,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private Button calming;
     private Button forum;
     private Button logout;
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
         forum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
 
-
     }
+
 }

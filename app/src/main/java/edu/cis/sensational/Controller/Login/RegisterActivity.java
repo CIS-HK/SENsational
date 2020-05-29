@@ -38,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String email, username, password;
     private EditText mEmail, mPassword, mUsername;
     private Button btnRegister;
+    private Button backButton;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -82,6 +83,15 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext,
+                        LoginActivity.class);
+                startActivity(intent);
+            }
         });
     }
 

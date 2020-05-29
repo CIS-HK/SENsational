@@ -362,7 +362,7 @@ public class FirebaseMethods {
     }
 
     /**
-     * update the email in the 'user's' node
+     * update the email in the 'users' node
      *
      * @param email
      */
