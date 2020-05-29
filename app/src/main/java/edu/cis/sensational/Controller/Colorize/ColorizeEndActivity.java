@@ -33,7 +33,7 @@ public class ColorizeEndActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colorize_end);
         playAgainButton = findViewById(R.id.playAgainButton);
-        quitButton = findViewById(R.id.stopButton);
+        quitButton = findViewById(R.id.quitButton);
         homePageButton = findViewById(R.id.homePageButton);
         scoreLabel = findViewById(R.id.scoreLabel);
         highScoreLabel = findViewById(R.id.highscorelabel);
@@ -63,6 +63,9 @@ public class ColorizeEndActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ColorizeEndActivity.this,ColorizeStartActivity.class));
+                finish();
+                GameConstants.mediaPlayer.stop();
+                GameConstants.MUSIC = false;
             }
         });
         quitButton.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +99,6 @@ public class ColorizeEndActivity extends AppCompatActivity {
         });
 
 
-        //need to fix if new user
-
 
         //if current score is greater than high score, update highscore
         firebaseMethods.checkHighScore(userID, new FirebaseMethods.Callback() {
@@ -106,6 +107,7 @@ public class ColorizeEndActivity extends AppCompatActivity {
             {
                 //retrieve the current high score from the database and compare it to the current
                 //user score
+
                 int currentHighScore = value;
 
                 //if current user score is greater than the high score stored on database, replace

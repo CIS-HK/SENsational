@@ -202,11 +202,13 @@ public class ColorizeMainActivity extends AppCompatActivity
 
     private void setBackgroundColor()
     {
+        //if user didn't select to have background, set background to white
         if (!GameConstants.BACKGROUND)
         {
             backgroundColor.setBackgroundColor(Color.WHITE);
         }
 
+        //if user did select to have background, generate random background color
         else if (GameConstants.BACKGROUND)
         {
             // background color cannot be the same as color of word
