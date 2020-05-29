@@ -124,7 +124,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/instructionsButton"
         app:layout_constraintVertical_bias="1.0" />
@@ -139,12 +139,10 @@
         android:textColor="#03477C"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="gone" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Switch
         android:id="@+id/musicSwitch2"

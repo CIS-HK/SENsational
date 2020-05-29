@@ -3,6 +3,7 @@ package edu.cis.sensational.Controller.Colorize;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +33,9 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
     ArrayAdapter myArrayAdapter;
     String selectedTime;
     Integer seconds;
-    TextView displayText;
+    CheckBox backgroundcheck;
+    Switch musicSwitch;
+    MediaPlayer myMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,90 +44,127 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_colorize_settings);
         backButton = findViewById(R.id.backButton);
         times = new ArrayList<String>();
-        displayText = findViewById(R.id.displayTime);
+        backgroundcheck = findViewById(R.id.backgroundCheck);
+        musicSwitch = findViewById(R.id.musicSwitch);
 
         //https://www.javatpoint.com/android-spinner-example
+        // create a spinner with user choices for time selection
         timeSpinner = findViewById(R.id.spinnerTime);
         addTime();
-
-        myArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, times);
+        myArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,
+                times);
         timeSpinner.setAdapter(myArrayAdapter);
         myArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        getTime();
+        setBackgroundcheck();
         setupButtons();
+        setUpMediaPlayer();
 
     }
 
+    private void setBackgroundcheck()
+    {
+        if (!GameConstants.BACKGROUND)
+        {
+            backgroundcheck.setChecked(false);
+        }
+
+        else if (GameConstants.BACKGROUND)
+        {
+            backgroundcheck.setChecked(true);
+        }
+
+    }
     private void addTime()
     {
-        times.add("3 seconds");
-        times.add("4 seconds");
-        times.add("5 seconds");
+        times.add(GameConstants.FIVESECONDS);
+        times.add(GameConstants.FOURSECONDS);
+        times.add(GameConstants.THREESECONDS);
     }
 
     private void setupButtons()
     {
 
+        musicSwitch.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if (musicSwitch.isChecked())
+                {
+                    GameConstants.mediaPlayer.start();
+                    GameConstants.mediaPlayer.setVolume(GameConstants.VOLUME,GameConstants.VOLUME);
+                    GameConstants.MUSIC = true;
+                }
+                else
+                {
+                    GameConstants.mediaPlayer.pause();
+                    GameConstants.MUSIC = false;
+                }
+            }
+        });
 
        backButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               Intent intent = new Intent(ColorizeSettingsActivity.this,ColorizeStartActivity.class);
+               Intent intent = new Intent(ColorizeSettingsActivity.this,
+                       ColorizeStartActivity.class);
+               getTime();
 
-               intent.putExtra("Time",seconds);
-
-               String someMsg = (String) timeSpinner.getSelectedItem();
-               System.out.println(someMsg);
+               //mapping the user preference to a specific String key and passing it to the next
+               //activity
+               intent.putExtra(GameConstants.TIMESTRING,seconds);
                startActivity(intent);
 
            }
        });
-//       timeSpinner.setOnItemClickdListener(new OnItemSelectedListener() {
-//           @Override
-//           public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-//           {
-//               selectedTime = adapterView.getItemAtPosition(i).toString();
-//               Toast.makeText(getApplicationContext(),selectedTime,Toast.LENGTH_LONG).show();
-//               Log.d("getTime","time");
-//           }
-//
-//           @Override
-//           public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//           }
-//       });
 
-//        timeSpinner.setOnItemClickListener(new HomeAdapter.OnItemClickListener());
+        backgroundcheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+            {
+                if (backgroundcheck.isChecked())
+                {
+                    GameConstants.BACKGROUND = true;
+                }
+                if (!backgroundcheck.isChecked())
+                {
+                    GameConstants.BACKGROUND = false;
+                }
+            }
+        });
 
-
+    }
+    private void setUpMediaPlayer()
+    {
+        myMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.colorizemusic);
+        GameConstants.mediaPlayer = myMediaPlayer;
+        GameConstants.mediaPlayer.setLooping(true);
     }
 
     private void getTime()
     {
+        //since the spinner is an array of Strings, have to convert them to int first in order to
+        // pass the data as a parameter in the Timer method
         selectedTime = String.valueOf(timeSpinner.getSelectedItem());
-        displayText.setText(selectedTime);
 
         if(!selectedTime.isEmpty())
         {
-            if (selectedTime.equals("3 seconds"))
+            if (selectedTime.equals(GameConstants.THREESECONDS))
             {
-                seconds = 3000;
+                seconds = GameConstants.THREESEC;
             }
-            if (selectedTime.equals("4 seconds"))
+            if (selectedTime.equals(GameConstants.FOURSECONDS))
             {
-                seconds = 4000;
+                seconds = GameConstants.FOURSEC;
             }
-            if (selectedTime.equals("5 seconds"))
+            if (selectedTime.equals(GameConstants.FIVESECONDS))
             {
-                seconds = 5000;
+                seconds = GameConstants.DEFAULTTIME;
             }
-
 
         }
     }
-
-
-
 
 }

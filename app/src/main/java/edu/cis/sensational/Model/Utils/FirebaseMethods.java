@@ -619,12 +619,12 @@ public class FirebaseMethods {
                 userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot != null && dataSnapshot.getValue() != null){
+                        if (dataSnapshot.getValue() != null) {
                             int score = scoretoinsert + dataSnapshot.getValue(Integer.class);
                             userRef.setValue(score);
                             callback.onCallBack(score);
                         }
-                        else
+                        if(dataSnapshot.getValue().equals(null))
                         {
                             userRef.setValue(scoretoinsert);
                         }

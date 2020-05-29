@@ -39,6 +39,13 @@ public class GameConstants {
     public static final int DELAY = 0;
     public static final int PERIOD = 13;
     public static final int INTERVAL = 1000;
+    public static final int THREESEC = 3000;
+    public static final int FOURSEC = 4000;
+    public static final int DEFAULTTIME = 5000;
+    public static final String TIMESTRING ="Time";
+    public static final String THREESECONDS = "3 seconds";
+    public static final String FOURSECONDS = "4 seconds";
+    public static final String FIVESECONDS = "5 seconds";
 
     //animations
     public static final int ZERO = 0;

@@ -2,27 +2,20 @@ package edu.cis.sensational.Controller.Colorize;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import edu.cis.sensational.Model.Colorize.GameConstants;
@@ -52,7 +45,7 @@ public class ColorizeMainActivity extends AppCompatActivity
         setContentView(R.layout.activity_colorize_main);
         answerOne = findViewById(R.id.answerOne);
         answerTwo = findViewById(R.id.answerTwo);
-        quitButton = findViewById(R.id.quitButton);
+        quitButton = findViewById(R.id.stopButton);
         timeLabel = findViewById(R.id.timeLabel);
         scoreLabel = (TextView) findViewById(R.id.scoreLabel);
         colorWord = findViewById(R.id.colorWord);
@@ -87,7 +80,7 @@ public class ColorizeMainActivity extends AppCompatActivity
     private void setUpTimer()
     {
         getTime();
-         counter = new CountDownTimer(GameConstants.TIME,GameConstants.INTERVAL)
+        counter = new CountDownTimer(GameConstants.TIME,GameConstants.INTERVAL)
         {
             @Override
             public void onTick(long millisUntilFinished)
@@ -112,15 +105,16 @@ public class ColorizeMainActivity extends AppCompatActivity
 
     private void getTime()
     {
+        //get the bundle that is passed on from start activity by String key
         if (getIntent().getExtras() != null)
         {
             Bundle bundle = getIntent().getExtras();
-            seconds = bundle.getInt("Time");
+            seconds = bundle.getInt(GameConstants.TIMESTRING);
             GameConstants.TIME = seconds;
         }
         else
         {
-            GameConstants.TIME = 5000;
+            GameConstants.TIME = GameConstants.DEFAULTTIME;
         }
     }
 
