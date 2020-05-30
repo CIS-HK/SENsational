@@ -60,28 +60,35 @@ public class GamesSharedActivity extends AppCompatActivity {
         colorizeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(GamesSharedActivity.this, ColorizeStartActivity.class));
-            }
-        });
-
-        homePageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(GamesSharedActivity.this, MainActivity.class));
+                startActivity(new Intent(GamesSharedActivity.this,
+                        ColorizeStartActivity.class));
             }
         });
 
         bubblesIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GamesSharedActivity.this, BubbleStartActivity.class));
+                startActivity(new Intent(GamesSharedActivity.this,
+                        BubbleStartActivity.class));
             }
         });
+
+
+        homePageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(GamesSharedActivity.this,
+                        MainActivity.class));
+            }
+        });
+
+
 
         trophiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GamesSharedActivity.this, TrophiesActivity.class));
+                startActivity(new Intent(GamesSharedActivity.this,
+                        TrophiesActivity.class));
             }
         });
     }

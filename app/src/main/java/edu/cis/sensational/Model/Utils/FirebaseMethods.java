@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.Model.Comment;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.Model.User;
@@ -640,13 +642,14 @@ public class FirebaseMethods {
     }
 
 
-    public void checkHighScore(final String userID, final Callback callback)
+    public void checkHighScore(final String userID, final int score, final Callback callback)
     {
         final DatabaseReference userRef = myRef.child("user_scores")
                 .child("user_id")
                 .child(userID)
                 .child("user_score")
                 .child("colorizehighscore");
+
 
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener()
@@ -661,7 +664,7 @@ public class FirebaseMethods {
                 }
                 if (dataSnapshot.getValue() == null)
                 {
-                    userRef.setValue(0);
+                    userRef.setValue(score);
                 }
 
             }
@@ -686,4 +689,39 @@ public class FirebaseMethods {
         userRef.setValue(score);
 
     }
+
+    public void initialStoring(final String userID, final int score, final TextView currentScore,
+                               final TextView highScore)
+    {
+        final DatabaseReference userRef = myRef.child("user_scores")
+                .child("user_id")
+                .child(userID)
+                .child("user_score")
+                .child("colorizehighscore");
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                //for first time users, their highscore is null, so the score for the first round
+                //will be their current score and highscore
+                if (dataSnapshot.getValue() == null)
+                {
+                    userRef.setValue(score);
+                    currentScore.setText(""+score);
+                    highScore.setText(GameConstants.DISPLAYHIGHSCORE +score);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+
 }

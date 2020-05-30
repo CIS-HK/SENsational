@@ -64,6 +64,7 @@ public class ColorizeEndActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(ColorizeEndActivity.this,ColorizeStartActivity.class));
                 finish();
+                GameConstants.SCORE = GameConstants.ZERO;
                 GameConstants.mediaPlayer.stop();
                 GameConstants.MUSIC = false;
             }
@@ -98,10 +99,10 @@ public class ColorizeEndActivity extends AppCompatActivity {
             }
         });
 
-
+        firebaseMethods.initialStoring(userID,GameConstants.SCORE,scoreLabel,highScoreLabel);
 
         //if current score is greater than high score, update highscore
-        firebaseMethods.checkHighScore(userID, new FirebaseMethods.Callback() {
+        firebaseMethods.checkHighScore(userID, GameConstants.SCORE,new FirebaseMethods.Callback() {
             @Override
             public void onCallBack(int value)
             {

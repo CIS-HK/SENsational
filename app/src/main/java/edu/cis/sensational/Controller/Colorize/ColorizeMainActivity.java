@@ -25,7 +25,7 @@ import edu.cis.sensational.R;
 public class ColorizeMainActivity extends AppCompatActivity
 {
 
-    Button answerOne, answerTwo, quitButton;
+    Button answerOne, answerTwo, stopButton;
     TextView timeLabel, scoreLabel, colorWord;
     ImageView backgroundColor;
     ArrayList<String> colorWords;
@@ -45,7 +45,7 @@ public class ColorizeMainActivity extends AppCompatActivity
         setContentView(R.layout.activity_colorize_main);
         answerOne = findViewById(R.id.answerOne);
         answerTwo = findViewById(R.id.answerTwo);
-        quitButton = findViewById(R.id.stopButton);
+        stopButton = findViewById(R.id.stopButton);
         timeLabel = findViewById(R.id.timeLabel);
         scoreLabel = (TextView) findViewById(R.id.scoreLabel);
         colorWord = findViewById(R.id.colorWord);
@@ -63,7 +63,7 @@ public class ColorizeMainActivity extends AppCompatActivity
 
     private void setUpButtons()
     {
-        quitButton.setOnClickListener(new View.OnClickListener()
+        stopButton.setOnClickListener(new View.OnClickListener()
         {
 
             @Override
