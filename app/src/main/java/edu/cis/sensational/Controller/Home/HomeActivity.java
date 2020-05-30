@@ -189,27 +189,34 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void setUpSearch(){
+        // Set up the widgets
         searchField = (EditText) findViewById(R.id.searchField);
         searchButton = (Button) findViewById(R.id.searchButton);
         refresh = (ImageButton) findViewById(R.id.refreshButton);
 
+        // When the search button is clicked
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Retrieve the search word inputted and sets it to lowercase
                 String searchText = searchField.getText().toString().toLowerCase();
-
+                // Checks if the input is valid
                 if(checkInputs(searchText)){
+                    // Search for the posts with the inputted search word
                     Log.d(TAG, "Searching for posts.");
                     searchForTag(searchText);
                 }
             }
         });
 
+        // When the refresh button is clicked
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Reset the widgets on the page
                 Toast.makeText(mContext, "Refreshing page.", Toast.LENGTH_SHORT).show();
                 setUpPublicRecyclerView();
+                switchButton.setText("See Private");
                 searchField.setText("");
             }
         });
@@ -217,19 +224,22 @@ public class HomeActivity extends AppCompatActivity {
 
     private boolean checkInputs(String text){
 
+        // Splits the text into separate words and stores each word in an array
         String [] array = text.trim().split(" ");
 
-        Log.d(TAG, "checkInputs: checking input for null values.");
+        // Checks if the text is null
         if(text.equals("")){
             Log.d(TAG, "checkInputs: checking input for null.");
             Toast.makeText(mContext, "Please input a search word.", Toast.LENGTH_SHORT).show();
             return false;
         }
+        // Checks if there were multiple words in the text
         else if(array.length != 1){
             Log.d(TAG, "checkInputs: checking tag input for more than one value.");
             Toast.makeText(mContext,"Please input only one tag.", Toast.LENGTH_SHORT).show();
             return false;
         }
+        // Checks if the text contains symbols
         else if(isAlpha(text)){
             Log.d(TAG, "checkInputs: checking tag input ");
             Toast.makeText(mContext, "Please input a tag that only contains letters.", Toast.LENGTH_SHORT).show();
@@ -290,8 +300,8 @@ public class HomeActivity extends AppCompatActivity {
 
     public void setUpButtons()
     {
+        // Initialize the bottom navigation buttons
         addPostButton = (Button) findViewById(R.id.addPostButton);
-//        profilePageButton = (Button) findViewById(R.id.profilePageButton);
         switchButton = (Button) findViewById(R.id.switchButton);
         mainButton = (Button) findViewById(R.id.mainButton);
 
@@ -312,15 +322,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-//        profilePageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context,
-//                        ProfileActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         switchButton.setOnClickListener(new View.OnClickListener() {
             @Override

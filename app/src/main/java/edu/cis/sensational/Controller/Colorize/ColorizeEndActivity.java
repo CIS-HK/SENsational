@@ -17,6 +17,11 @@ import edu.cis.sensational.Model.User;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
 
+/**
+ * The end activity is where the user will be directed to when they finished the game, it displays
+ * the current user score and high score, as well as buttons to play again, to go back to the start
+ * page or quit the game completely
+ */
 public class ColorizeEndActivity extends AppCompatActivity {
 
     Button playAgainButton, quitButton, homePageButton;
@@ -26,7 +31,10 @@ public class ColorizeEndActivity extends AppCompatActivity {
     String userID;
     FirebaseMethods firebaseMethods;
 
-
+    /**
+     * Creates and identifies the various components on screen such as buttons and labels
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -46,6 +54,9 @@ public class ColorizeEndActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Identifies actions once the corresponding buttons on the screen is pressed
+     */
     private void setUpButtons()
     {
         playAgainButton.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +75,7 @@ public class ColorizeEndActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(ColorizeEndActivity.this,ColorizeStartActivity.class));
                 finish();
+                GameConstants.SCORE = GameConstants.ZERO;
                 GameConstants.mediaPlayer.stop();
                 GameConstants.MUSIC = false;
             }
@@ -80,6 +92,10 @@ public class ColorizeEndActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Retrieves user ID from firebase and uses firebase methods to update total user score, check
+     * and update high score, and display current and high score on screen
+     */
     private void displayScore()
     {
         mAuth = FirebaseAuth.getInstance();
@@ -87,6 +103,7 @@ public class ColorizeEndActivity extends AppCompatActivity {
         {
             userID = mAuth.getCurrentUser().getUid();
         }
+
         firebaseMethods.updateUserScore(userID, GameConstants.SCORE, new FirebaseMethods.Callback()
         {
             @Override
@@ -96,9 +113,10 @@ public class ColorizeEndActivity extends AppCompatActivity {
             }
         });
 
+        firebaseMethods.initialStoring(userID,GameConstants.SCORE,scoreLabel,highScoreLabel);
 
         //if current score is greater than high score, update highscore
-        firebaseMethods.checkHighScore(userID, new FirebaseMethods.Callback() {
+        firebaseMethods.checkHighScore(userID, GameConstants.SCORE,new FirebaseMethods.Callback() {
             @Override
             public void onCallBack(int value)
             {

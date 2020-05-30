@@ -112,7 +112,7 @@
         android:layout_width="121dp"
         android:layout_height="37dp"
         android:layout_marginEnd="168dp"
-        android:layout_marginBottom="480dp"
+        android:layout_marginBottom="456dp"
         android:checked="false"
         android:fontFamily="@font/bubbler_one"
         android:text="Music"

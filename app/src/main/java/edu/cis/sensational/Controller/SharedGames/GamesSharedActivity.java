@@ -13,7 +13,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import edu.cis.sensational.Controller.BubblesGame.BubbleStartActivity;
 import edu.cis.sensational.Controller.Colorize.ColorizeStartActivity;
 import edu.cis.sensational.Controller.MainActivity;
-import edu.cis.sensational.Model.SharedGamesConstants;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
 
@@ -45,7 +44,7 @@ public class GamesSharedActivity extends AppCompatActivity {
         }
         if (userID != null) {
             FirebaseMethods firebaseMethods = new FirebaseMethods(GamesSharedActivity.this);
-            firebaseMethods.updateUserScore(userID, SharedGamesConstants.SCORETOINSERT, new FirebaseMethods.Callback() {
+            firebaseMethods.updateUserScore(userID, 0, new FirebaseMethods.Callback() {
                 @Override
                 public void onCallBack(int value) {
                     userTotalScore.setText("" + value);
@@ -61,32 +60,28 @@ public class GamesSharedActivity extends AppCompatActivity {
         colorizeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(GamesSharedActivity.this,
-                                        ColorizeStartActivity.class));
+                startActivity(new Intent(GamesSharedActivity.this, ColorizeStartActivity.class));
             }
         });
 
         homePageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(GamesSharedActivity.this,
-                                        MainActivity.class));
+                startActivity(new Intent(GamesSharedActivity.this, MainActivity.class));
             }
         });
 
         bubblesIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GamesSharedActivity.this,
-                                        BubbleStartActivity.class));
+                startActivity(new Intent(GamesSharedActivity.this, BubbleStartActivity.class));
             }
         });
 
         trophiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GamesSharedActivity.this,
-                                        TrophiesActivity.class));
+                startActivity(new Intent(GamesSharedActivity.this, TrophiesActivity.class));
             }
         });
     }

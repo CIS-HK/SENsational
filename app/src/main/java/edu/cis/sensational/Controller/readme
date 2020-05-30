@@ -12,25 +12,63 @@ There are 4 functions in this app in total: 2 games, 1 calming tool and 1 chat f
 has its own activities. Each layer describes their methods.
 
 Colorize Game
-(Activity) ColorizeStartActivity:
+(Activity) ColorizeStartActivity- The start page is a dynamic screen that displays buttons to
+                                   access instructions, settings, play or quit the game
     onCreate -- creates and identifies the various components on screen
-    setUpButtons -- identify actions once the corresponding buttons on the screen is pressed
+    setUpButtons -- identifies actions once the corresponding buttons on the screen is pressed
+            addBundle -- places the data gathered from the bundle into a new bundle and pass it onto
+                         the next activity
+    animation -- sets a timer to run the changePosition method indefinitely
+            changePosition -- generates animation for all the images on the screen by changing its X
+                             or Y coordinates
+    getBundle -- gets the data from the bundle sent from the Settings page by using the String Key
 
-(Activity) ColorizeInstructionsActivity:
+(Activity) ColorizeInstructionsActivity- The instructions page displays the instructions for the
+                                          game and prompts user to go back to the main page or play
+                                          the game
     onCreate -- creates and identifies the various components on screen
-    setUpButtons -- identify actions once the corresponding buttons on the screen is pressed
+    setUpButtons -- identifies actions once the corresponding buttons on the screen is pressed
 
-(Activity) ColorizeMainActivity:
+(Activity) ColorizeSettings Activity- The settings page prompts user to select their game
+                                      preferences such as background, music and time
     onCreate -- creates and identifies the various components on screen
-    setUpButtons -- identify actions once the corresponding buttons on the screen is pressed
+    setBackgroundCheck -- checks the user's preference for background option and sets the checkbox
+    setUpMusicChoice -- checks the user's preference for music option and sets the checkbox
+    setUpMedia Player -- creates a new media Player
+    addTime -- adds the timer options in an arraylist to display on spinner
+    setUpButtons -- identifies actions once the corresponding buttons on the screen is pressed
+            getTime -- gets what the user option is for time preference
+
+(Activity) ColorizeMainActivity- The main page is where the game will occur
+    onCreate -- creates and identifies the various components on screen
+    setUpButtons -- identifies actions once the corresponding buttons on the screen is pressed
+    setUpTimer -- sets the timer on the screen
+            getTime -- retrieves bundle that was passed on from ColorizeStartActivity
     addColors - adds colors and data that needs to be used and processed internally in the
                 corresponding data structures
     setUpGame -- starts the timer, generates random text, color of text and background color onto
                 screen, as well as the buttons for the users to click on
-    play -- identify actions once the buttons are clicked depending if they chose the right button.
+            setBackgroundColor -- checks user background preference by checking game constant
+    play -- identifies actions once the buttons are clicked depending if they chose the right button.
             If it is the right button, adds score, reset timer and repeats the game until the user
-            presses the wrong button.
+            presses the wrong button
 
+(Activity) ColorizeEndActivity- The end activity is where the user will be directed to when they
+                                finished the game, it displays the current user score and high
+                                score, as well as buttons to play again, to go back to the start
+                                page or quit the game completely
+    onCreate -- creates and identifies the various components on screen
+    setUpButtons -- identifies actions once the corresponding buttons on the screen is pressed
+    displayScore -- retrieves user ID from firebase and uses firebase methods to update total user
+                    score, check and update high score, and display current and high score on screen
+            updateUserScore -- uses user ID to update total user score on firebase by adding current
+                               user score
+            initialScoring -- uses user ID to set and display current score and high score for first
+                              time users
+            checkHighScore -- uses user ID to compare current user score with current highscore on
+                              the database
+                      storeHighScore -- uses user ID to store the updated user high score on
+                                        Firebase
 
 Bubbles Game
 (Activity) BubblesStartActivity - this is the start screen of the game
@@ -77,6 +115,33 @@ Bubbles Game
 (Activity) BubblesEndActivity -- this is the end screen of the game
     onCreate -- displays the user's final score, updates and displays the user's total number of
                 smiley faces, and sets up the Exit Game and Play Again buttons.
+
+Shared Games
+(Activity) Games Shared Activity- This page displays game icons and users can access the different
+                                  games, the trophies page or go back to the home page
+    onCreate -- creates and identifies the various components on screen
+    setUpButtons -- identifies actions once the corresponding buttons on the screen is pressed
+
+(Activity) Trophies Activity- This page displays the trophies that the user earned, the upcoming
+                              trophy and the total user score
+    onCreate -- creates and identifies the various components on screen
+
+(Class) Trophies Adapter- this class creates a customised recycler view adapter
+    onCreateViewHolder -- creates view holder for the trophies
+    onBindViewHolder -- creates a customised bind view holder
+    getItemCount -- returns the size of the trophy list
+
+(Class) Trophies View Holder - this class creates a customised recycler view holder
+
+(Class) Trophy - This class identifies the attributes of a trophy
+    setName - sets the trophy name
+    getName - gets the trophy name
+    setSmileyFaces - sets the smiley faces
+    getSmileyFaces - gets the smiley faces
+    setImageID - sets the image ID
+    getImageID - gets the image ID
+    setNextTrophy - sets the next trophy
+    getNextTrophy - gets the next trophy
 
 
 Calming

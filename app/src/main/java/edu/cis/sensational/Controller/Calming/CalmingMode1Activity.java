@@ -2,6 +2,7 @@ package edu.cis.sensational.Controller.Calming;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -60,13 +61,13 @@ public class CalmingMode1Activity extends AppCompatActivity
         breathe = findViewById(R.id.breatheTextView1);
         number = findViewById(R.id.numberTextView1);
 
-        //Setting default growth, hold, and shrink time to 3-2-3
-        inInt = 3;
-        holdInt = 2;
-        outInt = 3;
-
         //Setting up CConstants variable to access constants
         c = new CConstants();
+
+        //Setting default growth, hold, and shrink time to 3-2-3
+        inInt = c.THREE_INT;
+        holdInt = c.TWO_INT;
+        outInt = c.THREE_INT;
 
         //Calling methods to control the movement of the circle and the changing of the text
         sizeControl();
@@ -88,7 +89,7 @@ public class CalmingMode1Activity extends AppCompatActivity
     public void sizeControl()
     {
         //Checking if intent is empty (if settings have been chosen and saved)
-        if(getIntent().getExtras().getInt(c.IN) != 0)
+        if(getIntent().getExtras().getInt(c.IN) != c.ZERO_INT)
         {
             //Getting values from bundle in the extras
             Bundle b = getIntent().getExtras();
@@ -145,48 +146,49 @@ public class CalmingMode1Activity extends AppCompatActivity
     public void text(final int in, final int hold, final int out)
     {
         //Words to be shown in order on the screen
-        final ArrayList<String> wordArray = c.WORD_ARRAY;
+        final ArrayList<String> wordArray = Util.wordArrayList(c);
 
         //Making a new Runnable (loop) for the words string
         breathe.post(new Runnable()
         {
-            int x = 0;
+            int x = c.ZERO_INT;
             @Override
             public void run()
             {
                 //Setting  second interval between the changing of words to the values from the
                 //parameters
 
-                //Breathe in
-                if(x == 0)
+                if(pause == false)
                 {
-                    breathe.postDelayed(this, in * 1000);
-                }
-                //Hold
-                if(x == 1)
-                {
-                    breathe.postDelayed(this, hold * 1000);
-                }
-                //Breathe out
-                if(x == 2)
-                {
-                    breathe.postDelayed(this,out * 1000);
-                }
+                    //Breathe in
+                    if (x == c.ZERO_INT) {
+                        breathe.postDelayed(this, in * c.ONE_THOUSAND);
+                    }
+                    //Hold
+                    if (x == c.ONE_INT) {
+                        breathe.postDelayed(this, hold * c.ONE_THOUSAND);
+                    }
+                    //Breathe out
+                    if (x == c.TWO_INT) {
+                        breathe.postDelayed(this, out * c.ONE_THOUSAND);
+                    }
 
-                //Setting the text to the words in the array and positively incrementing x
-                breathe.setText(wordArray.get(x));
-                x++;
+                    //Setting the text to the words in the array and positively incrementing x
+                    breathe.setText(wordArray.get(x));
+                    x++;
+
+                    //When it reaches the end of array, goes back to beginning, continuing the loop
+                    if (x == c.THREE_INT)
+                    {
+                        x = c.ZERO_INT;
+                    }
+                }
 
                 //If paused, i is zero again and it is back to the start
                 if(pause == true)
                 {
-                    x = 0;
+                    x = c.ZERO_INT;
                     breathe.setText(wordArray.get(x));
-                }
-                //When it reaches the end of array, goes back to beginning, continuing the loop
-                if (x == 3)
-                {
-                    x = 0;
                 }
             }
         });
@@ -200,12 +202,12 @@ public class CalmingMode1Activity extends AppCompatActivity
         //Making a new Runnable (loop) for the number string
         number.post(new Runnable()
         {
-            int i = 0;
+            int i = c.ZERO_INT;
             @Override
             public void run()
             {
                 //Setting almost 1 second interval between the changing of numbers
-                number.postDelayed(this, 998);
+                number.postDelayed(this, c.NINE_NINE_EIGHT);
 
                 //Setting the text to the number in the array and positively incrementing i
                 number.setText(numberArray.get(i));
@@ -213,13 +215,13 @@ public class CalmingMode1Activity extends AppCompatActivity
                 //If paused, i is zero again and it is back to the start
                 if (pause == true)
                 {
-                    i = 0;
+                    i = c.ZERO_INT;
                     number.setText(numberArray.get(i));
                 }
                 //When it reaches the end of array, goes back to beginning, continuing the loop
                 if (i == numberArray.size())
                 {
-                    i = 0;
+                    i = c.ZERO_INT;
                 }
             }
         });
