@@ -63,6 +63,18 @@ public final class Util
     }
 
     /**
+     * Method to make word ArrayList with words from CConstants class
+     * @param cConstants Instance of CConstants class in order to access words
+     * @return ArrayList with words breathe in, hold, breathe out
+     */
+    public static ArrayList<String> wordArrayList(CConstants cConstants)
+    {
+        ArrayList<String> wordArrayList = new ArrayList<>(Arrays.asList
+                (cConstants.BIN, cConstants.BHOLD, cConstants.BOUT));
+        return wordArrayList;
+    }
+
+    /**
      * Method to make number ArrayList using numbers 1-chosen number for each parameter, and adding
      * them all to one ArrayList
      * @param in The time the circle will grow for

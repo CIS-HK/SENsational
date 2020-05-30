@@ -364,7 +364,7 @@ public class FirebaseMethods {
     }
 
     /**
-     * update the email in the 'user's' node
+     * update the email in the 'users' node
      *
      * @param email
      */
@@ -618,7 +618,6 @@ public class FirebaseMethods {
                     .child("user_score")
                     .child("totalscore");
 
-
                 userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -627,9 +626,10 @@ public class FirebaseMethods {
                             userRef.setValue(score);
                             callback.onCallBack(score);
                         }
-                        if(dataSnapshot.getValue() ==null)
+                        if (dataSnapshot.getValue() == null)
                         {
                             userRef.setValue(scoretoinsert);
+                            callback.onCallBack(scoretoinsert);
                         }
                     }
 
