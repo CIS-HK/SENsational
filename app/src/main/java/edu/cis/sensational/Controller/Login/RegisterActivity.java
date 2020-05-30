@@ -38,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String email, username, password;
     private EditText mEmail, mPassword, mUsername;
     private Button btnRegister;
+    private Button backButton;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -64,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void init(){
+        backButton = findViewById(R.id.backButton);
         //when the REGISTER button is clicked, this happens
         btnRegister.setOnClickListener(new View.OnClickListener() { /***** Part 2: this a creates listener for the register button and register a new email *****/
         @Override
@@ -82,6 +84,15 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext,
+                        LoginActivity.class);
+                startActivity(intent);
+            }
         });
     }
 

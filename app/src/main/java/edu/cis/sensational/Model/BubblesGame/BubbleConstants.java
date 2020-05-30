@@ -35,7 +35,7 @@ public class BubbleConstants
     public static final int DEFAULT = 0;
     public static final int MINUS_FROM_Y = 10;
     public static final int DELAY = 0;
-    public static final int PERIOD = 5;
+    public static final int PERIOD = 6;
     public static final int VOLUME = 20;
     public static final int MAX_ROUNDS = 3;
 

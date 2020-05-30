@@ -29,10 +29,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.969"
+        app:layout_constraintHorizontal_bias="0.973"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.02" />
 
     <TextView
         android:id="@+id/trophiesCollected"
@@ -65,13 +65,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint2"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="222dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trophiesRecyclerView">
+        app:layout_constraintTop_toBottomOf="@+id/trophiesRecyclerView"
+        app:layout_constraintVertical_bias="1.0">
 
         <TextView
             android:id="@+id/nextTrophy"
@@ -82,10 +83,10 @@
             android:textAlignment="center"
             android:textColor="#4CAF50"
             android:textSize="32sp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.096"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.281" />
@@ -95,13 +96,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bungee"
-            android:text="Trophy Name"
+            android:text="Red Trophy"
             android:textColor="#0E0D0D"
             android:textSize="24sp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.068"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.587" />
@@ -111,13 +112,13 @@
             android:layout_width="50dp"
             android:layout_height="45dp"
             android:background="@drawable/smiley_face"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.044"
+            app:layout_constraintHorizontal_bias="0.407"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.87"
+            app:layout_constraintVertical_bias="0.864"
             app:srcCompat="@drawable/smiley_face"
             tools:srcCompat="@drawable/smiley_face" />
 
@@ -130,13 +131,13 @@
             android:textColor="#000000"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.19"
+            app:layout_constraintHorizontal_bias="0.539"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.862" />
+            app:layout_constraintVertical_bias="0.84" />
 
         <Button
             android:id="@+id/backB"

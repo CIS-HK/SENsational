@@ -2,7 +2,6 @@ package edu.cis.sensational.Controller.Colorize;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,13 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import edu.cis.sensational.Model.Colorize.GameConstants;
@@ -36,31 +33,10 @@ public class ColorizeMainActivity extends AppCompatActivity
     HashMap<Integer, String> answers;
     String word, correctAnswer, wrongAnswer;
     long timeLeft;
-    int color, backColor, colorIndex;
+    int color, backColor, colorIndex, seconds;
 
-    CountDownTimer counter = new CountDownTimer(3000,1000)
-    {
-        @Override
-        public void onTick(long millisUntilFinished) {
-            timeLeft = millisUntilFinished/1000;
-            timeLabel.setText("" +timeLeft);
-        }
+    CountDownTimer counter;
 
-        @Override
-        public void onFinish()
-        {
-            finish();
-            startActivity(new Intent(ColorizeMainActivity.this,ColorizeEndActivity.class));
-
-            Context context = getApplicationContext();
-            CharSequence text = GameConstants.TOAST;
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -69,7 +45,7 @@ public class ColorizeMainActivity extends AppCompatActivity
         setContentView(R.layout.activity_colorize_main);
         answerOne = findViewById(R.id.answerOne);
         answerTwo = findViewById(R.id.answerTwo);
-        quitButton = findViewById(R.id.quitButton);
+        quitButton = findViewById(R.id.stopButton);
         timeLabel = findViewById(R.id.timeLabel);
         scoreLabel = (TextView) findViewById(R.id.scoreLabel);
         colorWord = findViewById(R.id.colorWord);
@@ -79,12 +55,13 @@ public class ColorizeMainActivity extends AppCompatActivity
         colorInts = new ArrayList<Integer>();
 
         setUpButtons();
+        setUpTimer();
         addColors();
         setUpGame();
         play();
     }
 
-    public void setUpButtons()
+    private void setUpButtons()
     {
         quitButton.setOnClickListener(new View.OnClickListener()
         {
@@ -92,11 +69,53 @@ public class ColorizeMainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 counter.cancel();
-                startActivity(new Intent(ColorizeMainActivity.this,ColorizeEndActivity.class));
+                startActivity(new Intent(ColorizeMainActivity.this,
+                        ColorizeEndActivity.class));
 
             }
         });
 
+    }
+
+    private void setUpTimer()
+    {
+        getTime();
+        counter = new CountDownTimer(GameConstants.TIME,GameConstants.INTERVAL)
+        {
+            @Override
+            public void onTick(long millisUntilFinished)
+            {
+                timeLeft = millisUntilFinished / GameConstants.INTERVAL;
+                timeLabel.setText("" +timeLeft);
+            }
+
+            @Override
+            public void onFinish()
+            {
+                finish();
+                startActivity(new Intent(ColorizeMainActivity.this,
+                        ColorizeEndActivity.class));
+
+                //https://www.youtube.com/watch?v=e7sHAYYubJo
+                TastyToast.makeText(getApplicationContext(), GameConstants.TOAST,
+                        TastyToast.LENGTH_LONG, TastyToast.WARNING);
+            }
+        };
+    }
+
+    private void getTime()
+    {
+        //get the bundle that is passed on from start activity by String key
+        if (getIntent().getExtras() != null)
+        {
+            Bundle bundle = getIntent().getExtras();
+            seconds = bundle.getInt(GameConstants.TIMESTRING);
+            GameConstants.TIME = seconds;
+        }
+        else
+        {
+            GameConstants.TIME = GameConstants.DEFAULTTIME;
+        }
     }
 
     //add colors to respective arraylists
@@ -154,8 +173,9 @@ public class ColorizeMainActivity extends AppCompatActivity
         //set word to random color
         colorWord.setTextColor(color);
 
-        //loop through colors to find corresponding int, then get value from hashmap for the correct answer
-        for (int i = 0; i<= colorInts.size()-1; i ++)
+        //loop through colors to find corresponding int, then get value from hashmap for the
+        // correct answer
+        for (int i = 0; i <= colorInts.size() - 1; i ++)
         {
             if (color == colorInts.get(i))
             {
@@ -174,20 +194,22 @@ public class ColorizeMainActivity extends AppCompatActivity
         randomAnswers.add(correctAnswer);
         randomAnswers.add(wrongAnswer);
 
-        String answer = randomAnswers.get(new Random().nextInt(2));
+        String answer = randomAnswers.get(new Random().nextInt(GameConstants.BOUND));
         answerOne.setText(answer);
         randomAnswers.remove(answer);
-        answerTwo.setText(randomAnswers.get(0));
+        answerTwo.setText(randomAnswers.get(GameConstants.ZERO));
     }
 
     private void setBackgroundColor()
     {
+        //if user didn't select to have background, set background to white
         if (!GameConstants.BACKGROUND)
         {
-            backgroundColor.setBackgroundColor(Color.TRANSPARENT);
+            backgroundColor.setBackgroundColor(Color.WHITE);
         }
 
-        if (GameConstants.BACKGROUND = true)
+        //if user did select to have background, generate random background color
+        else if (GameConstants.BACKGROUND)
         {
             // background color cannot be the same as color of word
             colorInts.remove(colorIndex);
@@ -205,7 +227,7 @@ public class ColorizeMainActivity extends AppCompatActivity
             public void onClick(View view) {
 
                 counter.cancel();
-                if (answerOne.getText() == correctAnswer && timeLeft > 0 )
+                if (answerOne.getText() == correctAnswer && timeLeft > GameConstants.ZERO )
                 {
                     counter.cancel();
                     GameConstants.SCORE ++;
@@ -216,7 +238,10 @@ public class ColorizeMainActivity extends AppCompatActivity
 
                 else
                 {
-                    startActivity(new Intent(ColorizeMainActivity.this,ColorizeEndActivity.class));
+                    TastyToast.makeText(getApplicationContext(), GameConstants.WRONGANSWER,
+                            TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    startActivity(new Intent(ColorizeMainActivity.this,
+                            ColorizeEndActivity.class));
                     finish();
                 }
             }
@@ -227,7 +252,7 @@ public class ColorizeMainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 counter.cancel();
-                if (answerTwo.getText() == correctAnswer && timeLeft > 0)
+                if (answerTwo.getText() == correctAnswer && timeLeft > GameConstants.ZERO)
                 {
 
                     GameConstants.SCORE++;
@@ -238,7 +263,10 @@ public class ColorizeMainActivity extends AppCompatActivity
                 }
                 else
                 {
-                    startActivity(new Intent(ColorizeMainActivity.this,ColorizeEndActivity.class));
+                    TastyToast.makeText(getApplicationContext(), GameConstants.WRONGANSWER,
+                            TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                    startActivity(new Intent(ColorizeMainActivity.this,
+                            ColorizeEndActivity.class));
                     finish();
 
                 }

@@ -94,7 +94,6 @@ public class PostActivity extends AppCompatActivity {
                 }
                 // Check that the inputs are valid
                 if(checkInputs(title, description, tag)){
-                    // TODO make the tag input accept only one word and checks for errors
                     // Call for the creation of a new Post on Firebase
                     FirebaseMethods firebaseMethods =
                             new FirebaseMethods(PostActivity.this);
@@ -115,8 +114,8 @@ public class PostActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    Toast.makeText(mContext, "Inputs are invalid. Try again."
-                            , Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "Inputs are invalid. Try again."
+//                            , Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -142,11 +141,40 @@ public class PostActivity extends AppCompatActivity {
      * @return boolean
      */
     private boolean checkInputs(String title, String description, String tag){
+
+        String [] tagArray = tag.trim().split(" ");
+
         Log.d(TAG, "checkInputs: checking inputs for null values.");
         if(title.equals("") || description.equals("") || tag.equals("")){
             Toast.makeText(mContext, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
             return false;
         }
+        else if (title.length() > 45){
+            Log.d(TAG, "checkInputs: checking title input for more than 40 characters.");
+            Toast.makeText(mContext,"Please input shorter title.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(tagArray.length != 1){
+            Log.d(TAG, "checkInputs: checking tag input for more than one value.");
+            Toast.makeText(mContext,"Please input only one tag.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(isAlpha(tag)){
+            Log.d(TAG, "checkInputs: checking tag input ");
+            Toast.makeText(mContext, "Please input a tag that only contains letters.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
+    }
+
+    public boolean isAlpha(String name) {
+        char[] chars = name.toCharArray();
+
+        for (char c : chars) {
+            if(!Character.isLetter(c)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

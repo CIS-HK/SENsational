@@ -2,18 +2,13 @@ package edu.cis.sensational.Controller.Colorize;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Point;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -23,15 +18,16 @@ import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.R;
 
-public class ColorizeStartActivity extends AppCompatActivity {
+public class ColorizeStartActivity extends AppCompatActivity
+{
 
     Button playButton, quitButton, instructionButton, settingsButton;
     TextView gameName;
-    Switch musicSwitch;
-    MediaPlayer myMediaPlayer;
+
     ImageView bottomright, middleleft, middleright, topright, topleft;
     int screenWidth, screenHeight;
     float brX,mlY,mrY,trX,tlX;
+
 
     Handler handler;
     Timer timer;
@@ -39,7 +35,8 @@ public class ColorizeStartActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colorize_start);
         gameName = findViewById(R.id.gameName);
@@ -56,76 +53,71 @@ public class ColorizeStartActivity extends AppCompatActivity {
         timer = new Timer();
         handler = new Handler();
 
-
-        //https://stackoverflow.com/questions/37244357/how-to-play-music-in-android-studio
-        musicSwitch = findViewById(R.id.musicSwitch);
-        myMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.colorizemusic);
-        GameConstants.mediaPlayer = myMediaPlayer;
-        GameConstants.mediaPlayer.setLooping(true);
-
         setUpButtons();
         animation();
         getBundle();
 
     }
 
+    /**
+     * Sets up listeners for buttons on the screen
+     */
+
     private void setUpButtons() {
-        playButton.setOnClickListener(new View.OnClickListener() {
+        playButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ColorizeStartActivity.this, ColorizeMainActivity.class);
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(ColorizeStartActivity.this,
+                        ColorizeMainActivity.class);
+
+                //grab bundle from settings activity to this activity
                 addBundle(getIntent());
+
+                //pass the bundle from this activity to the games activity
                 addBundle(intent);
                 startActivity(intent);
 
             }
         });
 
-        instructionButton.setOnClickListener(new View.OnClickListener() {
+        instructionButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ColorizeStartActivity.this, ColorizeInstructionsActivity.class));
+            public void onClick(View view)
+            {
+                startActivity(new Intent(ColorizeStartActivity.this,
+                        ColorizeInstructionsActivity.class));
             }
         });
 
-        quitButton.setOnClickListener(new View.OnClickListener() {
+        quitButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ColorizeStartActivity.this, GamesSharedActivity.class));
-                if (GameConstants.mediaPlayer.isPlaying()){
+            public void onClick(View view)
+            {
+                startActivity(new Intent(ColorizeStartActivity.this,
+                        GamesSharedActivity.class));
+                if (GameConstants.mediaPlayer.isPlaying())
+                {
                     GameConstants.mediaPlayer.stop();
                 }
             }
         });
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
+        settingsButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ColorizeStartActivity.this,ColorizeSettingsActivity.class));
-            }
-        });
-
-        //https://abhiandroid.com/ui/switch
-        //https://www.tutlane.com/tutorial/android/android-switch-on-off-button-with-examples
-
-        musicSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (musicSwitch.isChecked())
-                {
-                    GameConstants.mediaPlayer.start();
-                    GameConstants.mediaPlayer.setVolume(20,20);
-                    GameConstants.MUSIC = true;
-                }
-                else
-                {
-                    GameConstants.mediaPlayer.pause();
-                    GameConstants.MUSIC = false;
-                }
+            public void onClick(View view)
+            {
+                startActivity(new Intent(ColorizeStartActivity.this,
+                        ColorizeSettingsActivity.class));
             }
         });
 
     }
+
 
     //https://www.youtube.com/watch?v=UxbJKNjQWD8&app=desktop
     private void animation()
@@ -134,80 +126,96 @@ public class ColorizeStartActivity extends AppCompatActivity {
         screenWidth = size.x;
         screenHeight = size.y;
 
-
-        final Runnable run = new Runnable() {
+        final Runnable run = new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 changePosition();
             }
         };
 
-        TimerTask update = new TimerTask() {
+        TimerTask update = new TimerTask()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 handler.post(run);
             }
         };
 
-        timer.schedule(update,0,13);
+        timer.schedule(update,GameConstants.DELAY,GameConstants.PERIOD);
 
     }
 
-    private void changePosition() {
+    private void changePosition()
+    {
 
         //go up
-        mlY -= 10;
-        if (middleleft.getY() + middleleft.getHeight() < 0)
+        mlY -= GameConstants.MOVEMENTMARGIN;
+        if (middleleft.getY() + middleleft.getHeight() < GameConstants.ZERO)
         {
-            mlY = screenHeight + 2000.0f;
+            mlY = screenHeight + GameConstants.SCREENHEIGHTUP;
         }
 
         middleleft.setY(mlY);
 
         //go down
-        mrY += 10;
-        if (middleright.getY() - 1700 > screenHeight)
+        mrY += GameConstants.MOVEMENTMARGIN;
+        if (middleright.getY() - GameConstants.MIDDLERIGHTINITIAL > screenHeight)
         {
-            mrY = -1000.0f;
+            mrY = -GameConstants.SCREENHEIGHTDOWN;
         }
 
         middleright.setY(mrY);
 
         //go right
-        tlX += 10;
-        if (topleft.getX() - 1200 > screenWidth)
+        tlX += GameConstants.MOVEMENTMARGIN;
+        if (topleft.getX() - GameConstants.TOPLEFTINITIAL > screenWidth)
         {
-            tlX = -800.0f;
+            tlX = -GameConstants.SCREENWIDTHLEFT;
         }
 
         topleft.setX(tlX);
 
         //go left
-        brX -= 10;
-        if (bottomright.getX() + bottomright.getWidth() < 0)
+        brX -= GameConstants.MOVEMENTMARGIN;
+        if (bottomright.getX() + bottomright.getWidth() < GameConstants.ZERO)
         {
-            brX = screenWidth + 800.0f;
+            brX = screenWidth + GameConstants.SCREENWIDTHLEFT;
         }
 
+        bottomright.setX(brX);
+
+        //go left
+        trX -=GameConstants.MOVEMENTMARGIN;
+        if (topright.getX() + topright.getWidth() < GameConstants.ZERO)
+        {
+            trX = screenWidth + GameConstants.SCREENWIDTHLEFT;
+        }
+        topright.setX(trX);
     }
+
     public void getBundle()
     {
-        //Checking if bundle is empty (if setting have been saved or not)
+        //get the data from the bundle sent from the Settings page by using the String Key
         if(getIntent().getExtras() != null)
         {
             Bundle b = getIntent().getExtras();
-            seconds = b.getInt("Time");
+            seconds = b.getInt(GameConstants.TIMESTRING);
 
+        }
+        else
+        {
+            seconds = GameConstants.DEFAULTTIME;
         }
     }
 
-    //Adding information for circle growth and shrinking into an intent
+    //place the data gathered from the bundle into a new bundle and pass it onto the next activity
     public void addBundle(Intent intent)
     {
-        intent.putExtra("Time", seconds);
-
+        intent.putExtra(GameConstants.TIMESTRING, seconds);
     }
-
 
 }
 

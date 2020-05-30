@@ -79,7 +79,7 @@
     <string name="field_profile_photo">profile_photo</string>
     <string name="field_timestamp">timestamp</string>
     <string name="bubbles_title">BUBBLES!</string>
-    <string name="instructions1a">Bubbles will float up on the screen one by one. \n Try to remember
+    <string name="instructions1a">Bubbles will float up on the screen one by one. Try to remember
         the color of each bubble. </string>
     <string name="instructions2">Pick the color of each bubble in the right order.</string>
     <string name="instructionsLabel">Instructions:</string>

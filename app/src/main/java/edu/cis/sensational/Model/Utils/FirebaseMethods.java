@@ -362,7 +362,7 @@ public class FirebaseMethods {
     }
 
     /**
-     * update the email in the 'user's' node
+     * update the email in the 'users' node
      *
      * @param email
      */
@@ -412,7 +412,6 @@ public class FirebaseMethods {
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
                             Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
                             addNewUser(email, username);
-
                         }
                     }
                 });
@@ -474,7 +473,7 @@ public class FirebaseMethods {
 
     /**
      * Retrieves the account settings for the user currently logged in
-     * Database: user_acount_Settings node
+     * Database: user_account_settings node
      *
      * @param dataSnapshot
      * @return UserSettings
@@ -604,14 +603,19 @@ public class FirebaseMethods {
 
     // https://stackoverflow.com/questions/47847694/how-to-return-datasnapshot-value-as-a-result-of-a-method
 
-    public interface Callback {
+    public interface Callback
+    {
         void onCallBack(int value);
     }
 
     public void updateUserScore(final String userID, final int scoretoinsert, final Callback callback) {
         if (myRef != null) {
-            final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
-                    .child(userID).child("user_score");
+            final DatabaseReference userRef = myRef.child("user_scores")
+                    .child("user_id")
+                    .child(userID)
+                    .child("user_score")
+                    .child("totalscore");
+
                 userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -619,6 +623,11 @@ public class FirebaseMethods {
                             int score = scoretoinsert + dataSnapshot.getValue(Integer.class);
                             userRef.setValue(score);
                             callback.onCallBack(score);
+                        }
+                        if (dataSnapshot.getValue() == null)
+                        {
+                            userRef.setValue(scoretoinsert);
+                            callback.onCallBack(scoretoinsert);
                         }
                     }
 
@@ -630,46 +639,51 @@ public class FirebaseMethods {
         }
     }
 
+
     public void checkHighScore(final String userID, final Callback callback)
     {
-        final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
-                .child(userID).child("user_score").child("colorizehighscore");
+        final DatabaseReference userRef = myRef.child("user_scores")
+                .child("user_id")
+                .child(userID)
+                .child("user_score")
+                .child("colorizehighscore");
 
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.getValue() != null)
+                {
                     int score = dataSnapshot.getValue(Integer.class);
                     callback.onCallBack(score);
                 }
+                if (dataSnapshot.getValue() == null)
+                {
+                    userRef.setValue(0);
+                }
+
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error)
+            {
                 Log.w(TAG, "Failed to retrieve user score.", error.toException());
             }
         });
+
     }
 
     public void storeHighScore(final String userID, final int score)
     {
-        final DatabaseReference userRef = myRef.child("user_scores").child("user_id")
-                .child(userID).child("user_score").child("colorizehighscore");
+        final DatabaseReference userRef = myRef.child("user_scores")
+                .child("user_id")
+                .child(userID)
+                .child("user_score")
+                .child("colorizehighscore");
 
-        myRef.setValue(score);
+        userRef.setValue(score);
 
-//        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.getValue() != null) {
-//                    userRef.setValue(score);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.w(TAG, "Failed to retrieve user score.", error.toException());
-//            }
-//        });
     }
 }
