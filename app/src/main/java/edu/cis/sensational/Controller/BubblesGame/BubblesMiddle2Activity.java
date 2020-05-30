@@ -61,6 +61,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         message.setVisibility(View.GONE);
         nextRound.setVisibility(View.GONE);
 
+        // Gets data from previous screen
         roundNumber = getIntent().getIntExtra(BubbleConstants.ROUND_NUM, roundNumber);
         numBubbles = getIntent().getIntExtra(BubbleConstants.NUM_BUBBLES, BubbleConstants.DEFAULT);
         colorsPicked = getIntent().getStringArrayListExtra(BubbleConstants.COLORS_PICKED);
@@ -68,6 +69,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
 
         canProceed = false;
 
+        // Creates allColors ArrayList (with all possible colors that the bubble can be)
         allColors = new ArrayList<>();
         allColors.add(BubbleConstants.BLACK);
         allColors.add(BubbleConstants.BLUE);
@@ -77,16 +79,20 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         allColors.add(BubbleConstants.PINK);
         allColors.add(BubbleConstants.PURPLE);
 
+        // ArrayList with encouraging messages to display if user selects incorrect answer
         encouragingMessages = new ArrayList<>();
         encouragingMessages.add(BubbleConstants.SOCLOSE);
         encouragingMessages.add(BubbleConstants.NICETRY);
         encouragingMessages.add(BubbleConstants.KEEPTRYING);
 
+        // Sets up the 'next round' button
         nextRound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (canProceed) {
                     if (roundNumber != BubbleConstants.MAX_ROUNDS) {
+                        /* If the user needs to complete more rounds,
+                           it transitions to BubblesMiddleActivity */
                         Intent intent = new Intent(BubblesMiddle2Activity.this,
                                 BubblesMiddleActivity.class);
                         intent.putExtra(BubbleConstants.SCORE, score);
@@ -96,6 +102,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
                         startActivity(intent);
                     }
                     else {
+                        // Proceeds to BubblesEndActivity if the user has completed all rounds
                         Intent intent = new Intent(BubblesMiddle2Activity.this,
                                 BubblesEndActivity.class);
                         intent.putExtra(BubbleConstants.SCORE, score);
@@ -106,6 +113,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
             }
         });
 
+        // Displays the user's score so far
         if (score == 1)
         {
             smiley1.setVisibility(View.VISIBLE);
@@ -115,6 +123,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
             smiley1.setVisibility(View.VISIBLE);
             smiley2.setVisibility(View.VISIBLE);
         }
+
         numTimes = 1;
         randomizeOptions(numTimes - 1);
     }
@@ -157,6 +166,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
                                                    BubbleConstants.DRAWABLE,
                                                    getPackageName());
 
+        // Sets up the first answer option
         option1.setBackgroundResource(imageID);
         option1.setText(answer1);
         if (answer1.equals(correctAnswer))
@@ -168,6 +178,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
             setUpWrongButton(option1);
         }
 
+        // Sets up the second answer option
         index = random.nextInt(2);
         String answer2 = options.get(index);
         options.remove(index);
@@ -186,6 +197,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
             setUpWrongButton(option2);
         }
 
+        // Sets up the third answer option
         String answer3 = options.get(0);
         imageName = answer3 + BubbleConstants.BUBBLE;
         imageID = getResources().getIdentifier(imageName,

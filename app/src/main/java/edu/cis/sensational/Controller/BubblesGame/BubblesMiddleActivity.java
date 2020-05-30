@@ -112,7 +112,7 @@ public class BubblesMiddleActivity extends AppCompatActivity
             }
         }
 
-        // Set up allColors ArrayList
+        // Sets up allColors ArrayList (with all possible colors that the bubble can be)
         allColors = new ArrayList<>();
         allColors.add(BubbleConstants.BLACK);
         allColors.add(BubbleConstants.BLUE);
