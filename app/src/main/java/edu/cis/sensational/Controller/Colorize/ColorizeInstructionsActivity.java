@@ -23,7 +23,8 @@ public class ColorizeInstructionsActivity extends AppCompatActivity
      * @param savedInstanceState
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colorize_instructions);
         backButton = findViewById(R.id.backButton);
