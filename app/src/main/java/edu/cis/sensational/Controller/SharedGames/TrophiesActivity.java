@@ -38,22 +38,27 @@ public class TrophiesActivity extends AppCompatActivity
 
         totalScore = findViewById(R.id.totalScore2);
         back = findViewById(R.id.backB);
+
+        // Set up back button
         back.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                // Proceeds to GamesSharedActivity
                 startActivity(new Intent(TrophiesActivity.this,
                                           GamesSharedActivity.class));
             }
         });
 
+        // Sets up RecyclerView to display trophies won
         allTrophies = findViewById(R.id.trophiesRecyclerView);
         nextTrophy = findViewById(R.id.nextTrophy);
         nextTrophyName = findViewById(R.id.trophyName2);
         nextTrophyNum = findViewById(R.id.trophyNum2);
         nextTrophySmiley = findViewById(R.id.trophySmiley2);
 
+        // Creates all trophies
         trophies = new ArrayList<>();
         int imageID = getResources().getIdentifier(SharedGamesConstants.REDTROPHY1,
                 BubbleConstants.DRAWABLE,
@@ -90,6 +95,7 @@ public class TrophiesActivity extends AppCompatActivity
         greenTrophy.setNextTrophy(blueTrophy);
         blueTrophy.setNextTrophy(purpleTrophy);
 
+        // Gets score from Firebase
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null)
         {
@@ -108,6 +114,7 @@ public class TrophiesActivity extends AppCompatActivity
             {
                 @Override
                 public void onCallBack(int value) {
+                    // Updates RecyclerView to display trophies won
                     userScore = value;
                     totalScore.setText("" + value);
                     if (userScore >= redTrophy.getSmileyFaces())

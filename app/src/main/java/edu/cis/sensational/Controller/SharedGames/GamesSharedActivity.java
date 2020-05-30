@@ -37,6 +37,7 @@ public class GamesSharedActivity extends AppCompatActivity
         trophiesButton = findViewById(R.id.trophies);
         userTotalScore = findViewById(R.id.totalScore3);
 
+        // Gets score from Firebase
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null)
         {
@@ -68,6 +69,16 @@ public class GamesSharedActivity extends AppCompatActivity
             }
         });
 
+        bubblesIcon.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(GamesSharedActivity.this,
+                        BubbleStartActivity.class));
+            }
+        });
+
         homePageButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -75,16 +86,6 @@ public class GamesSharedActivity extends AppCompatActivity
             {
                 startActivity(new Intent(GamesSharedActivity.this,
                                                         MainActivity.class));
-            }
-        });
-
-        bubblesIcon.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                startActivity(new Intent(GamesSharedActivity.this,
-                                                        BubbleStartActivity.class));
             }
         });
 
