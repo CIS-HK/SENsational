@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import edu.cis.sensational.R;
 
+/**
+ * This class creates a customised recycler view holder
+ */
 public class TrophiesViewHolder extends RecyclerView.ViewHolder
 {
     protected TextView trophyName;

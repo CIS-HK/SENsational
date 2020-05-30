@@ -9,11 +9,19 @@ import android.widget.Button;
 
 import edu.cis.sensational.R;
 
-public class ColorizeInstructionsActivity extends AppCompatActivity {
+/**
+ * The instructions page displays the instructions for the game and prompts user to go back to the
+ * main page or play the game
+ */
 
+public class ColorizeInstructionsActivity extends AppCompatActivity
+{
     Button backButton, playButton;
 
-
+    /**
+     * Creates and identifies the various components on screen such as the buttons
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,18 +32,28 @@ public class ColorizeInstructionsActivity extends AppCompatActivity {
         setUpButtons();
     }
 
-    public void setUpButtons(){
-        backButton.setOnClickListener(new View.OnClickListener() {
+    /**
+     * Identifies actions once the corresponding buttons on the screen is pressed
+     */
+    public void setUpButtons()
+    {
+        backButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ColorizeInstructionsActivity.this,ColorizeStartActivity.class));
+            public void onClick(View view)
+            {
+                startActivity(new Intent(ColorizeInstructionsActivity.this,
+                        ColorizeStartActivity.class));
             }
         });
 
-        playButton.setOnClickListener(new View.OnClickListener() {
+        playButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ColorizeInstructionsActivity.this,ColorizeMainActivity.class));
+            public void onClick(View view)
+            {
+                startActivity(new Intent(ColorizeInstructionsActivity.this,
+                        ColorizeMainActivity.class));
             }
         });
     }

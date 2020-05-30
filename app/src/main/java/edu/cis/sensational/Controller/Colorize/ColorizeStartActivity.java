@@ -18,6 +18,11 @@ import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.R;
 
+/**
+ * The start page is a dynamic screen that displays buttons to access instructions, settings, play
+ * or quit the game
+ */
+
 public class ColorizeStartActivity extends AppCompatActivity
 {
 
@@ -33,7 +38,11 @@ public class ColorizeStartActivity extends AppCompatActivity
     Timer timer;
     Integer seconds;
 
-
+    /**
+     * Creates and identifies the various components on screen such as the buttons, images, and
+     * creates objects like a timer and handler
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -60,7 +69,8 @@ public class ColorizeStartActivity extends AppCompatActivity
     }
 
     /**
-     * Sets up listeners for buttons on the screen
+     * Sets up listeners for buttons on the screen to conduct specific action once the button is
+     * clicked
      */
 
     private void setUpButtons() {
@@ -120,6 +130,10 @@ public class ColorizeStartActivity extends AppCompatActivity
 
 
     //https://www.youtube.com/watch?v=UxbJKNjQWD8&app=desktop
+
+    /**
+     * Sets a timer to run the changePosition method indefinitely
+     */
     private void animation()
     {
         Point size = new Point();
@@ -148,6 +162,9 @@ public class ColorizeStartActivity extends AppCompatActivity
 
     }
 
+    /**
+     *  Generates animation for all the images on the screen by changing its X or Y coordinates
+     */
     private void changePosition()
     {
 
@@ -196,6 +213,9 @@ public class ColorizeStartActivity extends AppCompatActivity
         topright.setX(trX);
     }
 
+    /**
+     * Gets the data from the bundle sent from the Settings page by using the String Key
+     */
     public void getBundle()
     {
         //get the data from the bundle sent from the Settings page by using the String Key
@@ -211,7 +231,10 @@ public class ColorizeStartActivity extends AppCompatActivity
         }
     }
 
-    //place the data gathered from the bundle into a new bundle and pass it onto the next activity
+    /**
+     * Places the data gathered from the bundle into a new bundle and pass it onto the next activity
+     * @param intent
+     */
     public void addBundle(Intent intent)
     {
         intent.putExtra(GameConstants.TIMESTRING, seconds);

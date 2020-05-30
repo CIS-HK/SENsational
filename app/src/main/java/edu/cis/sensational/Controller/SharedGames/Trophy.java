@@ -1,5 +1,8 @@
 package edu.cis.sensational.Controller.SharedGames;
 
+/**
+ * This class identifies the attributes of a trophy
+ */
 public class Trophy
 {
     int smileyFaces;
@@ -7,42 +10,82 @@ public class Trophy
     int imageID;
     Trophy nextTrophy;
 
-    public Trophy(int smileyFaces, String name, int imageID){
+    public Trophy(int smileyFaces, String name, int imageID)
+    {
         this.smileyFaces = smileyFaces;
         this.name = name;
         this.imageID = imageID;
     }
 
-    public void setName(String name) {
+    /**
+     * Sets the trophy name
+     * @param name
+     */
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getName() {
+    /**
+     * Gets the trophy name
+     * @return String
+     */
+    public String getName()
+    {
         return name;
     }
 
-    public void setSmileyFaces(int smileyFaces) {
+    /**
+     * Sets the smiley faces
+     * @param smileyFaces
+     */
+    public void setSmileyFaces(int smileyFaces)
+    {
         this.smileyFaces = smileyFaces;
     }
 
-    public int getSmileyFaces() {
+    /**
+     * Gets the smiley faces
+     * @return int
+     */
+    public int getSmileyFaces()
+    {
         return smileyFaces;
     }
 
-    public void setImageID(int imageID) {
+    /**
+     * Sets the image ID
+     * @param imageID
+     */
+    public void setImageID(int imageID)
+    {
         this.imageID = imageID;
     }
 
-    public int getImageID() {
+    /**
+     * Gets the image ID
+     * @return int
+     */
+    public int getImageID()
+    {
         return imageID;
     }
 
+    /**
+     * Sets the next trophy
+     * @param nextTrophy
+     */
     public void setNextTrophy(Trophy nextTrophy)
     {
         this.nextTrophy = nextTrophy;
     }
 
-    public Trophy getNextTrophy() {
+    /**
+     * Gets the next Trophy
+     * @return Trophy
+     */
+    public Trophy getNextTrophy()
+    {
         return nextTrophy;
     }
 }

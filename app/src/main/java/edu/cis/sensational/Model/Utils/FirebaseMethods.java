@@ -605,11 +605,21 @@ public class FirebaseMethods {
 
     // https://stackoverflow.com/questions/47847694/how-to-return-datasnapshot-value-as-a-result-of-a-method
 
+    /**
+     * Creates a callback interface
+     */
     public interface Callback
     {
         void onCallBack(int value);
     }
 
+    /**
+     * Uses user ID to update total user score on firebase by adding current user score and retrieve
+     * it by using callbacks
+     * @param userID
+     * @param scoretoinsert
+     * @param callback
+     */
     public void updateUserScore(final String userID, final int scoretoinsert, final Callback callback) {
         if (myRef != null) {
             final DatabaseReference userRef = myRef.child("user_scores")
@@ -642,6 +652,12 @@ public class FirebaseMethods {
     }
 
 
+    /**
+     * Uses user ID to compare current user score with current highscore on the database
+     * @param userID
+     * @param score
+     * @param callback
+     */
     public void checkHighScore(final String userID, final int score, final Callback callback)
     {
         final DatabaseReference userRef = myRef.child("user_scores")
@@ -649,8 +665,6 @@ public class FirebaseMethods {
                 .child(userID)
                 .child("user_score")
                 .child("colorizehighscore");
-
-
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener()
         {
@@ -678,6 +692,11 @@ public class FirebaseMethods {
 
     }
 
+    /**
+     * Uses user ID to store the updated user high score on Firebase
+     * @param userID
+     * @param score
+     */
     public void storeHighScore(final String userID, final int score)
     {
         final DatabaseReference userRef = myRef.child("user_scores")
@@ -690,6 +709,13 @@ public class FirebaseMethods {
 
     }
 
+    /**
+     * Uses user ID to set and display current score and high score for first time users
+     * @param userID
+     * @param score
+     * @param currentScore
+     * @param highScore
+     */
     public void initialStoring(final String userID, final int score, final TextView currentScore,
                                final TextView highScore)
     {
@@ -713,15 +739,10 @@ public class FirebaseMethods {
                     highScore.setText(GameConstants.DISPLAYHIGHSCORE +score);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-
-
     }
-
-
 }

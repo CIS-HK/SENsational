@@ -25,6 +25,10 @@ import edu.cis.sensational.Controller.Home.HomeAdapter;
 import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.R;
 
+/**
+ * The settings page prompts user to select their game preferences such as background, music and
+ * time
+ */
 public class ColorizeSettingsActivity extends AppCompatActivity {
 
     Spinner timeSpinner;
@@ -37,6 +41,11 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
     Switch musicSwitch;
     MediaPlayer myMediaPlayer;
 
+    /**
+     * Creates and identifies the various components on screen such as buttons, spinners and
+     * switches
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -63,6 +72,9 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Checks the user's preference for background option and sets the checkbox
+     */
     private void setBackgroundcheck()
     {
         if (!GameConstants.BACKGROUND)
@@ -76,6 +88,10 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         }
 
     }
+
+    /**
+     * Adds the timer options in an arraylist to display on spinner
+     */
     private void addTime()
     {
         times.add(GameConstants.FIVESECONDS);
@@ -83,6 +99,9 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         times.add(GameConstants.THREESECONDS);
     }
 
+    /**
+     * Identifies actions once the corresponding buttons on the screen is pressed
+     */
     private void setupButtons()
     {
 
@@ -136,9 +155,11 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
+    /**
+     * Checks the user's preference for music option and sets the checkbox
+     */
     private void setUpMusicChoice()
     {
         if (!GameConstants.MUSIC)
@@ -151,6 +172,9 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Creates a new media Player
+     */
     private void setUpMediaPlayer()
     {
         myMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.colorizemusic);
@@ -158,6 +182,9 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
         GameConstants.mediaPlayer.setLooping(true);
     }
 
+    /**
+     * Gets what the user option is for time preference
+     */
     private void getTime()
     {
         //since the spinner is an array of Strings, have to convert them to int first in order to

@@ -27,6 +27,10 @@ import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
 
+/**
+ * The trophies page displays the trophies the user earned, the upcoming trophy and the total user
+ * score
+ */
 public class TrophiesActivity extends AppCompatActivity {
     private Button back;
     private RecyclerView allTrophies;
@@ -42,16 +46,23 @@ public class TrophiesActivity extends AppCompatActivity {
 
     private static final String TAG = "TrophiesActivity";
 
+    /**
+     * Creates and identifies the various components on screen
+     * @param savedInstanceState
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trophies);
 
         totalScore = findViewById(R.id.totalScore2);
         back = findViewById(R.id.backB);
-        back.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(TrophiesActivity.this,
                         GamesSharedActivity.class));
             }
@@ -63,6 +74,7 @@ public class TrophiesActivity extends AppCompatActivity {
         nextTrophyNum = findViewById(R.id.trophyNum2);
         nextTrophySmiley = findViewById(R.id.trophySmiley2);
 
+        //add trophies to the trophies list
         trophies = new ArrayList<>();
         int imageID = getResources().getIdentifier("redtrophy",
                 BubbleConstants.DRAWABLE,
@@ -89,47 +101,60 @@ public class TrophiesActivity extends AppCompatActivity {
         greenTrophy.setNextTrophy(blueTrophy);
         blueTrophy.setNextTrophy(purpleTrophy);
 
+        //get current user ID
         mAuth = FirebaseAuth.getInstance();
-        if (mAuth.getCurrentUser() != null) {
+        if (mAuth.getCurrentUser() != null)
+        {
             userID = mAuth.getCurrentUser().getUid();
         }
-        if (userID != null) {
+        if (userID != null)
+        {
+            //set recycler view
             final TrophiesAdapter adapter = new TrophiesAdapter(trophies);
             allTrophies.setAdapter(adapter);
             allTrophies.setLayoutManager(new LinearLayoutManager(this));
 
+            //retrive total user score from database
             FirebaseMethods firebaseMethods = new FirebaseMethods(TrophiesActivity.this);
             firebaseMethods.updateUserScore(userID, 0, new FirebaseMethods.Callback() {
                 @Override
-                public void onCallBack(int value) {
+
+                //decide if the user earns a trophy or not and display it on screen
+                public void onCallBack(int value)
+                {
                     userScore = value;
                     totalScore.setText("" + value);
-                    if (userScore >= redTrophy.getSmileyFaces()) {
+                    if (userScore >= redTrophy.getSmileyFaces())
+                    {
                         trophies.add(redTrophy);
                         // https://stackoverflow.com/questions/31367599/how-to-update-recyclerview-adapter-data
                         adapter.notifyItemInserted(0);
                         nextTrophyName.setText(redTrophy.getNextTrophy().getName());
                         nextTrophyNum.setText("" + redTrophy.getNextTrophy().getSmileyFaces());
                     }
-                    if (userScore >= orangeTrophy.getSmileyFaces()) {
+                    if (userScore >= orangeTrophy.getSmileyFaces())
+                    {
                         trophies.add(orangeTrophy);
                         adapter.notifyItemInserted(1);
                         nextTrophyName.setText(orangeTrophy.getNextTrophy().getName());
                         nextTrophyNum.setText("" + orangeTrophy.getNextTrophy().getSmileyFaces());
                     }
-                    if (userScore >= greenTrophy.getSmileyFaces()) {
+                    if (userScore >= greenTrophy.getSmileyFaces())
+                    {
                         trophies.add(greenTrophy);
                         adapter.notifyItemInserted(2);
                         nextTrophyName.setText(greenTrophy.getNextTrophy().getName());
                         nextTrophyNum.setText("" + greenTrophy.getNextTrophy().getSmileyFaces());
                     }
-                    if (userScore >= blueTrophy.getSmileyFaces()) {
+                    if (userScore >= blueTrophy.getSmileyFaces())
+                    {
                         trophies.add(blueTrophy);
                         adapter.notifyItemInserted(3);
                         nextTrophyName.setText(blueTrophy.getNextTrophy().getName());
                         nextTrophyNum.setText("" + blueTrophy.getNextTrophy().getSmileyFaces());
                     }
-                    if (userScore >= purpleTrophy.getSmileyFaces()) {
+                    if (userScore >= purpleTrophy.getSmileyFaces())
+                    {
                         trophies.add(purpleTrophy);
                         adapter.notifyItemInserted(4);
                         nextTrophyName.setVisibility(View.GONE);
@@ -137,7 +162,6 @@ public class TrophiesActivity extends AppCompatActivity {
                         nextTrophy.setVisibility(View.GONE);
                         nextTrophySmiley.setVisibility(View.GONE);
                     }
-
                 }
             });
         }

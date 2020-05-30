@@ -16,6 +16,10 @@ import edu.cis.sensational.Controller.MainActivity;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
 
+/**
+ * This page displays total user score, and users can access the different games, the
+ * trophies page or go back to the home page
+ */
 public class GamesSharedActivity extends AppCompatActivity {
 
     private Button colorizeIcon;
@@ -26,9 +30,13 @@ public class GamesSharedActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String userID;
 
-
+    /**
+     * Creates and identifies the various components on screen such as buttons and labels
+     * @param savedInstanceState
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_games_shared);
 
@@ -39,14 +47,18 @@ public class GamesSharedActivity extends AppCompatActivity {
         userTotalScore = findViewById(R.id.totalScore3);
 
         mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() != null){
+        if(mAuth.getCurrentUser() != null)
+        {
             userID = mAuth.getCurrentUser().getUid();
         }
-        if (userID != null) {
+        if (userID != null)
+        {
             FirebaseMethods firebaseMethods = new FirebaseMethods(GamesSharedActivity.this);
-            firebaseMethods.updateUserScore(userID, 0, new FirebaseMethods.Callback() {
+            firebaseMethods.updateUserScore(userID, 0, new FirebaseMethods.Callback()
+            {
                 @Override
-                public void onCallBack(int value) {
+                public void onCallBack(int value)
+                {
                     userTotalScore.setText("" + value);
                 }
             });
@@ -55,6 +67,9 @@ public class GamesSharedActivity extends AppCompatActivity {
         setUpButtons();
     }
 
+    /**
+     * Identifies actions once the corresponding buttons on the screen is pressed
+     */
     private void setUpButtons()
     {
         colorizeIcon.setOnClickListener(new View.OnClickListener() {
@@ -81,8 +96,6 @@ public class GamesSharedActivity extends AppCompatActivity {
                         MainActivity.class));
             }
         });
-
-
 
         trophiesButton.setOnClickListener(new View.OnClickListener() {
             @Override

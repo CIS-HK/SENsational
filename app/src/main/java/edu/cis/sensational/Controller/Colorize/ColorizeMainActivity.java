@@ -21,7 +21,9 @@ import java.util.Random;
 import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.R;
 
-
+/**
+ * The main page is where the game will occur
+ */
 public class ColorizeMainActivity extends AppCompatActivity
 {
 
@@ -38,6 +40,10 @@ public class ColorizeMainActivity extends AppCompatActivity
     CountDownTimer counter;
 
 
+    /**
+     * Creates and identifies the various components on screen such as buttons, labels and buttons
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -61,6 +67,9 @@ public class ColorizeMainActivity extends AppCompatActivity
         play();
     }
 
+    /**
+     * Identifies actions once the corresponding buttons on the screen is pressed
+     */
     private void setUpButtons()
     {
         stopButton.setOnClickListener(new View.OnClickListener()
@@ -74,9 +83,11 @@ public class ColorizeMainActivity extends AppCompatActivity
 
             }
         });
-
     }
 
+    /**
+     * Sets the timer on the screen
+     */
     private void setUpTimer()
     {
         getTime();
@@ -103,9 +114,12 @@ public class ColorizeMainActivity extends AppCompatActivity
         };
     }
 
+    /**
+     * Retrieves bundle that was passed on from ColorizeStartActivity
+     */
     private void getTime()
     {
-        //get the bundle that is passed on from start activity by String key
+        //get the data by String key
         if (getIntent().getExtras() != null)
         {
             Bundle bundle = getIntent().getExtras();
@@ -118,9 +132,13 @@ public class ColorizeMainActivity extends AppCompatActivity
         }
     }
 
-    //add colors to respective arraylists
+    /**
+     * Adds colors and data that needs to be used and processed internally in the corresponding data
+     * structures
+     */
     private void addColors()
     {
+        //clears all data structures first before constructing it again to avoid duplication of data
         answers.clear();
         colorInts.clear();
         colorWords.clear();
@@ -154,6 +172,10 @@ public class ColorizeMainActivity extends AppCompatActivity
     }
 
 
+    /**
+     * starts the timer, generates random text, color of text and background color onto screen, as
+     * well as the buttons for the users to click on
+     */
     private void setUpGame()
     {
         // start time
@@ -190,16 +212,21 @@ public class ColorizeMainActivity extends AppCompatActivity
 
         setBackgroundColor();
 
+        //place answer options in list
         ArrayList<String> randomAnswers = new ArrayList<>();
         randomAnswers.add(correctAnswer);
         randomAnswers.add(wrongAnswer);
 
+        //Randomize the answers in the list and display on screen
         String answer = randomAnswers.get(new Random().nextInt(GameConstants.BOUND));
         answerOne.setText(answer);
         randomAnswers.remove(answer);
         answerTwo.setText(randomAnswers.get(GameConstants.ZERO));
     }
 
+    /**
+     * Checks user background preference by checking game constant
+     */
     private void setBackgroundColor()
     {
         //if user didn't select to have background, set background to white
@@ -219,6 +246,11 @@ public class ColorizeMainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Identifies actions once the buttons are clicked depending if the user chose the right button.
+     * If it is the right button, adds score, reset timer and repeats the game until the user
+     * presses the wrong button, then the user will be directed to the end page
+     */
     private void play()
     {
         answerOne.setOnClickListener(new View.OnClickListener()
@@ -272,6 +304,5 @@ public class ColorizeMainActivity extends AppCompatActivity
                 }
             }
         });
-
     }
 }
