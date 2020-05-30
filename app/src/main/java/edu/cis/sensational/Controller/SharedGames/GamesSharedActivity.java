@@ -1,23 +1,21 @@
 package edu.cis.sensational.Controller.SharedGames;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
-
 import edu.cis.sensational.Controller.BubblesGame.BubbleStartActivity;
 import edu.cis.sensational.Controller.Colorize.ColorizeStartActivity;
 import edu.cis.sensational.Controller.MainActivity;
+import edu.cis.sensational.Model.SharedGamesConstants;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
 
-public class GamesSharedActivity extends AppCompatActivity {
-
+public class GamesSharedActivity extends AppCompatActivity
+{
     private Button colorizeIcon;
     private Button homePageButton;
     private Button bubblesIcon;
@@ -28,7 +26,8 @@ public class GamesSharedActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_games_shared);
 
@@ -39,12 +38,14 @@ public class GamesSharedActivity extends AppCompatActivity {
         userTotalScore = findViewById(R.id.totalScore3);
 
         mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() != null){
+        if(mAuth.getCurrentUser() != null)
+        {
             userID = mAuth.getCurrentUser().getUid();
         }
-        if (userID != null) {
+        if (userID != null)
+        {
             FirebaseMethods firebaseMethods = new FirebaseMethods(GamesSharedActivity.this);
-            firebaseMethods.updateUserScore(userID, 0, new FirebaseMethods.Callback() {
+            firebaseMethods.updateUserScore(userID, SharedGamesConstants.SCORETOINSERT, new FirebaseMethods.Callback() {
                 @Override
                 public void onCallBack(int value) {
                     userTotalScore.setText("" + value);
@@ -57,31 +58,43 @@ public class GamesSharedActivity extends AppCompatActivity {
 
     private void setUpButtons()
     {
-        colorizeIcon.setOnClickListener(new View.OnClickListener() {
+        colorizeIcon.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(GamesSharedActivity.this, ColorizeStartActivity.class));
+            public void onClick(View view)
+            {
+                startActivity(new Intent(GamesSharedActivity.this,
+                                                        ColorizeStartActivity.class));
             }
         });
 
-        homePageButton.setOnClickListener(new View.OnClickListener() {
+        homePageButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(GamesSharedActivity.this, MainActivity.class));
+            public void onClick(View view)
+            {
+                startActivity(new Intent(GamesSharedActivity.this,
+                                                        MainActivity.class));
             }
         });
 
-        bubblesIcon.setOnClickListener(new View.OnClickListener() {
+        bubblesIcon.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(GamesSharedActivity.this, BubbleStartActivity.class));
+            public void onClick(View v)
+            {
+                startActivity(new Intent(GamesSharedActivity.this,
+                                                        BubbleStartActivity.class));
             }
         });
 
-        trophiesButton.setOnClickListener(new View.OnClickListener() {
+        trophiesButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(GamesSharedActivity.this, TrophiesActivity.class));
+            public void onClick(View v)
+            {
+                startActivity(new Intent(GamesSharedActivity.this,
+                                                        TrophiesActivity.class));
             }
         });
     }
