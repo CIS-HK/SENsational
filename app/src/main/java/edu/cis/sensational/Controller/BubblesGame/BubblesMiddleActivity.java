@@ -67,14 +67,17 @@ public class BubblesMiddleActivity extends AppCompatActivity
 
             if (mode != null && mode.equals(BubbleConstants.EASY))
             {
+                // Sets the number of bubbles to 3 if the mode is easy
                 numBubbles = BubbleConstants.NUM_BUBBLES_EASY;
             }
             if (mode != null && mode.equals(BubbleConstants.MED))
             {
+                // Sets the number of bubbles to 4 if the mode is medium
                 numBubbles = BubbleConstants.NUM_BUBBLES_MED;
             }
             if (mode != null && mode.equals(BubbleConstants.HARD))
             {
+                // Sets the number of bubbles to 5 if the mode is hard
                 numBubbles = BubbleConstants.NUM_BUBBLES_HARD;
             }
 
@@ -97,6 +100,7 @@ public class BubblesMiddleActivity extends AppCompatActivity
             roundNumber = getIntent().getIntExtra(BubbleConstants.ROUND_NUM,
                                                   BubbleConstants.DEFAULT);
 
+            // Displays the user's score so far
             if (score == 1)
             {
                 smiley1.setVisibility(View.VISIBLE);
@@ -130,11 +134,14 @@ public class BubblesMiddleActivity extends AppCompatActivity
     public void generateRandomSequence()
     {
         Random random = new Random();
+
+        // Selects a random color from allColors
         String colorBubble = allColors.get(random.nextInt(allColors.size()));
         colorsPicked.add(colorBubble);
         allColors.remove(colorBubble);
         String imageName = colorBubble + BubbleConstants.BUBBLE;
 
+        // Sets the bubble ImageView's background to the appropriate PNG file (to change its color)
         // https://stackoverflow.com/questions/15545753/random-genaration-of-image-from-drawable-folder-in-android
         int imageID = getResources().getIdentifier(imageName,
                                                    BubbleConstants.DRAWABLE,
@@ -149,13 +156,13 @@ public class BubblesMiddleActivity extends AppCompatActivity
     public void setUpBubbles()
     {
         // https://www.youtube.com/watch?v=UxbJKNjQWD8
-        // Get the size of the screen
+        // Gets the size of the screen
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         Point sizeOfScreen = new Point();
         display.getSize(sizeOfScreen);
 
-        // Store the height of the screen
+        // Stores the height of the screen
         heightOfScreen = sizeOfScreen.y;
 
         playBubble();
@@ -171,14 +178,14 @@ public class BubblesMiddleActivity extends AppCompatActivity
         timer = new Timer();
         handler = new Handler();
 
-        // Move the bubble to the bottom of the screen
+        // Moves the bubble to the bottom of the screen
         bubbleY = heightOfScreen + BubbleConstants.ADD_TO_SCREEN_HEIGHT;
         bubble.setY(bubbleY);
 
-        // Move the number on the bubble so that it's at the center of the bubble
+        // Moves the number on the bubble so that it's at the center of the bubble
         bubbleNumber.setY(bubbleY + BubbleConstants.ADD_TO_Y);
 
-        // Move the bubble towards the top of the screen
+        // Moves the bubble towards the top of the screen
         timer.schedule(new TimerTask()
         {
             @Override
@@ -204,10 +211,16 @@ public class BubblesMiddleActivity extends AppCompatActivity
     public void changeBubbleCoordinates()
     {
         // https://www.youtube.com/watch?v=UxbJKNjQWD8
+        // Reduces the bubble's y-coordinate value to move it upwards
         bubbleY -= BubbleConstants.MINUS_FROM_Y;
+
+        // Checks whether the bubble has reached the top of the screen
         if (bubble.getY() + bubble.getHeight() < 0)
         {
+            // If the bubble has reached the top, the timer is cancelled and the bubble stops moving
             timer.cancel();
+
+            // If more bubbles need to be displayed, another bubble is displayed floating up
             if (numTimes < numBubbles)
             {
                 generateRandomSequence();
@@ -218,6 +231,7 @@ public class BubblesMiddleActivity extends AppCompatActivity
             }
             else
             {
+                // Proceeds to BubblesMiddle2Activity (where user can select the color of each bubble)
                 Intent intent = new Intent(BubblesMiddleActivity.this,
                                             BubblesMiddle2Activity.class);
                 intent.putExtra(BubbleConstants.NUM_BUBBLES, numBubbles);
@@ -227,6 +241,8 @@ public class BubblesMiddleActivity extends AppCompatActivity
                 startActivity(intent);
             }
         }
+
+        // Updates the y-coordinates of the bubble and the number on the bubble
         bubble.setY(bubbleY);
         bubbleNumber.setY(bubbleY + BubbleConstants.ADD_TO_Y);
     }

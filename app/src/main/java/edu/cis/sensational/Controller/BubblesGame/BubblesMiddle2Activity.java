@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Random;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
@@ -80,9 +78,9 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         allColors.add(BubbleConstants.PURPLE);
 
         encouragingMessages = new ArrayList<>();
-        encouragingMessages.add("So close!");
-        encouragingMessages.add("Nice try!");
-        encouragingMessages.add("Keep trying!");
+        encouragingMessages.add(BubbleConstants.SOCLOSE);
+        encouragingMessages.add(BubbleConstants.NICETRY);
+        encouragingMessages.add(BubbleConstants.KEEPTRYING);
 
         nextRound.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,7 +282,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
 
                     // Plays a sound effect
                     // https://stackoverflow.com/questions/10451092/how-to-play-a-sound-effect-in-android
-                    // // https://freesound.org/people/KevinVG207/sounds/331912/
+                    // https://freesound.org/people/KevinVG207/sounds/331912/
 
                     MediaPlayer mPlayer = MediaPlayer.create(getApplicationContext(),
                                                               R.raw.incorrect);
@@ -296,7 +294,6 @@ public class BubblesMiddle2Activity extends AppCompatActivity
                 }
             }
         });
-
     }
 
     /**
@@ -307,20 +304,31 @@ public class BubblesMiddle2Activity extends AppCompatActivity
     public void checkEnd()
     {
         if (numTimes > numBubbles)
+        // True when the user has been asked to select the color of all bubbles in the sequence
         {
             if (numberCorrect == numBubbles)
             {
+                // Increases the user's score if they got all the questions correct
                 score++;
             }
+            // Increases the number of rounds the user has completed so far
             roundNumber++;
+
+            // When the user has completed all the rounds:
             if (roundNumber == BubbleConstants.MAX_ROUNDS){
+                // The 'next round' button tells the user to proceed to the end screen
                 nextRound.setText(BubbleConstants.END_PAGE);
             }
+            /*
+            If users can proceed to the next round, canProceed is set to true and the 'next round'
+            button becomes visible
+             */
             canProceed = true;
             nextRound.setVisibility(View.VISIBLE);
         }
         else
         {
+            // Ask the user what the color of the next bubble in the sequence is:
             if (numTimes == 2)
             {
                 whichBubble.setText(BubbleConstants.SECOND);
@@ -337,6 +345,8 @@ public class BubblesMiddle2Activity extends AppCompatActivity
             {
                 whichBubble.setText(BubbleConstants.FIFTH);
             }
+
+            // Generate new answer options
             randomizeOptions(numTimes - 1);
         }
     }

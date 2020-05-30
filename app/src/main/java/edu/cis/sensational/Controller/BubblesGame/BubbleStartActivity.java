@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-
 import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 import edu.cis.sensational.R;
@@ -43,7 +42,10 @@ public class BubbleStartActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                // Gets the mode that the user selected
                 String mode = spinner.getSelectedItem().toString();
+
+                // Proceeds to the next screen to start the game
                 Intent intent = new Intent(BubbleStartActivity.this,
                                                          BubblesMiddleActivity.class);
                 intent.putExtra(BubbleConstants.MODE, mode);
@@ -57,6 +59,7 @@ public class BubbleStartActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                // Proceeds to the instructions screen
                 Intent intent = new Intent(BubbleStartActivity.this,
                                                          BubblesInstructionActivity.class);
                 startActivity(intent);
@@ -66,13 +69,14 @@ public class BubbleStartActivity extends AppCompatActivity
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Proceeds back to the Games Shared screen
                 Intent intent = new Intent(BubbleStartActivity.this,
                         GamesSharedActivity.class);
                 startActivity(intent);
             }
         });
 
-        // Set up spinner
+        // Sets up the spinner
         // https://www.youtube.com/watch?v=urQp7KsQhW8
         spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> sAdapter = new ArrayAdapter<String>(BubbleStartActivity.this,

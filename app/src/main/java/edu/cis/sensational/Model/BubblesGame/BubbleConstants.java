@@ -27,6 +27,9 @@ public class BubbleConstants
     public static final String PURPLE = "purple";
     public static final String EMPTY_STR = "";
     public static final String END_PAGE = "Go to end page!";
+    public static final String SOCLOSE = "So close!";
+    public static final String NICETRY = "Nice try!";
+    public static final String KEEPTRYING = "Keep trying!";
 
     // Ints
     public static final int NUM_BUBBLES_EASY = 3;
