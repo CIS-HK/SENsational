@@ -53,9 +53,9 @@ public class CalmingSettingsActivity extends AppCompatActivity
         holdSpinner = findViewById(R.id.calmingHoldSpinner);
         outSpinner = findViewById(R.id.calmingOutSpinner);
 
-        holdString = "";
-        inString = "";
-        outString = "";
+        holdString = c.EMPTY;
+        inString = c.EMPTY;
+        outString = c.EMPTY;
 
         c = new CConstants();
 
