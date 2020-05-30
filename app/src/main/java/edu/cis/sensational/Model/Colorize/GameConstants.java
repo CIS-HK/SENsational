@@ -5,7 +5,8 @@ import android.os.CountDownTimer;
 
 import edu.cis.sensational.R;
 
-public class GameConstants {
+public class GameConstants
+{
 
 
     public static boolean BACKGROUND = false;

@@ -25,12 +25,15 @@ public class BubblesInstructionActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bubbles_instruction);
 
+        // Sets up the back button
         back = findViewById(R.id.backButton);
+
         back.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                // Proceeds back to the start screen
                 Intent intent = new Intent(BubblesInstructionActivity.this,
                                             BubbleStartActivity.class);
                 startActivity(intent);

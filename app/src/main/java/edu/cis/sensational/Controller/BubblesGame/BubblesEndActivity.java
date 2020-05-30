@@ -3,14 +3,11 @@ package edu.cis.sensational.Controller.BubblesGame;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
-
 import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
@@ -73,13 +70,16 @@ public class BubblesEndActivity extends AppCompatActivity
 
         // Updates and sends total number of smiley faces to Firebase
         mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() != null){
+        if(mAuth.getCurrentUser() != null)
+        {
             userID = mAuth.getCurrentUser().getUid();
         }
 
-        if (userID != null) {
+        if (userID != null)
+        {
             FirebaseMethods firebaseMethods = new FirebaseMethods(BubblesEndActivity.this);
-            firebaseMethods.updateUserScore(userID, score, new FirebaseMethods.Callback() {
+            firebaseMethods.updateUserScore(userID, score, new FirebaseMethods.Callback()
+            {
                 @Override
                 public void onCallBack(int value) {
                     totalScore.setText("" + value);
@@ -87,25 +87,29 @@ public class BubblesEndActivity extends AppCompatActivity
             });
         }
 
+        // Sets up the 'play again' button
         playAgain.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                // Proceeds to the Start screen
                 Intent intent = new Intent(BubblesEndActivity.this,
                                             BubbleStartActivity.class);
                 startActivity(intent);
             }
         });
 
-        exitGame.setOnClickListener(new View.OnClickListener() {
+        exitGame.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                // Proceeds to the Games Shared screen
                 Intent intent = new Intent(BubblesEndActivity.this,
                                             GamesSharedActivity.class);
                 startActivity(intent);
             }
         });
     }
-
 }
