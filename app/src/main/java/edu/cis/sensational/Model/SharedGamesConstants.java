@@ -1,6 +1,7 @@
 package edu.cis.sensational.Model;
 
-public class SharedGamesConstants {
+public class SharedGamesConstants
+{
     // Strings
     public static final String REDTROPHY1 = "redtrophy";
     public static final String REDTROPHY2 = "Red Trophy";

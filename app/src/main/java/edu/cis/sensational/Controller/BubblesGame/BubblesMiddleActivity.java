@@ -15,6 +15,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
+import edu.cis.sensational.Model.Utils.BubblesMethods;
 import edu.cis.sensational.R;
 
 /**
@@ -50,6 +51,8 @@ public class BubblesMiddleActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bubbles_middle);
+
+        BubblesMethods bubblesMethods = new BubblesMethods();
 
         // Set up ImageViews
         bubble = findViewById(R.id.floatingBubble);
@@ -101,26 +104,11 @@ public class BubblesMiddleActivity extends AppCompatActivity
                                                   BubbleConstants.DEFAULT);
 
             // Displays the user's score so far
-            if (score == 1)
-            {
-                smiley1.setVisibility(View.VISIBLE);
-            }
-            else if (score == 2)
-            {
-                smiley1.setVisibility(View.VISIBLE);
-                smiley2.setVisibility(View.VISIBLE);
-            }
+            bubblesMethods.displayScore(score, smiley1, smiley2);
         }
 
         // Sets up allColors ArrayList (with all possible colors that the bubble can be)
-        allColors = new ArrayList<>();
-        allColors.add(BubbleConstants.BLACK);
-        allColors.add(BubbleConstants.BLUE);
-        allColors.add(BubbleConstants.GREEN);
-        allColors.add(BubbleConstants.RED);
-        allColors.add(BubbleConstants.YELLOW);
-        allColors.add(BubbleConstants.PINK);
-        allColors.add(BubbleConstants.PURPLE);
+        allColors = bubblesMethods.setUpAllColors();
 
         colorsPicked = new ArrayList<>();
         numTimes = 1;
@@ -231,7 +219,7 @@ public class BubblesMiddleActivity extends AppCompatActivity
             }
             else
             {
-                // Proceeds to BubblesMiddle2Activity (where user can select the color of each bubble)
+                // Proceeds to BubblesMiddle2Activity (where user can select each bubble's color)
                 Intent intent = new Intent(BubblesMiddleActivity.this,
                                             BubblesMiddle2Activity.class);
                 intent.putExtra(BubbleConstants.NUM_BUBBLES, numBubbles);

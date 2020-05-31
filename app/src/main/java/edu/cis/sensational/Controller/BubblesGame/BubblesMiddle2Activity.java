@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
+import edu.cis.sensational.Model.Utils.BubblesMethods;
 import edu.cis.sensational.R;
 
 /**
@@ -33,6 +34,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
     private ArrayList<String> colorsPicked;
     private ArrayList<String> allColors;
     private ArrayList<String> encouragingMessages;
+    private ArrayList<String> options;
     private int numTimes;
     private int numberCorrect;
     private int score;
@@ -70,14 +72,8 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         canProceed = false;
 
         // Creates allColors ArrayList (with all possible colors that the bubble can be)
-        allColors = new ArrayList<>();
-        allColors.add(BubbleConstants.BLACK);
-        allColors.add(BubbleConstants.BLUE);
-        allColors.add(BubbleConstants.GREEN);
-        allColors.add(BubbleConstants.RED);
-        allColors.add(BubbleConstants.YELLOW);
-        allColors.add(BubbleConstants.PINK);
-        allColors.add(BubbleConstants.PURPLE);
+        BubblesMethods bubblesMethods = new BubblesMethods();
+        allColors = bubblesMethods.setUpAllColors();
 
         // ArrayList with encouraging messages to display if user selects incorrect answer
         encouragingMessages = new ArrayList<>();
@@ -114,15 +110,7 @@ public class BubblesMiddle2Activity extends AppCompatActivity
         });
 
         // Displays the user's score so far
-        if (score == 1)
-        {
-            smiley1.setVisibility(View.VISIBLE);
-        }
-        else if (score == 2)
-        {
-            smiley1.setVisibility(View.VISIBLE);
-            smiley2.setVisibility(View.VISIBLE);
-        }
+        bubblesMethods.displayScore(score, smiley1, smiley2);
 
         numTimes = 1;
         randomizeOptions(numTimes - 1);
@@ -130,88 +118,90 @@ public class BubblesMiddle2Activity extends AppCompatActivity
 
     /**
      * Randomly selects three answer options that the user can choose from. One of them is the
-     * correct answer.
+     * correct answer. Makes use of the selectColor and setUpAnswerOption methods.
      * @param index the index in the colorsPicked ArrayList that stores the correct color
      *              of the bubble.
      */
     public void randomizeOptions(int index)
     {
-        ArrayList<String> options = new ArrayList<>();
+        options = new ArrayList<>();
 
-        // Add correct answer to options ArrayList
-        String correctAnswer = colorsPicked.get(index);
-        options.add(correctAnswer);
-        allColors.remove(correctAnswer);
+        // Adds correct answer to options ArrayList
+        String correctAnswer = selectColor(index, colorsPicked);
 
-        // Add two other random colors to options ArrayList
+        // Adds two other random colors to options ArrayList
         Random random = new Random();
-        String color2 = allColors.get(random.nextInt(6));
-        options.add(color2);
-        allColors.remove(color2);
-        String color3 = allColors.get(random.nextInt(5));
-        options.add(color3);
+        String color2 = selectColor(random.nextInt(6), allColors);
+        String color3 = selectColor(random.nextInt(5), allColors);
 
-        // Reset allColors ArrayList
+        // Resets allColors ArrayList
         allColors.add(correctAnswer);
         allColors.add(color2);
+        allColors.add(color3);
 
-        // Randomly decide which button has which color
+        // Randomly decides which button has which color and set up these buttons
         index = random.nextInt(3);
-        String answer1 = options.get(index);
+        setUpAnswerOption(index, correctAnswer, option1);
+
+        index = random.nextInt(2);
+        setUpAnswerOption(index, correctAnswer, option2);
+
+        index = 0;
+        setUpAnswerOption(index, correctAnswer, option3);
+    }
+
+    /**
+     * Selects a color for the answer option from the ArrayList specified and ensures that none of
+     * the answer options show the same color.
+     * @param index - the index that the color of the answer option is stored at in the ArrayList
+     * @param colorsArrayList - the ArrayList to retrieve the color from
+     * @return the color of the answer option (as a String)
+     */
+    public String selectColor(int index, ArrayList<String> colorsArrayList)
+    {
+        String answer = colorsArrayList.get(index);
+        options.add(answer);
+
+        // So that none of the answer options show the same color
+        allColors.remove(answer);
+        return answer;
+    }
+
+    /**
+     * Sets up the answer button by changing its background to the PNG file with the appropriate
+     * color. Makes use of the setUpCorrectButton and setUpWrongButton methods so that the answer
+     * button completes the appropriate actions when clicked on.
+     * @param index - the index that the color of the answer option is stored at in the options
+     *                ArrayList
+     * @param correctAnswer - the correct color of the bubble
+     * @param option - the answer button that will be set up
+     */
+    public void setUpAnswerOption(int index, String correctAnswer, Button option){
+        // Randomly picks a color from the options ArrayList for the answer button
+        String answer = options.get(index);
+
+        // So that none of the options show the same color
         options.remove(index);
-        String imageName = answer1 + BubbleConstants.BUBBLE;
+
+        String imageName = answer + BubbleConstants.BUBBLE;
 
         // https://stackoverflow.com/questions/15545753/random-genaration-of-image-from-drawable-folder-in-android
         int imageID = getResources().getIdentifier(imageName,
-                                                   BubbleConstants.DRAWABLE,
-                                                   getPackageName());
+                BubbleConstants.DRAWABLE,
+                getPackageName());
 
-        // Sets up the first answer option
-        option1.setBackgroundResource(imageID);
-        option1.setText(answer1);
-        if (answer1.equals(correctAnswer))
+        //Sets the option button's background to the appropriate PNG file and updates its text
+        option.setBackgroundResource(imageID);
+        option.setText(answer);
+
+        // Sets the option's onClickListener depending on whether it shows the correct answer
+        if (answer.equals(correctAnswer))
         {
-            setUpCorrectButton(option1);
+            setUpCorrectButton(option);
         }
         else
         {
-            setUpWrongButton(option1);
-        }
-
-        // Sets up the second answer option
-        index = random.nextInt(2);
-        String answer2 = options.get(index);
-        options.remove(index);
-        imageName = answer2 + BubbleConstants.BUBBLE;
-        imageID = getResources().getIdentifier(imageName,
-                                               BubbleConstants.DRAWABLE,
-                                               getPackageName());
-        option2.setBackgroundResource(imageID);
-        option2.setText(answer2);
-        if (answer2.equals(correctAnswer))
-        {
-            setUpCorrectButton(option2);
-        }
-        else
-        {
-            setUpWrongButton(option2);
-        }
-
-        // Sets up the third answer option
-        String answer3 = options.get(0);
-        imageName = answer3 + BubbleConstants.BUBBLE;
-        imageID = getResources().getIdentifier(imageName,
-                                               BubbleConstants.DRAWABLE,
-                                               getPackageName());
-        option3.setBackgroundResource(imageID);
-        option3.setText(answer3);
-        if (answer3.equals(correctAnswer))
-        {
-            setUpCorrectButton(option3);
-        }
-        else
-        {
-            setUpWrongButton(option3);
+            setUpWrongButton(option);
         }
     }
 
