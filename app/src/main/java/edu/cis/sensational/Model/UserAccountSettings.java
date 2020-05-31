@@ -4,7 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by User on 6/29/2017.
+ * @author Nicole Xiang
+ * Created on 23/03/2020.
  */
 
 public class UserAccountSettings implements Parcelable{

@@ -38,7 +38,6 @@ import java.util.Map;
 import edu.cis.sensational.Controller.Profile.AccountSettingsActivity;
 import edu.cis.sensational.R;
 import edu.cis.sensational.Model.Comment;
-import edu.cis.sensational.Model.Likes;
 import edu.cis.sensational.Model.User;
 import edu.cis.sensational.Model.UserAccountSettings;
 import edu.cis.sensational.Model.UserSettings;

@@ -1,9 +1,7 @@
 package edu.cis.sensational.Model.Utils;
 
 import android.content.Context;
-import android.telecom.Call;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,29 +24,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.Model.Comment;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.Model.User;
 import edu.cis.sensational.Model.UserAccountSettings;
 import edu.cis.sensational.Model.UserSettings;
 import edu.cis.sensational.R;
-//import edu.cis.instagramclone.View.materialcamera.MaterialCamera;
-//import edu.cis.instagramclone.Model.Comment;
-//import edu.cis.instagramclone.Model.Like;
-//import edu.cis.instagramclone.Model.Photo;
-//import edu.cis.instagramclone.Model.Story;
 
 /**
- * Created by User on 6/26/2017.
+ * @author Nicole Xiang
+ * Created on 23/03/2020.
  */
 
 public class FirebaseMethods {
 
-    private static final String TAG = "FirebaseMethods";
-
-    //firebase
+    // firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase mFirebaseDatabase;
@@ -56,9 +46,9 @@ public class FirebaseMethods {
     private StorageReference mStorageReference;
     private String userID;
 
-    //vars
+    // vars
     private Context mContext;
-    private double mPhotoUploadProgress = 0;
+    private static final String TAG = "FirebaseMethods";
 
     public FirebaseMethods(Context context) {
         mAuth = FirebaseAuth.getInstance();
@@ -67,13 +57,19 @@ public class FirebaseMethods {
         mStorageReference = FirebaseStorage.getInstance().getReference();
         mContext = context;
 
-        if (mAuth.getCurrentUser() != null) {
-            userID = mAuth.getCurrentUser().getUid();
+        if (mAuth.getCurrentUser() != null) {           // Checks if there's a User logged in
+            userID = mAuth.getCurrentUser().getUid();   // Retrieves the current User's userID
         }
     }
 
+    /**
+     * Retrieves the instantaneous time when the method is called
+     *
+     * @return sdf
+     */
     private String getTimestamp() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"
+                , Locale.CANADA);
         sdf.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));
         return sdf.format(new Date());
     }
@@ -91,14 +87,14 @@ public class FirebaseMethods {
     public boolean createNewPost(String title, String description,
                                  String tags, boolean privatePost){
 
-        // Create empty ArrayLists to initialize the Comments and Likes fields
+        // Create empty ArrayLists to initialize the comments and likes fields
         ArrayList<String> initLikes = new ArrayList();
         ArrayList<Comment> initComments = new ArrayList();
 
-        // retrieve a key for the postID
+        // Retrieve a key for the postID
         String newPostKey = myRef.child(mContext.getString(R.string.dbname_posts)).push().getKey();
 
-        // create a new Post object and set the values given
+        // Create a new Post object and set the values given
         Post post = new Post();
         post.setTitle(title);
         post.setDescription(description);
@@ -111,13 +107,22 @@ public class FirebaseMethods {
         post.setPrivate(privatePost);
         post.setPostID(newPostKey);
 
-        // upload the post to the database
+        // Upload the post to the database
         uploadNewPost(post, tags);
 
         return true;
-        // TODO figure out a way to listen back from the databse whether or not this has succeeded.
     }
 
+    /**
+     * Updates the likes String of the corresponding Post on database
+     * Accesses the posts, user_posts, and user_likes nodes
+     * Adds the UserID of the User that liked the Post to Firebase
+     *
+     * @param post_id
+     * @param userID
+     * @param post
+     *
+     */
     public void upvoteButtonPressed(final String post_id, final String userID, final Post post){
 
         post.setLikeCount(post.getLikeCount() + 1);
@@ -148,7 +153,6 @@ public class FirebaseMethods {
                         .child(userID)
                         .child(post_id)
                         .setValue(post);
-
                 upvote(post_id);
             }
 
@@ -159,6 +163,11 @@ public class FirebaseMethods {
         });
     }
 
+    /**
+     * Searches through the Database to retrieve the post's current upvote number and adds one
+     *
+     * @param post_id
+     */
     public void upvote(String post_id){
         final String postID = post_id;
 
@@ -190,6 +199,16 @@ public class FirebaseMethods {
         });
     }
 
+    /**
+     * Updates the unlikes String of the corresponding Post on database
+     * Accesses the posts, user_posts, and user_unlikes nodes
+     * Adds the UserID of the User that unliked the Post to Firebase
+     *
+     * @param post_id
+     * @param userID
+     * @param post
+     *
+     */
     public void downvoteButtonPressed(final String post_id, final String userID, final Post post){
 
         post.setLikeCount(post.getLikeCount() - 1);
@@ -231,6 +250,11 @@ public class FirebaseMethods {
         });
     }
 
+    /**
+     * Searches through the Database to retrieve the post's current upvote number and minuses one
+     *
+     * @param post_id
+     */
     public void downvote(String post_id){
         final String postID = post_id;
 
@@ -318,6 +342,13 @@ public class FirebaseMethods {
         Log.d(TAG, "New comment set.");
     }
 
+    /**
+     * Updates the user's account's settings on Firebase
+     *
+     * @param location
+     * @param age
+     * @param information
+     */
     public void updateUserAccountSettings(String location, String age, String information) {
 
         Log.d(TAG, "updateUserAccountSettings: updating user account settings.");
@@ -368,7 +399,6 @@ public class FirebaseMethods {
      *
      * @param email
      */
-
     public void updateEmail(String email) {
         Log.d(TAG, "updateEmail: updating email to: " + email);
 
@@ -378,6 +408,11 @@ public class FirebaseMethods {
                 .setValue(email);
     }
 
+    /**
+     * update the password in the 'users' node
+     *
+     * @param password
+     */
     public void updatePassword(String password) {
         Log.d(TAG, "updatePassword: updating password to: " + password);
 
@@ -388,13 +423,12 @@ public class FirebaseMethods {
     }
 
     /**
-     * Register a new email and password to Firebase Authentication
+     * Register a new email and password to Firebase authentication
      *
      * @param email
      * @param password
      * @param username
      */
-
     public void registerNewEmail(final String email, String password, final String username) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -403,16 +437,20 @@ public class FirebaseMethods {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         // If the task fails, display a message to the user.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(mContext, R.string.auth_failed,
+                            Log.d(TAG, R.string.auth_failed + "");
+                            Toast.makeText(mContext, "An account with this email already " +
+                                            "registered. Please login or check your inbox.",
                                     Toast.LENGTH_SHORT).show();
                             // If task succeeds, this happens
                         } else if (task.isSuccessful()) {
-                            //sends verification email to the registration email inbox
+                            // sends verification email to the registration email inbox
                             sendVerificationEmail();
-                            //the auth state listener will be notified and signed in user can be handled in the listener.
+                            // the auth state listener will be notified and
+                            // signed in user can be handled in the listener.
                             userID = mAuth.getCurrentUser().getUid();
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
-                            Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "Signup successful. Sending " +
+                                    "verification email.", Toast.LENGTH_SHORT).show();
                             addNewUser(email, username);
                         }
                     }
@@ -430,10 +468,14 @@ public class FirebaseMethods {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
+                            if (task.isSuccessful())
+                            {
 
-                            } else {
-                                Toast.makeText(mContext, "couldn't send verification email.", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(mContext, "couldn't send verification email."
+                                        , Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -471,7 +513,6 @@ public class FirebaseMethods {
                 .child(userID)
                 .setValue(settings);
     }
-
 
     /**
      * Retrieves the account settings for the user currently logged in
@@ -525,9 +566,11 @@ public class FirebaseMethods {
                                     .getPosts()
                     );
 
-                    Log.d(TAG, "getUserAccountSettings: retrieved user_account_settings information: " + settings.toString());
+                    Log.d(TAG, "getUserAccountSettings: " +
+                            "retrieved user_account_settings information: " + settings.toString());
                 } catch (NullPointerException e) {
-                    Log.e(TAG, "getUserAccountSettings: NullPointerException: " + e.getMessage());
+                    Log.e(TAG, "getUserAccountSettings: " +
+                            "NullPointerException: " + e.getMessage());
                 }
             }
 
@@ -552,7 +595,8 @@ public class FirebaseMethods {
                                 .getUser_id()
                 );
 
-                Log.d(TAG, "getUserAccountSettings: retrieved users information: " + user.toString());
+                Log.d(TAG, "getUserAccountSettings: " +
+                        "retrieved users information: " + user.toString());
             }
         }
         return new UserSettings(user, settings);
@@ -605,46 +649,28 @@ public class FirebaseMethods {
 
     // https://stackoverflow.com/questions/47847694/how-to-return-datasnapshot-value-as-a-result-of-a-method
 
-    /**
-     * Creates a callback interface
-     */
     public interface Callback
     {
         void onCallBack(int value);
     }
 
-    /**
-     * Uses user ID to update total user score on firebase by adding current user score and retrieve
-     * it by using callbacks
-     * @param userID
-     * @param scoretoinsert
-     * @param callback
-     */
     public void updateUserScore(final String userID, final int scoretoinsert,
-                                final Callback callback)
-    {
-        if (myRef != null)
-        {
+                                final Callback callback) {
+        if (myRef != null) {
             final DatabaseReference userRef = myRef.child("user_scores")
                     .child("user_id")
                     .child(userID)
                     .child("user_score")
                     .child("totalscore");
 
-                userRef.addListenerForSingleValueEvent(new ValueEventListener()
-                {
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-                    {
-                        //add current user score to total score
-                        if (dataSnapshot.getValue() != null)
-                        {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() != null) {
                             int score = scoretoinsert + dataSnapshot.getValue(Integer.class);
                             userRef.setValue(score);
                             callback.onCallBack(score);
                         }
-
-                        //for first time users, directly set the user score as total score
                         if (dataSnapshot.getValue() == null)
                         {
                             userRef.setValue(scoretoinsert);
@@ -653,8 +679,7 @@ public class FirebaseMethods {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error)
-                    {
+                    public void onCancelled(@NonNull DatabaseError error) {
                         Log.w(TAG, "Failed to retrieve user score.", error.toException());
                     }
                 });
@@ -662,19 +687,14 @@ public class FirebaseMethods {
     }
 
 
-    /**
-     * Uses user ID to compare current user score with current highscore on the database
-     * @param userID
-     * @param score
-     * @param callback
-     */
-    public void checkHighScore(final String userID, final int score, final Callback callback)
+    public void checkHighScore(final String userID, final Callback callback)
     {
         final DatabaseReference userRef = myRef.child("user_scores")
                 .child("user_id")
                 .child(userID)
                 .child("user_score")
                 .child("colorizehighscore");
+
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener()
         {
@@ -688,8 +708,9 @@ public class FirebaseMethods {
                 }
                 if (dataSnapshot.getValue() == null)
                 {
-                    userRef.setValue(score);
+                    userRef.setValue(0);
                 }
+
             }
 
             @Override
@@ -701,11 +722,6 @@ public class FirebaseMethods {
 
     }
 
-    /**
-     * Uses user ID to store the updated user high score on Firebase
-     * @param userID
-     * @param score
-     */
     public void storeHighScore(final String userID, final int score)
     {
         final DatabaseReference userRef = myRef.child("user_scores")
@@ -716,43 +732,5 @@ public class FirebaseMethods {
 
         userRef.setValue(score);
 
-    }
-
-    /**
-     * Uses user ID to set and display current score and high score for first time users
-     * @param userID
-     * @param score
-     * @param currentScore
-     * @param highScore
-     */
-    public void initialStoring(final String userID, final int score, final TextView currentScore,
-                               final TextView highScore)
-    {
-        final DatabaseReference userRef = myRef.child("user_scores")
-                .child("user_id")
-                .child(userID)
-                .child("user_score")
-                .child("colorizehighscore");
-
-        userRef.addListenerForSingleValueEvent(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-            {
-                //for first time users, their highscore is null, so the score for the first round
-                //will be their current score and highscore
-                if (dataSnapshot.getValue() == null)
-                {
-                    userRef.setValue(score);
-                    currentScore.setText(""+score);
-                    highScore.setText(GameConstants.DISPLAYHIGHSCORE +score);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError)
-            {
-
-            }
-        });
     }
 }

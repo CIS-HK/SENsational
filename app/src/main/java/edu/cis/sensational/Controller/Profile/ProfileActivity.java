@@ -26,10 +26,7 @@ import edu.cis.sensational.Model.UserAccountSettings;
 import edu.cis.sensational.Model.UserSettings;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
-//import edu.cis.instagramclone.Model.Utils.ViewCommentsFragment;
-//import edu.cis.sensational.Model.Utils.ViewPostFragment;
 import edu.cis.sensational.Model.Utils.ViewProfileFragment;
-//import edu.cis.instagramclone.Model.Photo;
 import edu.cis.sensational.Model.User;
 
 /**

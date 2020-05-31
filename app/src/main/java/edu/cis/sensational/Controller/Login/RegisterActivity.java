@@ -24,10 +24,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import edu.cis.sensational.R;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
-import edu.cis.sensational.Model.User;
 
 /**
- * Created by User on 6/19/2017.
+ * @author Nicole Xiang
+ * Created on 23/03/2020.
  */
 
 public class RegisterActivity extends AppCompatActivity {
@@ -60,13 +60,17 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: started.");
 
         initWidgets();
-//        setupFirebaseAuth();
         init();
+
     }
 
+    /**
+     * Sets up the register page widgets
+     * Sets up OnClickListener for the register button
+     */
     private void init(){
         backButton = findViewById(R.id.backButton);
-        //when the REGISTER button is clicked, this happens
+        // When the REGISTER button is clicked
         btnRegister.setOnClickListener(new View.OnClickListener() { /***** Part 2: this a creates listener for the register button and register a new email *****/
         @Override
         public void onClick(View v) {
@@ -79,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
             if(checkInputs(email, username, password)){
                 // Use a firebaseMethod to register the new email
                 firebaseMethods.registerNewEmail(email, password, username);
+                // Moves to the Login page
                 Intent intent = new Intent(mContext,
                         LoginActivity.class);
                 startActivity(intent);
@@ -86,6 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         });
 
+        // Sets up the back button to return to the login page
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,15 +102,24 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Checks that all the parameters are valid
+     *
+     * @param email
+     * @param username
+     * @param password
+     *
+     * @return boolean
+     */
     private boolean checkInputs(String email, String username, String password){
         Log.d(TAG, "checkInputs: checking inputs for null values.");
-
         // Checking if any of the parameters are null
         if(email.equals("") || username.equals("") || password.equals("")){
-            Toast.makeText(mContext, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "All fields must be filled out."
+                    , Toast.LENGTH_SHORT).show();
             return false;
         }
-        return true;
+        return true;        // Returns true if all parameters pass
     }
 
     /**
@@ -114,20 +129,9 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, "initWidgets: Initializing Widgets.");
         mEmail = (EditText) findViewById(R.id.input_email);
         mUsername = (EditText) findViewById(R.id.input_username);
-        btnRegister = (Button) findViewById(R.id.signUpButton);
         mPassword = (EditText) findViewById(R.id.input_password);
+        btnRegister = (Button) findViewById(R.id.signUpButton);
         mContext = RegisterActivity.this;
-    }
-
-    private boolean isStringNull(String string){
-        Log.d(TAG, "isStringNull: checking string if null.");
-
-        if(string.equals("")){
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 
      /*
@@ -135,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
      */
 
     /**
-     * Check is @param username already exists in teh database
+     * Check is @param username already exists in the database
      * @param username
      */
     private void checkIfUsernameExists(final String username) {
@@ -144,31 +148,31 @@ public class RegisterActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
                 .child(getString(R.string.dbname_users))
-                .orderByChild(getString(R.string.field_username))
-                .equalTo(username);
+                .orderByChild(getString(R.string.field_user_id))
+                .orderByChild(getString(R.string.field_username));
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
-                    if (singleSnapshot.exists()){
-                        Log.d(TAG, "checkIfUsernameExists: FOUND A MATCH: " + singleSnapshot.getValue(User.class).getUsername());
-                        append = myRef.push().getKey().substring(3,10);
-                        Log.d(TAG, "onDataChange: username already exists. Appending random string to name: " + append);
+                    if (singleSnapshot.equals(username)){
+                        Toast.makeText(mContext, "Username already exists. " +
+                                "Please input another.", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        // Add new user to the database
+                        firebaseMethods.addNewUser(email, username);
+                        Toast.makeText(mContext, "Sending verification email."
+                                , Toast.LENGTH_SHORT).show();
+
+                        mAuth.signOut();
                     }
                 }
-
-                //add new user to the database
-                firebaseMethods.addNewUser(email, username);
-
-                Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
-
-                mAuth.signOut();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "checking username failed.");
+                Log.d(TAG, "Checking username failed.");
             }
         });
     }

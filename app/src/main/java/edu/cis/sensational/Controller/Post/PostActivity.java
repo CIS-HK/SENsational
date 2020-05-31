@@ -3,11 +3,8 @@ package edu.cis.sensational.Controller.Post;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.cis.sensational.Controller.Home.HomeActivity;
-import edu.cis.sensational.Controller.Login.RegisterActivity;
-import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
-
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,29 +17,23 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class PostActivity extends AppCompatActivity {
 
+    // Firebase and context
     private static final String TAG = "PostActivity";
-
-    private EditText mTitle, mDescription, mTag;
-
-    private String title, description, tag;
-    private boolean privatePost;
-
-    private Button postButton, backButton;
-
-    private Switch privateSwitch;
-
+    final Context context = this;
     private Context mContext;
-
-    private String userID;
-
     private FirebaseAuth mAuth;
 
-    final Context context = this;
+    // widgets
+    private EditText mTitle, mDescription, mTag;
+    private Button postButton, backButton;
+    private Switch privateSwitch;
+
+    // vars
+    private String title, description, tag, userID;
+    private boolean privatePost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,21 +50,33 @@ public class PostActivity extends AppCompatActivity {
         init();
     }
 
+    /**
+     * Sets up all widgets on the page
+     */
     private void initWidgets(){
         Log.d(TAG, "initWidgets: Initializing Widgets.");
+
+        // Set up the text widgets
         mTitle = (EditText) findViewById(R.id.titleInput);
         mDescription = (EditText) findViewById(R.id.descriptionInput);
         mTag = (EditText) findViewById(R.id.tagInput);
 
+        // Set up the buttons
         postButton = (Button) findViewById(R.id.newPostButton);
         backButton = (Button) findViewById(R.id.backButton);
 
+        // Set up the switch
         privateSwitch = (Switch) findViewById(R.id.privateSwitch);
         privateSwitch.setChecked(false);
 
+        // Set up the context
         mContext = PostActivity.this;
     }
 
+    /**
+     * Initializes the buttons for ClickListeners
+     * Calls the posting methods or the return to homepage method on command
+     */
     private void init(){
         // When the Post Button is clicked
         postButton.setOnClickListener(new View.OnClickListener() {
@@ -83,17 +86,18 @@ public class PostActivity extends AppCompatActivity {
                 title = mTitle.getText().toString();
                 description = mDescription.getText().toString();
                 tag = mTag.getText().toString();
+
                 // Retrieve the status of the private/public posting setting
-                if(privateSwitch.isChecked()) // If private posting was selected
+                if(privateSwitch.isChecked())               // If private posting was selected
                 {
-                    privatePost = true; // Set private status to true
+                    privatePost = true;                     // Set private status to true
                 }
-                else // If public posting was selected
+                else                                        // If public posting was selected
                 {
-                    privatePost = false; // Set private status to false
+                    privatePost = false;                    // Set private status to false
                 }
-                // Check that the inputs are valid
-                if(checkInputs(title, description, tag)){
+
+                if(checkInputs(title, description, tag)){   // Check that the inputs are valid
                     // Call for the creation of a new Post on Firebase
                     FirebaseMethods firebaseMethods =
                             new FirebaseMethods(PostActivity.this);
@@ -109,17 +113,15 @@ public class PostActivity extends AppCompatActivity {
                     // If posting was unsuccessful:
                     else
                     {
+                        // Prompt the user to try again
                         Toast.makeText(mContext, "Posting unsuccessful. Try again."
                                 , Toast.LENGTH_SHORT).show();
                     }
                 }
-                else{
-//                    Toast.makeText(mContext, "Inputs are invalid. Try again."
-//                            , Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
+        // Set up back button to return to homepage
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +134,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks that all the parameters are valid (ie. not null)
+     * Checks that all the parameters are valid
      *
      * @param title
      * @param description
@@ -141,40 +143,56 @@ public class PostActivity extends AppCompatActivity {
      * @return boolean
      */
     private boolean checkInputs(String title, String description, String tag){
+        Log.d(TAG, "checkInputs: checking inputs for abnormal/unaccepted values.");
 
+        // Splits the tag into separate words
         String [] tagArray = tag.trim().split(" ");
 
-        Log.d(TAG, "checkInputs: checking inputs for null values.");
+        // Checks if there are any null inputs
         if(title.equals("") || description.equals("") || tag.equals("")){
-            Toast.makeText(mContext, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "All fields must be filled out."
+                    , Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if (title.length() > 45){
-            Log.d(TAG, "checkInputs: checking title input for more than 40 characters.");
-            Toast.makeText(mContext,"Please input shorter title.", Toast.LENGTH_SHORT).show();
+        else if (title.length() > 45){          // Checks if the title input exceeds 45 characters
+            Toast.makeText(mContext,"Please input shorter title."
+                    , Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if(tagArray.length != 1){
-            Log.d(TAG, "checkInputs: checking tag input for more than one value.");
-            Toast.makeText(mContext,"Please input only one tag.", Toast.LENGTH_SHORT).show();
+        else if(tagArray.length != 1){          // Checks if there were multiple words in the tag
+            Toast.makeText(mContext,"Please input only one tag."
+                    , Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if(isAlpha(tag)){
-            Log.d(TAG, "checkInputs: checking tag input ");
-            Toast.makeText(mContext, "Please input a tag that only contains letters.", Toast.LENGTH_SHORT).show();
+        else if(tag.length() > 10){             // Checks if the tag input exceeds 10 characters
+            Toast.makeText(mContext,"Please input only one tag."
+                    , Toast.LENGTH_SHORT).show();
             return false;
         }
-        return true;
+        else if(isNotAlpha(tag)){               // Checks if the tag input contains symbols
+            Toast.makeText(mContext, "Please input a tag that only contains letters."
+                    , Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;                            // Returns true if all inputs pass
     }
 
-    public boolean isAlpha(String name) {
-        char[] chars = name.toCharArray();
 
-        for (char c : chars) {
-            if(!Character.isLetter(c)) {
+    /**
+     * Checks that the parameter contains alphabetical letters only
+     *
+     * @param word
+     *
+     * @return boolean
+     */
+    public boolean isNotAlpha(String word) {
+        char[] chars = word.toCharArray();      // Splits the word into individual characters
+
+        for (char c : chars) {                  // Loops through the characters in the array
+            if(!Character.isLetter(c)) {        // Checks if the character is a letter
                 return true;
             }
         }
-        return false;
+        return false;                           // Returns false if all characters are letters
     }
 }

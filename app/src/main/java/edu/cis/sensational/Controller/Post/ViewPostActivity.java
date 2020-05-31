@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +39,8 @@ import edu.cis.sensational.Model.User;
 import edu.cis.sensational.Model.UserAccountSettings;
 
 /**
- * Created by Nicole Xiang on 29/04/2020.
+ * @author Nicole Xiang
+ * Created on 23/03/2020.
  */
 
 public class ViewPostActivity extends AppCompatActivity {
@@ -75,22 +77,20 @@ public class ViewPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
         Log.d(TAG, "onCreate: started.");
-
         setupFirebaseAuth();
-
         if (mAuth.getCurrentUser() != null) {
             userID = mAuth.getCurrentUser().getUid();
         }
-
         //https://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-in-android-application
         currentPost = getIntent().getStringExtra("Post");
         currentUser = getIntent().getStringExtra("User");
-
         init();
         initWidgets();
-
     }
 
+    /**
+     * Sets up the all the widgets on the page
+     */
     private void initWidgets(){
         // initialize the text widgets
         title = (TextView) findViewById(R.id.titleView);
@@ -103,15 +103,16 @@ public class ViewPostActivity extends AppCompatActivity {
         //https://stackoverflow.com/questions/1748977/making-textview-scrollable-on-android
         description.setMovementMethod(new ScrollingMovementMethod());
 
-        // initialize the buttons
+        // Initialize the buttons
         backButton = (Button) findViewById(R.id.backButton);
         upvote = (Button) findViewById(R.id.upvoteButton);
         downvote = (Button) findViewById(R.id.downvoteButton);
         commentButton = (Button) findViewById(R.id.commentButton);
 
-        // initialize the recyclerView
+        // Initialize the recyclerView
         commentsView = (RecyclerView) findViewById(R.id.commentView);
 
+        // Bring the user back to the home feed page if back button is pressed
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,23 +122,33 @@ public class ViewPostActivity extends AppCompatActivity {
             }
         });
 
+        // Call the makeComment method if comment button is pressed
         commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Get the inputted comment text
                 commentText = comment.getText().toString();
-                // Call the makeComment method with the corresponding arguments
-                FirebaseMethods firebaseMethods =
-                        new FirebaseMethods(ViewPostActivity.this);
-                firebaseMethods.makeComment(mPost, currentPost, commentText);
-                // Update the comments displayed on the page
-                displayComments();
-                // Clear the comment input text box
-                comment.setText("");
-                // TODO need to check inputs to ensure they are valid.
+                // Checks if the text is invalid (ie. is empty or just filled with spaces)
+                if (commentText.isEmpty() || commentText.
+                        replaceAll(" ","").isEmpty()){
+                    // Prompt the user to input text
+                    Toast.makeText(context, "Please input some text."
+                            , Toast.LENGTH_SHORT).show();
+                }
+                else {  // If text is valid
+                    // Call the makeComment method with the corresponding arguments
+                    FirebaseMethods firebaseMethods =
+                            new FirebaseMethods(ViewPostActivity.this);
+                    firebaseMethods.makeComment(mPost, currentPost, commentText);
+                    // Update the comments displayed on the page
+                    displayComments();
+                    // Clear the comment input text box
+                    comment.setText("");
+                }
             }
         });
 
+        // Call the upvote method if the upvote button is pressed
         upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +165,7 @@ public class ViewPostActivity extends AppCompatActivity {
             }
         });
 
+        // Call the downvote method if the downvote button is pressed
         downvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,7 +181,6 @@ public class ViewPostActivity extends AppCompatActivity {
                 setUpVotes();
             }
         });
-
     }
 
     /**
@@ -178,14 +189,15 @@ public class ViewPostActivity extends AppCompatActivity {
     public void displayComments(){
         // Retrieve the current comments from the Post object
         ArrayList<Comment> commentsList = mPost.getComments();
-
         // Displays the comments on a RecyclerView adapter
         CommentsAdapter myAdapter = new CommentsAdapter(commentsList);
         commentsView.setAdapter(myAdapter);
         commentsView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-
+    /**
+     * Searches through Firebase for the desired Post
+     */
     private void init(){
         try{
             // Create a new query that goes through the posts node
@@ -197,10 +209,8 @@ public class ViewPostActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
-
                         // Retrieves the Post and sets it to the class Post variable
                         mPost = singleSnapshot.getValue(Post.class);
-
                         // Calls the methods which sets up the information on the page
                         getCurrentUser();
                         getPostDetails();
@@ -300,26 +310,28 @@ public class ViewPostActivity extends AppCompatActivity {
      */
     private void setUpVotes()
     {
+        // Loop through all the userIDs that liked this current Post
         for(String like: mPost.getLikes()){
+            // If the system finds a match with the current User
             if(like.equals(userID)){
-                upvote.setBackgroundColor(Color.BLUE);
-                upvote.setEnabled(false);
-                downvote.setEnabled(false);
-                upvote.setTextColor(Color.WHITE);
+                upvote.setBackgroundColor(Color.BLUE);      // Set the upvote button to blue
+                upvote.setTextColor(Color.WHITE);           // Set the upvote text to white
+                upvote.setEnabled(false);                   // Disable the upvote button
+                downvote.setEnabled(false);                 // Disable the downvote button
             }
         }
-
+        // Loop through all the userIDs that disliked this current Post
         for(String unlike: mPost.getUnLikes()){
+            // If the system finds a match with the current User
             if (unlike.equals(userID)) {
-                downvote.setBackgroundColor(Color.RED);
-                downvote.setEnabled(false);
-                upvote.setEnabled(false);
-                downvote.setTextColor(Color.WHITE);
+                downvote.setBackgroundColor(Color.RED);     // Set the downvote button to red
+                downvote.setTextColor(Color.WHITE);         // Set the downvote text to white
+                downvote.setEnabled(false);                 // Disable the downvote button
+                upvote.setEnabled(false);                   // Disable the upvote button
             }
         }
-
+        // Retrieve the number of votes for this Post and display it on the page
         likes.setText(mPost.getLikeCount() + "");
-
     }
 
     /*
@@ -340,7 +352,6 @@ public class ViewPostActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-
 
                 if (user != null) {
                     // User is signed in

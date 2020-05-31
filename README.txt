@@ -5,7 +5,7 @@ Date: 17th March, 2020
 
 ---- Program Purpose ----
 This program consists of games training executive function, calming tools and a parent forum
- for parents of SEN children.
+for parents of SEN children.
 
 ---- Installation ----
 Works for android API levels 21-29
@@ -226,3 +226,14 @@ Calming
 (anim) circleanimation -- Shrinks circle to 0.7 scale
 
 (anim) circleanimation2 -- Grows circle to 1.3 scale
+
+Forum
+(Activity) HomeActivity - This is the activity that provides the main feed for the forum feature.
+This activity allows the user to access on the functionality the forum provides:
+    1. Viewing of the Posts from the database
+    2. Searching of the Posts using tags
+    3. Adding new Posts
+    4. Switching between public and private posting
+    5. Returning to the MainActivity page of the app
+This activity has the following methods:
+    onCreate -

@@ -79,9 +79,8 @@ public class LoginActivity extends AppCompatActivity{
                 String emailString = mEmail.getText().toString();
                 String pwString = mPassword.getText().toString();
 
-                /*** CODE for 1b inside if statement parenthesis, should not be boolean "true" ***/
-                if( emailString.isEmpty() || pwString.isEmpty()){
-                    Toast.makeText(mContext, "Invalid input", Toast.LENGTH_SHORT).show();
+                if(emailString.isEmpty() || pwString.isEmpty()){
+                    Toast.makeText(mContext, "Please input your email and password.", Toast.LENGTH_SHORT).show();
                 }else{
 
                     mAuth.signInWithEmailAndPassword(emailString, pwString)
@@ -96,28 +95,23 @@ public class LoginActivity extends AppCompatActivity{
                                     // the auth state listener will be notified and logic to handle the
                                     // signed in user can be handled in the listener.
 
-                                    /*** CODE for 1e inside if statement parenthesis, should not be boolean "true" ***/
                                     if (!task.isSuccessful()) {
                                         Log.w(TAG, "signInWithEmail:failed", task.getException());
 
-                                        Toast.makeText(mContext, "Something went wrong. Please try again.",
+                                        Toast.makeText(mContext, "Incorrect email or password.\nPlease try again.",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                     else{ //if task was successful
                                         try{
-                                            /*** CODE for 1g inside if statement parenthesis, should not be boolean "true" ***/
                                             if(currentUser.isEmailVerified()){
                                                 Log.d(TAG, "onComplete: success. email is verified.");
-                                                /* Intent intent = new Intent(context,
-                                                        HomeActivity.class);
-                                                 */
                                                 Intent intent = new Intent(context,
                                                         MainActivity.class);
                                                 startActivity(intent);
                                             }
                                             else
                                             {
-                                                Toast.makeText(mContext, "Email is not verified \n check your email inbox.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(mContext, "Email is not verified.\nCheck your email inbox.", Toast.LENGTH_SHORT).show();
                                                 mAuth.signOut();
                                             }
 
@@ -125,8 +119,6 @@ public class LoginActivity extends AppCompatActivity{
                                             Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
                                         }
                                     }
-
-                                    // ...
                                 }
                             });
                 }

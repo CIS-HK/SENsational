@@ -3,13 +3,11 @@ package edu.cis.sensational.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-
 
 /**
- * Created by User on 7/29/2017.
+ * @author Nicole Xiang
+ * Created on 23/03/2020.
  */
 
 public class Post implements Parcelable {
@@ -19,10 +17,10 @@ public class Post implements Parcelable {
     private String date_created;
     private String user_id;
     private String tag;
+    private long likeCount;
     private ArrayList<String> likes;
     private ArrayList<String> unlikes;
     private ArrayList<Comment> comments;
-    private long likeCount;
     private boolean privatePost;
     private String postID;
 

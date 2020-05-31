@@ -1,7 +1,8 @@
 package edu.cis.sensational.Model;
 
 /**
- * Created by User on 6/30/2017.
+ * @author Nicole Xiang
+ * Created on 23/03/2020.
  */
 
 public class UserSettings {

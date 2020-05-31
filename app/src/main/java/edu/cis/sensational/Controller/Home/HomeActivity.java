@@ -40,25 +40,25 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
     private Context mContext = HomeActivity.this;
 
-    //firebase
+    // firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    //buttons
+    // buttons
     private Button addPostButton;
     private Button switchButton;
     private Button mainButton;
     private Button searchButton;
     private ImageButton refresh;
 
-    //text widgets
+    // text widgets
     private EditText searchField;
 
-    //recyclerView
+    // recyclerView
     private RecyclerView recView;
     HomeAdapter myAdapter;
 
-    //vars
+    // vars
     private String userID;
     final Context context = this;
 
@@ -72,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
         setUpButtons();
         setUpSearch();
 
+        // Retrieves the current user's ID
         if (mAuth.getCurrentUser() != null) {
             userID = mAuth.getCurrentUser().getUid();
         }
@@ -80,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up the home page
+     * Sets up the home page to display public Posts from all forum users
      */
     public void setUpPublicRecyclerView(){
         // initialize the recyclerView
@@ -114,6 +115,9 @@ public class HomeActivity extends AppCompatActivity {
         attendanceRef.addListenerForSingleValueEvent(valueEventListener);
     }
 
+    /**
+     * Sets up the home page to display Posts created by the current user that were set to private
+     */
     public void setUpPrivateRecyclerView(){
         // initialize the recyclerView
         recView = findViewById(R.id.recView);
@@ -145,6 +149,13 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up the RecyclerView for the Posts
+     * Sets up the OnCLickListener for the adapter to navigate to Posts
+     *
+     * @param values
+     *
+     */
     public void showPosts(ArrayList<Post> values){
 
         // Create empty ArrayLists to separate the main information from each Post
@@ -160,8 +171,8 @@ public class HomeActivity extends AppCompatActivity {
             IDList.add(post.getPostID());
         }
 
-        // inverting the order of the list so the most recent posts appear first
-        //https://www.techiedelight.com/reverse-list-java-inplace/
+        // Inverting the order of the list so the most recent posts appear first
+        // https://www.techiedelight.com/reverse-list-java-inplace/
         for (int i = 0, j = titleList.size() - 1; i < j; i++){
             titleList.add(i, titleList.remove(j));
             descriptionList.add(i, descriptionList.remove(j));
@@ -188,6 +199,10 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up the search widgets and onClick Listeners
+     * Calls search method and refreshes GUI on command
+     */
     public void setUpSearch(){
         // Set up the widgets
         searchField = (EditText) findViewById(R.id.searchField);
@@ -222,47 +237,72 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Checks that the parameter is valid (ie. the searched word is appropriate)
+     * Checks for null
+     * Checks for multiple words entered
+     * Checks for symbols
+     *
+     * @param text
+     *
+     * @return boolean
+     */
     private boolean checkInputs(String text){
-
         // Splits the text into separate words and stores each word in an array
         String [] array = text.trim().split(" ");
 
-        // Checks if the text is null
-        if(text.equals("")){
+        if(text.equals("")){                    // Checks if the text is null
             Log.d(TAG, "checkInputs: checking input for null.");
             Toast.makeText(mContext, "Please input a search word.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        // Checks if there were multiple words in the text
-        else if(array.length != 1){
+        else if(array.length != 1){             // Checks if there were multiple words in the text
             Log.d(TAG, "checkInputs: checking tag input for more than one value.");
             Toast.makeText(mContext,"Please input only one tag.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        // Checks if the text contains symbols
-        else if(isAlpha(text)){
+        else if(text.length() > 10){             // Checks if the tag input exceeds 10 characters
+            Toast.makeText(mContext,"Please input a proper word.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(isAlpha(text)){                 // Checks if the text contains symbols
             Log.d(TAG, "checkInputs: checking tag input ");
-            Toast.makeText(mContext, "Please input a tag that only contains letters.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Please input a tag that only contains letters."
+                    , Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
-    public boolean isAlpha(String name) {
-        char[] chars = name.toCharArray();
+    /**
+     * Checks that the parameter contains alphabetical letters only
+     *
+     * @param word
+     *
+     * @return boolean
+     */
+    public boolean isAlpha(String word) {
+        char[] chars = word.toCharArray();      // Splits the word into individual characters
 
-        for (char c : chars) {
-            if(!Character.isLetter(c)) {
+        for (char c : chars) {                  // Loops through the characters in the array
+            if(!Character.isLetter(c)) {        // Checks if the character is a letter
                 return true;
             }
         }
-        return false;
+        return false;                           // Returns false if all characters are letters
     }
 
+    /**
+     * Searches through the database for Posts with the inputted search word as a tag
+     * Retrieves the Posts and displays them on the page
+     *
+     * @param searchWord
+     */
     public void searchForTag(final String searchWord){
-        //TODO make the search accept extreme values
+        // Create a new ArrayList to store the Posts
         final ArrayList<Post> mPostList = new ArrayList<>();
 
+        // Search through the "tags" node on Firebase
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference attendanceRef = rootRef
                 .child("tags")
@@ -271,33 +311,47 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    // Retrieve the Post that matches the searchWord
                     Post value = ds.getValue(Post.class);
+                    // If the current view of the feed is on "Private"
                     if(switchButton.getText().equals("See Public")){
+                        // Check to see if the Post retrieved is a private Post
                         if(value.getPrivate() == true){
+                            // If yes, then add the Post to the ArrayList
                             mPostList.add(value);
                         }
                     }
+                    // If the current view of the feed is on "Public"
                     else if(switchButton.getText().equals("See Private")){
+                        // Check to see if the Post retrieved is a public Post
                         if(value.getPrivate() == false){
+                            // If yes, then add the Post to the ArrayList
                             mPostList.add(value);
                         }
-
                     }
                 }
+                // Display all the Posts in the ArrayList on the page
                 showPosts(mPostList);
+                // If there are no Posts to display
                 if(mPostList.size() == 0){
-                    Toast.makeText(mContext, "No posts with the tag: " + searchWord, Toast.LENGTH_SHORT).show();
+                    // Display a Toast to the user
+                    Toast.makeText(mContext, "No posts with the tag: " + searchWord,
+                            Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d(TAG, databaseError.getMessage());
+                Toast.makeText(mContext, "Something went wrong.", Toast.LENGTH_SHORT).show();
             }
         };
         attendanceRef.addListenerForSingleValueEvent(valueEventListener);
     }
 
+    /**
+     * Set up the buttons on the page
+     */
     public void setUpButtons()
     {
         // Initialize the bottom navigation buttons
@@ -305,6 +359,7 @@ public class HomeActivity extends AppCompatActivity {
         switchButton = (Button) findViewById(R.id.switchButton);
         mainButton = (Button) findViewById(R.id.mainButton);
 
+        // Button to add a Post
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -314,6 +369,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // Button to return to the main app page
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -323,6 +379,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // Button to switch public/private views
         switchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -330,13 +387,15 @@ public class HomeActivity extends AppCompatActivity {
                 if(switchButton.getText().equals("See Public")){
                     switchButton.setText("See Private");
                     setUpPublicRecyclerView();
-                    Toast.makeText(mContext, "Displaying public posts.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Displaying public posts."
+                            , Toast.LENGTH_SHORT).show();
                 }
                 // If the user wants to disaply private posts
                 else if(switchButton.getText().equals("See Private")){
                     switchButton.setText("See Public");
                     setUpPrivateRecyclerView();
-                    Toast.makeText(mContext, "Displaying private posts.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Displaying private posts."
+                            , Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -352,28 +411,25 @@ public class HomeActivity extends AppCompatActivity {
      */
     private void checkCurrentUser(FirebaseUser user){
         Log.d(TAG, "checkCurrentUser: checking if user is logged in.");
-
-        if(user == null){
+        if(user == null){   // If user is not logged in
+            // Take user to the login page
             Intent intent = new Intent(mContext, LoginActivity.class);
             startActivity(intent);
         }
     }
+
     /**
      * Setup the firebase auth object
      */
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
-
         mAuth = FirebaseAuth.getInstance();
-
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-
-                //check if the user is logged in
+                // Checks if the user is logged in
                 checkCurrentUser(user);
-
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -381,7 +437,6 @@ public class HomeActivity extends AppCompatActivity {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
     }
@@ -390,7 +445,6 @@ public class HomeActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-//        mViewPager.setCurrentItem(HOME_FRAGMENT);
         checkCurrentUser(mAuth.getCurrentUser());
     }
 
