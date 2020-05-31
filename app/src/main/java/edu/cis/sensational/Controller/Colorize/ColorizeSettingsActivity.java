@@ -5,23 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AdapterView.OnItemSelectedListener;
+
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import edu.cis.sensational.Controller.Home.HomeAdapter;
+
 import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.R;
 
@@ -29,8 +24,8 @@ import edu.cis.sensational.R;
  * The settings page prompts user to select their game preferences such as background, music and
  * time
  */
-public class ColorizeSettingsActivity extends AppCompatActivity {
-
+public class ColorizeSettingsActivity extends AppCompatActivity
+{
     Spinner timeSpinner;
     Button backButton;
     ArrayList<String> times;
@@ -118,7 +113,6 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
                 }
                 else
                 {
-
                     GameConstants.mediaPlayer.pause();
                     GameConstants.MUSIC = false;
                 }
@@ -136,7 +130,6 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
                //activity
                intent.putExtra(GameConstants.TIMESTRING,seconds);
                startActivity(intent);
-
            }
        });
 
@@ -208,5 +201,4 @@ public class ColorizeSettingsActivity extends AppCompatActivity {
 
         }
     }
-
 }

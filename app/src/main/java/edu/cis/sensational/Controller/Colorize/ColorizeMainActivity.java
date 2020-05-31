@@ -259,11 +259,15 @@ public class ColorizeMainActivity extends AppCompatActivity
             public void onClick(View view) {
 
                 counter.cancel();
+
+                // if the user chose the correct answer and is within time
                 if (answerOne.getText() == correctAnswer && timeLeft > GameConstants.ZERO )
                 {
                     counter.cancel();
                     GameConstants.SCORE ++;
                     scoreLabel.setText(""+ GameConstants.SCORE);
+
+                    //generate new question
                     addColors();
                     setUpGame();
                 }
@@ -272,6 +276,8 @@ public class ColorizeMainActivity extends AppCompatActivity
                 {
                     TastyToast.makeText(getApplicationContext(), GameConstants.WRONGANSWER,
                             TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+
+                    //direct user to end page
                     startActivity(new Intent(ColorizeMainActivity.this,
                             ColorizeEndActivity.class));
                     finish();
@@ -284,6 +290,7 @@ public class ColorizeMainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 counter.cancel();
+
                 if (answerTwo.getText() == correctAnswer && timeLeft > GameConstants.ZERO)
                 {
 

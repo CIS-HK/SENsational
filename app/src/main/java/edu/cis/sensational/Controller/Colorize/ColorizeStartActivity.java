@@ -33,7 +33,6 @@ public class ColorizeStartActivity extends AppCompatActivity
     int screenWidth, screenHeight;
     float brX,mlY,mrY,trX,tlX;
 
-
     Handler handler;
     Timer timer;
     Integer seconds;
@@ -65,15 +64,14 @@ public class ColorizeStartActivity extends AppCompatActivity
         setUpButtons();
         animation();
         getBundle();
-
     }
 
     /**
      * Sets up listeners for buttons on the screen to conduct specific action once the button is
      * clicked
      */
-
-    private void setUpButtons() {
+    private void setUpButtons()
+    {
         playButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -88,7 +86,6 @@ public class ColorizeStartActivity extends AppCompatActivity
                 //pass the bundle from this activity to the games activity
                 addBundle(intent);
                 startActivity(intent);
-
             }
         });
 
@@ -125,12 +122,9 @@ public class ColorizeStartActivity extends AppCompatActivity
                         ColorizeSettingsActivity.class));
             }
         });
-
     }
 
-
     //https://www.youtube.com/watch?v=UxbJKNjQWD8&app=desktop
-
     /**
      * Sets a timer to run the changePosition method indefinitely
      */
@@ -159,7 +153,6 @@ public class ColorizeStartActivity extends AppCompatActivity
         };
 
         timer.schedule(update,GameConstants.DELAY,GameConstants.PERIOD);
-
     }
 
     /**
@@ -218,7 +211,6 @@ public class ColorizeStartActivity extends AppCompatActivity
      */
     public void getBundle()
     {
-        //get the data from the bundle sent from the Settings page by using the String Key
         if(getIntent().getExtras() != null)
         {
             Bundle b = getIntent().getExtras();
@@ -239,6 +231,5 @@ public class ColorizeStartActivity extends AppCompatActivity
     {
         intent.putExtra(GameConstants.TIMESTRING, seconds);
     }
-
 }
 

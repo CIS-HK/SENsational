@@ -620,8 +620,7 @@ public class FirebaseMethods {
      * @param scoretoinsert
      * @param callback
      */
-    public void updateUserScore(final String userID,
-                                final int scoretoinsert,
+    public void updateUserScore(final String userID, final int scoretoinsert,
                                 final Callback callback)
     {
         if (myRef != null)
@@ -637,12 +636,15 @@ public class FirebaseMethods {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                     {
+                        //add current user score to total score
                         if (dataSnapshot.getValue() != null)
                         {
                             int score = scoretoinsert + dataSnapshot.getValue(Integer.class);
                             userRef.setValue(score);
                             callback.onCallBack(score);
                         }
+
+                        //for first time users, directly set the user score as total score
                         if (dataSnapshot.getValue() == null)
                         {
                             userRef.setValue(scoretoinsert);
@@ -688,7 +690,6 @@ public class FirebaseMethods {
                 {
                     userRef.setValue(score);
                 }
-
             }
 
             @Override
@@ -748,7 +749,8 @@ public class FirebaseMethods {
                 }
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
 
             }
         });

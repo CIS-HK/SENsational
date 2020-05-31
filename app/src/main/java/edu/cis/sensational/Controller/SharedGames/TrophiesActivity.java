@@ -16,6 +16,10 @@ import edu.cis.sensational.Model.SharedGamesConstants;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
 
+/**
+ * This page displays the trophies that the user earned, the upcoming trophy and the total user
+ * score
+ */
 public class TrophiesActivity extends AppCompatActivity
 {
     private Button back;
@@ -30,6 +34,10 @@ public class TrophiesActivity extends AppCompatActivity
     private TextView nextTrophyNum;
     private ImageView nextTrophySmiley;
 
+    /**
+     * Creates and identifies the various components on screen like buttons and labeles
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -38,27 +46,23 @@ public class TrophiesActivity extends AppCompatActivity
 
         totalScore = findViewById(R.id.totalScore2);
         back = findViewById(R.id.backB);
-
-        // Set up back button
         back.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                // Proceeds to GamesSharedActivity
                 startActivity(new Intent(TrophiesActivity.this,
                                           GamesSharedActivity.class));
             }
         });
 
-        // Sets up RecyclerView to display trophies won
         allTrophies = findViewById(R.id.trophiesRecyclerView);
         nextTrophy = findViewById(R.id.nextTrophy);
         nextTrophyName = findViewById(R.id.trophyName2);
         nextTrophyNum = findViewById(R.id.trophyNum2);
         nextTrophySmiley = findViewById(R.id.trophySmiley2);
 
-        // Creates all trophies
+        //add trophies to trophies list
         trophies = new ArrayList<>();
         int imageID = getResources().getIdentifier(SharedGamesConstants.REDTROPHY1,
                 BubbleConstants.DRAWABLE,
@@ -95,7 +99,7 @@ public class TrophiesActivity extends AppCompatActivity
         greenTrophy.setNextTrophy(blueTrophy);
         blueTrophy.setNextTrophy(purpleTrophy);
 
-        // Gets score from Firebase
+        //retrieve user ID
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null)
         {
@@ -107,14 +111,17 @@ public class TrophiesActivity extends AppCompatActivity
             allTrophies.setAdapter(adapter);
             allTrophies.setLayoutManager(new LinearLayoutManager(this));
 
+            //update user score and retrieve total user score from Firebase
             FirebaseMethods firebaseMethods = new FirebaseMethods(TrophiesActivity.this);
             firebaseMethods.updateUserScore(userID,
                                             SharedGamesConstants.SCORETOINSERT,
                                             new FirebaseMethods.Callback()
             {
                 @Override
-                public void onCallBack(int value) {
-                    // Updates RecyclerView to display trophies won
+                public void onCallBack(int value)
+                {
+                    //compare score to check if user earned any trophies, display them and set
+                    // upcoming trophy on screen
                     userScore = value;
                     totalScore.setText("" + value);
                     if (userScore >= redTrophy.getSmileyFaces())
