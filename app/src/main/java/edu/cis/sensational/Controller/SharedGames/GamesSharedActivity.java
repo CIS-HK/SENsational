@@ -46,9 +46,13 @@ public class GamesSharedActivity extends AppCompatActivity
         if (userID != null)
         {
             FirebaseMethods firebaseMethods = new FirebaseMethods(GamesSharedActivity.this);
-            firebaseMethods.updateUserScore(userID, SharedGamesConstants.SCORETOINSERT, new FirebaseMethods.Callback() {
+            firebaseMethods.updateUserScore(userID,
+                                            SharedGamesConstants.SCORETOINSERT,
+                                            new FirebaseMethods.Callback()
+                                            {
                 @Override
-                public void onCallBack(int value) {
+                public void onCallBack(int value)
+                {
                     userTotalScore.setText("" + value);
                 }
             });

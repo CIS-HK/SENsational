@@ -7,33 +7,40 @@ public class Trophy
     int imageID;
     Trophy nextTrophy;
 
-    public Trophy(int smileyFaces, String name, int imageID){
+    public Trophy(int smileyFaces, String name, int imageID)
+    {
         this.smileyFaces = smileyFaces;
         this.name = name;
         this.imageID = imageID;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setSmileyFaces(int smileyFaces) {
+    public void setSmileyFaces(int smileyFaces)
+    {
         this.smileyFaces = smileyFaces;
     }
 
-    public int getSmileyFaces() {
+    public int getSmileyFaces()
+    {
         return smileyFaces;
     }
 
-    public void setImageID(int imageID) {
+    public void setImageID(int imageID)
+    {
         this.imageID = imageID;
     }
 
-    public int getImageID() {
+    public int getImageID()
+    {
         return imageID;
     }
 
@@ -42,7 +49,8 @@ public class Trophy
         this.nextTrophy = nextTrophy;
     }
 
-    public Trophy getNextTrophy() {
+    public Trophy getNextTrophy()
+    {
         return nextTrophy;
     }
 }

@@ -620,18 +620,25 @@ public class FirebaseMethods {
      * @param scoretoinsert
      * @param callback
      */
-    public void updateUserScore(final String userID, final int scoretoinsert, final Callback callback) {
-        if (myRef != null) {
+    public void updateUserScore(final String userID,
+                                final int scoretoinsert,
+                                final Callback callback)
+    {
+        if (myRef != null)
+        {
             final DatabaseReference userRef = myRef.child("user_scores")
                     .child("user_id")
                     .child(userID)
                     .child("user_score")
                     .child("totalscore");
 
-                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                userRef.addListenerForSingleValueEvent(new ValueEventListener()
+                {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getValue() != null) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                    {
+                        if (dataSnapshot.getValue() != null)
+                        {
                             int score = scoretoinsert + dataSnapshot.getValue(Integer.class);
                             userRef.setValue(score);
                             callback.onCallBack(score);
@@ -644,7 +651,8 @@ public class FirebaseMethods {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                    public void onCancelled(@NonNull DatabaseError error)
+                    {
                         Log.w(TAG, "Failed to retrieve user score.", error.toException());
                     }
                 });

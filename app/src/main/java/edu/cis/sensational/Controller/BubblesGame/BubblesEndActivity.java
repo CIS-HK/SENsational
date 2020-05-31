@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import edu.cis.sensational.Controller.SharedGames.GamesSharedActivity;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
+import edu.cis.sensational.Model.Utils.BubblesMethods;
 import edu.cis.sensational.Model.Utils.FirebaseMethods;
 import edu.cis.sensational.R;
 
@@ -52,21 +53,8 @@ public class BubblesEndActivity extends AppCompatActivity
 
         // Displays the user's final score
         score = getIntent().getIntExtra(BubbleConstants.SCORE, BubbleConstants.DEFAULT);
-        if (score == 1)
-        {
-            smiley1.setVisibility(View.VISIBLE);
-        }
-        else if (score == 2)
-        {
-            smiley1.setVisibility(View.VISIBLE);
-            smiley2.setVisibility(View.VISIBLE);
-        }
-        else if (score == 3)
-        {
-            smiley1.setVisibility(View.VISIBLE);
-            smiley2.setVisibility(View.VISIBLE);
-            smiley3.setVisibility(View.VISIBLE);
-        }
+        BubblesMethods bubblesMethods = new BubblesMethods();
+        bubblesMethods.displayEndScore(score, smiley1, smiley2, smiley3);
 
         // Updates and sends total number of smiley faces to Firebase
         mAuth = FirebaseAuth.getInstance();
