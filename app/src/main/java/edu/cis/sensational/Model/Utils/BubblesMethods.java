@@ -5,6 +5,10 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import edu.cis.sensational.Model.BubblesGame.BubbleConstants;
 
+/**
+ * Stores methods used by more than one class in the Bubbles Game
+ */
+
 public class BubblesMethods
 {
 
@@ -13,6 +17,10 @@ public class BubblesMethods
 
     }
 
+    /**
+     * Sets up the allColors ArrayList, which stores all the possible colors that the bubbles can be
+     * @return allColors ArrayList
+     */
     public ArrayList<String> setUpAllColors(){
         ArrayList<String> allColors = new ArrayList<>();
         allColors.add(BubbleConstants.BLACK);
@@ -25,6 +33,12 @@ public class BubblesMethods
         return allColors;
     }
 
+    /**
+     * Displays the user's score so far on the screen using smiley faces.
+     * @param score the user's score so far (an int)
+     * @param smiley1 the first smiley face ImageView
+     * @param smiley2 the second smiley face ImageView
+     */
     public void displayScore(int score, ImageView smiley1, ImageView smiley2)
     {
         if (score == 1)
@@ -38,6 +52,13 @@ public class BubblesMethods
         }
     }
 
+    /**
+     * Displays the user's final score on the end screen using smiley faces.
+     * @param score the user's final score (as an int).
+     * @param smiley1 the first smiley face ImageView
+     * @param smiley2 the second smiley face ImageView
+     * @param smiley3 the third smiley face ImageView
+     */
     public void displayEndScore(int score, ImageView smiley1, ImageView smiley2, ImageView smiley3)
     {
         if (score == 1)
