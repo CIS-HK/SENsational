@@ -52,21 +52,13 @@ public class LoginActivity extends AppCompatActivity{
 
     }
 
-    private boolean isStringNull(String string){
-        Log.d(TAG, "isStringNull: checking string if null.");
-
-        if(string.equals("")){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
      /*
     ------------------------------------ Firebase ---------------------------------------------
      */
 
+    /**
+     * Initialize the widgets on the page
+     */
     private void init(){
 
         //initialize the button for logging in

@@ -603,45 +603,6 @@ public class FirebaseMethods {
 
     }
 
-    public Post getPost(DataSnapshot dataSnapshot){
-        Log.d(TAG, "getPost: retrieving post information from firebase.");
-
-        Post post = new Post();
-
-        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-            // posts node
-            if (ds.getKey().equals(mContext.getString(R.string.dbname_posts))) {
-                Log.d(TAG, "getUserSettings: posts node datasnapshot: " + ds);
-
-                try {
-
-                    post.setTitle(
-                            ds.child(userID)
-                                    .getValue(Post.class)
-                                    .getTitle()
-                    );
-
-                    post.setDescription(
-                            ds.child(userID)
-                                    .getValue(Post.class)
-                                    .getDescription()
-                    );
-
-                    post.setTags(
-                            ds.child(userID)
-                                    .getValue(Post.class)
-                                    .getTags()
-                    );
-
-                    Log.d(TAG, "getPost: retrieved post information: " + post.toString());
-                } catch (NullPointerException e) {
-                    Log.e(TAG, "getPost: NullPointerException: " + e.getMessage());
-                }
-            }
-        }
-        return post;
-    }
 
     /*
     ---------------------------------- Games Highscore ------------------------------------------

@@ -89,7 +89,7 @@ public class ViewPostActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up the all the widgets on the page
+     * Sets up all the widgets on the page
      */
     private void initWidgets(){
         // initialize the text widgets

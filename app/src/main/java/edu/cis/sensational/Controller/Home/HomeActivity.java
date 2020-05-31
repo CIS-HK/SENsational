@@ -265,7 +265,7 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(mContext,"Please input a proper word.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if(isAlpha(text)){                 // Checks if the text contains symbols
+        else if(isNotAlpha(text)){                 // Checks if the text contains symbols
             Log.d(TAG, "checkInputs: checking tag input ");
             Toast.makeText(mContext, "Please input a tag that only contains letters."
                     , Toast.LENGTH_SHORT).show();
@@ -281,7 +281,7 @@ public class HomeActivity extends AppCompatActivity {
      *
      * @return boolean
      */
-    public boolean isAlpha(String word) {
+    public boolean isNotAlpha(String word) {
         char[] chars = word.toCharArray();      // Splits the word into individual characters
 
         for (char c : chars) {                  // Loops through the characters in the array

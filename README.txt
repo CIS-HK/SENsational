@@ -228,6 +228,32 @@ Calming
 (anim) circleanimation2 -- Grows circle to 1.3 scale
 
 Forum
+(Class) User - This is the User class which stores the variables associated with each user of the
+                forum. Consists of getters and setters to access the data.
+(Class) Post - This is the Post class which stores the data associated with each Post on the forum.
+                Consists of getters and setters to access the data.
+(Class) Comment - This is the Comment class which stores the information for each Comment.
+                    Consists of getters and setters to access the data.
+(Model) FirebaseMethods - This is a Utils class that consists of all the methods that write to the
+                            database. This allows for other Activities to call methods when needed.
+This Model consists of the following methods:
+    getTimestamp -- Retrieves the instantaneous time when the method is called
+    createNewPost -- Creates a new Post object with the parameters
+    upvoteButtonPressed -- Updates the likes String of the corresponding Post on database
+    upvote -- Searches through the Database to retrieve the post's current upvote number and adds 1
+    downvoteButtonPressed -- Updates the unlikes String of the corresponding Post on database
+    downvote -- Searches through the Database, retrieves  post's current upvote number and minuses 1
+    uploadNewPost -- Uploads the Post to Firebase under all relevant nodes
+    makeComment -- Creates a new Comment object with the arguments
+    updateUserAccountSettings -- Updates the user's account's settings on Firebase
+    updateUsername -- update username in the 'users' node and 'user_account_settings' node
+    updateEmail -- update the email in the 'users' node
+    updatePassword -- update the password in the 'users' node
+    registerNewEmail -- Register a new email and password to Firebase authentication
+    sendVerificationEmail -- Sends verification email to the email used to register new user
+    addNewUser -- Adds User to Firebase
+    UserSettings -- Retrieves the account settings for the user currently logged in
+
 (Activity) HomeActivity - This is the activity that provides the main feed for the forum feature.
 This activity allows the user to access on the functionality the forum provides:
     1. Viewing of the Posts from the database
@@ -236,4 +262,50 @@ This activity allows the user to access on the functionality the forum provides:
     4. Switching between public and private posting
     5. Returning to the MainActivity page of the app
 This activity has the following methods:
-    onCreate -
+    onCreate -- sets up all the components of the Activity
+    setUpPublicRecyclerView -- Sets up the home page to display public Posts from all forum users
+    setUpPrivateRecyclerView -- Sets up the home page to display Posts created
+                                by the current user that were set to private
+    showPosts -- Sets up the RecyclerView for the Posts
+    setUpSearch -- Sets up the search widgets and onClick Listeners
+    checkInputs -- Checks that the parameter is valid (ie. the searched word is appropriate)
+    isNotAlpha -- Checks that the parameter contains alphabetical letters only
+    searchForTag -- Searches through the database and retrieves Posts tagged with the inputted word
+    setUpButtons -- Set up the buttons on the page
+    checkCurrentUser -- checks to see if the @param 'user' is logged in
+    setupFirebaseAuth -- Setup the firebase auth object
+
+(Activity) PostActivity - This is the activity that provides the posting function for forum users.
+This activity has the following methods:
+    onCreate -- sets up all the components of the Activity
+    initWidgets -- Sets up all widgets on the page
+    init -- Initializes the buttons for ClickListeners
+    checkInputs -- Checks that all the parameters are valid
+    isNotAlpha -- Checks that the parameter contains alphabetical letters only
+
+(Activity) ViewPostActivity - This is the activity that allows users to view the Posts.
+This activity has the following methods:
+    onCreate -- sets up all the components of the Activity
+    initWidgets -- Sets up all the widgets on the page
+    displayComments -- Displays the RecyclerView with Comments for this Post
+    init -- Searches through Firebase for the desired Post
+    getCurrentUser -- Retrieves the current user's information from Firebase
+    getPostDetails -- Retrieves the user information of this Post from Firebase
+    setupWidgets -- Sets up the display of the widgets on the page
+    setUpVotes -- Sets up the display for the voting function of the page
+    setupFirebaseAuth -- Setup the firebase auth object
+
+(Activity) LoginActivity - This is the activity that allows users to login with their account.
+This activity has the following methods:
+    onCreate -- sets up all the components of the Activity
+    init -- Initialize the widgets on the page
+    setupFirebaseAuth -- Setup the firebase auth object
+
+(Activity) RegisterActivity - This is the activity that allows users to register a new account.
+This activity has the following methods:
+    onCreate -- sets up all the components of the Activity
+    init -- Sets up the register page widgets
+    checkInputs -- Checks that all the parameters are valid
+    initWidgets -- Initialize the activity widgets
+    checkIfUsernameExists -- Check if @param username already exists in the database
+    setupFirebaseAuth -- Setup the firebase auth object
