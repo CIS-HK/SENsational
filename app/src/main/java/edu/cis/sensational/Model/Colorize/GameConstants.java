@@ -7,12 +7,9 @@ import edu.cis.sensational.R;
 
 public class GameConstants
 {
-
-
     public static boolean BACKGROUND = false;
     public static int SCORE = 0;
     public static int HIGHSCORE = 0;
-
 
     public static final int BOUND = 2;
 
@@ -56,6 +53,5 @@ public class GameConstants
     public static final int MIDDLERIGHTINITIAL = 1700;
     public static final int TOPLEFTINITIAL = 1200;
     public static final float SCREENWIDTHLEFT = 800.0f;
-
 
 }

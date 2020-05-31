@@ -7,6 +7,26 @@ Date: 17th March, 2020
 This program consists of games training executive function, calming tools and a parent forum
  for parents of SEN children.
 
+---- Installation ----
+Works for android API levels 21-29
+
+---- Current Dependencies ----
+androidx.appcompat:appcompat:1.0.2
+androidx.constraintlayout:constraintlayout:1.1.3
+androidx.test.espresso:espresso-core:3.1.1
+com.google.firebase:firebase-auth:19.3.0
+com.google.firebase:firebase-database:19.2.1
+com.google.firebase:firebase-storage:19.1.1
+androidx.test.ext:junit:1.1.0
+junit:junit:4.12
+androidx.legacy:legacy-support-v4:1.0.0
+androidx.lifecycle:lifecycle-extensions:2.0.0
+com.google.android.material:material:1.0.0
+androidx.navigation:navigation-fragment:2.0.0
+androidx.navigation:navigation-ui:2.0.0
+androidx.preference:preference:1.1.0-alpha05
+com.sdsmdg.tastytoast:tastytoast:0.1.1
+
 ---- Design ----
 There are 4 functions in this app in total: 2 games, 1 calming tool and 1 chat forum. Each function
 has its own activities. Each layer describes their methods.
