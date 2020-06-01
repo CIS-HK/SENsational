@@ -65,47 +65,63 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: attempting to log in.");
-
                 String emailString = mEmail.getText().toString();
                 String pwString = mPassword.getText().toString();
-
-                if(emailString.isEmpty() || pwString.isEmpty()){
-                    Toast.makeText(mContext, "Please input your email and password.", Toast.LENGTH_SHORT).show();
-                }else{
-
+                // If the inputs were null, show error message.
+                if(emailString.isEmpty() || pwString.isEmpty())
+                {
+                    Toast.makeText(mContext, "Please input your email and password."
+                            , Toast.LENGTH_SHORT).show();
+                }
+                // If the inputs were valid, sign in user
+                else{
                     mAuth.signInWithEmailAndPassword(emailString, pwString)
-                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(LoginActivity.this,
+                                    new OnCompleteListener<AuthResult>() {
                                 @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                                public void onComplete(@NonNull Task<AuthResult> task)
+                                {
+                                    Log.d(TAG, "signInWithEmail:onComplete:"
+                                            + task.isSuccessful());
                                     //get current user from mAuth, store it in variable
                                     FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                                    // If sign in fails, display a message to the user. If sign in succeeds
-                                    // the auth state listener will be notified and logic to handle the
-                                    // signed in user can be handled in the listener.
-                                    if (!task.isSuccessful()) {
-                                        Log.w(TAG, "signInWithEmail:failed", task.getException());
-
-                                        Toast.makeText(mContext, "Incorrect email or password.\nPlease try again.",
+                                    // If sign in fails, display a message to the user.
+                                    // If sign in succeeds the auth state listener will be notified
+                                    // and logic to handle the signed in user can be
+                                    // handled in the listener.
+                                    if (!task.isSuccessful())
+                                    {
+                                        Log.w(TAG, "signInWithEmail:failed"
+                                                , task.getException());
+                                        Toast.makeText(mContext, "Incorrect email or " +
+                                                        "password.\nPlease try again.",
                                                 Toast.LENGTH_SHORT).show();
                                     }
-                                    else{ //if task was successful
-                                        try{
-                                            if(currentUser.isEmailVerified()){
-                                                Log.d(TAG, "onComplete: success. email is verified.");
+                                    // if task was successful
+                                    else
+                                    {
+                                        try
+                                        {
+                                            if(currentUser.isEmailVerified())
+                                            {
+                                                Log.d(TAG, "onComplete: success. " +
+                                                        "email is verified.");
                                                 Intent intent = new Intent(context,
                                                         MainActivity.class);
                                                 startActivity(intent);
                                             }
                                             else
                                             {
-                                                Toast.makeText(mContext, "Email is not verified.\nCheck your email inbox.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(mContext, "Email is not " +
+                                                        "verified.\nCheck your email inbox."
+                                                        , Toast.LENGTH_SHORT).show();
                                                 mAuth.signOut();
                                             }
-
-                                        }catch (NullPointerException e){
-                                            Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
+                                        }
+                                        catch (NullPointerException e){
+                                            Log.e(TAG, "onComplete: NullPointerException: "
+                                                    + e.getMessage() );
                                         }
                                     }
                                 }
@@ -114,12 +130,16 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
 
+        // Button to open signup page
         TextView linkSignUp = (TextView) findViewById(R.id.link_signup);
-        linkSignUp.setOnClickListener(new View.OnClickListener() {
+        linkSignUp.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Log.d(TAG, "onClick: navigating to register screen");
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this
+                        , RegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -127,7 +147,8 @@ public class LoginActivity extends AppCompatActivity{
          /*
          If the user is logged in then navigate to HomeActivity and call 'finish()'
           */
-        if(mAuth.getCurrentUser() != null){
+        if(mAuth.getCurrentUser() != null)
+        {
             // Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
@@ -148,10 +169,13 @@ public class LoginActivity extends AppCompatActivity{
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                if (user != null) {
+                if (user != null)
+                {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
+                }
+                else
+                {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
@@ -160,15 +184,18 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
-    public void onStop() {
+    public void onStop()
+    {
         super.onStop();
-        if (mAuthListener != null) {
+        if (mAuthListener != null)
+        {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }

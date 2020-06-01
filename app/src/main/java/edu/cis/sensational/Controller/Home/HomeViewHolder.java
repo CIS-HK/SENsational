@@ -11,18 +11,19 @@ public class HomeViewHolder extends RecyclerView.ViewHolder {
     protected TextView titleText;
     protected TextView descriptionText;
 
-    public HomeViewHolder(@NonNull View itemView, final HomeAdapter.OnItemClickListener listener) {
+    public HomeViewHolder(@NonNull View itemView, final HomeAdapter.OnItemClickListener listener)
+    {
         super(itemView);
-
         titleText = itemView.findViewById(R.id.postTitleView);
         descriptionText = itemView.findViewById(R.id.postDescriptionView);
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null){
+                if (listener != null)
+                {
                     int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
+                    if (position != RecyclerView.NO_POSITION)
+                    {
                         listener.onItemClick(position);
                     }
                 }

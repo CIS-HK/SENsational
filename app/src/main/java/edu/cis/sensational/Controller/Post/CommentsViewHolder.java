@@ -12,9 +12,9 @@ public class CommentsViewHolder extends RecyclerView.ViewHolder
 {
     protected TextView usernameView, commentView;
 
-    public CommentsViewHolder(@NonNull View itemView) {
+    public CommentsViewHolder(@NonNull View itemView)
+    {
         super(itemView);
-
         commentView = itemView.findViewById(R.id.commentView);
     }
 }

@@ -91,7 +91,8 @@ public class ViewPostActivity extends AppCompatActivity {
     /**
      * Sets up all the widgets on the page
      */
-    private void initWidgets(){
+    private void initWidgets()
+    {
         // initialize the text widgets
         title = (TextView) findViewById(R.id.titleView);
         description = (TextView) findViewById(R.id.descriptionView);
@@ -113,9 +114,11 @@ public class ViewPostActivity extends AppCompatActivity {
         commentsView = (RecyclerView) findViewById(R.id.commentView);
 
         // Bring the user back to the home feed page if back button is pressed
-        backButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent intent = new Intent(context,
                         HomeActivity.class);
                 startActivity(intent);
@@ -123,19 +126,24 @@ public class ViewPostActivity extends AppCompatActivity {
         });
 
         // Call the makeComment method if comment button is pressed
-        commentButton.setOnClickListener(new View.OnClickListener() {
+        commentButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 // Get the inputted comment text
                 commentText = comment.getText().toString();
                 // Checks if the text is invalid (ie. is empty or just filled with spaces)
                 if (commentText.isEmpty() || commentText.
-                        replaceAll(" ","").isEmpty()){
+                        replaceAll(" ","").isEmpty())
+                {
                     // Prompt the user to input text
                     Toast.makeText(context, "Please input some text."
                             , Toast.LENGTH_SHORT).show();
                 }
-                else {  // If text is valid
+                // If text is valid
+                else
+                {
                     // Call the makeComment method with the corresponding arguments
                     FirebaseMethods firebaseMethods =
                             new FirebaseMethods(ViewPostActivity.this);
@@ -149,9 +157,11 @@ public class ViewPostActivity extends AppCompatActivity {
         });
 
         // Call the upvote method if the upvote button is pressed
-        upvote.setOnClickListener(new View.OnClickListener() {
+        upvote.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Log.d(TAG, "upvote button clicked");
                 // Call method to upvote the post in Firebase
                 FirebaseMethods firebaseMethods =
@@ -166,9 +176,11 @@ public class ViewPostActivity extends AppCompatActivity {
         });
 
         // Call the downvote method if the downvote button is pressed
-        downvote.setOnClickListener(new View.OnClickListener() {
+        downvote.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Log.d(TAG, "downvote button clicked");
                 // Call method to downvote the post in Firebase
                 FirebaseMethods firebaseMethods =
@@ -186,7 +198,8 @@ public class ViewPostActivity extends AppCompatActivity {
     /**
      * Displays the RecyclerView with Comments for this Post
      */
-    public void displayComments(){
+    public void displayComments()
+    {
         // Retrieve the current comments from the Post object
         ArrayList<Comment> commentsList = mPost.getComments();
         // Displays the comments on a RecyclerView adapter
@@ -198,17 +211,21 @@ public class ViewPostActivity extends AppCompatActivity {
     /**
      * Searches through Firebase for the desired Post
      */
-    private void init(){
+    private void init()
+    {
         try{
             // Create a new query that goes through the posts node
             Query query = FirebaseDatabase.getInstance().getReference()
                     .child("posts")
                     .orderByChild(getString(R.string.field_post_id))
                     .equalTo(currentPost); // Finds the post that matches the current PostID
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
+            query.addListenerForSingleValueEvent(new ValueEventListener()
+            {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    for (DataSnapshot singleSnapshot :  dataSnapshot.getChildren())
+                    {
                         // Retrieves the Post and sets it to the class Post variable
                         mPost = singleSnapshot.getValue(Post.class);
                         // Calls the methods which sets up the information on the page
@@ -219,12 +236,15 @@ public class ViewPostActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(DatabaseError databaseError)
+                {
                     Log.d(TAG, "onCancelled: query cancelled.");
                 }
             });
 
-        }catch (NullPointerException e){
+        }
+        catch (NullPointerException e)
+        {
             Log.e(TAG, "onCreateView: NullPointerException: " + e.getMessage() );
         }
     }
@@ -232,7 +252,8 @@ public class ViewPostActivity extends AppCompatActivity {
     /**
      * Retrieves the current user's information from Firebase
      */
-    private void getCurrentUser(){
+    private void getCurrentUser()
+    {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference
                 .child(getString(R.string.dbname_users))
@@ -240,14 +261,17 @@ public class ViewPostActivity extends AppCompatActivity {
                 .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot singleSnapshot :  dataSnapshot.getChildren())
+                {
                     mCurrentUser = singleSnapshot.getValue(User.class);
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError)
+            {
                 Log.d(TAG, "onCancelled: query cancelled.");
             }
         });
@@ -257,19 +281,24 @@ public class ViewPostActivity extends AppCompatActivity {
     /**
      * Retrieves the user information of this Post from Firebase
      */
-    private void getPostDetails(){
+    private void getPostDetails()
+    {
         Log.d(TAG, "getPostDetails: retrieving post details.");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        // Query through the database to find the user's information
         Query query = reference
                 .child(getString(R.string.dbname_user_account_settings))
                 .orderByChild(getString(R.string.field_user_id))
                 .equalTo(mPost.getUser_id());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+                    // Store the user's information
                     mUserAccountSettings = singleSnapshot.getValue(UserAccountSettings.class);
                 }
+                // Set up the page
                 setupWidgets();
             }
 
@@ -283,7 +312,8 @@ public class ViewPostActivity extends AppCompatActivity {
     /**
      * Sets up the display of the widgets on the page
      */
-    private void setupWidgets() {
+    private void setupWidgets()
+    {
         // Retrieves the main post information and displays it on the page
         title.setText(mPost.getTitle());
         description.setText(mPost.getDescription());
@@ -311,9 +341,11 @@ public class ViewPostActivity extends AppCompatActivity {
     private void setUpVotes()
     {
         // Loop through all the userIDs that liked this current Post
-        for(String like: mPost.getLikes()){
+        for(String like: mPost.getLikes())
+        {
             // If the system finds a match with the current User
-            if(like.equals(userID)){
+            if(like.equals(userID))
+            {
                 upvote.setBackgroundColor(Color.BLUE);      // Set the upvote button to blue
                 upvote.setTextColor(Color.WHITE);           // Set the upvote text to white
                 upvote.setEnabled(false);                   // Disable the upvote button
@@ -321,9 +353,11 @@ public class ViewPostActivity extends AppCompatActivity {
             }
         }
         // Loop through all the userIDs that disliked this current Post
-        for(String unlike: mPost.getUnLikes()){
+        for(String unlike: mPost.getUnLikes())
+        {
             // If the system finds a match with the current User
-            if (unlike.equals(userID)) {
+            if (unlike.equals(userID))
+            {
                 downvote.setBackgroundColor(Color.RED);     // Set the downvote button to red
                 downvote.setTextColor(Color.WHITE);         // Set the downvote text to white
                 downvote.setEnabled(false);                 // Disable the downvote button
@@ -348,15 +382,20 @@ public class ViewPostActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener()
+        {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
+            {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                if (user != null) {
+                if (user != null)
+                {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
+                }
+                else
+                {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
@@ -365,13 +404,15 @@ public class ViewPostActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
-    public void onStop() {
+    public void onStop()
+    {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
