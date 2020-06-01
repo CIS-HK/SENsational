@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.cis.sensational.R;
 
-public class HomeViewHolder extends RecyclerView.ViewHolder {
-
+public class HomeViewHolder extends RecyclerView.ViewHolder
+{
     protected TextView titleText;
     protected TextView descriptionText;
 

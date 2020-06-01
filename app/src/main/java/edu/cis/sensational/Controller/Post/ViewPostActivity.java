@@ -43,8 +43,8 @@ import edu.cis.sensational.Model.UserAccountSettings;
  * Created on 23/03/2020.
  */
 
-public class ViewPostActivity extends AppCompatActivity {
-
+public class ViewPostActivity extends AppCompatActivity
+{
     private static final String TAG = "ViewPostActivity";
 
     //firebase
@@ -73,12 +73,14 @@ public class ViewPostActivity extends AppCompatActivity {
     @Nullable
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
         Log.d(TAG, "onCreate: started.");
         setupFirebaseAuth();
-        if (mAuth.getCurrentUser() != null) {
+        if (mAuth.getCurrentUser() != null)
+        {
             userID = mAuth.getCurrentUser().getUid();
         }
         //https://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-in-android-application
@@ -101,6 +103,7 @@ public class ViewPostActivity extends AppCompatActivity {
         likes = (TextView) findViewById(R.id.likes);
         comment = (EditText) findViewById(R.id.commentField);
 
+        // Create scrolling function for description
         //https://stackoverflow.com/questions/1748977/making-textview-scrollable-on-android
         description.setMovementMethod(new ScrollingMovementMethod());
 
@@ -138,8 +141,7 @@ public class ViewPostActivity extends AppCompatActivity {
                         replaceAll(" ","").isEmpty())
                 {
                     // Prompt the user to input text
-                    Toast.makeText(context, "Please input some text."
-                            , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.fill_inputs, Toast.LENGTH_SHORT).show();
                 }
                 // If text is valid
                 else
@@ -213,10 +215,11 @@ public class ViewPostActivity extends AppCompatActivity {
      */
     private void init()
     {
-        try{
+        try
+        {
             // Create a new query that goes through the posts node
             Query query = FirebaseDatabase.getInstance().getReference()
-                    .child("posts")
+                    .child(getString(R.string.dbname_posts))
                     .orderByChild(getString(R.string.field_post_id))
                     .equalTo(currentPost); // Finds the post that matches the current PostID
             query.addListenerForSingleValueEvent(new ValueEventListener()
@@ -238,6 +241,9 @@ public class ViewPostActivity extends AppCompatActivity {
                 @Override
                 public void onCancelled(DatabaseError databaseError)
                 {
+                    // Return to the home page if database error occurs.
+                    Intent intent = new Intent(context,HomeActivity.class);
+                    startActivity(intent);
                     Log.d(TAG, "onCancelled: query cancelled.");
                 }
             });
@@ -245,6 +251,9 @@ public class ViewPostActivity extends AppCompatActivity {
         }
         catch (NullPointerException e)
         {
+            // Return to the home page if database error occurs.
+            Intent intent = new Intent(context,HomeActivity.class);
+            startActivity(intent);
             Log.e(TAG, "onCreateView: NullPointerException: " + e.getMessage() );
         }
     }
@@ -259,7 +268,8 @@ public class ViewPostActivity extends AppCompatActivity {
                 .child(getString(R.string.dbname_users))
                 .orderByChild(getString(R.string.field_user_id))
                 .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
@@ -272,10 +282,12 @@ public class ViewPostActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError)
             {
+                // Return to the home page if database error occurs.
+                Intent intent = new Intent(context,HomeActivity.class);
+                startActivity(intent);
                 Log.d(TAG, "onCancelled: query cancelled.");
             }
         });
-
     }
 
     /**
@@ -293,8 +305,10 @@ public class ViewPostActivity extends AppCompatActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren())
+                {
                     // Store the user's information
                     mUserAccountSettings = singleSnapshot.getValue(UserAccountSettings.class);
                 }
@@ -303,7 +317,11 @@ public class ViewPostActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError)
+            {
+                // Return to the home page if database error occurs.
+                Intent intent = new Intent(context,HomeActivity.class);
+                startActivity(intent);
                 Log.d(TAG, "onCancelled: query cancelled.");
             }
         });
@@ -377,18 +395,15 @@ public class ViewPostActivity extends AppCompatActivity {
      */
     private void setupFirebaseAuth(){
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
-
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
-
         mAuthListener = new FirebaseAuth.AuthStateListener()
         {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
             {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-
                 if (user != null)
                 {
                     // User is signed in
@@ -414,7 +429,8 @@ public class ViewPostActivity extends AppCompatActivity {
     public void onStop()
     {
         super.onStop();
-        if (mAuthListener != null) {
+        if (mAuthListener != null)
+        {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }

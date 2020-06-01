@@ -38,6 +38,25 @@
     <!-- Firebase messages -->
     <string name="auth_failed">Failed to Authenticate</string>
     <string name="auth_success">Authentication Success</string>
+    <string name="register_failed">An account with this email already registered.
+        Please login or check your inbox.</string>
+    <string name="register_success">Signup successful. Sending verification email.</string>
+    <string name="email_fail">Sending verification email has failed.</string>
+    <string name="database_fail">Failed to retrieve database information.</string>
+    <string name="fill_inputs">Fields must be filled out.</string>
+    <string name="shorter_title">Please input a shorter title.</string>
+    <string name="proper_tag">Please input a proper tag.</string>
+    <string name="one_tag">Please input only one tag.</string>
+    <string name="letters_tag">Please input a tag that only contains letters.</string>
+    <string name="post_success">Successfully posted.</string>
+    <string name="post_fail">Posting unsuccessful. Try again.</string>
+    <string name="display_public">Displaying public posts.</string>
+    <string name="display_private">Displaying private posts.</string>
+    <string name="see_public">See Public</string>
+    <string name="see_private">See Private</string>
+    <string name="login_error">Incorrect email or password. Please try again.</string>
+    <string name="email_not_verified">Email is not verified. Check your email inbox.</string>
+    <string name="login_request">Please input your email and password.</string>
 
     <!-- Firebase database fields -->
     <string name="dbname_users">users</string>
@@ -48,7 +67,10 @@
     <string name="dbname_followers">followers</string>
     <string name="dbname_stories">stories</string>
     <string name="dbname_tags">tags</string>
+    <string name="dbname_user_likes">user_likes</string>
+    <string name="dbname_user_unlikes">user_unlikes</string>
 
+    <string name="field_posts">posts</string>
     <string name="field_username">username</string>
     <string name="field_email">email</string>
     <string name="field_password">password</string>
@@ -63,6 +85,7 @@
     <string name="field_user_id">user_id</string>
     <string name="field_likes">likes</string>
     <string name="field_like_count">likeCount</string>
+    <string name="field_unlikes">unlikes</string>
     <string name="field_caption">caption</string>
     <string name="field_date_created">date_created</string>
     <string name="field_post_id">postID</string>

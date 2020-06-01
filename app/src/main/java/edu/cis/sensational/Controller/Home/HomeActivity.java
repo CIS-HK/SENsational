@@ -72,7 +72,8 @@ public class HomeActivity extends AppCompatActivity {
         setUpButtons();
         setUpSearch();
         // Retrieves the current user's ID
-        if (mAuth.getCurrentUser() != null) {
+        if (mAuth.getCurrentUser() != null)
+        {
             userID = mAuth.getCurrentUser().getUid();
         }
         // Set up the page
@@ -90,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
         // Look through the posts node
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference attendanceRef = rootRef
-                .child("posts");
+                .child(mContext.getString(R.string.dbname_posts));
         ValueEventListener valueEventListener = new ValueEventListener()
         {
             @Override
@@ -113,6 +114,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
+                // Return to the main page if database error occurs.
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
                 Log.d(TAG, databaseError.getMessage());
             }
         };
@@ -152,6 +156,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError)
             {
+                // Return to the main page if database error occurs.
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
                 Log.d(TAG, "onCancelled: query cancelled.");
             }
         });
@@ -259,33 +266,28 @@ public class HomeActivity extends AppCompatActivity {
     {
         // Splits the text into separate words and stores each word in an array
         String [] array = text.trim().split(" ");
-
         // Checks if the text is null
-        if(text.equals(""))
+        if (text.isEmpty() || text.replaceAll(" ","").isEmpty())
         {
-            Log.d(TAG, "checkInputs: checking input for null.");
-            Toast.makeText(mContext, "Please input a search word.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.fill_inputs, Toast.LENGTH_SHORT).show();
             return false;
         }
         // Checks if there were multiple words in the text
         else if(array.length != 1)
         {
-            Log.d(TAG, "checkInputs: checking tag input for more than one value.");
-            Toast.makeText(mContext,"Please input only one tag.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.one_tag, Toast.LENGTH_SHORT).show();
             return false;
         }
-        // Checks if the tag input exceeds 10 characters
-        else if(text.length() > 10)
+        // Checks if the tag input exceeds 20 characters
+        else if(text.length() > 20)
         {
-            Toast.makeText(mContext,"Please input a proper word.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.proper_tag, Toast.LENGTH_SHORT).show();
             return false;
         }
         // Checks if the text contains symbols
         else if(isNotAlpha(text))
         {
-            Log.d(TAG, "checkInputs: checking tag input ");
-            Toast.makeText(mContext, "Please input a tag that only contains letters."
-                    , Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.letters_tag, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -326,7 +328,7 @@ public class HomeActivity extends AppCompatActivity {
         // Search through the "tags" node on Firebase
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference attendanceRef = rootRef
-                .child("tags")
+                .child(mContext.getString(R.string.dbname_tags))
                 .child(searchWord);
         ValueEventListener valueEventListener = new ValueEventListener()
         {
@@ -373,7 +375,10 @@ public class HomeActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
                 Log.d(TAG, databaseError.getMessage());
-                Toast.makeText(mContext, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.database_fail, Toast.LENGTH_SHORT).show();
+                // Return to the main page if database error occurs.
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
             }
         };
         attendanceRef.addListenerForSingleValueEvent(valueEventListener);
@@ -416,18 +421,16 @@ public class HomeActivity extends AppCompatActivity {
                 // If the user wants to display public posts
                 if(switchButton.getText().equals("See Public"))
                 {
-                    switchButton.setText("See Private");
+                    switchButton.setText(R.string.see_private);
                     setUpPublicRecyclerView();
-                    Toast.makeText(mContext, "Displaying public posts."
-                            , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.display_public, Toast.LENGTH_SHORT).show();
                 }
                 // If the user wants to disaply private posts
                 else if(switchButton.getText().equals("See Private"))
                 {
-                    switchButton.setText("See Public");
+                    switchButton.setText(R.string.see_public);
                     setUpPrivateRecyclerView();
-                    Toast.makeText(mContext, "Displaying private posts."
-                            , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.display_private, Toast.LENGTH_SHORT).show();
                 }
             }
         });

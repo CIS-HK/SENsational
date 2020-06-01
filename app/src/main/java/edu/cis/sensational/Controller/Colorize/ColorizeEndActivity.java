@@ -113,36 +113,36 @@ public class ColorizeEndActivity extends AppCompatActivity {
             }
         });
 
-        firebaseMethods.initialStoring(userID,GameConstants.SCORE,scoreLabel,highScoreLabel);
-
-        //if current score is greater than high score, update highscore
-        firebaseMethods.checkHighScore(userID, GameConstants.SCORE,new FirebaseMethods.Callback() {
-            @Override
-            public void onCallBack(int value)
-            {
-                //retrieve the current high score from the database and compare it to the current
-                //user score
-
-                int currentHighScore = value;
-
-                //if current user score is greater than the high score stored on database, replace
-                //the value on firebase and display updated highscore on UI
-                if(GameConstants.SCORE > currentHighScore)
-                {
-                    GameConstants.HIGHSCORE = GameConstants.SCORE;
-                    firebaseMethods.storeHighScore(userID,GameConstants.HIGHSCORE);
-                    highScoreLabel.setText(GameConstants.DISPLAYHIGHSCORE + GameConstants.HIGHSCORE);
-                    scoreLabel.setText(""+GameConstants.HIGHSCORE);
-                }
-
-                //if the current user score isn't greater, don't update the scores
-                else
-                {
-                    scoreLabel.setText(""+GameConstants.SCORE);
-                    highScoreLabel.setText(GameConstants.DISPLAYHIGHSCORE + currentHighScore);
-                }
-            }
-        });
+//        firebaseMethods.initialStoring(userID,GameConstants.SCORE,scoreLabel,highScoreLabel);
+//
+//        //if current score is greater than high score, update highscore
+//        firebaseMethods.checkHighScore(userID, GameConstants.SCORE,new FirebaseMethods.Callback() {
+//            @Override
+//            public void onCallBack(int value)
+//            {
+//                //retrieve the current high score from the database and compare it to the current
+//                //user score
+//
+//                int currentHighScore = value;
+//
+//                //if current user score is greater than the high score stored on database, replace
+//                //the value on firebase and display updated highscore on UI
+//                if(GameConstants.SCORE > currentHighScore)
+//                {
+//                    GameConstants.HIGHSCORE = GameConstants.SCORE;
+//                    firebaseMethods.storeHighScore(userID,GameConstants.HIGHSCORE);
+//                    highScoreLabel.setText(GameConstants.DISPLAYHIGHSCORE + GameConstants.HIGHSCORE);
+//                    scoreLabel.setText(""+GameConstants.HIGHSCORE);
+//                }
+//
+//                //if the current user score isn't greater, don't update the scores
+//                else
+//                {
+//                    scoreLabel.setText(""+GameConstants.SCORE);
+//                    highScoreLabel.setText(GameConstants.DISPLAYHIGHSCORE + currentHighScore);
+//                }
+//            }
+//        });
 
     }
 }

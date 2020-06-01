@@ -23,8 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import edu.cis.sensational.Controller.MainActivity;
 import edu.cis.sensational.R;
 
-public class LoginActivity extends AppCompatActivity{
-
+public class LoginActivity extends AppCompatActivity
+{
     private static final String TAG = "LoginActivity";
 
     //firebase
@@ -37,15 +37,14 @@ public class LoginActivity extends AppCompatActivity{
     final Context context = this;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Log.d(TAG, "onCreate: started.");
-
         mEmail = (EditText) findViewById(R.id.input_email);
         mPassword = (EditText) findViewById(R.id.input_password);
         mContext = LoginActivity.this;
-
         setupFirebaseAuth();
         init();
     }
@@ -58,7 +57,6 @@ public class LoginActivity extends AppCompatActivity{
      * Initialize the widgets on the page
      */
     private void init(){
-
         //initialize the button for logging in
         Button btnLogin = (Button) findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +68,7 @@ public class LoginActivity extends AppCompatActivity{
                 // If the inputs were null, show error message.
                 if(emailString.isEmpty() || pwString.isEmpty())
                 {
-                    Toast.makeText(mContext, "Please input your email and password."
-                            , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.login_request, Toast.LENGTH_SHORT).show();
                 }
                 // If the inputs were valid, sign in user
                 else{
@@ -85,7 +82,6 @@ public class LoginActivity extends AppCompatActivity{
                                             + task.isSuccessful());
                                     //get current user from mAuth, store it in variable
                                     FirebaseUser currentUser = mAuth.getCurrentUser();
-
                                     // If sign in fails, display a message to the user.
                                     // If sign in succeeds the auth state listener will be notified
                                     // and logic to handle the signed in user can be
@@ -94,8 +90,7 @@ public class LoginActivity extends AppCompatActivity{
                                     {
                                         Log.w(TAG, "signInWithEmail:failed"
                                                 , task.getException());
-                                        Toast.makeText(mContext, "Incorrect email or " +
-                                                        "password.\nPlease try again.",
+                                        Toast.makeText(mContext, R.string.login_error,
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                     // if task was successful
@@ -113,13 +108,13 @@ public class LoginActivity extends AppCompatActivity{
                                             }
                                             else
                                             {
-                                                Toast.makeText(mContext, "Email is not " +
-                                                        "verified.\nCheck your email inbox."
+                                                Toast.makeText(mContext, R.string.email_not_verified
                                                         , Toast.LENGTH_SHORT).show();
                                                 mAuth.signOut();
                                             }
                                         }
-                                        catch (NullPointerException e){
+                                        catch (NullPointerException e)
+                                        {
                                             Log.e(TAG, "onComplete: NullPointerException: "
                                                     + e.getMessage() );
                                         }
@@ -149,7 +144,6 @@ public class LoginActivity extends AppCompatActivity{
           */
         if(mAuth.getCurrentUser() != null)
         {
-            // Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
             finish();
@@ -159,16 +153,14 @@ public class LoginActivity extends AppCompatActivity{
     /**
      * Setup the firebase auth object
      */
-    private void setupFirebaseAuth(){
+    private void setupFirebaseAuth()
+    {
         Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
-
         mAuth = FirebaseAuth.getInstance();
-
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-
                 if (user != null)
                 {
                     // User is signed in

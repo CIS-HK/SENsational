@@ -30,8 +30,8 @@ import edu.cis.sensational.Model.Utils.FirebaseMethods;
  * Created on 23/03/2020.
  */
 
-public class RegisterActivity extends AppCompatActivity {
-
+public class RegisterActivity extends AppCompatActivity
+{
     private static final String TAG = "RegisterActivity";
 
     private Context mContext;
@@ -182,7 +182,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError)
+            {
+                // Return to the login page if database error occurs.
+                Intent intent = new Intent(context, LoginActivity.class);
+                startActivity(intent);
                 Log.d(TAG, "Checking username failed.");
             }
         });
@@ -231,8 +235,8 @@ public class RegisterActivity extends AppCompatActivity {
                 {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
-                    Intent intent = new Intent(context,
-                            LoginActivity.class);
+                    // Return to LoginActivity page
+                    Intent intent = new Intent(context, LoginActivity.class);
                     startActivity(intent);
                 }
             }

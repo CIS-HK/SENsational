@@ -10,7 +10,6 @@ import edu.cis.sensational.R;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeViewHolder>
 {
-
     ArrayList<String> tData, dData, iData;
     private OnItemClickListener mListener;
 

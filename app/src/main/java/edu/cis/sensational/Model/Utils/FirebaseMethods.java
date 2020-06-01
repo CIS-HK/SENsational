@@ -35,8 +35,8 @@ import edu.cis.sensational.R;
  * Created on 23/03/2020.
  */
 
-public class FirebaseMethods {
-
+public class FirebaseMethods
+{
     // firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -49,14 +49,16 @@ public class FirebaseMethods {
     private Context mContext;
     private static final String TAG = "FirebaseMethods";
 
-    public FirebaseMethods(Context context) {
+    public FirebaseMethods(Context context)
+    {
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         mStorageReference = FirebaseStorage.getInstance().getReference();
         mContext = context;
-
-        if (mAuth.getCurrentUser() != null) {           // Checks if there's a User logged in
+        // Checks if there's a User logged in
+        if (mAuth.getCurrentUser() != null)
+        {
             userID = mAuth.getCurrentUser().getUid();   // Retrieves the current User's userID
         }
     }
@@ -66,7 +68,8 @@ public class FirebaseMethods {
      *
      * @return sdf
      */
-    private String getTimestamp() {
+    private String getTimestamp()
+    {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"
                 , Locale.CANADA);
         sdf.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));
@@ -84,7 +87,8 @@ public class FirebaseMethods {
      *
      */
     public boolean createNewPost(String title, String description,
-                                 String tags, boolean privatePost){
+                                 String tags, boolean privatePost)
+    {
         // Create empty ArrayLists to initialize the comments and likes fields
         ArrayList<String> initLikes = new ArrayList();
         ArrayList<Comment> initComments = new ArrayList();
@@ -117,18 +121,19 @@ public class FirebaseMethods {
      * @param post
      *
      */
-    public void upvoteButtonPressed(final String post_id, final String userID, final Post post){
-
+    public void upvoteButtonPressed(final String post_id, final String userID, final Post post)
+    {
         // Set the local Post object's like count to current + 1
         post.setLikeCount(post.getLikeCount() + 1);
-
         final DatabaseReference userRef = myRef
-                .child("posts")
+                .child(mContext.getString(R.string.dbname_posts))
                 .child(post_id)
-                .child("likes");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                .child(mContext.getString(R.string.dbname_user_likes));
+        userRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
                 Log.d(TAG, "Post: upvoting");
                 List<String> userLikesList = new ArrayList<>();
                 userLikesList.add(userID);
@@ -141,15 +146,15 @@ public class FirebaseMethods {
                         .child(post_id)
                         .child(mContext.getString(R.string.field_likes))
                         .setValue(userLikesList);
-                myRef.child("user_likes")
+                myRef.child(mContext.getString(R.string.dbname_user_likes))
                         .child(userID)
                         .child(post_id)
                         .setValue(post);
                 upvote(post_id);
             }
-
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(DatabaseError error)
+            {
                 Log.w(TAG, "Failed to retrieve number of likes.", error.toException());
             }
         });
@@ -162,14 +167,15 @@ public class FirebaseMethods {
      */
     public void upvote(String post_id){
         final String postID = post_id;
-
         final DatabaseReference userRef = myRef
-                .child("posts")
+                .child(mContext.getString(R.string.dbname_posts))
                 .child(postID)
-                .child("likeCount");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                .child(mContext.getString(R.string.field_like_count));
+        userRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
                 final long newLikeCount = dataSnapshot.getValue(Long.class) + 1;
                 myRef.child(mContext.getString(R.string.dbname_posts))
                         .child(postID)
@@ -181,9 +187,9 @@ public class FirebaseMethods {
                         .child(mContext.getString(R.string.field_like_count))
                         .setValue(newLikeCount);
             }
-
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(DatabaseError error)
+            {
                 Log.w(TAG, "Failed to retrieve number of likes.", error.toException());
             }
         });
@@ -199,38 +205,40 @@ public class FirebaseMethods {
      * @param post
      *
      */
-    public void downvoteButtonPressed(final String post_id, final String userID, final Post post){
-
+    public void downvoteButtonPressed(final String post_id, final String userID, final Post post)
+    {
+        // Set the local Post object's like count to current -1
         post.setLikeCount(post.getLikeCount() - 1);
-
         final DatabaseReference userRef = myRef
-                .child("posts")
+                .child(mContext.getString(R.string.field_posts))
                 .child(post_id)
-                .child("unlikes");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                .child(mContext.getString(R.string.field_unlikes));
+        userRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
                 Log.d(TAG, "Post: downvoting");
                 List<String> userUnLikesList = new ArrayList<>();
                 userUnLikesList.add(userID);
                 myRef.child(mContext.getString(R.string.dbname_posts))
                         .child(post_id)
-                        .child("unlikes")
+                        .child(mContext.getString(R.string.field_unlikes))
                         .setValue(userUnLikesList);
                 myRef.child(mContext.getString(R.string.dbname_user_posts))
                         .child(userID)
                         .child(post_id)
-                        .child("unlikes")
+                        .child(mContext.getString(R.string.field_unlikes))
                         .setValue(userUnLikesList);
-                myRef.child("user_unlikes")
+                myRef.child(mContext.getString(R.string.dbname_user_unlikes))
                         .child(userID)
                         .child(post_id)
                         .setValue(post);
                 downvote(post_id);
             }
-
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(DatabaseError error)
+            {
                 Log.w(TAG, "Failed to retrieve number of likes.", error.toException());
             }
         });
@@ -241,18 +249,20 @@ public class FirebaseMethods {
      *
      * @param post_id
      */
-    public void downvote(String post_id){
+    public void downvote(String post_id)
+    {
         final String postID = post_id;
-
         final DatabaseReference userRef = myRef
-                .child("posts")
+                .child(mContext.getString(R.string.field_posts))
                 .child(postID)
-                .child("likeCount");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                .child(mContext.getString(R.string.field_like_count));
+        userRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.getValue(Long.class) > 0){
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if(dataSnapshot.getValue(Long.class) > 0)
+                {
                     final long newLikeCount = dataSnapshot.getValue(Long.class) - 1;
 
                     myRef.child(mContext.getString(R.string.dbname_posts))
@@ -266,9 +276,9 @@ public class FirebaseMethods {
                             .setValue(newLikeCount);
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(DatabaseError error)
+            {
                 Log.w(TAG, "Failed to retrieve number of likes.", error.toException());
             }
         });
@@ -293,7 +303,7 @@ public class FirebaseMethods {
                 .child(post.getPostID())
                 .setValue(post);
         // Store Post under "tags" node
-        myRef.child("tags")
+        myRef.child(mContext.getString(R.string.dbname_tags))
                 .child(tag.toLowerCase())
                 .child(post.getPostID())
                 .setValue(post);
@@ -308,7 +318,8 @@ public class FirebaseMethods {
      * @param post_id
      * @param comment
      */
-    public void makeComment(Post post, String post_id, String comment){
+    public void makeComment(Post post, String post_id, String comment)
+    {
         // Create a new Comment instantiation and store the corresponding values
         Comment newComment = new Comment(comment, userID, 0, getTimestamp());
         // Retrieve the ArrayList of Comments already present for this post
@@ -337,28 +348,31 @@ public class FirebaseMethods {
      * @param password
      * @param username
      */
-    public void registerNewEmail(final String email, String password, final String username) {
+    public void registerNewEmail(final String email, String password, final String username)
+    {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) { // Check if user creation is successful
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         // If the task fails, display a message to the user.
-                        if (!task.isSuccessful()) {
+                        if (!task.isSuccessful())
+                        {
                             Log.d(TAG, R.string.auth_failed + "");
-                            Toast.makeText(mContext, "An account with this email already " +
-                                            "registered. Please login or check your inbox.",
+                            Toast.makeText(mContext, R.string.register_failed,
                                     Toast.LENGTH_SHORT).show();
                             // If task succeeds, this happens
-                        } else if (task.isSuccessful()) {
+                        }
+                        else if (task.isSuccessful())
+                        {
                             // sends verification email to the registration email inbox
                             sendVerificationEmail();
                             // the auth state listener will be notified and
                             // signed in user can be handled in the listener.
                             userID = mAuth.getCurrentUser().getUid();
                             Log.d(TAG, "onComplete: Authstate changed: " + userID);
-                            Toast.makeText(mContext, "Signup successful. Sending " +
-                                    "verification email.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, R.string.register_success,
+                                    Toast.LENGTH_SHORT).show();
                             addNewUser(email, username);
                         }
                     }
@@ -368,21 +382,19 @@ public class FirebaseMethods {
     /**
      * Sends verification email to the email used to register new user
      */
-    public void sendVerificationEmail() {
+    public void sendVerificationEmail()
+    {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
+        if (user != null)
+        {
             user.sendEmailVerification()
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful())
+                            // If sending fails
+                            if (!(task.isSuccessful()))
                             {
-
-                            }
-                            else
-                            {
-                                Toast.makeText(mContext, "couldn't send verification email."
+                                Toast.makeText(mContext, R.string.email_fail
                                         , Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -397,17 +409,15 @@ public class FirebaseMethods {
      * @param email
      * @param username
      */
-    public void addNewUser(String email, String username) {
-
+    public void addNewUser(String email, String username)
+    {
         // creates a new User object with the parameters given
         User user = new User(userID, StringManipulation.condenseUsername(username),
                 email);
-
         // saves the user to the database
         myRef.child(mContext.getString(R.string.dbname_users))
                 .child(userID)
                 .setValue(user);
-
         // creates a new UserAccountSettings for this user
         UserAccountSettings settings = new UserAccountSettings(
                 StringManipulation.condenseUsername(username),
@@ -415,13 +425,11 @@ public class FirebaseMethods {
                 0,
                 userID
         );
-
         // saves the settings to the databse
         myRef.child(mContext.getString(R.string.dbname_user_account_settings))
                 .child(userID)
                 .setValue(settings);
     }
-
 
     /*
     ---------------------------------- Games Highscore ------------------------------------------

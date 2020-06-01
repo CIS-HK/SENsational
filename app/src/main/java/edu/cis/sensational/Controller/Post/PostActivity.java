@@ -18,8 +18,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class PostActivity extends AppCompatActivity {
-
+public class PostActivity extends AppCompatActivity
+{
     // Firebase and context
     private static final String TAG = "PostActivity";
     final Context context = this;
@@ -36,16 +36,15 @@ public class PostActivity extends AppCompatActivity {
     private boolean privatePost;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-
         mAuth = FirebaseAuth.getInstance();
-
-        if(mAuth.getCurrentUser() != null){
+        if(mAuth.getCurrentUser() != null)
+        {
             userID = mAuth.getCurrentUser().getUid();
         }
-
         initWidgets();
         init();
     }
@@ -53,7 +52,8 @@ public class PostActivity extends AppCompatActivity {
     /**
      * Sets up all widgets on the page
      */
-    private void initWidgets(){
+    private void initWidgets()
+    {
         Log.d(TAG, "initWidgets: Initializing Widgets.");
 
         // Set up the text widgets
@@ -77,7 +77,8 @@ public class PostActivity extends AppCompatActivity {
      * Initializes the buttons for ClickListeners
      * Calls the posting methods or the return to homepage method on command
      */
-    private void init(){
+    private void init()
+    {
         // When the Post Button is clicked
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +87,6 @@ public class PostActivity extends AppCompatActivity {
                 title = mTitle.getText().toString();
                 description = mDescription.getText().toString();
                 tag = mTag.getText().toString();
-
                 // Retrieve the status of the private/public posting setting
                 if(privateSwitch.isChecked())               // If private posting was selected
                 {
@@ -96,26 +96,25 @@ public class PostActivity extends AppCompatActivity {
                 {
                     privatePost = false;                    // Set private status to false
                 }
-
-                if(checkInputs(title, description, tag)){   // Check that the inputs are valid
+                // Check that the inputs are valid
+                if(checkInputs(title, description, tag))
+                {
                     // Call for the creation of a new Post on Firebase
                     FirebaseMethods firebaseMethods =
                             new FirebaseMethods(PostActivity.this);
                     // If posting was successful:
-                    if(firebaseMethods.createNewPost(title, description, tag, privatePost)){
+                    if(firebaseMethods.createNewPost(title, description, tag, privatePost))
+                    {
                         // Return to main page
-                        Toast.makeText(mContext, "Successfully posted."
-                                , Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context,
-                                HomeActivity.class);
+                        Toast.makeText(mContext, R.string.post_success, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, HomeActivity.class);
                         startActivity(intent);
                     }
                     // If posting was unsuccessful:
                     else
                     {
                         // Prompt the user to try again
-                        Toast.makeText(mContext, "Posting unsuccessful. Try again."
-                                , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, R.string.post_fail, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -130,7 +129,6 @@ public class PostActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     /**
@@ -142,36 +140,39 @@ public class PostActivity extends AppCompatActivity {
      *
      * @return boolean
      */
-    private boolean checkInputs(String title, String description, String tag){
+    private boolean checkInputs(String title, String description, String tag)
+    {
         Log.d(TAG, "checkInputs: checking inputs for abnormal/unaccepted values.");
-
         // Splits the tag into separate words
         String [] tagArray = tag.trim().split(" ");
-
         // Checks if there are any null inputs
-        if(title.equals("") || description.equals("") || tag.equals("")){
-            Toast.makeText(mContext, "All fields must be filled out."
-                    , Toast.LENGTH_SHORT).show();
+        if(title.equals("") || description.equals("") || tag.equals(""))
+        {
+            Toast.makeText(mContext, R.string.fill_inputs, Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if (title.length() > 45){          // Checks if the title input exceeds 45 characters
-            Toast.makeText(mContext,"Please input shorter title."
-                    , Toast.LENGTH_SHORT).show();
+        // Checks if the title input exceeds 45 characters
+        else if (title.length() > 45)
+        {
+            Toast.makeText(mContext, R.string.shorter_title, Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if(tagArray.length != 1){          // Checks if there were multiple words in the tag
-            Toast.makeText(mContext,"Please input only one tag."
-                    , Toast.LENGTH_SHORT).show();
+        // Checks if the tag input exceeds 20 characters
+        else if(tag.length() > 20)
+        {
+            Toast.makeText(mContext, R.string.proper_tag, Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if(tag.length() > 10){             // Checks if the tag input exceeds 10 characters
-            Toast.makeText(mContext,"Please input only one tag."
-                    , Toast.LENGTH_SHORT).show();
+        // Checks if there were multiple words in the tag
+        else if(tagArray.length != 1)
+        {
+            Toast.makeText(mContext, R.string.one_tag, Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if(isNotAlpha(tag)){               // Checks if the tag input contains symbols
-            Toast.makeText(mContext, "Please input a tag that only contains letters."
-                    , Toast.LENGTH_SHORT).show();
+        // Checks if the tag input contains symbols
+        else if(isNotAlpha(tag))
+        {
+            Toast.makeText(mContext, R.string.letters_tag, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;                            // Returns true if all inputs pass
@@ -184,10 +185,14 @@ public class PostActivity extends AppCompatActivity {
      *
      * @return boolean
      */
-    public boolean isNotAlpha(String word) {
+    public boolean isNotAlpha(String word)
+    {
         char[] chars = word.toCharArray();      // Splits the word into individual characters
-        for (char c : chars) {                  // Loops through the characters in the array
-            if(!Character.isLetter(c)) {        // Checks if the character is a letter
+        // Loops through the characters in the array
+        for (char c : chars)
+        {
+            if(!Character.isLetter(c))
+            {        // Checks if the character is a letter
                 return true;
             }
         }
