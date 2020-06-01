@@ -3,13 +3,9 @@ package edu.cis.sensational.Controller.Home;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
-import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.R;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeViewHolder> {

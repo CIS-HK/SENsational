@@ -26,25 +26,19 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsViewHolder>
     @NonNull
     @Override
     public CommentsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View myView = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_comment_view, parent, false);
-
         CommentsViewHolder holder = new CommentsViewHolder(myView);
-
         return holder;
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull CommentsViewHolder holder, int position) {
         holder.commentView.setText(commentData.get(position).getComment());
-//        holder.usernameView.setText(commentData.get(position).getUser_id());
     }
 
     @Override
     public int getItemCount() {
         return commentData.size();
     }
-
 
 }

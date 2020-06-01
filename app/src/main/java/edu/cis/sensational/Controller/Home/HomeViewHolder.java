@@ -2,10 +2,8 @@ package edu.cis.sensational.Controller.Home;
 
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import edu.cis.sensational.R;
 
 public class HomeViewHolder extends RecyclerView.ViewHolder {

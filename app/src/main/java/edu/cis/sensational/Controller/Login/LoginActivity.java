@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import edu.cis.sensational.Controller.Home.HomeActivity;
 import edu.cis.sensational.Controller.MainActivity;
 import edu.cis.sensational.R;
 
@@ -85,7 +84,6 @@ public class LoginActivity extends AppCompatActivity{
                                     // If sign in fails, display a message to the user. If sign in succeeds
                                     // the auth state listener will be notified and logic to handle the
                                     // signed in user can be handled in the listener.
-
                                     if (!task.isSuccessful()) {
                                         Log.w(TAG, "signInWithEmail:failed", task.getException());
 
