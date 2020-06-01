@@ -2,6 +2,7 @@ package edu.cis.sensational.Model.Utils;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import edu.cis.sensational.Model.Colorize.GameConstants;
 import edu.cis.sensational.Model.Comment;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.Model.User;
@@ -431,58 +434,82 @@ public class FirebaseMethods
                 .setValue(settings);
     }
 
-    /*
+   /*
     ---------------------------------- Games Highscore ------------------------------------------
     */
 
     // https://stackoverflow.com/questions/47847694/how-to-return-datasnapshot-value-as-a-result-of-a-method
 
+    /**
+     * Creates a callback interface
+     */
     public interface Callback
     {
         void onCallBack(int value);
     }
 
+    /**
+     * Uses user ID to update total user score on firebase by adding current user score and retrieve
+     * it by using callbacks
+     * @param userID
+     * @param scoretoinsert
+     * @param callback
+     */
     public void updateUserScore(final String userID, final int scoretoinsert,
-                                final Callback callback) {
-        if (myRef != null) {
+                                final Callback callback)
+    {
+        if (myRef != null)
+        {
             final DatabaseReference userRef = myRef.child("user_scores")
                     .child("user_id")
                     .child(userID)
                     .child("user_score")
                     .child("totalscore");
 
-                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getValue() != null) {
-                            int score = scoretoinsert + dataSnapshot.getValue(Integer.class);
-                            userRef.setValue(score);
-                            callback.onCallBack(score);
-                        }
-                        if (dataSnapshot.getValue() == null)
-                        {
-                            userRef.setValue(scoretoinsert);
-                            callback.onCallBack(scoretoinsert);
-                        }
+            userRef.addListenerForSingleValueEvent(new ValueEventListener()
+            {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                {
+                    //add current user score to total score
+                    if (dataSnapshot.getValue() != null)
+                    {
+                        int score = scoretoinsert + dataSnapshot.getValue(Integer.class);
+                        userRef.setValue(score);
+                        callback.onCallBack(score);
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.w(TAG, "Failed to retrieve user score.", error.toException());
+                    //for first time users, directly set the user score as total score
+                    if (dataSnapshot.getValue() == null)
+                    {
+                        userRef.setValue(scoretoinsert);
+                        callback.onCallBack(scoretoinsert);
                     }
-                });
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error)
+                {
+                    Log.w(TAG, "Failed to retrieve user score.", error.toException());
+                }
+            });
         }
     }
 
 
-    public void checkHighScore(final String userID, final Callback callback)
+    /**
+     * Uses user ID to compare current user score with current highscore on the database
+     * @param userID
+     * @param score
+     * @param callback
+     */
+    public void checkHighScore(final String userID, final int score, final Callback callback)
     {
         final DatabaseReference userRef = myRef.child("user_scores")
                 .child("user_id")
                 .child(userID)
                 .child("user_score")
                 .child("colorizehighscore");
-
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener()
         {
@@ -496,7 +523,7 @@ public class FirebaseMethods
                 }
                 if (dataSnapshot.getValue() == null)
                 {
-                    userRef.setValue(0);
+                    userRef.setValue(score);
                 }
             }
 
@@ -506,8 +533,14 @@ public class FirebaseMethods
                 Log.w(TAG, "Failed to retrieve user score.", error.toException());
             }
         });
+
     }
 
+    /**
+     * Uses user ID to store the updated user high score on Firebase
+     * @param userID
+     * @param score
+     */
     public void storeHighScore(final String userID, final int score)
     {
         final DatabaseReference userRef = myRef.child("user_scores")
@@ -518,5 +551,43 @@ public class FirebaseMethods
 
         userRef.setValue(score);
 
+    }
+
+    /**
+     * Uses user ID to set and display current score and high score for first time users
+     * @param userID
+     * @param score
+     * @param currentScore
+     * @param highScore
+     */
+    public void initialStoring(final String userID, final int score, final TextView currentScore,
+                               final TextView highScore)
+    {
+        final DatabaseReference userRef = myRef.child("user_scores")
+                .child("user_id")
+                .child(userID)
+                .child("user_score")
+                .child("colorizehighscore");
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                //for first time users, their highscore is null, so the score for the first round
+                //will be their current score and highscore
+                if (dataSnapshot.getValue() == null)
+                {
+                    userRef.setValue(score);
+                    currentScore.setText(""+score);
+                    highScore.setText(GameConstants.DISPLAYHIGHSCORE +score);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
+            }
+        });
     }
 }
