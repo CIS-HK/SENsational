@@ -28,7 +28,6 @@ import edu.cis.sensational.Model.Comment;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.Model.User;
 import edu.cis.sensational.Model.UserAccountSettings;
-import edu.cis.sensational.Model.UserSettings;
 import edu.cis.sensational.R;
 
 /**
@@ -86,14 +85,11 @@ public class FirebaseMethods {
      */
     public boolean createNewPost(String title, String description,
                                  String tags, boolean privatePost){
-
         // Create empty ArrayLists to initialize the comments and likes fields
         ArrayList<String> initLikes = new ArrayList();
         ArrayList<Comment> initComments = new ArrayList();
-
         // Retrieve a key for the postID
         String newPostKey = myRef.child(mContext.getString(R.string.dbname_posts)).push().getKey();
-
         // Create a new Post object and set the values given
         Post post = new Post();
         post.setTitle(title);
@@ -106,10 +102,8 @@ public class FirebaseMethods {
         post.setComments(initComments);
         post.setPrivate(privatePost);
         post.setPostID(newPostKey);
-
         // Upload the post to the database
         uploadNewPost(post, tags);
-
         return true;
     }
 
@@ -125,6 +119,7 @@ public class FirebaseMethods {
      */
     public void upvoteButtonPressed(final String post_id, final String userID, final Post post){
 
+        // Set the local Post object's like count to current + 1
         post.setLikeCount(post.getLikeCount() + 1);
 
         final DatabaseReference userRef = myRef
@@ -134,12 +129,9 @@ public class FirebaseMethods {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 Log.d(TAG, "Post: upvoting");
-
                 List<String> userLikesList = new ArrayList<>();
                 userLikesList.add(userID);
-
                 myRef.child(mContext.getString(R.string.dbname_posts))
                         .child(post_id)
                         .child(mContext.getString(R.string.field_likes))
@@ -178,9 +170,7 @@ public class FirebaseMethods {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 final long newLikeCount = dataSnapshot.getValue(Long.class) + 1;
-
                 myRef.child(mContext.getString(R.string.dbname_posts))
                         .child(postID)
                         .child(mContext.getString(R.string.field_like_count))
@@ -220,12 +210,9 @@ public class FirebaseMethods {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 Log.d(TAG, "Post: downvoting");
-
                 List<String> userUnLikesList = new ArrayList<>();
                 userUnLikesList.add(userID);
-
                 myRef.child(mContext.getString(R.string.dbname_posts))
                         .child(post_id)
                         .child("unlikes")
@@ -239,7 +226,6 @@ public class FirebaseMethods {
                         .child(userID)
                         .child(post_id)
                         .setValue(post);
-
                 downvote(post_id);
             }
 
@@ -297,15 +283,18 @@ public class FirebaseMethods {
      */
     public void uploadNewPost(Post post, String tag)
     {
-        myRef.child("user_posts")
+        // Store Post under "user_posts" node
+        myRef.child(mContext.getString(R.string.dbname_user_posts))
                 .child(post.getUser_id())
                 .child(post.getPostID())
                 .setValue(post);
-        myRef.child("posts")
+        // Store Post under "posts" node
+        myRef.child(mContext.getString(R.string.dbname_posts))
                 .child(post.getPostID())
                 .setValue(post);
+        // Store Post under "tags" node
         myRef.child("tags")
-                .child(tag)
+                .child(tag.toLowerCase())
                 .child(post.getPostID())
                 .setValue(post);
     }
@@ -328,7 +317,6 @@ public class FirebaseMethods {
         currentComments.add(newComment);
         // Set the Comments ArrayList with the newest addition to the corresponding Post
         post.setComments(currentComments);
-
         // Store the new ArrayList of Comments into the database under the corresponding Post
         myRef.child(mContext.getString(R.string.dbname_user_posts))
                 .child(userID)
@@ -340,86 +328,6 @@ public class FirebaseMethods {
                 .child(mContext.getString(R.string.field_comments))
                 .setValue(currentComments);
         Log.d(TAG, "New comment set.");
-    }
-
-    /**
-     * Updates the user's account's settings on Firebase
-     *
-     * @param location
-     * @param age
-     * @param information
-     */
-    public void updateUserAccountSettings(String location, String age, String information) {
-
-        Log.d(TAG, "updateUserAccountSettings: updating user account settings.");
-
-        if (location != null) {
-            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
-                    .child(userID)
-                    .child(mContext.getString(R.string.field_location))
-                    .setValue(location);
-        }
-
-        if (age != null) {
-            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
-                    .child(userID)
-                    .child(mContext.getString(R.string.field_age))
-                    .setValue(age);
-        }
-
-        if (information != null) {
-            myRef.child(mContext.getString(R.string.dbname_user_account_settings))
-                    .child(userID)
-                    .child(mContext.getString(R.string.field_information))
-                    .setValue(information);
-        }
-    }
-
-    /**
-     * update username in the 'users' node and 'user_account_settings' node
-     *
-     * @param username
-     */
-    public void updateUsername(String username) {
-        Log.d(TAG, "updateUsername: updating username to: " + username);
-
-        myRef.child(mContext.getString(R.string.dbname_users))
-                .child(userID)
-                .child(mContext.getString(R.string.field_username))
-                .setValue(username);
-
-        myRef.child(mContext.getString(R.string.dbname_user_account_settings))
-                .child(userID)
-                .child(mContext.getString(R.string.field_username))
-                .setValue(username);
-    }
-
-    /**
-     * update the email in the 'users' node
-     *
-     * @param email
-     */
-    public void updateEmail(String email) {
-        Log.d(TAG, "updateEmail: updating email to: " + email);
-
-        myRef.child(mContext.getString(R.string.dbname_users))
-                .child(userID)
-                .child(mContext.getString(R.string.field_email))
-                .setValue(email);
-    }
-
-    /**
-     * update the password in the 'users' node
-     *
-     * @param password
-     */
-    public void updatePassword(String password) {
-        Log.d(TAG, "updatePassword: updating password to: " + password);
-
-        myRef.child(mContext.getString(R.string.dbname_users))
-                .child(userID)
-                .child(mContext.getString(R.string.field_password))
-                .setValue(password);
     }
 
     /**
@@ -514,95 +422,6 @@ public class FirebaseMethods {
                 .setValue(settings);
     }
 
-    /**
-     * Retrieves the account settings for the user currently logged in
-     * Database: user_account_settings node
-     *
-     * @param dataSnapshot
-     * @return UserSettings
-     */
-    public UserSettings getUserSettings(DataSnapshot dataSnapshot) {
-        Log.d(TAG, "getUserSettings: retrieving user account settings from firebase.");
-
-
-        UserAccountSettings settings = new UserAccountSettings();
-        User user = new User();
-
-        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-            // user_account_settings node
-            if (ds.getKey().equals(mContext.getString(R.string.dbname_user_account_settings))) {
-                Log.d(TAG, "getUserSettings: user account settings node datasnapshot: " + ds);
-
-                try {
-
-                    settings.setUsername(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getUsername()
-                    );
-
-                    settings.setLocation(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getLocation()
-                    );
-
-                    settings.setChild_age(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getChild_age()
-                    );
-
-                    settings.setChild_gender(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getChild_gender()
-                    );
-
-                    settings.setPosts(
-                            ds.child(userID)
-                                    .getValue(UserAccountSettings.class)
-                                    .getPosts()
-                    );
-
-                    Log.d(TAG, "getUserAccountSettings: " +
-                            "retrieved user_account_settings information: " + settings.toString());
-                } catch (NullPointerException e) {
-                    Log.e(TAG, "getUserAccountSettings: " +
-                            "NullPointerException: " + e.getMessage());
-                }
-            }
-
-            // users node
-            Log.d(TAG, "getUserSettings: snapshot key: " + ds.getKey());
-            if (ds.getKey().equals(mContext.getString(R.string.dbname_users))) {
-                Log.d(TAG, "getUserAccountSettings: users node datasnapshot: " + ds);
-
-                user.setUsername(
-                        ds.child(userID)
-                                .getValue(User.class)
-                                .getUsername()
-                );
-                user.setEmail(
-                        ds.child(userID)
-                                .getValue(User.class)
-                                .getEmail()
-                );
-                user.setUser_id(
-                        ds.child(userID)
-                                .getValue(User.class)
-                                .getUser_id()
-                );
-
-                Log.d(TAG, "getUserAccountSettings: " +
-                        "retrieved users information: " + user.toString());
-            }
-        }
-        return new UserSettings(user, settings);
-
-    }
-
 
     /*
     ---------------------------------- Games Highscore ------------------------------------------
@@ -671,7 +490,6 @@ public class FirebaseMethods {
                 {
                     userRef.setValue(0);
                 }
-
             }
 
             @Override
@@ -680,7 +498,6 @@ public class FirebaseMethods {
                 Log.w(TAG, "Failed to retrieve user score.", error.toException());
             }
         });
-
     }
 
     public void storeHighScore(final String userID, final int score)

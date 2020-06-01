@@ -177,7 +177,6 @@ public class PostActivity extends AppCompatActivity {
         return true;                            // Returns true if all inputs pass
     }
 
-
     /**
      * Checks that the parameter contains alphabetical letters only
      *
@@ -187,7 +186,6 @@ public class PostActivity extends AppCompatActivity {
      */
     public boolean isNotAlpha(String word) {
         char[] chars = word.toCharArray();      // Splits the word into individual characters
-
         for (char c : chars) {                  // Loops through the characters in the array
             if(!Character.isLetter(c)) {        // Checks if the character is a letter
                 return true;

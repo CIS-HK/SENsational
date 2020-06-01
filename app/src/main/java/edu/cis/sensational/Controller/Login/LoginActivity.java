@@ -41,15 +41,14 @@ public class LoginActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Log.d(TAG, "onCreate: started.");
 
         mEmail = (EditText) findViewById(R.id.input_email);
         mPassword = (EditText) findViewById(R.id.input_password);
         mContext = LoginActivity.this;
-        Log.d(TAG, "onCreate: started.");
 
         setupFirebaseAuth();
         init();
-
     }
 
      /*
@@ -114,7 +113,6 @@ public class LoginActivity extends AppCompatActivity{
                                 }
                             });
                 }
-
             }
         });
 
@@ -159,7 +157,6 @@ public class LoginActivity extends AppCompatActivity{
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
     }

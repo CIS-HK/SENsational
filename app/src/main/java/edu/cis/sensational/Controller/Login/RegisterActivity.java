@@ -55,13 +55,13 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        Log.d(TAG, "onCreate: started.");
+
         mContext = RegisterActivity.this;
         firebaseMethods = new FirebaseMethods(mContext);
-        Log.d(TAG, "onCreate: started.");
 
         initWidgets();
         init();
-
     }
 
     /**
@@ -217,7 +217,6 @@ public class RegisterActivity extends AppCompatActivity {
                             LoginActivity.class);
                     startActivity(intent);
                 }
-                // ...
             }
         };
     }
