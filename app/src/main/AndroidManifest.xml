@@ -7,17 +7,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/clover_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Controller.SharedGames.TrophiesActivity"></activity>
         <activity android:name=".Controller.Colorize.ColorizeSettingsActivity" />
         <activity android:name=".Controller.SharedGames.GamesSharedActivity" />
-        <activity android:name=".Controller.Profile.AccountSettingsActivity" />
-        <activity android:name=".Controller.Profile.ProfileActivity" />
-        <activity android:name=".Controller.Search.SearchActivity" />
         <activity android:name=".Controller.BubblesGame.BubblesMiddle2Activity" />
         <activity android:name=".Controller.BubblesGame.BubblesEndActivity" />
         <activity android:name=".Controller.BubblesGame.BubblesMiddleActivity" />
