@@ -38,12 +38,11 @@ public class BubbleConstants
     public static final int DEFAULT = 0;
     public static final int MINUS_FROM_Y = 10;
     public static final int DELAY = 0;
-    public static final int PERIOD = 6;
+    public static final int PERIOD = 10;
     public static final int VOLUME = 20;
     public static final int MAX_ROUNDS = 3;
 
     // Floats
-    public static final float ADD_TO_Y = 170.0f;
     public static final float ADD_TO_SCREEN_HEIGHT = 100.0f;
 
 }

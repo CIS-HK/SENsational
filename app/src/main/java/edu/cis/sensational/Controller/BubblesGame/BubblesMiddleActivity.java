@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +32,7 @@ public class BubblesMiddleActivity extends AppCompatActivity
     private ImageView smiley1;
     private ImageView smiley2;
     private int heightOfScreen;
+    private float density;
     private float bubbleY;
     private Handler handler;
     private Timer timer;
@@ -153,6 +154,10 @@ public class BubblesMiddleActivity extends AppCompatActivity
         // Stores the height of the screen
         heightOfScreen = sizeOfScreen.y;
 
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        density = getResources().getDisplayMetrics().density;
+
         playBubble();
     }
 
@@ -167,11 +172,14 @@ public class BubblesMiddleActivity extends AppCompatActivity
         handler = new Handler();
 
         // Moves the bubble to the bottom of the screen
-        bubbleY = heightOfScreen + BubbleConstants.ADD_TO_SCREEN_HEIGHT;
+        bubbleY = heightOfScreen + bubble.getHeight();
         bubble.setY(bubbleY);
 
         // Moves the number on the bubble so that it's at the center of the bubble
-        bubbleNumber.setY(bubbleY + BubbleConstants.ADD_TO_Y);
+        float addToY = bubble.getHeight()/3.0f;
+        bubbleNumber.setY(bubbleY + addToY);
+
+        int duration = (int) (20/density);
 
         // Moves the bubble towards the top of the screen
         timer.schedule(new TimerTask()
@@ -188,7 +196,7 @@ public class BubblesMiddleActivity extends AppCompatActivity
                     }
                 });
             }
-        }, BubbleConstants.DELAY, BubbleConstants.PERIOD);
+        }, BubbleConstants.DELAY, duration);
     }
 
     /**
@@ -232,7 +240,8 @@ public class BubblesMiddleActivity extends AppCompatActivity
 
         // Updates the y-coordinates of the bubble and the number on the bubble
         bubble.setY(bubbleY);
-        bubbleNumber.setY(bubbleY + BubbleConstants.ADD_TO_Y);
+        float addToY = bubble.getHeight()/3.0f;
+        bubbleNumber.setY(bubbleY + addToY);
     }
 }
 
