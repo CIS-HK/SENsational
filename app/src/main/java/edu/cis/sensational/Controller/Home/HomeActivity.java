@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,14 +25,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 import edu.cis.sensational.Controller.Login.LoginActivity;
 import edu.cis.sensational.Controller.MainActivity;
 import edu.cis.sensational.Controller.Post.PostActivity;
 import edu.cis.sensational.Controller.Post.ViewPostActivity;
 import edu.cis.sensational.Model.Post;
 import edu.cis.sensational.R;
+
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 

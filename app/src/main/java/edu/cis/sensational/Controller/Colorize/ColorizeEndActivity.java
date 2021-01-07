@@ -46,12 +46,9 @@ public class ColorizeEndActivity extends AppCompatActivity {
         scoreLabel = findViewById(R.id.scoreLabel);
         highScoreLabel = findViewById(R.id.highscorelabel);
         smiley = findViewById(R.id.smiley);
-
         firebaseMethods = new FirebaseMethods(ColorizeEndActivity.this);
-
         setUpButtons();
         displayScore();
-
     }
 
     /**
